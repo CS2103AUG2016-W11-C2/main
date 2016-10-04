@@ -3,20 +3,20 @@ package guitests;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.ClearCommand.MESSAGE_SUCCESS;
+import static seedu.agendum.logic.commands.ClearCommand.MESSAGE_SUCCESS;
 
-public class ClearCommandTest extends AddressBookGuiTest {
+public class ClearCommandTest extends ToDoListGuiTest {
 
     @Test
     public void clear() {
 
         //verify a non-empty list can be cleared
-        assertTrue(personListPanel.isListMatching(td.getTypicalPersons()));
+        assertTrue(taskListPanel.isListMatching(td.getTypicalTasks()));
         assertClearCommandSuccess();
 
         //verify other commands can work after a clear command
         commandBox.runCommand(td.hoon.getAddCommand());
-        assertTrue(personListPanel.isListMatching(td.hoon));
+        assertTrue(taskListPanel.isListMatching(td.hoon));
         commandBox.runCommand("delete 1");
         assertListSize(0);
 
