@@ -16,7 +16,7 @@ import seedu.address.TestApp;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
-import seedu.address.model.AddressBook;
+import seedu.address.model.ToDoList;
 import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -60,20 +60,20 @@ public class TestUtil {
      */
     public static String SANDBOX_FOLDER = FileUtil.getPath("./src/test/data/sandbox/");
 
-    public static final Person[] samplePersonData = getSamplePersonData();
+    public static final Task[] samplePersonData = getSamplePersonData();
 
-    private static Person[] getSamplePersonData() {
+    private static Task[] getSamplePersonData() {
         try {
-            return new Person[]{
-                    new Person(new Name("Ali Muster"), new UniqueTagList()),
-                    new Person(new Name("Boris Mueller"), new UniqueTagList()),
-                    new Person(new Name("Carl Kurz"), new UniqueTagList()),
-                    new Person(new Name("Daniel Meier"), new UniqueTagList()),
-                    new Person(new Name("Elle Meyer"), new UniqueTagList()),
-                    new Person(new Name("Fiona Kunz"), new UniqueTagList()),
-                    new Person(new Name("George Best"), new UniqueTagList()),
-                    new Person(new Name("Hoon Meier"), new UniqueTagList()),
-                    new Person(new Name("Ida Mueller"), new UniqueTagList())
+            return new Task[]{
+                    new Task(new Name("Ali Muster"), new UniqueTagList()),
+                    new Task(new Name("Boris Mueller"), new UniqueTagList()),
+                    new Task(new Name("Carl Kurz"), new UniqueTagList()),
+                    new Task(new Name("Daniel Meier"), new UniqueTagList()),
+                    new Task(new Name("Elle Meyer"), new UniqueTagList()),
+                    new Task(new Name("Fiona Kunz"), new UniqueTagList()),
+                    new Task(new Name("George Best"), new UniqueTagList()),
+                    new Task(new Name("Hoon Meier"), new UniqueTagList()),
+                    new Task(new Name("Ida Mueller"), new UniqueTagList())
             };
         } catch (IllegalValueException e) {
             assert false;
@@ -97,7 +97,7 @@ public class TestUtil {
         }
     }
 
-    public static List<Person> generateSamplePersonData() {
+    public static List<Task> generateSamplePersonData() {
         return Arrays.asList(samplePersonData);
     }
 
@@ -134,8 +134,8 @@ public class TestUtil {
         createDataFileWithSampleData(TestApp.SAVE_LOCATION_FOR_TESTING);
     }
 
-    public static AddressBook generateEmptyAddressBook() {
-        return new AddressBook(new UniquePersonList(), new UniqueTagList());
+    public static ToDoList generateEmptyAddressBook() {
+        return new ToDoList(new UniqueTaskList(), new UniqueTagList());
     }
 
     public static XmlSerializableAddressBook generateSampleStorageAddressBook() {
@@ -326,7 +326,7 @@ public class TestUtil {
         return list;
     }
 
-    public static boolean compareCardAndPerson(PersonCardHandle card, ReadOnlyPerson person) {
+    public static boolean compareCardAndPerson(PersonCardHandle card, ReadOnlyTask person) {
         return card.isSamePerson(person);
     }
 

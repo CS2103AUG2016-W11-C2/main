@@ -1,9 +1,11 @@
 package guitests;
 
 import org.junit.Test;
-import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.ReadOnlyTask;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_TASK_SUCCESS;
 
 public class SelectCommandTest extends AddressBookGuiTest {
 
@@ -35,18 +37,18 @@ public class SelectCommandTest extends AddressBookGuiTest {
 
     private void assertSelectionInvalid(int index) {
         commandBox.runCommand("select " + index);
-        assertResultMessage("The person index provided is invalid");
+        assertResultMessage(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
 
     private void assertSelectionSuccess(int index) {
         commandBox.runCommand("select " + index);
-        assertResultMessage("Selected Person: "+index);
+        assertResultMessage(String.format(MESSAGE_SELECT_TASK_SUCCESS, index));
         assertPersonSelected(index);
     }
 
     private void assertPersonSelected(int index) {
         assertEquals(personListPanel.getSelectedPersons().size(), 1);
-        ReadOnlyPerson selectedPerson = personListPanel.getSelectedPersons().get(0);
+        ReadOnlyTask selectedPerson = personListPanel.getSelectedPersons().get(0);
         assertEquals(personListPanel.getPerson(index-1), selectedPerson);
         //TODO: confirm the correct page is loaded in the Browser Panel
     }
