@@ -4,9 +4,14 @@ We are a team based in the [School of Computing, National University of Singapor
 
 ## Project Team
 
+-#### [Muthu Kumar Chandrasekaran](http://www.comp.nus.edu.sg/~damithch) <br>
+-<img src="https://lh5.googleusercontent.com/swdvryeX53Wc7dCEh1Owfz6PmATQWo87AF6lr_J2qL7rrcTW8Nego1_YFdu2TSoxyQBpJ42I_X5n31AVF6O3nQV_ECVZvQN9xbFMa_fDHV03azyXHdSNJMaSGCw-VWUNJVuIsVNh" width="150"><br>
+-**Role**: Project Advisor
+
 #### [Rachel Sim](https://github.com/rachx)
 <img src="" width="150"><br>
 Role: Team leader
+Responsibilities: 
 
 -----
 
@@ -34,6 +39,3 @@ Responsibilities:
 # Contributors
 
 We welcome contributions. See [Contact Us](ContactUs.md) page for more info.
-
-* [Akshay Narayan](https://github.com/se-edu/addressbook-level4/pulls?q=is%3Apr+author%3Aokkhoy)
-* [Sam Yong](https://github.com/se-edu/addressbook-level4/pulls?q=is%3Apr+author%3Amauris)
