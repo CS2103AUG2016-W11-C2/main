@@ -9,36 +9,36 @@ import java.util.Optional;
 /**
  * Represents a storage for {@link seedu.address.model.ToDoList}.
  */
-public interface AddressBookStorage {
+public interface ToDoListStorage {
 
     /**
      * Returns the file path of the data file.
      */
-    String getAddressBookFilePath();
+    String getToDoListFilePath();
 
     /**
-     * Returns AddressBook data as a {@link ReadOnlyToDoList}.
+     * Returns ToDoList data as a {@link ReadOnlyToDoList}.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<ReadOnlyToDoList> readAddressBook() throws DataConversionException, IOException;
+    Optional<ReadOnlyToDoList> readToDoList() throws DataConversionException, IOException;
 
     /**
-     * @see #getAddressBookFilePath()
+     * @see #getToDoListFilePath()
      */
-    Optional<ReadOnlyToDoList> readAddressBook(String filePath) throws DataConversionException, IOException;
+    Optional<ReadOnlyToDoList> readToDoList(String filePath) throws DataConversionException, IOException;
 
     /**
      * Saves the given {@link ReadOnlyToDoList} to the storage.
-     * @param addressBook cannot be null.
+     * @param toDoList cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveAddressBook(ReadOnlyToDoList addressBook) throws IOException;
+    void saveToDoList(ReadOnlyToDoList toDoList) throws IOException;
 
     /**
-     * @see #saveAddressBook(ReadOnlyToDoList)
+     * @see #saveToDoList(ReadOnlyToDoList)
      */
-    void saveAddressBook(ReadOnlyToDoList addressBook, String filePath) throws IOException;
+    void saveToDoList(ReadOnlyToDoList toDoList, String filePath) throws IOException;
 
 }

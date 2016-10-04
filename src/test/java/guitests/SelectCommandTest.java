@@ -1,7 +1,8 @@
 package guitests;
 
 import org.junit.Test;
-import seedu.address.model.person.ReadOnlyTask;
+
+import seedu.address.model.task.ReadOnlyTask;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;

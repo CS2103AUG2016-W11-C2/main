@@ -17,10 +17,10 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.ToDoList;
-import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.model.task.*;
+import seedu.address.storage.XmlSerializableToDoList;
 
 import java.io.File;
 import java.io.IOException;
@@ -138,8 +138,8 @@ public class TestUtil {
         return new ToDoList(new UniqueTaskList(), new UniqueTagList());
     }
 
-    public static XmlSerializableAddressBook generateSampleStorageAddressBook() {
-        return new XmlSerializableAddressBook(generateEmptyAddressBook());
+    public static XmlSerializableToDoList generateSampleStorageAddressBook() {
+        return new XmlSerializableToDoList(generateEmptyAddressBook());
     }
 
     /**

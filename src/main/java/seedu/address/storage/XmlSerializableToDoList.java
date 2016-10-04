@@ -3,9 +3,9 @@ package seedu.address.storage;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.ReadOnlyTask;
+import seedu.address.model.task.UniqueTaskList;
 import seedu.address.model.ReadOnlyToDoList;
-import seedu.address.model.person.ReadOnlyTask;
-import seedu.address.model.person.UniqueTaskList;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,31 +15,31 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * An Immutable AddressBook that is serializable to XML format
+ * An Immutable ToDoList that is serializable to XML format
  */
-@XmlRootElement(name = "addressbook")
-public class XmlSerializableAddressBook implements ReadOnlyToDoList {
+@XmlRootElement(name = "todolist")
+public class XmlSerializableToDoList implements ReadOnlyToDoList {
 
     @XmlElement
-    private List<XmlAdaptedPerson> persons;
+    private List<XmlAdaptedTask> tasks;
     @XmlElement
     private List<Tag> tags;
 
     {
-        persons = new ArrayList<>();
+        tasks = new ArrayList<>();
         tags = new ArrayList<>();
     }
 
     /**
      * Empty constructor required for marshalling
      */
-    public XmlSerializableAddressBook() {}
+    public XmlSerializableToDoList() {}
 
     /**
      * Conversion
      */
-    public XmlSerializableAddressBook(ReadOnlyToDoList src) {
-        persons.addAll(src.getTaskList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
+    public XmlSerializableToDoList(ReadOnlyToDoList src) {
+        tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
         tags = src.getTagList();
     }
 
@@ -57,7 +57,7 @@ public class XmlSerializableAddressBook implements ReadOnlyToDoList {
     @Override
     public UniqueTaskList getUniqueTaskList() {
         UniqueTaskList lists = new UniqueTaskList();
-        for (XmlAdaptedPerson p : persons) {
+        for (XmlAdaptedTask p : tasks) {
             try {
                 lists.add(p.toModelType());
             } catch (IllegalValueException e) {
@@ -69,7 +69,7 @@ public class XmlSerializableAddressBook implements ReadOnlyToDoList {
 
     @Override
     public List<ReadOnlyTask> getTaskList() {
-        return persons.stream().map(p -> {
+        return tasks.stream().map(p -> {
             try {
                 return p.toModelType();
             } catch (IllegalValueException e) {
