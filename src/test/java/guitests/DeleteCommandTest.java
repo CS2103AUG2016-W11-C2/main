@@ -1,12 +1,12 @@
 package guitests;
 
 import org.junit.Test;
+import seedu.agendum.logic.commands.DeleteCommand;
+import seedu.agendum.commons.core.Messages;
 import seedu.agendum.testutil.TestTask;
 import seedu.agendum.testutil.TestUtil;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.agendum.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
-import static seedu.agendum.logic.commands.DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS;
 
 public class DeleteCommandTest extends ToDoListGuiTest {
 
@@ -30,7 +30,7 @@ public class DeleteCommandTest extends ToDoListGuiTest {
 
         //invalid index
         commandBox.runCommand("delete " + currentList.length + 1);
-        assertResultMessage(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
 
     }
 
@@ -49,7 +49,7 @@ public class DeleteCommandTest extends ToDoListGuiTest {
         assertTrue(taskListPanel.isListMatching(expectedRemainder));
 
         //confirm the result message is correct
-        assertResultMessage(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
+        assertResultMessage(String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
     }
 
 }

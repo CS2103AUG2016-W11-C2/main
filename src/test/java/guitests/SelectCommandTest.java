@@ -1,12 +1,11 @@
 package guitests;
 
 import org.junit.Test;
-
+import seedu.agendum.logic.commands.SelectCommand;
+import seedu.agendum.commons.core.Messages;
 import seedu.agendum.model.task.ReadOnlyTask;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.agendum.commons.core.Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
-import static seedu.agendum.logic.commands.SelectCommand.MESSAGE_SELECT_TASK_SUCCESS;
 
 public class SelectCommandTest extends ToDoListGuiTest {
 
@@ -38,12 +37,12 @@ public class SelectCommandTest extends ToDoListGuiTest {
 
     private void assertSelectionInvalid(int index) {
         commandBox.runCommand("select " + index);
-        assertResultMessage(MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
+        assertResultMessage(Messages.MESSAGE_INVALID_TASK_DISPLAYED_INDEX);
     }
 
     private void assertSelectionSuccess(int index) {
         commandBox.runCommand("select " + index);
-        assertResultMessage(String.format(MESSAGE_SELECT_TASK_SUCCESS, index));
+        assertResultMessage(String.format(SelectCommand.MESSAGE_SELECT_TASK_SUCCESS, index));
         assertTaskSelected(index);
     }
 

@@ -1,9 +1,9 @@
 package guitests;
 
 import org.junit.Test;
+import seedu.agendum.logic.commands.ClearCommand;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.agendum.logic.commands.ClearCommand.MESSAGE_SUCCESS;
 
 public class ClearCommandTest extends ToDoListGuiTest {
 
@@ -27,6 +27,6 @@ public class ClearCommandTest extends ToDoListGuiTest {
     private void assertClearCommandSuccess() {
         commandBox.runCommand("clear");
         assertListSize(0);
-        assertResultMessage(MESSAGE_SUCCESS);
+        assertResultMessage(ClearCommand.MESSAGE_SUCCESS);
     }
 }

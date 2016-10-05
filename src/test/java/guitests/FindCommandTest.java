@@ -33,7 +33,7 @@ public class FindCommandTest extends ToDoListGuiTest {
     private void assertFindResult(String command, TestTask... expectedHits ) {
         commandBox.runCommand(command);
         assertListSize(expectedHits.length);
-        assertResultMessage(expectedHits.length + " tasks listed!");
+        assertResultMessage(String.format(Messages.MESSAGE_TASKS_LISTED_OVERVIEW, expectedHits.length));
         assertTrue(taskListPanel.isListMatching(expectedHits));
     }
 }
