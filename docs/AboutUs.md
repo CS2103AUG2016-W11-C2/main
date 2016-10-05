@@ -9,7 +9,7 @@ We are a team based in the [School of Computing, National University of Singapor
 -**Role**: Project Advisor
 
 #### [Rachael Sim](https://github.com/rachx)
-<img src="images/RachaelSim.jpg" width="150"><br>
+<img src="images/RachaelSim.JPG" width="150"><br>
 Role: Team leader  
 Responsibilities: Model, UI, Scheduling and tracking, Code quality
 
