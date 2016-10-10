@@ -13,7 +13,9 @@ import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.core.ComponentManager;
 
 import java.time.LocalDateTime;
+import java.util.EmptyStackException;
 import java.util.Set;
+import java.util.Stack;
 import java.util.logging.Logger;
 
 /**
@@ -23,6 +25,7 @@ import java.util.logging.Logger;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    private final Stack<ToDoList> backupToDoLists = new Stack<ToDoList>();
     private final ToDoList toDoList;
     private final FilteredList<Task> filteredTasks;
 
@@ -52,6 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public void resetData(ReadOnlyToDoList newData) {
+        saveCurrentToDoList();
         toDoList.resetData(newData);
         indicateToDoListChanged();
     }
@@ -66,14 +70,21 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ToDoListChangedEvent(toDoList));
     }
 
+    /** Saves the current to do list into the back up to-do list stack */
+    private void saveCurrentToDoList() {
+        backupToDoLists.push(new ToDoList(toDoList));
+    }
+
     @Override
     public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
+        saveCurrentToDoList();
         toDoList.removeTask(target);
         indicateToDoListChanged();
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
+        saveCurrentToDoList();
         toDoList.addTask(task);
         updateFilteredListToShowAll();
         indicateToDoListChanged();
@@ -82,6 +93,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void renameTask(ReadOnlyTask target, Name newTaskName)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
+        saveCurrentToDoList();
         toDoList.renameTask(target, newTaskName);
         updateFilteredListToShowAll();
         indicateToDoListChanged();
@@ -90,19 +102,28 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void scheduleTask(ReadOnlyTask target, LocalDateTime startDateTime,
             LocalDateTime endDateTime) throws UniqueTaskList.TaskNotFoundException {
+        saveCurrentToDoList();
         toDoList.scheduleTask(target, startDateTime, endDateTime);
         indicateToDoListChanged();
     }
 
     @Override
     public synchronized void markTask(ReadOnlyTask target) throws TaskNotFoundException {
+        saveCurrentToDoList();
         toDoList.markTask(target);
         indicateToDoListChanged();
     }
     
     @Override
     public synchronized void unmarkTask(ReadOnlyTask target) throws TaskNotFoundException {
+        saveCurrentToDoList();
         toDoList.unmarkTask(target);
+        indicateToDoListChanged();
+    }
+    
+    @Override
+    public void restorePreviousToDoList() throws EmptyStackException {
+        toDoList.resetData(backupToDoLists.pop());
         indicateToDoListChanged();
     }
 
