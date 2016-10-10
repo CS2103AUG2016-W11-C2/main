@@ -70,7 +70,7 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new ToDoListChangedEvent(toDoList));
     }
 
-    /** Saves the current to do list into the back up to-do list stack */
+    /** Saves the current to do list into the back up to-do lists stack */
     private void saveCurrentToDoList() {
         backupToDoLists.push(new ToDoList(toDoList));
     }
