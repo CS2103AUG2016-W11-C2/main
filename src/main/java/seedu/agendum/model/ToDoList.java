@@ -3,10 +3,12 @@ package seedu.agendum.model;
 import javafx.collections.ObservableList;
 import seedu.agendum.model.tag.Tag;
 import seedu.agendum.model.tag.UniqueTagList;
+import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -106,6 +108,42 @@ public class ToDoList implements ReadOnlyToDoList {
 
     public boolean removeTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
         if (tasks.remove(key)) {
+            return true;
+        } else {
+            throw new UniqueTaskList.TaskNotFoundException();
+        }
+    }
+
+    /**
+     * Renames an existing task to the to-do list.
+     * @throws UniqueTaskList.DuplicateTaskException if an equivalent task already exists.
+     * @throws UniqueTaskList.TaskNotFoundException if no such task could be found in the list.
+     */
+    public boolean renameTask(ReadOnlyTask key, Name newTaskName)
+            throws UniqueTaskList.TaskNotFoundException,
+            UniqueTaskList.DuplicateTaskException {
+        return tasks.rename(key, newTaskName);
+    }
+
+    public boolean scheduleTask(ReadOnlyTask key, Optional<LocalDateTime> startDateTime,
+            Optional<LocalDateTime> endDateTime) throws UniqueTaskList.TaskNotFoundException {
+        if (tasks.schedule(key, startDateTime, endDateTime)) {
+            return true;
+        } else {
+            throw new UniqueTaskList.TaskNotFoundException();
+        }
+    }
+
+    public boolean markTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
+        if (tasks.mark(key)) {
+            return true;
+        } else {
+            throw new UniqueTaskList.TaskNotFoundException();
+        }
+    }
+
+    public boolean unmarkTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
+        if (tasks.unmark(key)) {
             return true;
         } else {
             throw new UniqueTaskList.TaskNotFoundException();

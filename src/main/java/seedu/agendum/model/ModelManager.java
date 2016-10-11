@@ -4,6 +4,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.util.StringUtil;
+import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
@@ -11,6 +12,8 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.core.ComponentManager;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -74,6 +77,33 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
         toDoList.addTask(task);
         updateFilteredListToShowAll();
+        indicateToDoListChanged();
+    }
+
+    @Override
+    public synchronized void renameTask(ReadOnlyTask target, Name newTaskName)
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
+        toDoList.renameTask(target, newTaskName);
+        updateFilteredListToShowAll();
+        indicateToDoListChanged();
+    }
+
+    @Override
+    public synchronized void scheduleTask(ReadOnlyTask target, Optional<LocalDateTime> startDateTime,
+            Optional<LocalDateTime> endDateTime) throws UniqueTaskList.TaskNotFoundException {
+        toDoList.scheduleTask(target, startDateTime, endDateTime);
+        indicateToDoListChanged();
+    }
+
+    @Override
+    public synchronized void markTask(ReadOnlyTask target) throws TaskNotFoundException {
+        toDoList.markTask(target);
+        indicateToDoListChanged();
+    }
+    
+    @Override
+    public synchronized void unmarkTask(ReadOnlyTask target) throws TaskNotFoundException {
+        toDoList.unmarkTask(target);
         indicateToDoListChanged();
     }
 

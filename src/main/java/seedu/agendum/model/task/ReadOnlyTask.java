@@ -1,5 +1,8 @@
 package seedu.agendum.model.task;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import seedu.agendum.model.tag.UniqueTagList;
 
 /**
@@ -9,6 +12,9 @@ import seedu.agendum.model.tag.UniqueTagList;
 public interface ReadOnlyTask {
 
     Name getName();
+    boolean isCompleted();
+    Optional<LocalDateTime> getStartDateTime();
+    Optional<LocalDateTime> getEndDateTime();
 
     /**
      * The returned TagList is a deep copy of the internal TagList,
@@ -22,7 +28,10 @@ public interface ReadOnlyTask {
     default boolean isSameStateAs(ReadOnlyTask other) {
         return other == this // short circuit if same object
                 || (other != null // this is first to avoid NPE below
-                && other.getName().equals(this.getName())); // state checks here onwards
+                && other.getName().equals(this.getName())) // state checks here onwards
+                && (other.isCompleted() == this.isCompleted())
+                && other.getStartDateTime().equals(this.getStartDateTime())
+                && other.getEndDateTime().equals(this.getEndDateTime());
     }
 
     /**
