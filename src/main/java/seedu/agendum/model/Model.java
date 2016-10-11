@@ -8,6 +8,7 @@ import seedu.agendum.model.task.UniqueTaskList;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.EmptyStackException;
 import java.util.Optional;
 import java.util.Set;
 
@@ -40,7 +41,10 @@ public interface Model {
     
     /** Unmarks the given task */
     void unmarkTask(ReadOnlyTask target) throws UniqueTaskList.TaskNotFoundException;
-    
+
+    /** Restores the previous to do list saved*/
+    void restorePreviousToDoList() throws EmptyStackException;
+
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
 

@@ -525,6 +525,51 @@ public class LogicManagerTest {
     }
 
 
+    @Test
+    public void execute_undo_identifiesNoPreviousCommand() throws Exception {
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_FAILURE, new ToDoList(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_undo_reversePreviousMutatingCommand() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task p1 = helper.generateTaskWithName("old name");
+        List<Task> listWithOneTask = helper.generateTaskList(p1);
+        ToDoList expectedTDL = helper.generateToDoList(listWithOneTask);
+
+        //Undo add command
+        model.addTask(p1);
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, new ToDoList(), Collections.emptyList());
+
+        //Undo delete command
+        model.addTask(p1);
+        model.deleteTask(p1);
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
+        //Undo clear command
+        model.resetData(new ToDoList());
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
+        //Undo rename command
+        model.renameTask(p1, new Name("new name"));
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
+        //Undo mark command
+        model.markTask(p1);
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
+        //Undo unmark command
+        model.markTask(p1);
+        Task p2 = helper.generateTaskWithName("old name"); //p1 clone
+        p2.markAsCompleted();
+        listWithOneTask = helper.generateTaskList(p2);
+        expectedTDL = helper.generateToDoList(listWithOneTask);
+        model.unmarkTask(p2);
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
+    }
+
+
     /**
      * A utility class to generate test data.
      */
