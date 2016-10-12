@@ -30,9 +30,6 @@
 4. **Buildship Gradle Integration** plugin from the 
    [Eclipse Marketplace](https://marketplace.eclipse.org/content/buildship-gradle-integration)
 
-4. **Buildship Gradle Integration** plugin from the 
-   [Eclipse Marketplace](https://marketplace.eclipse.org/content/buildship-gradle-integration)
-
 ### Importing the project into Eclipse
 
 0. Fork this repo, and clone the fork to your computer
@@ -307,7 +304,6 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | User | Undo my last action(s) | Easily correct any accidental mistakes in the last command(s)
 `* * *` | User | Search based on task name | Find a task without going through the entire list if I remember a few key words
 `* * *` | User | Specify my data storage location | Easily locate the raw text file for editing and sync the file to a cloud storage service
-`* * *` | User | Clear all existing tasks | Easily start afresh with a new task list
 `* * *` | User | Exit the application by typing a command | Close the app easily
 `* * *` | Busy user | Specify start and end time when creating tasks | Keep track of events with defined start and end dates
 `* * *` | Busy User | Specify deadlines when creating tasks | Keep track of tasks which must be done by a certain and date and time
@@ -341,6 +337,15 @@ Priority | As a ... | I want to ... | So that I can...
 
 (For all use cases below, the **System** is `Agendum` and the **Actor** is the `user`, unless specified otherwise)
 
+### Use case 00 - List tasks
+
+**MSS**
+
+1. System prompts the Actor to enter a command
+2. Actor enters the list command
+3. System displays the task list
+4. Use case ends
+
 ### Use case 01 - Add a task
 
 **MSS**
@@ -348,7 +353,7 @@ Priority | As a ... | I want to ... | So that I can...
 1. System prompts the Actor to enter a command
 2. Actor enters an add command with the task name into the input box.
 3. System adds the task.
-4. System shows a feedback message (“Task <name> added”) and displays the updated list.
+4. System shows a feedback message ("Task <name> added") and displays the updated list.
 5. Use case ends.
 
 **Extensions**
