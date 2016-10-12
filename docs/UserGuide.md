@@ -96,19 +96,24 @@ The event “project meeting” will start at 12pm on 10 October and end at 2pm 
 
 You can see tasks sorted by date. Tasks without a date will be appended at the end of the list.
 
-You can view a list of all uncompleted tasks.  
+You can view a list of all uncompleted tasks.
+
 Format: `list`  
 
 You can view a list of overdue tasks.
+
 Format: `list overdue`  
 
 You can view a list of upcoming tasks within a week.
+
 Format: `list near`  
 
-You can view a list of completed tasks.  
+You can view a list of completed tasks.
+
 Format: `list done`  
 
 You can view a list of all tasks, which includes overdue, completed and uncompleted tasks.  
+
 Format: `list all`  
 
 #### Finding tasks containing keywords: `find`
