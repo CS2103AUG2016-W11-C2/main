@@ -134,9 +134,9 @@ You can delete tasks that are no longer required.
 
 Format: `delete INDEX`  
 
-> Deletes the task at the specified `INDEX`.
-> The index refers to the index number shown in the most recent listing.
-> The index **must be a positive integer** 1, 2, 3, ...
+> * Deletes the task at the specified `INDEX`.
+> * The index refers to the index number shown in the most recent listing.
+> * The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:  
 
@@ -160,9 +160,9 @@ If you find that the name of a task is not suitable, you can rename it.
 
 Format: `rename INDEX NEW_TASK_NAME`  
 
-> Renames the task at the specified `INDEX`. 
-> Index refers to the index number shown in the most recent listing.
-> The index **must be a positive integer** 1, 2, 3, ...
+> * Renames the task at the specified `INDEX`. 
+> * Index refers to the index number shown in the most recent listing.
+> * The index **must be a positive integer** 1, 2, 3, ...
 
 Examples:  
 
@@ -179,10 +179,10 @@ If your deadline has been reduced or extended and you need to change the date of
 
 Format: `schedule INDEX [NEW_DATE_TIME]`
 
-> Schedule the task at the specified `INDEX`. 
-> The index refers to the index number shown in the most recent listing.
-> The index **must be a positive integer** 1, 2, 3, ...
-> The time description must follow the format given in the add command examples
+> * Schedule the task at the specified `INDEX`. 
+> * The index refers to the index number shown in the most recent listing.
+> * The index **must be a positive integer** 1, 2, 3, ...
+> * The time description must follow the format given in the add command examples
 
 Examples:  
 
@@ -202,10 +202,10 @@ If you have completed a task, you can mark it as completed by using this command
 
 Format: `mark INDEX...`
 
-> Mark the task(s) at the specified `INDEX(es)`.
-> The index refers to the index number shown in the most recent listing.
-> The index **must be a positive integer** 1, 2, 3, ...
-> The index can be in any order.
+> * Mark the task(s) at the specified `INDEX(es)`.
+> * The index refers to the index number shown in the most recent listing.
+> * The index **must be a positive integer** 1, 2, 3, ...
+> * The index can be in any order.
 
 Examples:  
 
@@ -250,10 +250,10 @@ You can use both new and old command aliases to carry out the same action.
 
 Format: `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`  
 
-> NEW_COMMAND_NAME must be a single word.
-> ORIGINAL_COMMAND_NAME must be a command word that is specified in the Command Summary section
-> Only one alias can be used
-> When creating a new alias with a pre-existing alias, the previous alias will be overriden.
+> * NEW_COMMAND_NAME must be a single word.
+> * ORIGINAL_COMMAND_NAME must be a command word that is specified in the Command Summary section
+> * Only one alias can be used
+> * When creating a new alias with a pre-existing alias, the previous alias will be overriden.
 
 Examples:
 
@@ -267,8 +267,8 @@ Examples:
 If you no longer want to use the alternative alias command, you can remove it.
 Format: `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
 
-> NEW_COMMAND_NAME must be a user-defined command word.
-> ORIGINAL_COMMAND_NAME must be a command word that is specified in the Command Summary section
+> * NEW_COMMAND_NAME must be a user-defined command word.
+> * ORIGINAL_COMMAND_NAME must be a command word that is specified in the Command Summary section
 
 Examples:
 
