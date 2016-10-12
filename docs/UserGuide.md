@@ -43,29 +43,23 @@
 
 #### Viewing help : `help`
 
-If you need some more information about the features available, you can use the `help` command.
-
-Format: `help`  
-
+If you need some more information about the features available, you can use the `help` command.<br>
+Format: `help` 
 > Help is also shown if an incorrect command is entered e.g. `run`
 
 #### Adding a task: `add`
 
-You can add a task without a specific time and date.
-
+You can add a task without a specific time and date.<br>
 Format: `add TASK_NAME`
-
-This will create a task without a start date/time or end date/time.
+> This will create a task without a start date/time or end date/time.
 
 Examples:  
 
 * `add Workout`
 * `add watch Star Wars`
 
-If you need a task to be done by a specific date, you can specify it using `by` or `before`.
-
-Format: `add TASK_NAME [by DATE_TIME]`  or `add TASK_NAME [before DATE_TIME]`  
-
+If you need a task to be done by a specific date, you can specify it using `by` or `before`.<br>
+Format: `add TASK_NAME [by DATE_TIME]`  or `add TASK_NAME [before DATE_TIME]`
 > Date formats are not case-sensitive
 
 Examples:  
@@ -75,11 +69,9 @@ Examples:
 * `add watch Star Wars by next Wed`
 * `add watch Star Wars by 10 Oct, 9.30pm`
 
-If you need a task to be done within a specific date and time, you can specify it using `from` and `to`
-
+If you need a task to be done within a specific date and time, you can specify it using `from` and `to`.<br>
 Format: `add TASK_NAME [from START_DATE_TIME] [to END_DATE_TIME] ` 
-
-> If you specify the time but no day or date is given, the date of creation will be used.  
+> If you specify the time but no day or date is given, the date of creation will be used.
 
 Examples:
 
@@ -87,7 +79,7 @@ Examples:
 * `add movie marathon from today 12pm to friday 3pm`
 * `add project meeting from 10 oct 12pm to 2pm`
 
-The event “watch Star Wars” will begin at 7pm on the date of creation. No end time will be attached to the task.  
+The event “watch Star Wars” will begin at 7pm on the date of creation. No end time will be attached to the task.
 
 The event “project meeting” will start at 12pm on 10 October and end at 2pm on 10 October.
 
@@ -96,30 +88,24 @@ The event “project meeting” will start at 12pm on 10 October and end at 2pm 
 
 You can see tasks sorted by date. Tasks without a date will be appended at the end of the list.
 
-You can view a list of all uncompleted tasks.
-
+You can view a list of all uncompleted tasks. <br>
 Format: `list`  
 
-You can view a list of overdue tasks.
-
+You can view a list of overdue tasks. <br>
 Format: `list overdue`  
 
-You can view a list of upcoming tasks within a week.
-
+You can view a list of upcoming tasks within a week. <br>
 Format: `list near`  
 
-You can view a list of completed tasks.
-
+You can view a list of completed tasks. <br>
 Format: `list done`  
 
-You can view a list of all tasks, which includes overdue, completed and uncompleted tasks.  
-
+You can view a list of all tasks, which includes overdue, completed and uncompleted tasks. <br>
 Format: `list all`  
 
 #### Finding tasks containing keywords: `find`
 
-If you have a huge list of tasks and need to find only specific ones, you can use this command to search for tasks which contain any of the given keywords.
-
+If you have a huge list of tasks and need to find only specific ones, you can use this command to search for tasks which contain any of the given keywords.<br>
 Format: `find KEYWORD``...`  
 
   > * The search is not case sensitive. e.g `assignment` will match `Assignment`
@@ -130,18 +116,15 @@ Format: `find KEYWORD``...`
 
 Examples:  
 
-* `find Dory`
-
+* `find Dory` <br>
   Returns `Shark & Dory` and `dory`  
   
-* `find Nemo Dory`
-
+* `find Nemo Dory` <br>
   Returns all tasks that contain `Dory` or `Nemo`  
 
 #### Deleting a task : `delete`
 
-You can delete tasks that are no longer required.
-
+You can delete tasks that are no longer required.<br>
 Format: `delete INDEX...`  
 
 > * Deletes the task at the specified `INDEX`.
@@ -150,32 +133,25 @@ Format: `delete INDEX...`
 
 Examples:  
 
-* `list`
-
-  `delete 2`
-  
+* `list` <br>
+  `delete 2` <br>
   Deletes the 2nd task in the task list.
   
-* `find movie`
-
-  `delete 1`
-  
+* `find movie` <br>
+  `delete 1` <br>
   Deletes the 1st task in the results of the `find` command.
 
 You can also delete multiple tasks in the task list with a single command.
 
 Examples:
 
-* `list`
-
-  `delete 2 3 4`
-  
+* `list` <br>
+  `delete 2 3 4` <br>
   Deletes the 2nd, 3rd and 4th task in the task list.  
 
 #### Renaming a task : `rename`
 
-If you find that the name of a task is not suitable, you can rename it.
-
+If you find that the name of a task is not suitable, you can rename it.<br>
 Format: `rename INDEX NEW_TASK_NAME`  
 
 > * Renames the task at the specified `INDEX`. 
@@ -184,22 +160,17 @@ Format: `rename INDEX NEW_TASK_NAME`
 
 Examples:  
 
-* `list`
-
-  `rename 2 Star Wars II`
-  
+* `list` <br>
+  `rename 2 Star Wars II` <br>
   Renames the 2nd task in the list to “Star Wars II”
   
-* `find Star Trek`
-
-  `rename 1 Star Wars II`
-  
+* `find Star Trek`   <br>
+  `rename 1 Star Wars II` <br>
   Renames the 1st task in the results of the `find` command to “Star Wars II”
 
 #### Updating the date/time of a task : `schedule`
 
-If your deadline has been reduced or extended and you need to change the date of time of a task, you can use this command.
-
+If your deadline has been reduced or extended and you need to change the date of time of a task, you can use this command.<br>
 Format: `schedule INDEX [NEW_DATE_TIME]`
 
 > * Schedule the task at the specified `INDEX`. 
@@ -209,28 +180,21 @@ Format: `schedule INDEX [NEW_DATE_TIME]`
 
 Examples:  
 
-* `list`
-
-  `schedule 4`
-  
+* `list` <br>
+  `schedule 4` <br>
   Removes the start and end date/time or deadline for task 4 on the list.
   
-* `list`
-
-  `schedule 2 by Fri`
-  
+* `list` <br>
+  `schedule 2 by Fri`<br>
   Removes the start and end date/time or deadline for task 2 and sets the deadline to the coming Friday (If the current day is Friday, it would be the following Friday).
   
-* `list`
-
-  `schedule 3 from 1 Oct 7pm to 9.30pm`
-  
+* `list`<br>
+  `schedule 3 from 1 Oct 7pm to 9.30pm`<br>
   Sets task 3 to start on 1 Oct at 7pm and end at 9.30pm
 
 #### Marking a task as completed : `mark`
 
-If you have completed a task, you can mark it as completed by using this command
-
+If you have completed a task, you can mark it as completed by using this command.<br>
 Format: `mark INDEX...`
 
 > * Mark the task at the specified `INDEX`.
@@ -240,59 +204,45 @@ Format: `mark INDEX...`
 
 Examples:  
 
-* `list`
-
-  `mark 2`
-  
+* `list`<br>
+  `mark 2`<br>
   Marks the 2nd task in the list.
   
-* `find Homework`
-
-  `mark 1`
-  
+* `find Homework`<br>
+  `mark 1`<br>
   Marks the 1st task in the list of results of the `find` command.
 
 You can also mark multiple tasks as completed with a single command.
 
 Examples:
 
-* `list`
-
-  `mark 2 3 4`
-  
+* `list`<br>
+  `mark 2 3 4`<br>
   Marks the 2nd, 3rd and 4th task in the task list.  
 
 #### Unmarking a task as completed : `unmark`
 
-If a certain task still has work remaining, you can remove the marking.
-
-This works simlar to the `mark` command.
-
+If a certain task still has work remaining, you can remove the marking.<br>
+This works simlar to the `mark` command.<br>
 Format: `unmark INDEX...`
 
 
 #### Undo the last command : `undo`  
 
-If you have accidentally made a mistake in the previous commands, you can use the 'undo' command to remedy it.
-
+If you have accidentally made a mistake in the previous commands, you can use the 'undo' command to remedy it.<br>
+Multiple undo actions are also supported.<br>
 Format: `undo`
-
-Multiple undo actions are supported.
 
 Examples:
 
-* `add homework`
-
-  `undo`
-  
+* `add homework`<br>
+  `undo`<br>
   The task "homework" which has been added previously, will be removed.
 
 #### Create an alias for a command : `alias`
 
-If you are looking for alternatives or want to type a command faster, you can use the `alias` comand. 
-
-You can use both new and old command aliases to carry out the same action.
-
+If you are looking for alternatives or want to type a command faster, you can use the `alias` comand.<br>
+You can use both new and old command aliases to carry out the same action.<br>
 Format: `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`  
 
 > * NEW_COMMAND_NAME must be a single word.
@@ -302,12 +252,9 @@ Format: `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`
 
 Examples:
 
-* `alias mark m` 
-
-  `m` and `mark` can now be used to mark a task.
-  
-  `alias mark mk`
-  
+* `alias mark m` <br>
+  `m` and `mark` can now be used to mark a task.<br>
+  `alias mark mk`<br>
   only `mk` and `mark` can be used to mark a task, as `m` has been overriden.
 
 #### Remove an alias command : `unalias`
@@ -320,32 +267,26 @@ Format: `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
 
 Examples:
 
-* `unalias m`
-
-  `m` can no longer be used to mark tasks.
-  
-  `unalias mark`
-  
+* `unalias m`<br>
+  `m` can no longer be used to mark tasks.<br>
+  `unalias mark`<br>
   The assigned alias for `mark` will be removed, and only `mark` can be used to mark a task as completed.
 
 #### Specifying a data storage location : `store`
 
-If you want to store the task list data in a different location, you can specifiy it using this command.
-
+If you want to store the task list data in a different location, you can specifiy it using this command.<br>
 Format: `store FILE_PATH`
 
 > FILE_PATH must be a valid path on the local computer
 
 Examples:
-
 * `store C:/Dropbox/ToDo`
 
 The task list data will be moved to the specific directory, and future data will be saved in that location.
 
 #### Exiting the program : `exit`
 
-If you have finished using the application, you can use this command to exit the program.
-
+If you have finished using the application, you can use this command to exit the program.<br>
 Format: `exit`  
 
 #### Keyboard Shortcuts
@@ -356,8 +297,7 @@ Format: `exit`
 
 #### Saving the data
 
-Agendum data is saved in the hard disk automatically after any command that changes the data.
-
+Agendum data is saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
 
 &nbsp;
