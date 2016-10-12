@@ -52,21 +52,20 @@
   
 #### 3. Troubleshooting project setup
 
-**Problem: Eclipse reports compile errors after new commits are pulled from Git**
-
-* Reason: Eclipse fails to recognize new files that appeared due to the Git pull. 
-* Solution: Refresh the project in Eclipse:<br> 
-Right click on the project (in Eclipse package explorer), choose `Gradle` -> `Refresh Gradle Project`.
+* **Problem: Eclipse reports compile errors after new commits are pulled from Git**
+	* Reason: Eclipse fails to recognize new files that appeared due to the Git 	pull. 
+	* Solution: Refresh the project in Eclipse:<br> 
+	Right click on the project (in Eclipse package explorer), choose `Gradle` -> 	`Refresh Gradle Project`.
   
-**Problem: Eclipse reports some required libraries missing**
+* **Problem: Eclipse reports some required libraries missing**
 
-* Reason: Required libraries may not have been downloaded during the project import. 
-* Solution: [Run tests using Gardle](UsingGradle.md) once (to refresh the libraries).
+	* Reason: Required libraries may not have been downloaded during the project 	import. 
+	* Solution: [Run tests using Gardle](UsingGradle.md) once (to refresh the 	libraries).
  
 
 ## Design
 
-### Architecture
+### 1. Architecture
 
 <img src="images/Architecture.png" width="600"><br>
 The **_Architecture Diagram_** given above explains the high-level design of the App.
@@ -114,7 +113,7 @@ being saved to the hard disk and the status bar of the UI being updated to refle
 
 The sections below give more details of each component.
 
-### UI component
+### 2. UI component
 
 <img src="images/UiClassDiagram.png" width="800"><br>
 
@@ -134,7 +133,7 @@ The `UI` component,
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
-### Logic component
+### 3. Logic component
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
@@ -149,7 +148,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
  API call.<br>
 <img src="images/DeletePersonSdForLogic.png" width="800"><br>
 
-### Model component
+### 4. Model component
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
 
@@ -162,7 +161,7 @@ The `Model`,
   so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
-### Storage component
+### 5. Storage component
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
 
@@ -172,13 +171,13 @@ The `Storage` component,
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
 
-### Common classes
+### 6. Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 ## Implementation
 
-### Logging
+### 1. Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels
 and logging destinations.
@@ -197,7 +196,7 @@ and logging destinations.
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging
   e.g. print the actual list instead of just its size
 
-### Configuration
+### 2. Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file 
 (default: `config.json`):
@@ -207,21 +206,24 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 Tests can be found in the `./src/test/java` folder.
 
-**In Eclipse**:
+**1. In Eclipse**:
+
 * To run all tests, right-click on the `src/test/java` folder and choose
   `Run as` > `JUnit Test`
 * To run a subset of tests, you can right-click on a test package, test class, or a test and choose
   to run as a JUnit test.
 
-**Using Gradle**:
+**2. Using Gradle**:
+
 * See [UsingGradle.md](UsingGradle.md) for how to run tests using Gradle.
 
-We have two types of tests:
+**3. Type of tests**:
 
-1. **GUI Tests** - These are _System Tests_ that test the entire App by simulating user actions on the GUI. 
-   These are in the `guitests` package.
+* **GUI Tests**	<br>
+These are _System Tests_ that test the entire App by simulating user actions on the GUI. They are in the `guitests` package.
   
-2. **Non-GUI Tests** - These are tests not involving the GUI. They include,
+* **Non-GUI Tests**<br>
+These are tests not involving the GUI. They include,
    * _Unit tests_ targeting the lowest level methods/classes. <br>
       e.g. `seedu.address.commons.UrlUtilTest`
    * _Integration tests_ that are checking the integration of multiple code units 
@@ -231,34 +233,35 @@ We have two types of tests:
       how the are connected together.<br>
       e.g. `seedu.address.logic.LogicManagerTest`
   
-**Headless GUI Testing** :
+**4. Headless GUI Testing** :
+
 Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
  our GUI tests can be run in the _headless_ mode. 
  In the headless mode, GUI tests do not show up on the screen.
  That means the developer can do other things on the Computer while the tests are running.<br>
  See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in headless mode.
  
-#### Troubleshooting tests
- **Problem: Tests fail because NullPointException when AssertionError is expected**
+>#### Troubleshooting tests
+>**Problem: Tests fail because NullPointException when AssertionError is expected**
 
- * Reason: Assertions are not enabled for JUnit tests. 
+>* Reason: Assertions are not enabled for JUnit tests. 
    This can happen if you are not using a recent Eclipse version (i.e. _Neon_ or later)
- * Solution: Enable assertions in JUnit tests as described 
+>* Solution: Enable assertions in JUnit tests as described 
    [here](http://stackoverflow.com/questions/2522897/eclipse-junit-ea-vm-option). <br>
    Delete run configurations created when you ran tests earlier.
   
 ## Dev Ops
 
-### Build Automation
+### 1. Build Automation
 
 See [UsingGradle.md](UsingGradle.md) to learn how to use Gradle for build automation.
 
-### Continuous Integration
+### 2. Continuous Integration
 
 We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our projects.
 See [UsingTravis.md](UsingTravis.md) for more details.
 
-### Making a Release
+### 3. Making a Release
 
 Here are the steps to create a new release.
  
@@ -267,7 +270,7 @@ Here are the steps to create a new release.
  2. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/) 
     and upload the JAR file your created.
    
-### Managing Dependencies
+### 4. Managing Dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the
 [Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these _dependencies_
@@ -279,7 +282,7 @@ b. Require developers to download those libraries manually (this creates extra w
 
 ## Appendix A : User Stories
 
-Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
+>Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
 
 Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
@@ -324,7 +327,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 ## Appendix B : Use Cases
 
-(For all use cases below, the **System** is `Agendum` and the **Actor** is the `user`, unless specified otherwise)
+>For all use cases below, the **System** is `Agendum` and the **Actor** is the `user`, unless specified otherwise
 
 ### Use case 01 - Add a task
 
@@ -521,29 +524,31 @@ Priority | As a ... | I want to ... | So that I can...
 
 ## Appendix D : Glossary
 
-##### Mainstream OS
+##### Mainstream OS: 
 
-> Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, OS-X
 
 ## Appendix E : Product Survey
 
 #### Wunderlist
 
-Strengths:
-- Clearly display tasks that have not been completed
-- Tasks can be categorized under different lists
-- Tasks can have sub tasks
-- Possible to highlight tasks by marking as important (starred) or pinning tasks
-- Can set deadlines for tasks
-- Can create recurring tasks
-- Can associate files with tasks
-- Can be used offline
-- Keyboard friendly – keyboard shortcuts to mark tasks as completed and important
-- Search and sort functionality makes finding and organizing tasks easier
-- Possible to synchronize across devices
-- Give notifications and reminders for tasks near deadline or overdue
+*Strengths:*
 
-Weaknesses:
-- Wunderlist has a complex interface and might require multiple clicks to get specific tasks done. For example, it has separate field to add tasks, search for tasks and a sort button. There are various lists & sub-lists. Each list has a completed/uncompleted  section and each task needs to be clicked to display the associated subtasks, notes, files and comment.
-- New users might not know how to use the advanced features e.g. creating recurring tasks
+* Clearly display tasks that have not been completed
+* Tasks can be categorized under different lists
+* Tasks can have sub tasks
+* Possible to highlight tasks by marking as important (starred) or pinning tasks
+* Can set deadlines for tasks
+* Can create recurring tasks
+* Can associate files with tasks
+* Can be used offline
+* Keyboard friendly – keyboard shortcuts to mark tasks as completed and important
+* Search and sort functionality makes finding and organizing tasks easier
+* Possible to synchronize across devices
+* Give notifications and reminders for tasks near deadline or overdue
+
+*Weaknesses:*
+
+* Wunderlist has a complex interface and might require multiple clicks to get specific tasks done. For example, it has separate field to add tasks, search for tasks and a sort button. There are various lists & sub-lists. Each list has a completed/uncompleted  section and each task needs to be clicked to display the associated subtasks, notes, files and comment.
+* New users might not know how to use the advanced features e.g. creating recurring tasks
 
