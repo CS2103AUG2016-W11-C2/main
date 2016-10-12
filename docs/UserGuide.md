@@ -4,7 +4,7 @@
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
 
-;&nbsp
+&nbsp;
 
 ## Quick Start
 
@@ -30,7 +30,7 @@
 
 6. Refer to the [Features](#features) section below for more details of each command.
 
-;&nbsp
+&nbsp;
 
 ## Features
 
@@ -308,7 +308,7 @@ Agendum data is saved in the hard disk automatically after any command that chan
 
 There is no need to save manually.
 
-;&nbsp
+&nbsp;
 
 ## FAQ
 
@@ -316,7 +316,7 @@ There is no need to save manually.
 **A**: Install Agendum in the other computer and overwrite the empty data file it creates with
        the file that contains the data of your previous Agendum folder.
 
-;&nbsp
+&nbsp;
 
 ## Command Summary
 
