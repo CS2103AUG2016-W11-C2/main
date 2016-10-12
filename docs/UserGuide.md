@@ -4,6 +4,8 @@
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
 
+;&nbsp
+
 ## Quick Start
 
 0. Ensure you have Java version `1.8.0_60` or later installed in your Computer.
@@ -28,6 +30,7 @@
 
 6. Refer to the [Features](#features) section below for more details of each command.
 
+;&nbsp
 
 ## Features
 
@@ -295,19 +298,25 @@ Format: `exit`
 
 #### Keyboard Shortcuts
 
-1. Use the __UP ARROW__ and __DOWN ARROW__ to scroll through earlier commands.
-2. If you are entering a command, use the __DOWN ARROW__ to instantly clear the command line.
-3. Use __TAB__ to switch between the various task lists e.g. uncompleted, overdue, upcoming
+1. Use the <kbd>UP ARROW</kbd> and <kbd>DOWN ARROW</kbd> to scroll through earlier commands.
+2. If you are entering a command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line.
+3. Use <kbd>TAB</kbd> to switch between the various task lists e.g. uncompleted, overdue, upcoming
 
 #### Saving the data
-Agendum data is saved in the hard disk automatically after any command that changes the data.<br>
+
+Agendum data is saved in the hard disk automatically after any command that changes the data.
+
 There is no need to save manually.
+
+;&nbsp
 
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install Agendum in the other computer and overwrite the empty data file it creates with
        the file that contains the data of your previous Agendum folder.
+
+;&nbsp
 
 ## Command Summary
 
