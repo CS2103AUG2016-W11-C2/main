@@ -88,10 +88,12 @@ Examples:
 * `add project meeting from 10 oct 12pm to 2pm`
 
 The event “watch Star Wars” will begin at 7pm on the date of creation. No end time will be attached to the task.  
+
 The event “project meeting” will start at 12pm on 10 October and end at 2pm on 10 October.
 
 
 #### Retrieving task list : `list`
+
 You can see tasks sorted by date. Tasks without a date will be appended at the end of the list.
 
 You can view a list of all uncompleted tasks.  
@@ -123,16 +125,19 @@ Format: `find KEYWORD``...`
 
 Examples:  
 
-* `find Dory`<br>
+* `find Dory`
+
   Returns `Shark & Dory` and `dory`  
-* `find Nemo Dory`<br>
+  
+* `find Nemo Dory`
+
   Returns all tasks that contain `Dory` or `Nemo`  
 
 #### Deleting a task : `delete`
 
 You can delete tasks that are no longer required.
 
-Format: `delete INDEX`  
+Format: `delete INDEX...`  
 
 > * Deletes the task at the specified `INDEX`.
 > * The index refers to the index number shown in the most recent listing.
@@ -141,17 +146,25 @@ Format: `delete INDEX`
 Examples:  
 
 * `list`
+
   `delete 2`
+  
   Deletes the 2nd task in the task list.
+  
 * `find movie`
+
   `delete 1`
+  
   Deletes the 1st task in the results of the `find` command.
 
 You can also delete multiple tasks in the task list with a single command.
 
-Examples:  
+Examples:
+
 * `list`
+
   `delete 2 3 4`
+  
   Deletes the 2nd, 3rd and 4th task in the task list.  
 
 #### Renaming a task : `rename`
@@ -167,11 +180,16 @@ Format: `rename INDEX NEW_TASK_NAME`
 Examples:  
 
 * `list`
+
   `rename 2 Star Wars II`
-  Renames the 2nd task in the list to “Star Wars II”.
+  
+  Renames the 2nd task in the list to “Star Wars II”
+  
 * `find Star Trek`
+
   `rename 1 Star Wars II`
-  Renames the 1st task in the results of the `find` command to “Star Wars II”. 
+  
+  Renames the 1st task in the results of the `find` command to “Star Wars II”
 
 #### Updating the date/time of a task : `schedule`
 
@@ -187,13 +205,21 @@ Format: `schedule INDEX [NEW_DATE_TIME]`
 Examples:  
 
 * `list`
+
   `schedule 4`
+  
   Removes the start and end date/time or deadline for task 4 on the list.
+  
 * `list`
+
   `schedule 2 by Fri`
+  
   Removes the start and end date/time or deadline for task 2 and sets the deadline to the coming Friday (If the current day is Friday, it would be the following Friday).
+  
 * `list`
+
   `schedule 3 from 1 Oct 7pm to 9.30pm`
+  
   Sets task 3 to start on 1 Oct at 7pm and end at 9.30pm
 
 #### Marking a task as completed : `mark`
@@ -202,7 +228,7 @@ If you have completed a task, you can mark it as completed by using this command
 
 Format: `mark INDEX...`
 
-> * Mark the task(s) at the specified `INDEX(es)`.
+> * Mark the task at the specified `INDEX`.
 > * The index refers to the index number shown in the most recent listing.
 > * The index **must be a positive integer** 1, 2, 3, ...
 > * The index can be in any order.
@@ -210,22 +236,31 @@ Format: `mark INDEX...`
 Examples:  
 
 * `list`
+
   `mark 2`
+  
   Marks the 2nd task in the list.
+  
 * `find Homework`
+
   `mark 1`
+  
   Marks the 1st task in the list of results of the `find` command.
 
 You can also mark multiple tasks as completed with a single command.
 
-Examples:  
+Examples:
+
 * `list`
+
   `mark 2 3 4`
+  
   Marks the 2nd, 3rd and 4th task in the task list.  
 
 #### Unmarking a task as completed : `unmark`
 
-If you found that certain task still has work remaining, you can remove the marking that it is completed.
+If a certain task still has work remaining, you can remove the marking.
+
 This works simlar to the `mark` command.
 
 Format: `unmark INDEX...`
@@ -240,12 +275,17 @@ Format: `undo`
 Multiple undo actions are supported.
 
 Examples:
+
 * `add homework`
+
   `undo`
+  
   The task "homework" which has been added previously, will be removed.
 
 #### Create an alias for a command : `alias`
+
 If you are looking for alternatives or want to type a command faster, you can use the `alias` comand. 
+
 You can use both new and old command aliases to carry out the same action.
 
 Format: `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`  
@@ -258,8 +298,11 @@ Format: `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`
 Examples:
 
 * `alias mark m` 
+
   `m` and `mark` can now be used to mark a task.
+  
   `alias mark mk`
+  
   only `mk` and `mark` can be used to mark a task, as `m` has been overriden.
 
 #### Remove an alias command : `unalias`
@@ -273,8 +316,11 @@ Format: `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
 Examples:
 
 * `unalias m`
+
   `m` can no longer be used to mark tasks.
+  
   `unalias mark`
+  
   The assigned alias for `mark` will be removed, and only `mark` can be used to mark a task as completed.
 
 #### Specifying a data storage location : `store`
@@ -288,6 +334,7 @@ Format: `store FILE_PATH`
 Examples:
 
 * `store C:/Dropbox/ToDo`
+
 The task list data will be moved to the specific directory, and future data will be saved in that location.
 
 #### Exiting the program : `exit`
