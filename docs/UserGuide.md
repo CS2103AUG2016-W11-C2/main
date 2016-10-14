@@ -294,7 +294,7 @@ Format: `store FILE_PATH`
 > If a file at FILE_PATH exists, it will be overriden.
 
 Examples:
-* `store C:/Dropbox/ToDo`
+* `store C:/Dropbox/ToDo/mytasklist.xml`
 
 The task list data will be moved to the specific directory, and future data will be saved in that location.
 
@@ -314,8 +314,7 @@ Format: `exit`
 
 #### Saving the data
 
-Agendum saves its state into the hard disk automatically after any command that changes the data.<br>
-There is no need to save manually.
+Agendum saves its data into the specified data storage location, or by default it saves into `todolist.xml`. This saving automatically happens whenever the task list is changed; There is no need to save manually.
 
 
 &nbsp;
