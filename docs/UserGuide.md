@@ -325,6 +325,13 @@ Agendum saves its data into the specified data storage location, or by default i
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install Agendum in the other computer and overwrite the empty data file it creates with
        the file that contains the data of your previous Agendum folder.
+       
+**Q**: Why did Agendum complain about an invalid file directory?<br>
+**A**: Check if the directory you wish to relocate to exists, or if you have enough administrator privileges. 
+
+**Q**: Can Agendum remind me when my task is due soon?
+**A**: Agendum will always show the tasks that are due soon at the top of list. However, Agendum will not show you a reminder.
+
 
 
 &nbsp;
