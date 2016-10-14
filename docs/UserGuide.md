@@ -8,44 +8,48 @@
 
 ## Quick Start
 
-0. Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+0. Ensure you have Java version `1.8.0_60` or above installed in your Computer.
 
-   > Agendum will not work with earlier versions of Java 8.
+   > Take note that Agendum might not work with earlier versions of Java 8.
 
 1. Download the latest `Agendum.jar` from the [releases](../../../releases) tab.
 
-2. Copy the file to the folder you want to use as the home folder for Agendum.
+2. Copy Agendum.jar to the folder you want to use as the home.
 
-3. Double-click the file to start Agendum. The GUI should appear in a few seconds.
+3. Double-click the file to start Agendum. The GUI should appear promptly.
 
 4. Type a command in the command box and press <kbd>Enter</kbd> to execute it.
 
    e.g. typing **`help`** and pressing <kbd>Enter</kbd> will list some information about commands.
    
-5. Here are some commands you can try:
+5. Go ahead and try some of the commands listed below!
    * **`add`**` Go to shopping mall` : adds a task with description `Go to shopping mall` to Agendum.
    * **`delete`**` 3` : deletes the 3rd task shown in the current list
    * **`list`** : lists all tasks
    * **`exit`** : exits Agendum
 
-6. Refer to the [Features](#features) section below for more details of each command.
+6. You can refer to the [Features](#features) section below for more details of each command.
+
 
 &nbsp;
+
 
 ## Features
 
 > **Command Format**
 > * Words in `UPPER_CASE` are the parameters.
-> * Items in `SQUARE_BRACKETS` are optional.
-> * Items with `...` after them can have multiple instances.
+> * Parameters in `SQUARE_BRACKETS` are optional.
+> * Parameters with `...` after them can have multiple instances.
 > * The order of parameters is fixed.
-> * Commands are not case-sensitive e.g `list` will match `List`  
+> * Commands and parameters are not case-sensitive e.g `list` will match `List`  
+
 
 #### Viewing help : `help`
 
 If you need some more information about the features available, you can use the `help` command.<br>
 Format: `help` 
 > Help is also shown if an incorrect command is entered e.g. `run`
+
 
 #### Adding a task: `add`
 
@@ -103,6 +107,7 @@ Format: `list done`
 You can view a list of all tasks, which includes overdue, completed and uncompleted tasks. <br>
 Format: `list all`  
 
+
 #### Finding tasks containing keywords: `find`
 
 If you have a huge list of tasks and need to find only specific ones, you can use this command to search for tasks which contain any of the given keywords.<br>
@@ -121,6 +126,7 @@ Examples:
   
 * `find Nemo Dory` <br>
   Returns all tasks that contain `Dory` or `Nemo`  
+
 
 #### Deleting a task : `delete`
 
@@ -149,6 +155,7 @@ Examples:
   `delete 2 3 4` <br>
   Deletes the 2nd, 3rd and 4th task in the task list.  
 
+
 #### Renaming a task : `rename`
 
 If you find that the name of a task is not suitable, you can rename it.<br>
@@ -167,6 +174,7 @@ Examples:
 * `find Star Trek`   <br>
   `rename 1 Star Wars II` <br>
   Renames the 1st task in the results of the `find` command to “Star Wars II”
+
 
 #### Updating the date/time of a task : `schedule`
 
@@ -191,6 +199,7 @@ Examples:
 * `list`<br>
   `schedule 3 from 1 Oct 7pm to 9.30pm`<br>
   Sets task 3 to start on 1 Oct at 7pm and end at 9.30pm
+
 
 #### Marking a task as completed : `mark`
 
@@ -220,6 +229,7 @@ Examples:
   `mark 2 3 4`<br>
   Marks the 2nd, 3rd and 4th task in the task list.  
 
+
 #### Unmarking a task as completed : `unmark`
 
 If a certain task still has work remaining, you can remove the marking.<br>
@@ -239,7 +249,8 @@ Examples:
   `undo`<br>
   The task "homework" which has been added previously, will be removed.
 
-#### Create an alias for a command : `alias`
+
+#### Creating an alias for a command : `alias`
 
 If you are looking for alternatives or want to type a command faster, you can use the `alias` comand.<br>
 You can use both new and old command aliases to carry out the same action.<br>
@@ -257,7 +268,8 @@ Examples:
   `alias mark mk`<br>
   only `mk` and `mark` can be used to mark a task, as `m` has been overriden.
 
-#### Remove an alias command : `unalias`
+
+#### Removing an alias command : `unalias`
 
 If you no longer want to use the alternative alias command, you can remove it.
 Format: `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
@@ -272,7 +284,8 @@ Examples:
   `unalias mark`<br>
   The assigned alias for `mark` will be removed, and only `mark` can be used to mark a task as completed.
 
-#### Specifying a data storage location : `store`
+
+#### Specifying the data storage location : `store`
 
 If you want to store the task list data in a different location, you can specifiy it using this command.<br>
 Format: `store FILE_PATH`
@@ -285,10 +298,12 @@ Examples:
 
 The task list data will be moved to the specific directory, and future data will be saved in that location.
 
+
 #### Exiting the program : `exit`
 
 If you have finished using the application, you can use this command to exit the program.<br>
 Format: `exit`  
+
 
 #### Keyboard Shortcuts
 
@@ -296,12 +311,15 @@ Format: `exit`
 2. If you are entering a command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line.
 3. Use <kbd>TAB</kbd> to switch between the various task lists e.g. uncompleted, overdue, upcoming
 
+
 #### Saving the data
 
-Agendum data is saved in the hard disk automatically after any command that changes the data.<br>
+Agendum saves its state into the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.
 
+
 &nbsp;
+
 
 ## FAQ
 
@@ -309,7 +327,9 @@ There is no need to save manually.
 **A**: Install Agendum in the other computer and overwrite the empty data file it creates with
        the file that contains the data of your previous Agendum folder.
 
+
 &nbsp;
+
 
 ## Command Summary
 
