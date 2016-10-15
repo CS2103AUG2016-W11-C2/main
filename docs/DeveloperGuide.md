@@ -49,16 +49,21 @@ This guide describes the design and implementation of Agendum. It will help deve
 #### 2. Importing the project into Eclipse
 
 * Fork this repo, and clone the fork to your computer
+
 * Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given in the prerequisites above)
+
 * Click `File` > `Import`
+
 * Click `Gradle` > `Gradle Project` > `Next` > `Next`
+
 * Click `Browse`, then locate the project's directory
+
 * Click `Finish`
 
   > * If you are asked whether to 'keep' or 'overwrite' config files, choose to 'keep'.
   > * Depending on your connection speed and server load, it can even take up to 30 minutes for the set up to finish
       (This is because Gradle downloads library files from servers during the project set up process)
-  > * If Eclipse auto-changed any settings files during the import process, you can discard those changes.
+  > * If Eclipse has changed any settings during the import process, you can discard those changes.
   
 #### 3. Troubleshooting project setup
 
@@ -85,7 +90,7 @@ This guide describes the design and implementation of Agendum. It will help deve
 The **_Architecture Diagram_** given above explains the high-level design of the App.
 Given below is a quick overview of each component.
 
-`Main` has only one class called [`MainApp`](../src/main/java/seedu/agendum/MainApp.java). It is responsible for,
+`Main` has only one class called [`MainApp`](../src/main/java/seedu/agendum/MainApp.java). It is responsible for the following:
 
 * At app launch: Initializes the components in the correct sequence, and connect them up with each other.
 * At shut down: Shuts down the components and invoke cleanup method where necessary.
@@ -560,6 +565,53 @@ Priority | As a ... | I want to ... | So that I can...
 
 > *b1.  System gives an error message (“We do not understand the command: <invalid-command>”)
 > *b2. System displays a short list of valid commands
+
+
+### Use case 08 - Specify data storage location
+
+**MSS**
+
+1. Actor enters store command followed by a file path
+2. System updates data storage location to the specified file path
+3. System shows a feedback message ("New save location: <file-path>")
+4. Use case ends.
+
+**Extensions**
+
+1a. File path is input as 'default'
+
+> 1a1. System updates data storage location to default
+> 1a2. System shows a feedback message ("Save location set to default: <file-path>")
+> Use case ends
+
+1b. File path is invalid
+
+> 1b1. System shows an error message ("The specified location is invalid.")
+> Use case ends
+
+
+### Use case 09 - Load from data file
+
+**MSS**
+
+1. Actor enters load command followed by a file path
+2. System saves current task list into existing data storage location
+3. System loads task list from specified file path
+2. System updates data storage location to the specified file path
+3. System shows a feedback message ("Data successfully loaded from: <file-path>")
+4. Use case ends.
+
+**Extensions**
+
+1a. File path is invalid
+
+> 1a1. System shows an error message ("The specified location is invalid.")
+> Use case ends
+
+3a. File is in the wrong format
+
+> 3a1. System shows an error message ("File is in the wrong format.")
+> Use case ends
 
 
 &nbsp;
