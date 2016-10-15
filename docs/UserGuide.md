@@ -111,7 +111,7 @@ Examples:
 
 #### Finding tasks containing keywords: `find`
 
-If you have a huge list of tasks and need to find only specific ones, you can use this command to search for tasks which contain any of the given keywords.<br>
+If you have a long list of tasks and need to find only specific ones, you can use this command to search for tasks which contain any of the given keywords.<br>
 Format: `find KEYWORD``...`  
 
   > * The search is not case sensitive. e.g `assignment` will match `Assignment`
@@ -305,7 +305,7 @@ Examples:
 
 #### Loading from another data storage location : `load`
 
-If you have another data storage file with existing task data, you can load it into Agendum. <br><br>
+If you have another data file with existing task data, you can load it into Agendum. <br><br>
 Format: `load FILE_PATH`
 
 > * FILE_PATH must be a valid path on the local computer.
@@ -325,7 +325,7 @@ Format: `exit`
 #### Keyboard Shortcuts
 
 1. Use the <kbd>UP ARROW</kbd> and <kbd>DOWN ARROW</kbd> to scroll through earlier commands.
-2. If you are entering a command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line.
+2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line.
 3. Use <kbd>TAB</kbd> to switch between the various task lists e.g. uncompleted, overdue, upcoming
 
 
