@@ -292,7 +292,7 @@ Format: `store FILE_PATH`
 
 > * FILE_PATH must be a valid path on the local computer.
 > * If a file at FILE_PATH exists, it will be overriden.
-> * The previous storage file will not be deleted.
+> * The previous data storage file will not be deleted.
 
 
 Examples:
