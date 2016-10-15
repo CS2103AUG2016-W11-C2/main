@@ -48,17 +48,17 @@ This guide describes the design and implementation of Agendum. It will help deve
 
 #### 2. Importing the project into Eclipse
 
-* Fork this repo, and clone the fork to your computer
+1. Fork this repo, and clone the fork to your computer
 
-* Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given in the prerequisites above)
+2. Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given in the prerequisites above)
 
-* Click `File` > `Import`
+3. Click `File` > `Import`
 
-* Click `Gradle` > `Gradle Project` > `Next` > `Next`
+4. Click `Gradle` > `Gradle Project` > `Next` > `Next`
 
-* Click `Browse`, then locate the project's directory
+5. Click `Browse`, then locate the project's directory
 
-* Click `Finish`
+6. Click `Finish`
 
   > * If you are asked whether to 'keep' or 'overwrite' config files, choose to 'keep'.
   > * Depending on your connection speed and server load, it can even take up to 30 minutes for the set up to finish
