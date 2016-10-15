@@ -1,5 +1,9 @@
 # Developer Guide 
 
+
+&nbsp;
+
+
 ## Table of contents
 
 * [Introduction](#introduction)
@@ -13,6 +17,9 @@
 * [Appendix C: Non Functional Requirements](#appendix-c--non-functional-requirements)
 * [Appendix D: Glossary](#appendix-d--glossary)
 * [Appendix E : Product Survey](#appendix-e--product-survey)
+
+
+&nbsp;
 
 
 ## Introduction
@@ -57,15 +64,18 @@ This guide describes the design and implementation of Agendum. It will help deve
 #### 3. Troubleshooting project setup
 
 * **Problem: Eclipse reports compile errors after new commits are pulled from Git**
-	* Reason: Eclipse fails to recognize new files that appeared due to the Git 	pull. 
+	* Reason: Eclipse fails to recognize new files that appeared due to the Git pull. 
 	* Solution: Refresh the project in Eclipse:<br> 
 	Right click on the project (in Eclipse package explorer), choose `Gradle` -> 	`Refresh Gradle Project`.
   
 * **Problem: Eclipse reports some required libraries missing**
 
-	* Reason: Required libraries may not have been downloaded during the project 	import. 
-	* Solution: [Run tests using Gardle](UsingGradle.md) once (to refresh the 	libraries).
- 
+	* Reason: Required libraries may not have been downloaded during the project import. 
+	* Solution: [Run tests using Gardle](UsingGradle.md) once (to refresh the libraries).
+
+
+&nbsp;
+
 
 ## Design
 
@@ -185,6 +195,27 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.agendum.commons` package.
 
+They are further separated into sub-packages, namely `core`, `events`, `exceptions` and `util`.
+
+#### Core
+This package consists of
+
+
+#### Evemts
+This package consists of
+
+
+#### Exceptions
+This package consists of
+
+
+#### Util
+This package consists of
+
+
+&nbsp;
+
+
 ## Implementation
 
 ### 1. Logging
@@ -210,6 +241,9 @@ and logging destinations.
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file 
 (default: `config.json`):
+
+
+&nbsp;
 
 
 ## Testing
@@ -259,7 +293,11 @@ Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
 >* Solution: Enable assertions in JUnit tests as described 
    [here](http://stackoverflow.com/questions/2522897/eclipse-junit-ea-vm-option). <br>
    Delete run configurations created when you ran tests earlier.
-  
+
+
+&nbsp;
+
+
 ## Dev Ops
 
 ### 1. Build Automation
@@ -287,6 +325,9 @@ A project often depends on third-party libraries. For example, Agendum depends o
 
 * Include those libraries in the repo
 * Require developers to download those libraries manually
+
+
+&nbsp;
 
 
 ## Appendix A : User Stories
@@ -334,6 +375,9 @@ Priority | As a ... | I want to ... | So that I can...
 `* Unlikely` | Busy user | Can specify a priority of a task | Keep track of what tasks are more important
 
 
+&nbsp;
+
+
 ## Appendix B : Use Cases
 
 >For all use cases below, the **System** is `Agendum` and the **Actor** is the `user`, unless specified otherwise
@@ -345,7 +389,7 @@ Priority | As a ... | I want to ... | So that I can...
 1. System prompts the user to enter a command
 2. User enters an add command with the task name into the input box.
 3. System adds the task.
-4. System shows a feedback message (“Task <name> added”) and displays the updated list containing the new task on the interface.
+4. System shows a feedback message ("Task <name> added") and displays the updated list containing the new task on the interface.
 5. Use case ends.
 
 **Extensions**
@@ -512,6 +556,9 @@ Priority | As a ... | I want to ... | So that I can...
 > *b2. System displays a short list of valid commands
 
 
+&nbsp;
+
+
 ## Appendix C : Non Functional Requirements
 
 1.  Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
@@ -531,11 +578,19 @@ Priority | As a ... | I want to ... | So that I can...
 15.	Should not require an installer.
 16.	Should not use paid libraries and frameworks.
 
+
+&nbsp;
+
+
 ## Appendix D : Glossary
 
 ##### Mainstream OS: 
 
 Windows, Linux, Unix, OS-X
+
+
+&nbsp;
+
 
 ## Appendix E : Product Survey
 
