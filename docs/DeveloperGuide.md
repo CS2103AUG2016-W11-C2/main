@@ -30,7 +30,7 @@ This guide describes the design and implementation of Agendum. It will help deve
 
 ## Setting up
 
-#### 1. Prerequisites
+### Prerequisites
 
 * **JDK `1.8.0_60`**  or above<br>
 
@@ -46,7 +46,7 @@ This guide describes the design and implementation of Agendum. It will help deve
    [Eclipse Marketplace](https://marketplace.eclipse.org/content/buildship-gradle-integration)
 
 
-#### 2. Importing the project into Eclipse
+### Importing the project into Eclipse
 
 1. Fork this repo, and clone the fork to your computer
 
@@ -65,7 +65,7 @@ This guide describes the design and implementation of Agendum. It will help deve
       (This is because Gradle downloads library files from servers during the project set up process)
   > * If Eclipse has changed any settings during the import process, you can discard those changes.
   
-#### 3. Troubleshooting project setup
+### Troubleshooting project setup
 
 * **Problem: Eclipse reports compile errors after new commits are pulled from Git**
 	* Reason: Eclipse fails to recognize new files that appeared due to the Git pull. 
