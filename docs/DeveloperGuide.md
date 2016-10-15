@@ -238,7 +238,7 @@ These are tests not involving the GUI. They include,
    * _Integration tests_ that are checking the integration of multiple code units
      (those code units are assumed to be working).<br>
       e.g. `seedu.agendum.storage.StorageManagerTest`
-   * Hybrids of _unit and integration tests_. These tests are checking multiple code units as well as 
+   * Hybrids of _unit and integration tests_. These tests are checking multiple code units as well as
       how the are connected together.<br>
       e.g. `seedu.agendum.logic.LogicManagerTest`
 
@@ -311,7 +311,7 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | Busy User | Edit and remove start and end time of tasks | Update events with defined start and end dates
 `* * *` | Busy User | Edit and remove deadlines of tasks | Update tasks which must be done by a certain and date and time
 `* *` | User | Sort tasks by alphabetical order and date | Organise and easily locate tasks
-`* *` | User | Filter upcoming and overdue tasks | Decide on what needs to be done soon
+`* *` | User | Filter overdue tasks and upcoming tasks (due within a week) | Decide on what needs to be done soon
 `* *` | User | Filter tasks based on whether they are marked/unmarked | View my tasks grouped by their state of completion. Review my completed tasks and decide on what I should do next
 `* *` | User | See the count/statistics for upcoming/ overdue and pending tasks | Know how many tasks I need to do
 `*` | User | Clear the command I am typing with a key | Enter a new command without having to backspace the entire command line
@@ -367,7 +367,7 @@ Priority | As a ... | I want to ... | So that I can...
 2. System shows a list of tasks
 3. Actor requests to delete a specific task in the list by its index
 4. System deletes the task.
-5. System shows a feedback message (“Task <index> deleted”) and displays the updated list without the deleted task.
+5. System shows a feedback message (“Task <index> deleted”) and displays the updated list.
 6. Use case ends.
 
 **Extensions**
@@ -514,21 +514,20 @@ Priority | As a ... | I want to ... | So that I can...
 ## Appendix C : Non Functional Requirements
 
 1.  Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
-2.	Should be able to hold up to 500 tasks.
+2.	Should be able to hold up to 800 tasks in total (including completed).
 3.	Should come with automated unit tests.
 4.	Should use a Continuous Integration server for real time status of master’s health.
 5.	Should be kept open source code.
 6.	Should favour DOS style commands over Unix-style commands.
-7.	Should be able to accept minor mistakes in the commands entered.
-8.	Should adopt an object oriented design.
-9.	Should not violate any copyrights.
-10.	Should have a response time of less than 1 second, for every action performed.
-11.	Should work offline without an internet connection.
-12.	Should work as a standalone application.
-13.	Should not use relational databases to store data.
-14.	Should store data in an editable text file.
-15.	Should not require an installer.
-16.	Should not use paid libraries and frameworks.
+7.	Should adopt an object oriented design.
+8.	Should not violate any copyrights.
+9.	Should have a response time of less than 1 second, for every action performed.
+10.	Should work offline without an internet connection.
+11.	Should work as a standalone application.
+12.	Should not use relational databases to store data.
+13.	Should store data in an editable text file.
+14.	Should not require an installer.
+15.	Should not use paid libraries and frameworks.
 
 ## Appendix D : Glossary
 
