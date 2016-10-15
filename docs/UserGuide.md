@@ -262,7 +262,6 @@ Format: `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`
 
 > * NEW_COMMAND_NAME must be a single word.
 > * ORIGINAL_COMMAND_NAME must be a command word that is specified in the Command Summary section
-> * Only one alias can be used
 > * When creating an alias for a command with a pre-existing alias, the pre-existing alias will be overriden.
 
 Examples:
