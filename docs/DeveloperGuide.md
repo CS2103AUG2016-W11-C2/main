@@ -400,7 +400,7 @@ Priority | As a ... | I want to ... | So that I can...
 1. System prompts the Actor to enter a command
 2. Actor enters an add command with the task name into the input box.
 3. System adds the task.
-4. System shows a feedback message ("Task <name> added") and displays the updated list
+4. System shows a feedback message ("Task `name` added") and displays the updated list
 5. Use case ends.
 
 **Extensions**
@@ -423,7 +423,7 @@ Priority | As a ... | I want to ... | So that I can...
 2. System shows a list of tasks
 3. Actor requests to delete a specific task in the list by its index
 4. System deletes the task.
-5. System shows a feedback message (“Task <index> deleted”) and displays the updated list
+5. System shows a feedback message (“Task `index` deleted”) and displays the updated list
 6. Use case ends.
 
 **Extensions**
@@ -445,7 +445,7 @@ Priority | As a ... | I want to ... | So that I can...
 2. System shows a list of tasks
 3. Actor requests to rename a specific task in the list by its index and also input the new task name
 4. System updates the task 
-5. System shows a feedback message (“Task <index> updated”) and displays the updated list
+5. System shows a feedback message (“Task `index` updated”) and displays the updated list
 6. Use case ends.
 
 **Extensions**
@@ -477,7 +477,7 @@ Priority | As a ... | I want to ... | So that I can...
 2. System shows a list of tasks
 3. Actor inputs index and the new start/end time or deadline of the task to be modified
 4. System updates the task 
-5. System shows a feedback message (“Task <index> ’s time/date has been updated”) and displays the updated list
+5. System shows a feedback message (“Task `index`'s time/date has been updated”) and displays the updated list
 6. Use case ends.
 
 **Extensions**
@@ -503,7 +503,7 @@ Priority | As a ... | I want to ... | So that I can...
 1. Actor enters the undo command
 2. System finds the latest command that modified the task list
 3. System undo the identified command
-4. System shows a feedback message (“The command <last-command> has been undone”) and displays the updated list.
+4. System shows a feedback message (“The command `last-command` has been undone”) and displays the updated list.
 5. Use case ends.
 
 **Extensions**
@@ -521,7 +521,7 @@ Priority | As a ... | I want to ... | So that I can...
 2. System show a list of tasks
 3. Actor requests to mark a task specified by its index in the list as completed
 4. System updates the task
-5. System shows a feedback message (“Task <index> is marked as completed”) and hides the marked task.
+5. System shows a feedback message (“Task `index` is marked as completed”) and hides the marked task.
 6. Use case ends
 
 **Extensions**
@@ -541,7 +541,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 1. Actor enters a alias command and specify the name and new alias name of the command
 2. System alias the command
-3. System shows a feedback message (“The command <original-command> can now be keyed in as <new-command>”)
+3. System shows a feedback message (“The command `original-command` can now be keyed in as <new-command>”)
 4. Use case ends.
 
 **Extensions**
@@ -563,7 +563,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 *b. At any time, Actor enters a invalid command
 
-> *b1.  System gives an error message (“We do not understand the command: <invalid-command>”)
+> *b1.  System gives an error message (“We do not understand the command: `invalid-command`”)<br>
 > *b2. System displays a short list of valid commands
 
 
@@ -573,7 +573,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 1. Actor enters store command followed by a file path
 2. System updates data storage location to the specified file path
-3. System shows a feedback message ("New save location: <file-path>")
+3. System shows a feedback message ("New save location: `file-path`")
 4. Use case ends.
 
 **Extensions**
@@ -581,7 +581,7 @@ Priority | As a ... | I want to ... | So that I can...
 1a. File path is input as 'default'
 
 > 1a1. System updates data storage location to default
-> 1a2. System shows a feedback message ("Save location set to default: <file-path>")
+> 1a2. System shows a feedback message ("Save location set to default: `file-path`")
 > Use case ends
 
 1b. File path is invalid
@@ -598,7 +598,7 @@ Priority | As a ... | I want to ... | So that I can...
 2. System saves current task list into existing data storage location
 3. System loads task list from specified file path
 2. System updates data storage location to the specified file path
-3. System shows a feedback message ("Data successfully loaded from: <file-path>")
+3. System shows a feedback message ("Data successfully loaded from: `file-path`")
 4. Use case ends.
 
 **Extensions**
