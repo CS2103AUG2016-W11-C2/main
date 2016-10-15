@@ -94,20 +94,22 @@ You can see tasks sorted by date. Tasks without a date will be appended at the e
 Format: `list [TYPE]` 
 > `TYPE` refers to a keyword such as `overdue, near, done or all`.
 
-You can view a list of all uncompleted tasks. <br>
-Format: `list`  
+Examples:
 
-You can view a list of overdue tasks. <br>
-Format: `list overdue`  
+* Format: `list` <br>
+  Agendum will show you a list of all uncompleted tasks. 
+ 
+* Format: `list overdue`<br>
+  Agendum will show you a list of overdue tasks. 
+  
+* Format: `list near`  <br>
+  Agendum will show you a list of upcoming tasks within a week. <br>
 
-You can view a list of upcoming tasks within a week. <br>
-Format: `list near`  
+* Format: `list done`<br>
+  Agendum will show you a list of completed tasks. <br>
 
-You can view a list of completed tasks. <br>
-Format: `list done`  
-
-You can view a list of all tasks, which includes overdue, completed and uncompleted tasks. <br>
-Format: `list all`  
+* Format: `list all`<br>
+  Agendum will show you a list of all tasks; this includes overdue, completed and uncompleted tasks. <br>
 
 
 #### Finding tasks containing keywords: `find`
