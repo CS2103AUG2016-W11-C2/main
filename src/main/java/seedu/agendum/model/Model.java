@@ -47,7 +47,10 @@ public interface Model {
     /** Updates the filter of the filtered task list to filter by the given keywords*/
     void updateFilteredTaskList(Set<String> keywords);
     
-    /** Change the storage location of the todolist.xml */
+    /** Change the data storage location */
     void changeSaveLocation(String location);
+
+    /** load the data from a file **/
+    void loadFromLocation(String location);
 
 }

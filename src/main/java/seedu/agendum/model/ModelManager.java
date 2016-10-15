@@ -6,20 +6,18 @@ import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.util.ConfigUtil;
 import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
-import seedu.agendum.model.task.Name;
+import seedu.agendum.commons.util.XmlUtil;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
+import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
-import seedu.agendum.commons.exceptions.FileDeletionException;
 import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.Config;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -76,10 +74,15 @@ public class ModelManager extends ComponentManager implements Model {
     private void indicateToDoListChanged() {
         raise(new ToDoListChangedEvent(toDoList));
     }
-    
+
     /** Raises an event to indicate that save location has changed */
     private void indicateSaveLocationChanged(String location) {
         raise(new SaveLocationChangedEvent(location));
+    }
+    
+    /** Raises an event to indicate that save location has changed */
+    private void indicateLoadDataRequest(String location) {
+        raise(new LoadDataRequestEvent(location));
     }
 
     @Override
@@ -93,6 +96,17 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList.addTask(task);
         updateFilteredListToShowAll();
         indicateToDoListChanged();
+    }
+
+    @Override
+    public synchronized void loadFromLocation(String location) {
+        assert StringUtil.isValidFilePath(location);
+        assert XmlUtil.isFileCorrectFormat(location);
+        
+        config.setToDoListFilePath(location);
+        indicateSaveLocationChanged(location);
+        saveConfigFile();
+        indicateLoadDataRequest(location);
     }
 
     @Override
