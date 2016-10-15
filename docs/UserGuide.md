@@ -290,8 +290,10 @@ Examples:
 If you want to store the task list data in a different location, you can specifiy it using this command.<br>
 Format: `store FILE_PATH`
 
-> FILE_PATH must be a valid path on the local computer
-> If a file at FILE_PATH exists, it will be overriden.
+> * FILE_PATH must be a valid path on the local computer.
+> * If a file at FILE_PATH exists, it will be overriden.
+> * The previous storage file will not be deleted.
+
 
 Examples:
 * `store C:/Dropbox/ToDo/mytasklist.xml`
@@ -322,36 +324,38 @@ Agendum saves its data into the specified data storage location, or by default i
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install Agendum in the other computer and overwrite the empty data file it creates with
-       the file that contains the data of your previous Agendum folder.
+<html>
+<dl>
+   <dt>Q: How do I transfer my data to another computer?</dt>
+   <dd> Firstly, take note of the data storage location that your current todo list is saved at. You can check this by looking at the            bottom-right of Agendum. Navigate to this location and copy the data file to a portable USB device or hard disk. Then, ensure            that you have installed Agendum in the other computer. Copy the data file from your device onto the other computer, preferrably          in the same folder as Agendum. Use the `load` command to load it into Agendum. </dd>
        
-**Q**: Why did Agendum complain about an invalid file directory?<br>
-**A**: Check if the directory you wish to relocate to exists, or if you have enough administrator privileges. 
+   <dt>Q: Why did Agendum complain about an invalid file directory?</dt>
+   <dd> Check if the directory you wish to relocate to exists, or if you have enough administrator privileges. </dd>
 
-**Q**: Can Agendum remind me when my task is due soon?
-**A**: Agendum will always show the tasks that are due soon at the top of list. However, Agendum will not show you a reminder.
+   <dt>Q: Can Agendum remind me when my task is due soon?</dt>
+   <dd> Agendum will always show the tasks that are due soon at the top of list. However, Agendum will not show you a reminder. </dd>
 
-
+</dl>
+</html>
 
 &nbsp;
 
 
 ## Command Summary
 
-Command | Format  
--------- | :--------
-Add | `add NAME [DATETIME]`
-Alias |`alias OLD_COMMAND as NEW_COMMAND`
-Delete | `delete INDEX`
-Edit | `edit INDEX NAME`
-Find | `find KEYWORD [MORE_KEYWORDS]`
-Help | `help`
-List | `list`
-Mark | `mark INDEX`
+Command  | Format  
+:-------:| :--------
+Add      | `add NAME [DATETIME]`
+Alias    | `alias OLD_COMMAND as NEW_COMMAND`
+Delete   | `delete INDEX`
+Edit     | `edit INDEX NAME`
+Find     | `find KEYWORD [MORE_KEYWORDS]`
+Help     | `help`
+List     | `list`
+Mark     | `mark INDEX`
 Schedule | `schedule INDEX DATETIME`
-Select | `select INDEX`
-Store | `store DIRECTORY`
-Unalias | `Unalias NEW_COMMAND`
-Undo | `undo`
-Unmark | `unmark INDEX`
+Select   | `select INDEX`
+Store    | `store DIRECTORY`
+Unalias  | `Unalias NEW_COMMAND`
+Undo     | `undo`
+Unmark   | `unmark INDEX`
