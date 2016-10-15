@@ -342,7 +342,7 @@ Agendum saves its data into the specified data storage location, or by default i
 <html>
 <dl>
    <dt> Q: How do I transfer my data to another computer? </dt>
-   <dd> Firstly, take note of the data storage location that your current todo list is saved at. You can check this by looking at the            bottom-right of Agendum. Navigate to this location and copy the data file to a portable USB device or hard disk. Then, ensure            that you have installed Agendum in the other computer. Copy the data file from your device onto the other computer, preferrably          in the same folder as Agendum. Use the `load` command to load it into Agendum. </dd>
+   <dd> Firstly, take note of the data storage location that your current todo list is saved at. You can check this by looking at the            bottom-right of Agendum. Navigate to this location and copy the data file to a portable USB device or hard disk. Then, ensure            that you have installed Agendum in the other computer. Copy the data file from your device onto the other computer, preferrably          in the same folder as Agendum. Use the <code>load</code> command to load it into Agendum. </dd>
 
    <dt> Q: Why did Agendum complain about an invalid file directory? </dt>
    <dd> Check if the directory you wish to relocate to exists, or if you have enough administrator privileges. </dd>
