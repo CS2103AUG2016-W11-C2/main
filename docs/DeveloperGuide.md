@@ -24,15 +24,15 @@
 
 ## Introduction
 
-Agendum is a task manager for the user to manage their schedules and todo tasks via keyboard commands. It is a Java desktop application that has a **GUI** implemented with JavaFX.
+Agendum is a task manager for you to manage your schedules and tasks via keyboard commands. It is a Java desktop application that has a **GUI** implemented with JavaFX.
 
-This guide describes the design and implementation of Agendum. It will help developers understand how Agendum works and how they can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
+This guide describes the design and implementation of Agendum. It will help developers like you understand how Agendum works and how you can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
 
 ## Setting up
 
 #### 1. Prerequisites
 
-* **JDK `1.8.0_60`**  or later<br>
+* **JDK `1.8.0_60`**  or above<br>
 
     > Having any Java 8 version is not enough. <br>
     This application will not work with earlier versions of Java 8.
@@ -113,8 +113,7 @@ For example, the `Logic` component (see the class diagram given below) defines i
 interface and exposes its functionality using the `LogicManager.java` class.<br>
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the
-command `delete 1`.
+The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 <img src="images\SDforDeleteTask.png" width="800">
 
@@ -393,10 +392,10 @@ Priority | As a ... | I want to ... | So that I can...
 
 **MSS**
 
-1. System prompts the user to enter a command
-2. User enters an add command with the task name into the input box.
+1. System prompts the Actor to enter a command
+2. Actor enters an add command with the task name into the input box.
 3. System adds the task.
-4. System shows a feedback message ("Task <name> added") and displays the updated list containing the new task on the interface.
+4. System shows a feedback message ("Task <name> added") and displays the updated list
 5. Use case ends.
 
 **Extensions**
@@ -419,7 +418,7 @@ Priority | As a ... | I want to ... | So that I can...
 2. System shows a list of tasks
 3. Actor requests to delete a specific task in the list by its index
 4. System deletes the task.
-5. System shows a feedback message (“Task <index> deleted”) and displays the updated list without the deleted task.
+5. System shows a feedback message (“Task <index> deleted”) and displays the updated list
 6. Use case ends.
 
 **Extensions**
@@ -441,7 +440,7 @@ Priority | As a ... | I want to ... | So that I can...
 2. System shows a list of tasks
 3. Actor requests to rename a specific task in the list by its index and also input the new task name
 4. System updates the task 
-5. System shows a feedback message (“Task <index> updated”) and displays the updated list with the edited task name.
+5. System shows a feedback message (“Task <index> updated”) and displays the updated list
 6. Use case ends.
 
 **Extensions**
@@ -465,15 +464,15 @@ Priority | As a ... | I want to ... | So that I can...
 > 3c1. System shows an error message (“Please use a new task name”)
 > Use case resumes at step 2
 
-### Use case 04 - Modify a task’s start and end time and deadlines
+### Use case 04 - Schedule a task’s start and end time and deadlines
 
 **MSS**
 
 1. Actor requests to list tasks
 2. System shows a list of tasks
-3. Actor requests to set time of a specific task in the list by its index and also input the new start/end time or deadline
+3. Actor inputs index and the new start/end time or deadline of the task to be modified
 4. System updates the task 
-5. System shows a feedback message (“Task <index> ’s time updated”) and displays the updated list on the interface.
+5. System shows a feedback message (“Task <index> ’s time/date has been updated”) and displays the updated list
 6. Use case ends.
 
 **Extensions**
@@ -492,14 +491,14 @@ Priority | As a ... | I want to ... | So that I can...
 > 3b1. System shows an error message (“Please follow the given time format”)
 > Use case resumes at step 2
 
-### Use case 05 - Undo the previous command that modified the task list
+### Use case 05 - Undo previous command that modified the task list
 
 **MSS**
 
-1. Actor enters an undo command
+1. Actor enters the undo command
 2. System finds the latest command that modified the task list
 3. System undo the identified command
-4. System shows a feedback message (“The command <last-command> has been undone”) and displays the updated list on the interface.
+4. System shows a feedback message (“The command <last-command> has been undone”) and displays the updated list.
 5. Use case ends.
 
 **Extensions**
@@ -610,7 +609,7 @@ This means you can do other things on the Computer while the tests are running.
 
 *Strengths:*
 
-* Clearly display tasks that have not been completed
+* Clearly displays tasks that have not been completed
 * Tasks can be categorized under different lists
 * Tasks can have sub tasks
 * Possible to highlight tasks by marking as important (starred) or pinning tasks
