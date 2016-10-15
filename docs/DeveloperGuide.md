@@ -553,12 +553,12 @@ Priority | As a ... | I want to ... | So that I can...
 
 1b. The new alias name is already reserved/used for other commands
 
-> 1b1. System shows an error message (“The name is already in use”)
+> 1b1. System shows an error message (“The name is already in use”) <br>
 > Use case ends
 
 *a. At any time, Actor choose to exit System
 
-> *a1. System displays a goodbye message
+> *a1. System displays a goodbye message <br>
 > *a2. System closes the program
 
 *b. At any time, Actor enters a invalid command
@@ -580,13 +580,13 @@ Priority | As a ... | I want to ... | So that I can...
 
 1a. File path is input as 'default'
 
-> 1a1. System updates data storage location to default
-> 1a2. System shows a feedback message ("Save location set to default: `file-path`")
+> 1a1. System updates data storage location to default <br>
+> 1a2. System shows a feedback message ("Save location set to default: `file-path`") <br>
 > Use case ends
 
 1b. File path is invalid
 
-> 1b1. System shows an error message ("The specified location is invalid.")
+> 1b1. System shows an error message ("The specified location is invalid.") <br>
 > Use case ends
 
 
@@ -605,12 +605,12 @@ Priority | As a ... | I want to ... | So that I can...
 
 1a. File path is invalid
 
-> 1a1. System shows an error message ("The specified location is invalid.")
+> 1a1. System shows an error message ("The specified location is invalid.") <br>
 > Use case ends
 
 3a. File is in the wrong format
 
-> 3a1. System shows an error message ("File is in the wrong format.")
+> 3a1. System shows an error message ("File is in the wrong format.")<br>
 > Use case ends
 
 
