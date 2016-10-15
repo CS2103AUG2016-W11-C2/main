@@ -1,4 +1,4 @@
-# Developer Guide 
+# Developer Guide
 
 ## Table of contents
 
@@ -17,9 +17,9 @@
 
 ## Introduction
 
-Agendum is a task manager for the user to manage their schedules and todo tasks via keyboard commands. It is a Java desktop application that has a **GUI** implemented with JavaFX.
+Agendum is a task manager for busy users to manage their schedules and tasks via keyboard commands. It is a Java desktop application that has a **GUI** implemented with JavaFX.
 
-This guide describes the design and implementation of Agendum. It will help developers understand how Agendum works and how they can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
+This guide describes the design and implementation of Agendum. It will help developers (like you) understand how Agendum works and how to further contribute to its development. We have organized this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
 
 ## Setting up
 
@@ -27,22 +27,21 @@ This guide describes the design and implementation of Agendum. It will help deve
 
 * **JDK `1.8.0_60`**  or later<br>
 
-    > Having any Java 8 version is not enough. <br>
-    This application will not work with earlier versions of Java 8.
-    
+    > This application will not work with any earlier versions of Java 8.
+
 * **Eclipse** IDE
 
 * **e(fx)clipse** plugin for Eclipse (Do the steps 2 onwards given in
    [this page](http://www.eclipse.org/efxclipse/install.html#for-the-ambitious))
-   
-* **Buildship Gradle Integration** plugin from the 
+
+* **Buildship Gradle Integration** plugin from the
    [Eclipse Marketplace](https://marketplace.eclipse.org/content/buildship-gradle-integration)
 
 
 #### 2. Importing the project into Eclipse
 
 * Fork this repo, and clone the fork to your computer
-* Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given 
+* Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given
    in the prerequisites above)
 * Click `File` > `Import`
 * Click `Gradle` > `Gradle Project` > `Next` > `Next`
@@ -51,21 +50,21 @@ This guide describes the design and implementation of Agendum. It will help deve
 
   > * If you are asked whether to 'keep' or 'overwrite' config files, choose to 'keep'.
   > * Depending on your connection speed and server load, it can even take up to 30 minutes for the set up to finish
-      (This is because Gradle downloads library files from servers during the project set up process)
-  > * If Eclipse auto-changed any settings files during the import process, you can discard those changes.
-  
+      (Gradle needs time to download library files from servers during the project set up process)
+  > * If Eclipse automatically changed any settings files during the import process, you can discard those changes.
+
 #### 3. Troubleshooting project setup
 
 * **Problem: Eclipse reports compile errors after new commits are pulled from Git**
-	* Reason: Eclipse fails to recognize new files that appeared due to the Git 	pull. 
-	* Solution: Refresh the project in Eclipse:<br> 
+	* Reason: Eclipse has failed to recognize new files that appeared due to the Git 	pull.
+	* Solution: Refresh the project in Eclipse:<br>
 	Right click on the project (in Eclipse package explorer), choose `Gradle` -> 	`Refresh Gradle Project`.
-  
+
 * **Problem: Eclipse reports some required libraries missing**
 
-	* Reason: Required libraries may not have been downloaded during the project 	import. 
-	* Solution: [Run tests using Gardle](UsingGradle.md) once (to refresh the 	libraries).
- 
+	* Reason: Required libraries may not have been downloaded during the project 	import.
+	* Solution: [Run tests using Gradle](UsingGradle.md) once (to refresh the 	libraries).
+
 
 ## Design
 
@@ -89,7 +88,7 @@ Two of those classes play important roles at the architecture level.
 
 The rest of the App consists four components.
 
-* [**`UI`**](#2-ui-component) : The UI of tha App.
+* [**`UI`**](#2-ui-component) : The UI of the App.
 * [**`Logic`**](#3-logic-component) : The command executor.
 * [**`Model`**](#4-model-component) : Holds the data of the App in-memory.
 * [**`Storage`**](#5-storage-component) : Reads data from, and writes data to, the hard disk.
@@ -116,7 +115,7 @@ being saved to the hard disk and the status bar of the UI being updated to refle
 <img src="images\SDforDeleteTaskEventHandling.png" width="800">
 
 > Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having
-  to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct 
+  to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct
   coupling between components.
 
 The sections below give more details of each component.
@@ -208,7 +207,7 @@ and logging destinations.
 
 ### 2. Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file 
+Certain properties of the application can be controlled (e.g. App name, logging level) through the configuration file
 (default: `config.json`):
 
 
@@ -231,35 +230,35 @@ Tests can be found in the `./src/test/java` folder.
 
 * **GUI Tests**	<br>
 These are _System Tests_ that test the entire App by simulating user actions on the GUI. They are in the `guitests` package.
-  
+
 * **Non-GUI Tests**<br>
 These are tests not involving the GUI. They include,
    * _Unit tests_ targeting the lowest level methods/classes. <br>
       e.g. `seedu.agendum.commons.UrlUtilTest`
-   * _Integration tests_ that are checking the integration of multiple code units 
+   * _Integration tests_ that are checking the integration of multiple code units
      (those code units are assumed to be working).<br>
       e.g. `seedu.agendum.storage.StorageManagerTest`
-   * Hybrids of _unit and integration tests_. These test are checking multiple code units as well as 
+   * Hybrids of _unit and integration tests_. These tests are checking multiple code units as well as 
       how the are connected together.<br>
       e.g. `seedu.agendum.logic.LogicManagerTest`
-  
+
 **4. Headless GUI Testing** :
 
 Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
- our GUI tests can be run in the _headless_ mode. 
+ our GUI tests can be run in the _headless_ mode.
  In the headless mode, GUI tests do not show up on the screen.
  That means the developer can do other things on the Computer while the tests are running.<br>
  See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in headless mode.
- 
+
 >#### Troubleshooting tests
 >**Problem: Tests fail because NullPointException when AssertionError is expected**
 
->* Reason: Assertions are not enabled for JUnit tests. 
+>* Reason: Assertions are not enabled for JUnit tests.
    This can happen if you are not using a recent Eclipse version (i.e. _Neon_ or later)
->* Solution: Enable assertions in JUnit tests as described 
+>* Solution: Enable assertions in JUnit tests as described
    [here](http://stackoverflow.com/questions/2522897/eclipse-junit-ea-vm-option). <br>
    Delete run configurations created when you ran tests earlier.
-  
+
 ## Dev Ops
 
 ### 1. Build Automation
@@ -274,12 +273,12 @@ See [UsingTravis.md](UsingTravis.md) for more details.
 ### 3. Making a Release
 
 Here are the steps to create a new release.
- 
+
  1. Generate a JAR file [using Gradle](UsingGradle.md#creating-the-jar-file).
  2. Tag the repo with the version number. e.g. `v0.1`
- 2. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/) 
+ 2. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/)
     and upload the JAR file your created.
-   
+
 ### 4. Managing Dependencies
 
 A project often depends on third-party libraries. For example, Agendum depends on the
@@ -389,7 +388,7 @@ Priority | As a ... | I want to ... | So that I can...
 1. Actor requests to list tasks
 2. System shows a list of tasks
 3. Actor requests to rename a specific task in the list by its index and also input the new task name
-4. System updates the task 
+4. System updates the task
 5. System shows a feedback message (“Task <index> updated”) and displays the updated list with the edited task name.
 6. Use case ends.
 
@@ -421,7 +420,7 @@ Priority | As a ... | I want to ... | So that I can...
 1. Actor requests to list tasks
 2. System shows a list of tasks
 3. Actor requests to set time of a specific task in the list by its index and also input the new start/end time or deadline
-4. System updates the task 
+4. System updates the task
 5. System shows a feedback message (“Task <index> ’s time updated”) and displays the updated list on the interface.
 6. Use case ends.
 
@@ -533,7 +532,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 ## Appendix D : Glossary
 
-##### Mainstream OS: 
+##### Mainstream OS:
 
 Windows, Linux, Unix, OS-X
 
