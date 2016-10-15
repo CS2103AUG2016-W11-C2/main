@@ -407,12 +407,12 @@ Priority | As a ... | I want to ... | So that I can...
 
 2a. No task description is provided
 
-> 2a1. System shows an error message (“Please provide a task name/description”)
+> 2a1. System shows an error message (“Please provide a task name/description”) <br>
 > Use case resumes at step 1
 
 2b. There is an existing task with the same description and details
 
-> 2b1. System shows an error message (“Please use a new task description”)
+> 2b1. System shows an error message (“Please use a new task description”) <br>
 > Use case resumes at step 1
 
 ### Use case 02 - Delete a task
@@ -434,7 +434,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 3a. The given index is invalid
 
-> 3a1. System shows an error message (“Please select a task on the list with a valid index”)
+> 3a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
 > Use case resumes at step 2
 
 ### Use case 03 - Rename a task
@@ -456,17 +456,17 @@ Priority | As a ... | I want to ... | So that I can...
 
 3a. The given index is invalid
 
-> 3a1. System shows an error message (“Please select a task on the list with a valid index”)
+> 3a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
 > Use case resumes at step 2
 
 3b. No task description is provided
 
-> 3b1. System shows an error message (“Please include a new task name”)
+> 3b1. System shows an error message (“Please include a new task name”) <br>
 > Use case resumes at step 2
 
 3c. There is an existing task with the same description and details
 
-> 3c1. System shows an error message (“Please use a new task name”)
+> 3c1. System shows an error message (“Please use a new task name”) <br>
 > Use case resumes at step 2
 
 ### Use case 04 - Schedule a task’s start and end time and deadlines
@@ -488,12 +488,12 @@ Priority | As a ... | I want to ... | So that I can...
 
 3a. The given index is invalid
 
-> 3a1. System shows an error message (“Please select a task on the list with a valid index”)
+> 3a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
 > Use case resumes at step 2
 
 3b. The new input time format is invalid
 
-> 3b1. System shows an error message (“Please follow the given time format”)
+> 3b1. System shows an error message (“Please follow the given time format”) <br>
 > Use case resumes at step 2
 
 ### Use case 05 - Undo previous command that modified the task list
@@ -510,7 +510,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 2a. There are no previous commands that modify the list (since the launch of the application)
 
-> 2a1. System shows an error message (“No previous command to undo”)
+> 2a1. System shows an error message (“No previous command to undo”) <br>
 > Use case ends
 
 ### Use case 06 - Mark a task as completed
@@ -532,7 +532,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 3a. The given index is invalid
 
-> 3a1. System shows an error message (“Please select a task on the list with a valid index”)
+> 3a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
 > Use case resumes at step 2
 
 ### Use case 07 - Add short hand commands
@@ -548,7 +548,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 1a. There is no existing command with the original name specified
 
-> 1a1. System shows an error message (“There is no such existing command”)
+> 1a1. System shows an error message (“There is no such existing command”) <br>
 > Use case ends
 
 1b. The new alias name is already reserved/used for other commands
