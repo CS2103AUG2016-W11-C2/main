@@ -96,19 +96,19 @@ Format: `list [TYPE]`
 
 Examples:
 
-* Format: `list` <br>
+* `list` <br>
   Agendum will show you a list of all uncompleted tasks. 
  
-* Format: `list overdue`<br>
+* `list overdue`<br>
   Agendum will show you a list of overdue tasks. 
   
-* Format: `list near`  <br>
+* `list near`  <br>
   Agendum will show you a list of upcoming tasks within a week. <br>
 
-* Format: `list done`<br>
+* `list done`<br>
   Agendum will show you a list of completed tasks. <br>
 
-* Format: `list all`<br>
+* `list all`<br>
   Agendum will show you a list of all tasks; this includes overdue, completed and uncompleted tasks. <br>
 
 
@@ -330,13 +330,13 @@ Agendum saves its data into the specified data storage location, or by default i
 
 <html>
 <dl>
-   <dt>Q: How do I transfer my data to another computer?</dt>
+   <dt> Q: How do I transfer my data to another computer? </dt>
    <dd> Firstly, take note of the data storage location that your current todo list is saved at. You can check this by looking at the            bottom-right of Agendum. Navigate to this location and copy the data file to a portable USB device or hard disk. Then, ensure            that you have installed Agendum in the other computer. Copy the data file from your device onto the other computer, preferrably          in the same folder as Agendum. Use the `load` command to load it into Agendum. </dd>
        
-   <dt>Q: Why did Agendum complain about an invalid file directory?</dt>
+   <dt> Q: Why did Agendum complain about an invalid file directory? </dt>
    <dd> Check if the directory you wish to relocate to exists, or if you have enough administrator privileges. </dd>
 
-   <dt>Q: Can Agendum remind me when my task is due soon?</dt>
+   <dt> Q: Can Agendum remind me when my task is due soon? </dt>
    <dd> Agendum will always show the tasks that are due soon at the top of list. However, Agendum will not show you a reminder. </dd>
 
 </dl>
@@ -355,7 +355,7 @@ Delete   | `delete INDEX...`
 Edit     | `edit INDEX NAME`
 Find     | `find KEYWORD...`
 Help     | `help`
-List     | `list`
+List     | `list [TYPE]`
 Mark     | `mark INDEX...`
 Schedule | `schedule INDEX [by DATE_TIME] [from START_DATE_TIME] [to END_DATE_TIME]`
 Select   | `select INDEX...`
