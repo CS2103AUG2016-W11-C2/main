@@ -25,7 +25,7 @@
 5. Go ahead and try some of the commands listed below!
    * **`add`**` Go to shopping mall` : adds a task with description `Go to shopping mall` to Agendum.
    * **`delete`**` 3` : deletes the 3rd task shown in the current list
-   * **`list`** : lists all tasks
+   * **`list`** : lists all uncompleted tasks
    * **`exit`** : exits Agendum
 
 6. You can refer to the [Features](#features) section below for more details of each command.
