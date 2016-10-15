@@ -263,14 +263,14 @@ Format: `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`
 > * NEW_COMMAND_NAME must be a single word.
 > * ORIGINAL_COMMAND_NAME must be a command word that is specified in the Command Summary section
 > * Only one alias can be used
-> * When creating a new alias with a pre-existing alias, the previous alias will be overriden.
+> * When creating an alias for a command with a pre-existing alias, the pre-existing alias will be overriden.
 
 Examples:
 
 * `alias mark m` <br>
-  `m` and `mark` can now be used to mark a task.<br>
+  you can now use`m` or `mark` to mark a task as completed.<br>
   `alias mark mk`<br>
-  only `mk` and `mark` can be used to mark a task, as `m` has been overriden.
+  Now you can only use `mk` or `mark` to mark a task; `m` has been overriden.
 
 
 #### Removing an alias command : `unalias`
@@ -286,7 +286,7 @@ Examples:
 * `unalias m`<br>
   `m` can no longer be used to mark tasks.<br>
   `unalias mark`<br>
-  The assigned alias for `mark` will be removed, and only `mark` can be used to mark a task as completed.
+  The assigned alias for `mark` will be removed; Now you can only use the original command `mark` to mark a task as completed.
 
 
 #### Specifying the data storage location : `store`
