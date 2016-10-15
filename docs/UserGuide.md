@@ -62,7 +62,7 @@ Examples:
 * `add Workout`
 * `add watch Star Wars`
 
-If you need a task to be done by a specific date, you can specify it using `by`.<br>
+If you need a task to be done by a specific date, you can specify the deadline after the keyword `by`.<br>
 Format: `add TASK_NAME [by DATE_TIME]`
 > Date formats are not case-sensitive
 
@@ -73,21 +73,21 @@ Examples:
 * `add watch Star Wars by next Wed`
 * `add watch Star Wars by 10 Oct, 9.30pm`
 
-If you need a task to be done within a specific date and time, you can specify it using `from` and `to`.<br>
+If you need a task to be done within a specific date and time, you can specify the start and end time using `from` and `to`.<br>
 Format: `add TASK_NAME [from START_DATE_TIME to END_DATE_TIME] `
 > If you specify the time but no day or date is given, the date of creation will be used.
 
 Examples:
 
 * `add movie marathon from today 12pm to friday 3pm`
-* `add project meeting from 10 oct 12pm to 2pm`
+* `add project meeting from 10 oct 12pm to 10 oct 2pm`
 
 The event “project meeting” will start at 12pm on 10 October and end at 2pm on 10 October.
 
 
 #### Retrieving task list : `list`
 
-You can see tasks sorted by date. Tasks without a date will be appended at the end of the list.<br>
+You can view tasks sorted by date. Tasks without a date will be appended at the end of the list.<br>
 Format: `list [TYPE]`
 > `TYPE` refers to a keyword such as `overdue, near, done or all`.
 
@@ -106,7 +106,7 @@ Examples:
   Agendum will show you a list of completed tasks. <br>
 
 * `list all`<br>
-  Agendum will show you a list of all tasks; this includes overdue, completed and uncompleted tasks. <br>
+  Agendum will show you a list of all tasks including overdue, completed and uncompleted tasks. <br>
 
 
 #### Finding tasks containing keywords: `find`
@@ -182,7 +182,7 @@ Examples:
 #### Updating the date/time of a task : `schedule`
 
 Have the deadline of your task been reduced or extended? Have an event been rescheduled? To change the date or time of a task, you can use this command.<br>
-Format: `schedule INDEX [NEW_DATE_TIME]`
+Format: `schedule INDEX [NEW_DATE_TIME_RESTRICTIONS]`
 
 > * Schedule the task at the specified `INDEX`.
 > * The index refers to the index number shown in the most recent listing.
@@ -200,7 +200,7 @@ Examples:
   Removes the deadline and start and end date/time for task 2 and resets the deadline to the coming Friday (If the current day is Friday, it would be the following Friday).
 
 * `list`<br>
-  `schedule 3 from 1 Oct 7pm to 9.30pm`<br>
+  `schedule 3 from 1 Oct 7pm to 1 Oct 9.30pm`<br>
   Sets the start time of task 3 to 1 Oct 7pm and the end time to 1 Oct 9.30pm respectively
 
 
@@ -291,7 +291,7 @@ Examples:
 
 #### Specifying the data storage location : `store`
 
-If you want to store the task list data in a different location, you can specifiy it using this command. 
+If you want to store the task list data in a different location, you can specifiy it using this command.
 The task list data will be moved to the specific directory, and future data will be saved in that location.<br>
 Format: `store FILE_PATH`
 
@@ -303,9 +303,9 @@ Examples:
 * `store C:/Dropbox/ToDo/mytasklist.xml`
 
 
-#### Loading from another data storage : `store`
+#### Loading from another data storage location : `load`
 
-If you have another data storage file, you can load it into Agendum. <br><br>
+If you have another data storage file with existing task data, you can load it into Agendum. <br><br>
 Format: `load FILE_PATH`
 
 > * FILE_PATH must be a valid path on the local computer.
