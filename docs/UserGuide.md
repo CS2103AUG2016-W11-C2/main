@@ -90,7 +90,9 @@ The event “project meeting” will start at 12pm on 10 October and end at 2pm 
 
 #### Retrieving task list : `list`
 
-You can see tasks sorted by date. Tasks without a date will be appended at the end of the list.
+You can see tasks sorted by date. Tasks without a date will be appended at the end of the list.<br>
+Format: `list [TYPE]` 
+> `TYPE` refers to a keyword such as `overdue, near, done or all`.
 
 You can view a list of all uncompleted tasks. <br>
 Format: `list`  
