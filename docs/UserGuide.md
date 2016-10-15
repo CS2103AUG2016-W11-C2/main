@@ -291,19 +291,30 @@ Examples:
 
 #### Specifying the data storage location : `store`
 
-If you want to store the task list data in a different location, you can specifiy it using this command.<br>
+If you want to store the task list data in a different location, you can specifiy it using this command. 
+The task list data will be moved to the specific directory, and future data will be saved in that location.<br>
 Format: `store FILE_PATH`
 
 > * FILE_PATH must be a valid path on the local computer.
 > * If a file at FILE_PATH exists, it will be overriden.
 > * The previous data storage file will not be deleted.
 
-
 Examples:
 * `store C:/Dropbox/ToDo/mytasklist.xml`
 
-The task list data will be moved to the specific directory, and future data will be saved in that location.
 
+#### Loading from another data storage : `store`
+
+If you have another data storage file, you can load it into Agendum. <br><br>
+Format: `load FILE_PATH`
+
+> * FILE_PATH must be a valid path on the local computer.
+> * Existing data will be saved and stored in the existing data storage location.
+> * The task list in Agendum will be replaced by the loaded task list.
+> * Future data will be stored in the specified file.
+
+Examples:
+* `load data/mytasklist.xml`
 
 #### Exiting the program : `exit`
 
