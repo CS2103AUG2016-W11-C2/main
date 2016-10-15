@@ -586,7 +586,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 1b. File path is invalid
 
-> 1b1. System shows an error message ("The specified location is invalid.") <br>
+> 1b1. System shows an error message ("The specified file path is invalid.") <br>
 > Use case ends
 
 
@@ -605,7 +605,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 1a. File path is invalid
 
-> 1a1. System shows an error message ("The specified location is invalid.") <br>
+> 1a1. System shows an error message ("The specified file path is invalid.") <br>
 > Use case ends
 
 3a. File is in the wrong format
