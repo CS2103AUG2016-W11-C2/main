@@ -260,7 +260,9 @@ public class Parser {
                 taskIds.addAll(IntStream.rangeClosed(startIndex,endIndex).boxed().collect(Collectors.toList()));
             }
         }
-        taskIds.remove(0);
+        if (taskIds.remove(0)) {
+            return new HashSet<Integer>();
+        }
 
         return taskIds;
     }
