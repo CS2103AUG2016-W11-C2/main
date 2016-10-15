@@ -49,8 +49,7 @@ This guide describes the design and implementation of Agendum. It will help deve
 #### 2. Importing the project into Eclipse
 
 * Fork this repo, and clone the fork to your computer
-* Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given 
-   in the prerequisites above)
+* Open Eclipse (Note: Ensure you have installed the **e(fx)clipse** and **buildship** plugins as given in the prerequisites above)
 * Click `File` > `Import`
 * Click `Gradle` > `Gradle Project` > `Next` > `Next`
 * Click `Browse`, then locate the project's directory
@@ -82,6 +81,7 @@ This guide describes the design and implementation of Agendum. It will help deve
 ### 1. Architecture
 
 <img src="images/Architecture.png" width="600"><br>
+
 The **_Architecture Diagram_** given above explains the high-level design of the App.
 Given below is a quick overview of each component.
 
@@ -97,14 +97,14 @@ Two of those classes play important roles at the architecture level.
   is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-The rest of the App consists four components.
+The rest of the App comprises four components:
 
-* [**`UI`**](#2-ui-component) : The UI of tha App.
-* [**`Logic`**](#3-logic-component) : The command executor.
-* [**`Model`**](#4-model-component) : Holds the data of the App in-memory.
-* [**`Storage`**](#5-storage-component) : Reads data from, and writes data to, the hard disk.
+* [**`UI`**](#2-ui-component) - The UI of tha App.
+* [**`Logic`**](#3-logic-component) - The command executor.
+* [**`Model`**](#4-model-component) - Holds the data of the App in-memory.
+* [**`Storage`**](#5-storage-component) - Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the four components has the following properties:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -131,6 +131,7 @@ being saved to the hard disk and the status bar of the UI being updated to refle
 
 The sections below give more details of each component.
 
+
 ### 2. UI component
 
 <img src="images/UiClassDiagram.png" width="800"><br>
@@ -138,19 +139,19 @@ The sections below give more details of each component.
 **API** : [`Ui.java`](../src/main/java/seedu/agendum/ui/Ui.java)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`,
-`StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class
-and they can be loaded using the `UiPartLoader`.
+`StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit the abstract `UiPart` class. They can be loaded using `UiPartLoader`.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
  that are in the `src/main/resources/view` folder.<br>
  For example, the layout of the [`MainWindow`](../src/main/java/seedu/agendum/ui/MainWindow.java) is specified in
  [`MainWindow.fxml`](../src/main/resources/view/MainWindow.fxml)
 
-The `UI` component,
+The `UI` component has the following functions:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+
 
 ### 3. Logic component
 
@@ -163,16 +164,18 @@ The `UI` component,
 3. The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
 4. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")`
- API call.<br>
+You can view the Sequence Diagram below for interactions within the `Logic` component for the `execute("delete 1")` API call.<br>
+
 <img src="images/DeleteTaskSdForLogic.png" width="800"><br>
+
 
 ### 4. Model component
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
 
 **API** : [`Model.java`](../src/main/java/seedu/agendum/model/Model.java)
-The `Model`,
+
+The `Model` has the following functions:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Agendum data.
@@ -180,37 +183,39 @@ The `Model`,
   so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
+
 ### 5. Storage component
 
 <img src="images/StorageClassDiagram.png" width="800"><br>
 
 **API** : [`Storage.java`](../src/main/java/seedu/agendum/storage/Storage.java)
 
-The `Storage` component,
+The `Storage` component has the following functions:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Agendum data in xml format and read it back.
+
 
 ### 6. Common classes
 
 Classes used by multiple components are in the `seedu.agendum.commons` package.
 
-They are further separated into sub-packages, namely `core`, `events`, `exceptions` and `util`.
+They are further separated into sub-packages - namely `core`, `events`, `exceptions` and `util`.
 
 #### Core
-This package consists of
+This package consists of the essential classes that are required by multiple components.
 
 
-#### Evemts
-This package consists of
+#### Events
+This package consists of the different type of events that can occur; these are used mainly by EventManager and EventBus.
 
 
 #### Exceptions
-This package consists of
+This package consists of exceptions that may occur with the use of Agendum.
 
 
 #### Util
-This package consists of
+This package consists of additional utilities for the different components.
 
 
 &nbsp;
@@ -248,26 +253,18 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 ## Testing
 
-Tests can be found in the `./src/test/java` folder.
+You can find all the test files in the `./src/test/java` folder.
 
-**1. In Eclipse**:
+### Types of Tests
 
-* To run all tests, right-click on the `src/test/java` folder and choose
-  `Run as` > `JUnit Test`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose
-  to run as a JUnit test.
+#### 1. GUI Tests
 
-**2. Using Gradle**:
-
-* See [UsingGradle.md](UsingGradle.md) for how to run tests using Gradle.
-
-**3. Type of tests**:
-
-* **GUI Tests**	<br>
-These are _System Tests_ that test the entire App by simulating user actions on the GUI. They are in the `guitests` package.
+These are _System Tests_ that test the entire App by simulating user actions on the GUI. 
+They are in the `guitests` package.
   
-* **Non-GUI Tests**<br>
-These are tests not involving the GUI. They include,
+#### 2. Non-GUI Tests
+
+These are tests not involving the GUI. They include the following:
    * _Unit tests_ targeting the lowest level methods/classes. <br>
       e.g. `seedu.agendum.commons.UrlUtilTest`
    * _Integration tests_ that are checking the integration of multiple code units 
@@ -276,14 +273,24 @@ These are tests not involving the GUI. They include,
    * Hybrids of _unit and integration tests_. These test are checking multiple code units as well as 
       how the are connected together.<br>
       e.g. `seedu.agendum.logic.LogicManagerTest`
-  
-**4. Headless GUI Testing** :
 
-Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
- our GUI tests can be run in the _headless_ mode. 
- In the headless mode, GUI tests do not show up on the screen.
- That means the developer can do other things on the Computer while the tests are running.<br>
- See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in headless mode.
+#### 3. Headless Mode GUI Tests
+
+Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use, 
+our GUI tests can be run in [headless mode](#headless-mode). <br>
+See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in headless mode.
+
+### How to Test
+
+#### 1. Using Eclipse
+
+* To run all tests, right-click on the `src/test/java` folder and choose `Run as` > `JUnit Test`
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose to run as a JUnit test.
+
+#### 2. Using Gradle
+
+* See [UsingGradle.md](UsingGradle.md) for how to run tests using Gradle.
+
  
 >#### Troubleshooting tests
 >**Problem: Tests fail because NullPointException when AssertionError is expected**
@@ -587,6 +594,11 @@ Priority | As a ... | I want to ... | So that I can...
 ##### Mainstream OS: 
 
 Windows, Linux, Unix, OS-X
+
+##### Headless Mode:
+
+In the headless mode, GUI tests do not show up on the screen. <br>
+This means you can do other things on the Computer while the tests are running.
 
 
 &nbsp;
