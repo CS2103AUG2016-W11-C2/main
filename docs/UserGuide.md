@@ -345,17 +345,17 @@ Agendum saves its data into the specified data storage location, or by default i
 
 Command  | Format  
 :-------:| :--------
-Add      | `add NAME [DATETIME]`
-Alias    | `alias OLD_COMMAND as NEW_COMMAND`
-Delete   | `delete INDEX`
+Add      | `add TASK_NAME [by DATE_TIME] [from START_DATE_TIME] [to END_DATE_TIME]`
+Alias    | `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`
+Delete   | `delete INDEX...`
 Edit     | `edit INDEX NAME`
-Find     | `find KEYWORD [MORE_KEYWORDS]`
+Find     | `find KEYWORD...`
 Help     | `help`
 List     | `list`
-Mark     | `mark INDEX`
-Schedule | `schedule INDEX DATETIME`
-Select   | `select INDEX`
-Store    | `store DIRECTORY`
-Unalias  | `Unalias NEW_COMMAND`
+Mark     | `mark INDEX...`
+Schedule | `schedule INDEX [by DATE_TIME] [from START_DATE_TIME] [to END_DATE_TIME]`
+Select   | `select INDEX...`
+Store    | `store FILE_PATH`
+Unalias  | `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
 Undo     | `undo`
-Unmark   | `unmark INDEX`
+Unmark   | `unmark INDEX...`
