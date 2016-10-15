@@ -604,6 +604,7 @@ public class LogicManagerTest {
         model.resetData(new ToDoList());
         helper.addToModel(model, threeTasks);
 
+        //boundary value: use the last task
         assertCommandBehavior("rename 3 " + newTaskName,
                 String.format(RenameCommand.MESSAGE_SUCCESS, "3", newTaskName),
                 expectedTDL,
