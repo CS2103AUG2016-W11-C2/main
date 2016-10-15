@@ -21,7 +21,7 @@
 4. Type a command in the command box and press <kbd>Enter</kbd> to execute it.
 
    e.g. typing **`help`** and pressing <kbd>Enter</kbd> will list some information about commands.
-   
+
 5. Go ahead and try some of the commands listed below!
    * **`add`**` Go to shopping mall` : adds a task with description `Go to shopping mall` to Agendum.
    * **`delete`**` 3` : deletes the 3rd task shown in the current list
@@ -46,8 +46,8 @@
 
 #### Viewing help : `help`
 
-If you need some more information about the features available, you can use the `help` command.<br>
-Format: `help` 
+If you need some reminder or more information about the features available, you can use the `help` command.<br>
+Format: `help`
 > Help is also shown if an incorrect command is entered e.g. `run`
 
 
@@ -62,8 +62,8 @@ Examples:
 * `add Workout`
 * `add watch Star Wars`
 
-If you need a task to be done by a specific date, you can specify it using `by` or `before`.<br>
-Format: `add TASK_NAME [by DATE_TIME]`  or `add TASK_NAME [before DATE_TIME]`
+If you need a task to be done by a specific date, you can specify it using `by`.<br>
+Format: `add TASK_NAME [by DATE_TIME]`
 > Date formats are not case-sensitive
 
 Examples:  
@@ -74,16 +74,13 @@ Examples:
 * `add watch Star Wars by 10 Oct, 9.30pm`
 
 If you need a task to be done within a specific date and time, you can specify it using `from` and `to`.<br>
-Format: `add TASK_NAME [from START_DATE_TIME] [to END_DATE_TIME] ` 
+Format: `add TASK_NAME [from START_DATE_TIME to END_DATE_TIME] `
 > If you specify the time but no day or date is given, the date of creation will be used.
 
 Examples:
 
-* `add watch Star Wars from 7pm`
 * `add movie marathon from today 12pm to friday 3pm`
 * `add project meeting from 10 oct 12pm to 2pm`
-
-The event “watch Star Wars” will begin at 7pm on the date of creation. No end time will be attached to the task.
 
 The event “project meeting” will start at 12pm on 10 October and end at 2pm on 10 October.
 
@@ -91,17 +88,17 @@ The event “project meeting” will start at 12pm on 10 October and end at 2pm 
 #### Retrieving task list : `list`
 
 You can see tasks sorted by date. Tasks without a date will be appended at the end of the list.<br>
-Format: `list [TYPE]` 
+Format: `list [TYPE]`
 > `TYPE` refers to a keyword such as `overdue, near, done or all`.
 
 Examples:
 
 * `list` <br>
-  Agendum will show you a list of all uncompleted tasks. 
- 
+  Agendum will show you a list of all uncompleted tasks.
+
 * `list overdue`<br>
-  Agendum will show you a list of overdue tasks. 
-  
+  Agendum will show you a list of overdue tasks.
+
 * `list near`  <br>
   Agendum will show you a list of upcoming tasks within a week. <br>
 
@@ -127,14 +124,14 @@ Examples:
 
 * `find Dory` <br>
   Returns `Shark & Dory` and `dory`  
-  
+
 * `find Nemo Dory` <br>
   Returns all tasks that contain `Dory` or `Nemo`  
 
 
 #### Deleting a task : `delete`
 
-You can delete tasks that are no longer required.<br>
+You can delete tasks that you no longer want to keep track of.<br>
 Format: `delete INDEX...`  
 
 > * Deletes the task at the specified `INDEX`.
@@ -146,7 +143,7 @@ Examples:
 * `list` <br>
   `delete 2` <br>
   Deletes the 2nd task in the task list.
-  
+
 * `find movie` <br>
   `delete 1` <br>
   Deletes the 1st task in the results of the `find` command.
@@ -157,15 +154,17 @@ Examples:
 
 * `list` <br>
   `delete 2 3 4` <br>
-  Deletes the 2nd, 3rd and 4th task in the task list.  
+  `delete 2,3,4` <br>
+  `delete 2-4` <br>
+  Each of the above command will delete the 2nd, 3rd and 4th task in the task list.  
 
 
 #### Renaming a task : `rename`
 
-If you find that the name of a task is not suitable, you can rename it.<br>
+If you find that the name of an existing task is not suitable, you can always rename it.<br>
 Format: `rename INDEX NEW_TASK_NAME`  
 
-> * Renames the task at the specified `INDEX`. 
+> * Renames the task at the specified `INDEX`.
 > * Index refers to the index number shown in the most recent listing.
 > * The index **must be a positive integer** 1, 2, 3, ...
 
@@ -174,7 +173,7 @@ Examples:
 * `list` <br>
   `rename 2 Star Wars II` <br>
   Renames the 2nd task in the list to “Star Wars II”
-  
+
 * `find Star Trek`   <br>
   `rename 1 Star Wars II` <br>
   Renames the 1st task in the results of the `find` command to “Star Wars II”
@@ -182,10 +181,10 @@ Examples:
 
 #### Updating the date/time of a task : `schedule`
 
-If your deadline has been reduced or extended and you need to change the date of time of a task, you can use this command.<br>
+Have the deadline of your task been reduced or extended? Have an event been rescheduled? To change the date or time of a task, you can use this command.<br>
 Format: `schedule INDEX [NEW_DATE_TIME]`
 
-> * Schedule the task at the specified `INDEX`. 
+> * Schedule the task at the specified `INDEX`.
 > * The index refers to the index number shown in the most recent listing.
 > * The index **must be a positive integer** 1, 2, 3, ...
 > * The time description must follow the format given in the add command examples
@@ -194,20 +193,20 @@ Examples:
 
 * `list` <br>
   `schedule 4` <br>
-  Removes the start and end date/time or deadline for task 4 on the list.
-  
+  Removes the deadline and start and end date/time for task 4 on the list.
+
 * `list` <br>
   `schedule 2 by Fri`<br>
-  Removes the start and end date/time or deadline for task 2 and sets the deadline to the coming Friday (If the current day is Friday, it would be the following Friday).
-  
+  Removes the deadline and start and end date/time for task 2 and resets the deadline to the coming Friday (If the current day is Friday, it would be the following Friday).
+
 * `list`<br>
   `schedule 3 from 1 Oct 7pm to 9.30pm`<br>
-  Sets task 3 to start on 1 Oct at 7pm and end at 9.30pm
+  Sets the start time of task 3 to 1 Oct 7pm and the end time to 1 Oct 9.30pm respectively
 
 
 #### Marking a task as completed : `mark`
 
-If you have completed a task, you can mark it as completed by using this command.<br>
+If you have completed a task, you can mark it as completed by using the following command.<br>
 Format: `mark INDEX...`
 
 > * Mark the task at the specified `INDEX`.
@@ -220,7 +219,7 @@ Examples:
 * `list`<br>
   `mark 2`<br>
   Marks the 2nd task in the list.
-  
+
 * `find Homework`<br>
   `mark 1`<br>
   Marks the 1st task in the list of results of the `find` command.
@@ -231,14 +230,16 @@ Examples:
 
 * `list`<br>
   `mark 2 3 4`<br>
-  Marks the 2nd, 3rd and 4th task in the task list.  
+  `mark 2,3,4` <br>
+  `mark 2-4` <br>
+  Each of the above command will mark the 2nd, 3rd and 4th task as completed.  
 
 
 #### Unmarking a task as completed : `unmark`
 
-If a certain task still has work remaining, you can remove the marking.<br>
-This works simlar to the `mark` command.<br>
+You might change your mind and want to continue working on a completed task. To reflect these changes in Agendum, follow this command: <br>
 Format: `unmark INDEX...`
+This works in a same way as the `mark` command.<br>
 
 
 #### Undo the last command : `undo`  
@@ -331,7 +332,7 @@ Agendum saves its data into the specified data storage location, or by default i
 <dl>
    <dt> Q: How do I transfer my data to another computer? </dt>
    <dd> Firstly, take note of the data storage location that your current todo list is saved at. You can check this by looking at the            bottom-right of Agendum. Navigate to this location and copy the data file to a portable USB device or hard disk. Then, ensure            that you have installed Agendum in the other computer. Copy the data file from your device onto the other computer, preferrably          in the same folder as Agendum. Use the `load` command to load it into Agendum. </dd>
-       
+
    <dt> Q: Why did Agendum complain about an invalid file directory? </dt>
    <dd> Check if the directory you wish to relocate to exists, or if you have enough administrator privileges. </dd>
 
@@ -348,16 +349,18 @@ Agendum saves its data into the specified data storage location, or by default i
 
 Command  | Format  
 :-------:| :--------
-Add      | `add TASK_NAME [by DATE_TIME] [from START_DATE_TIME] [to END_DATE_TIME]`
+Add      | `add TASK_NAME [by DATE_TIME] [from START_DATE_TIME to END_DATE_TIME]`
 Alias    | `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`
 Delete   | `delete INDEX...`
-Edit     | `edit INDEX NAME`
+Exit     | `exit`
 Find     | `find KEYWORD...`
 Help     | `help`
 List     | `list [TYPE]`
+Load     | `load FILE_PATH`
 Mark     | `mark INDEX...`
-Schedule | `schedule INDEX [by DATE_TIME] [from START_DATE_TIME] [to END_DATE_TIME]`
-Select   | `select INDEX...`
+Rename   | `rename INDEX NEW_NAME`
+Schedule | `schedule INDEX [by DATE_TIME] [from START_DATE_TIME to END_DATE_TIME]`
+Select   | `select INDEX`
 Store    | `store FILE_PATH`
 Unalias  | `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
 Undo     | `undo`
