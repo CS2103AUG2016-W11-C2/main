@@ -12,7 +12,7 @@ import seedu.agendum.commons.exceptions.FileDeletionException;
 public class FileUtil {
     private static final String CHARSET = "UTF-8";
     
-    public static void deleteFileAtPath(String filePath) throws FileDeletionException {
+    public static void deleteFile(String filePath) throws FileDeletionException {
         assert StringUtil.isValidFilePath(filePath);
         
         File file = new File(filePath);
@@ -47,6 +47,11 @@ public class FileUtil {
             file.delete();
         }
         return true;
+    }
+    
+    public static boolean isFileExists(String filePath) {
+        File file = new File(filePath);
+        return isFileExists(file);
     }
     
     public static boolean isFileExists(File file) {

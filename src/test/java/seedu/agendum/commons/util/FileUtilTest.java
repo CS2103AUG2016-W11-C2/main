@@ -23,6 +23,26 @@ public class FileUtilTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    @Test
+    public void isFileExists() throws IOException, FileDeletionException {
+        String filePath = "test.file";
+        File file = new File(filePath);
+        
+        // file does not exist
+        assertFalse(FileUtil.isFileExists(file));
+        assertFalse(FileUtil.isFileExists(filePath));
+        
+        // create the file
+        FileUtil.createFile(file);
+        
+        // file exists
+        assertTrue(FileUtil.isFileExists(file));
+        assertTrue(FileUtil.isFileExists(filePath));
+        
+        // delete file
+        FileUtil.deleteFile(filePath);
+    }
+    
     
     @Test 
     public void createFile() throws IOException {
@@ -51,17 +71,17 @@ public class FileUtilTest {
         
         // invalid filepath
         thrown.expect(AssertionError.class);
-        FileUtil.deleteFileAtPath(null);
+        FileUtil.deleteFile(null);
         
         // able to delete
         File file = new File("test.file");
         FileUtil.createFile(file);
-        FileUtil.deleteFileAtPath(file.getPath());
+        FileUtil.deleteFile(file.getPath());
         assertTrue(FileUtil.isFileExists(file));
         
         // unable to delete file
         thrown.expect(FileDeletionException.class);
-        FileUtil.deleteFileAtPath(file.getPath());
+        FileUtil.deleteFile(file.getPath());
     }
     
     @Test
@@ -77,7 +97,7 @@ public class FileUtilTest {
         assertTrue(FileUtil.isPathAvailable(availablePath));
         
         // delete the file
-        FileUtil.deleteFileAtPath(availablePath);
+        FileUtil.deleteFile(availablePath);
     }
     
     @Test
