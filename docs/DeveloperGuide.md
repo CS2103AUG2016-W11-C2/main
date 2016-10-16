@@ -53,6 +53,9 @@ This guide describes the design and implementation of Agendum. It will help deve
       (Gradle needs time to download library files from servers during the project set up process)
   > * If Eclipse automatically changed any settings files during the import process, you can discard those changes.
 
+  > After you are done importing Agendum, it will be a good practice to enable assertions before developing. This will enable Agendum app to verify assumptions along the way. To enable assertions, follow the instructions [here](http://stackoverflow.com/questions/5509082/eclipse-enable-assertions)
+
+
 #### 3. Troubleshooting project setup
 
 * **Problem: Eclipse reports compile errors after new commits are pulled from Git**
@@ -213,7 +216,7 @@ Certain properties of the application can be controlled (e.g. App name, logging 
 
 ## Testing
 
-Tests can be found in the `./src/test/java` folder.
+You can find all our tests in the `./src/test/java` folder.
 
 **1. In Eclipse**:
 
@@ -234,21 +237,18 @@ These are _System Tests_ that test the entire App by simulating user actions on 
 * **Non-GUI Tests**<br>
 These are tests not involving the GUI. They include,
    * _Unit tests_ targeting the lowest level methods/classes. <br>
-      e.g. `seedu.agendum.commons.UrlUtilTest`
+      e.g. `seedu.agendum.commons.StringUtilTest` tests the correctness of StringUtil methods e.g. if a source string contains a query string, ignoring letter cases.
    * _Integration tests_ that are checking the integration of multiple code units
      (those code units are assumed to be working).<br>
-      e.g. `seedu.agendum.storage.StorageManagerTest`
+      e.g. `seedu.agendum.storage.StorageManagerTest` tests if StorageManager is correctly connected to other storage components such as JsonUserPrefsStorage.
    * Hybrids of _unit and integration tests_. These tests are checking multiple code units as well as
       how the are connected together.<br>
-      e.g. `seedu.agendum.logic.LogicManagerTest`
+      e.g. `seedu.agendum.logic.LogicManagerTest` will check various code units from the `Model` and `Logic` components.
 
 **4. Headless GUI Testing** :
 
-Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
- our GUI tests can be run in the _headless_ mode.
- In the headless mode, GUI tests do not show up on the screen.
- That means the developer can do other things on the Computer while the tests are running.<br>
- See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in headless mode.
+Fortunately, our GUI tests can be run in the _headless_ mode where they will not show up on screen. As such, you can continue developing and coding while the tests are running. This is enabled by the [TestFX](https://github.com/TestFX/TestFX) library we use.<br>
+ Refer to [UsingGradle.md](UsingGradle.md#running-tests) for instructions on how to run tests in headless mode.
 
 >#### Troubleshooting tests
 >**Problem: Tests fail because NullPointException when AssertionError is expected**
@@ -263,29 +263,26 @@ Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
 
 ### 1. Build Automation
 
-See [UsingGradle.md](UsingGradle.md) to learn how to use Gradle for build automation.
+See [UsingGradle.md](UsingGradle.md) for instructions on how to use Gradle for build automation. We use Gradle to run tests and manage library dependencies.
 
 ### 2. Continuous Integration
 
-We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our projects.
+We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our project.
 See [UsingTravis.md](UsingTravis.md) for more details.
 
 ### 3. Making a Release
 
-Here are the steps to create a new release.
+To contribute a new release:
 
  1. Generate a JAR file [using Gradle](UsingGradle.md#creating-the-jar-file).
- 2. Tag the repo with the version number. e.g. `v0.1`
+ 2. Tag the repo with the version number. e.g. `v1.1`
  2. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/)
-    and upload the JAR file your created.
+    and upload the JAR file you created.
 
 ### 4. Managing Dependencies
 
-A project often depends on third-party libraries. For example, Agendum depends on the
-[Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these dependencies can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives:
-
-* Include those libraries in the repo
-* Require developers to download those libraries manually
+Agendum depends on third-party libraries, such as the
+[Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these dependencies have been automated using Gradle. Gradle can download the dependencies automatically hence the libraries are not included in this repo and you do not need to download these libraries manually. To add a new dependency, update _build.gradle_.
 
 
 ## Appendix A : User Stories
