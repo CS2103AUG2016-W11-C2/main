@@ -19,7 +19,7 @@
 
 Agendum is a task manager for busy users to manage their schedules and tasks via keyboard commands. It is a Java desktop application that has a **GUI** implemented with JavaFX.
 
-This guide describes the design and implementation of Agendum. It will help developers (like you) understand how Agendum works and how to further contribute to its development. We have organized this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
+This guide describes the design and implementation of Agendum. It will help developers (like you) understand how Agendum works and how to further contribute to its development. We have organized this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections. Each sub-section is mostly self-contained to provide ease of reference.
 
 ## Setting up
 
@@ -71,8 +71,8 @@ This guide describes the design and implementation of Agendum. It will help deve
 ### 1. Architecture
 
 <img src="images/Architecture.png" width="600"><br>
-The **_Architecture Diagram_** given above explains the high-level design of the App.
-Given below is a quick overview of each component.
+The **_Architecture Diagram_** given above summarizes the high-level design of the App.
+Here is a quick overview of each component.
 
 `Main` has only one class called [`MainApp`](../src/main/java/seedu/agendum/MainApp.java). It is responsible for,
 
@@ -102,23 +102,23 @@ For example, the `Logic` component (see the class diagram given below) defines i
 interface and exposes its functionality using the `LogicManager.java` class.<br>
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the
-command `delete 1`.
+The _Sequence Diagram_ below illustrates how the components interact for the scenario where the user issues the
+command `delete 1` to delete the first task in the displayed list. The `UI` component will invoke the `Logic` component's _execute_ method to carry out the given command. In this scenario, the `Logic` component will identify the corresponding task and invoke `Model`'s  _deleteTask(task)_ method to update the in-app memory and raise a `ToDoListChangedEvent`.
 
 <img src="images\SDforDeleteTask.png" width="800">
 
 >Note how the `Model` simply raises a `ToDoListChangedEvent` when the Agendum data are changed,
- instead of asking the `Storage` to save the updates to the hard disk.
+ instead of directly asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates
-being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time. <br>
+The diagram below shows how the `EventsCenter` reacts to that raised event. The subscribers (the `UI` and `Storage` components) are informed and will respond accordingly. The status bar of the UI will be updated to reflect the 'Last Updated' time and the updates to the task data will also be saved to hard disk. <br>
+
 <img src="images\SDforDeleteTaskEventHandling.png" width="800">
 
 > Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having
-  to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct
+  to be coupled to either of them. This application of Event Driven approach helps us reduce direct
   coupling between components.
 
-The sections below give more details of each component.
+The following sections will then give more details of each individual component.
 
 ### 2. UI component
 
