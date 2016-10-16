@@ -1,4 +1,4 @@
-# Developer Guide 
+# Developer Guide
 
 
 &nbsp;
@@ -24,9 +24,10 @@
 
 ## Introduction
 
-Agendum is a task manager for you to manage your schedules and tasks via keyboard commands. It is a Java desktop application that has a **GUI** implemented with JavaFX.
+Agendum is a task manager for busy users to manage their schedules and tasks via keyboard commands. It is a Java desktop application that has a **GUI** implemented with JavaFX.
 
-This guide describes the design and implementation of Agendum. It will help developers like you understand how Agendum works and how you can further contribute to its development. We have organised this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections.
+This guide describes the design and implementation of Agendum. It will help developers (like you) understand how Agendum works and how to further contribute to its development. We have organized this guide in a top-down manner so that you can understand the big picture before moving on to the more detailed sections. Each sub-section is mostly self-contained to provide ease of reference.
+
 
 ## Setting up
 
@@ -34,15 +35,14 @@ This guide describes the design and implementation of Agendum. It will help deve
 
 * **JDK `1.8.0_60`**  or above<br>
 
-    > Having any Java 8 version is not enough. <br>
-    This application will not work with earlier versions of Java 8.
-    
+    > This application will not work with any earlier versions of Java 8.
+
 * **Eclipse** IDE
 
 * **e(fx)clipse** plugin for Eclipse (Do the steps 2 onwards given in
    [this page](http://www.eclipse.org/efxclipse/install.html#for-the-ambitious))
-   
-* **Buildship Gradle Integration** plugin from the 
+
+* **Buildship Gradle Integration** plugin from the
    [Eclipse Marketplace](https://marketplace.eclipse.org/content/buildship-gradle-integration)
 
 
@@ -62,19 +62,19 @@ This guide describes the design and implementation of Agendum. It will help deve
 
   > * If you are asked whether to 'keep' or 'overwrite' config files, choose to 'keep'.
   > * Depending on your connection speed and server load, it can even take up to 30 minutes for the set up to finish
-      (This is because Gradle downloads library files from servers during the project set up process)
-  > * If Eclipse has changed any settings during the import process, you can discard those changes.
-  
+      (Gradle needs time to download library files from servers during the project set up process)
+  > * If Eclipse automatically changed any settings during the import process, you can discard those changes.
+
+    > After you are done importing Agendum, it will be a good practice to enable assertions before developing. This will enable Agendum app to verify assumptions along the way. To enable assertions, follow the instructions [here](http://stackoverflow.com/questions/5509082/eclipse-enable-assertions)
+
 ### Troubleshooting project setup
 
 * **Problem: Eclipse reports compile errors after new commits are pulled from Git**
-	* Reason: Eclipse fails to recognize new files that appeared due to the Git pull. 
-	* Solution: Refresh the project in Eclipse:<br> 
-	Right click on the project (in Eclipse package explorer), choose `Gradle` -> 	`Refresh Gradle Project`.
-  
-* **Problem: Eclipse reports some required libraries missing**
+	* Reason: Eclipse fails to recognize new files that appeared due to the Git pull.
+	* Solution: Refresh the project in Eclipse:<br>
 
-	* Reason: Required libraries may not have been downloaded during the project import. 
+* **Problem: Eclipse reports some required libraries missing**
+	* Reason: Required libraries may not have been downloaded during the project import.
 	* Solution: [Run tests using Gardle](UsingGradle.md) once (to refresh the libraries).
 
 
@@ -104,7 +104,7 @@ Two of those classes play important roles at the architecture level.
 
 The rest of the App comprises four components:
 
-* [**`UI`**](#2-ui-component) - The UI of tha App.
+* [**`UI`**](#2-ui-component) - The UI of the App.
 * [**`Logic`**](#3-logic-component) - The command executor.
 * [**`Model`**](#4-model-component) - Holds the data of the App in-memory.
 * [**`Storage`**](#5-storage-component) - Reads data from, and writes data to, the hard disk.
@@ -118,22 +118,23 @@ For example, the `Logic` component (see the class diagram given below) defines i
 interface and exposes its functionality using the `LogicManager.java` class.<br>
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below illustrates how the components interact for the scenario where the user issues the
+command `delete 1` to delete the first task in the displayed list. The `UI` component will invoke the `Logic` component's _execute_ method to carry out the given command. In this scenario, the `Logic` component will identify the corresponding task and invoke `Model`'s  _deleteTask(task)_ method to update the in-app memory and raise a `ToDoListChangedEvent`.
 
 <img src="images\SDforDeleteTask.png" width="800">
 
 >Note how the `Model` simply raises a `ToDoListChangedEvent` when the Agendum data are changed,
- instead of asking the `Storage` to save the updates to the hard disk.
+ instead of directly asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates
-being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time. <br>
+The diagram below shows how the `EventsCenter` reacts to that raised event. The subscribers (the `UI` and `Storage` components) are informed and will respond accordingly. The status bar of the UI will be updated to reflect the 'Last Updated' time and the updates to the task data will also be saved to hard disk. <br>
+
 <img src="images\SDforDeleteTaskEventHandling.png" width="800">
 
 > Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having
-  to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct 
+  to be coupled to either of them. This application of Event Driven approach helps us reduce direct
   coupling between components.
 
-The sections below give more details of each component.
+The following sections will then give more details of each individual component.
 
 
 ### 2. UI component
@@ -236,24 +237,28 @@ and logging destinations.
   (See [Configuration](#2-configuration))
 * The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to
   the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
+* Currently log messages are output through `Console` and to a `.log` file.
 
 **Logging Levels**
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging
-  e.g. print the actual list instead of just its size
+Currently, Agendum has 4 logging levels: `SEVERE`, `WARNING`, `INFO` and `FINE`. They record information pertaining to:
+
+* `SEVERE` : A critical problem which may cause the termination of Agendum
+   e.g. fatal error during the initialization of Agendum's main window
+* `WARNING` : A problem which requires attention and caution but allows Agendum to continue working
+   e.g. error reading from/saving to config file
+* `INFO` : Noteworthy actions by Agendum
+  e.g. valid and invalid commands executed and their results
+* `FINE` : Less significant details that may be useful in debugging
+  e.g. print the elements in actual list instead of just its size
 
 ### 2. Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file 
+You can alter certain properties of our Agendum application (e.g. logging level) through the configuration file.
 (default: `config.json`):
 
 
 &nbsp;
-
 
 ## Testing
 
@@ -263,26 +268,26 @@ You can find all the test files in the `./src/test/java` folder.
 
 #### 1. GUI Tests
 
-These are _System Tests_ that test the entire App by simulating user actions on the GUI. 
+These are _System Tests_ that test the entire App by simulating user actions on the GUI.
 They are in the `guitests` package.
-  
+
 #### 2. Non-GUI Tests
 
-These are tests not involving the GUI. They include the following:
+These are tests not involving the GUI. They include,
    * _Unit tests_ targeting the lowest level methods/classes. <br>
-      e.g. `seedu.agendum.commons.UrlUtilTest`
-   * _Integration tests_ that are checking the integration of multiple code units 
+      e.g. `seedu.agendum.commons.StringUtilTest` tests the correctness of StringUtil methods e.g. if a source string contains a query string, ignoring letter cases.
+   * _Integration tests_ that are checking the integration of multiple code units
      (those code units are assumed to be working).<br>
-      e.g. `seedu.agendum.storage.StorageManagerTest`
-   * Hybrids of _unit and integration tests_. These test are checking multiple code units as well as 
+      e.g. `seedu.agendum.storage.StorageManagerTest` tests if StorageManager is correctly connected to other storage components such as JsonUserPrefsStorage.
+   * Hybrids of _unit and integration tests_. These tests are checking multiple code units as well as
       how the are connected together.<br>
-      e.g. `seedu.agendum.logic.LogicManagerTest`
+      e.g. `seedu.agendum.logic.LogicManagerTest` will check various code units from the `Model` and `Logic` components.
 
 #### 3. Headless Mode GUI Tests
 
-Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use, 
+Thanks to the [TestFX](https://github.com/TestFX/TestFX) library we use,
 our GUI tests can be run in [headless mode](#headless-mode). <br>
-See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in headless mode.
+See [UsingGradle.md](UsingGradle.md#running-tests)  for instructions on how to run tests in headless mode.
 
 ### How to Test
 
@@ -295,13 +300,12 @@ See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in 
 
 * See [UsingGradle.md](UsingGradle.md) for how to run tests using Gradle.
 
- 
 >#### Troubleshooting tests
 >**Problem: Tests fail because NullPointException when AssertionError is expected**
 
->* Reason: Assertions are not enabled for JUnit tests. 
+>* Reason: Assertions are not enabled for JUnit tests.
    This can happen if you are not using a recent Eclipse version (i.e. _Neon_ or later)
->* Solution: Enable assertions in JUnit tests as described 
+>* Solution: Enable assertions in JUnit tests as described
    [here](http://stackoverflow.com/questions/2522897/eclipse-junit-ea-vm-option). <br>
    Delete run configurations created when you ran tests earlier.
 
@@ -313,29 +317,26 @@ See [UsingGradle.md](UsingGradle.md#running-tests) to learn how to run tests in 
 
 ### 1. Build Automation
 
-See [UsingGradle.md](UsingGradle.md) to learn how to use Gradle for build automation.
+See [UsingGradle.md](UsingGradle.md) for instructions on how to use Gradle for build automation. We use Gradle to run tests and manage library dependencies.
 
 ### 2. Continuous Integration
 
-We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our projects.
+We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our project.
 See [UsingTravis.md](UsingTravis.md) for more details.
 
 ### 3. Making a Release
 
-Here are the steps to create a new release.
- 
+To contribute a new release:
+
  1. Generate a JAR file [using Gradle](UsingGradle.md#creating-the-jar-file).
- 2. Tag the repo with the version number. e.g. `v0.1`
- 2. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/) 
-    and upload the JAR file your created.
-   
+ 2. Tag the repo with the version number. e.g. `v1.1`
+ 2. [Create a new release using GitHub](https://help.github.com/articles/creating-releases/)
+    and upload the JAR file you created.
+
 ### 4. Managing Dependencies
 
-A project often depends on third-party libraries. For example, Agendum depends on the
-[Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these dependencies can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives:
-
-* Include those libraries in the repo
-* Require developers to download those libraries manually
+Agendum depends on third-party libraries, such as the
+[Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these dependencies have been automated using Gradle. Gradle can download the dependencies automatically hence the libraries are not included in this repo and you do not need to download these libraries manually. To add a new dependency, update _build.gradle_.
 
 
 &nbsp;
@@ -364,7 +365,7 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | Busy User | Edit and remove start and end time of tasks | Update events with defined start and end dates
 `* * *` | Busy User | Edit and remove deadlines of tasks | Update tasks which must be done by a certain and date and time
 `* *` | User | Sort tasks by alphabetical order and date | Organise and easily locate tasks
-`* *` | User | Filter upcoming and overdue tasks | Decide on what needs to be done soon
+`* *` | User | Filter overdue tasks and upcoming tasks (due within a week) | Decide on what needs to be done soon
 `* *` | User | Filter tasks based on whether they are marked/unmarked | View my tasks grouped by their state of completion. Review my completed tasks and decide on what I should do next
 `* *` | User | See the count/statistics for upcoming/ overdue and pending tasks | Know how many tasks I need to do
 `*` | User | Clear the command I am typing with a key | Enter a new command without having to backspace the entire command line
@@ -444,7 +445,7 @@ Priority | As a ... | I want to ... | So that I can...
 1. Actor requests to list tasks
 2. System shows a list of tasks
 3. Actor requests to rename a specific task in the list by its index and also input the new task name
-4. System updates the task 
+4. System updates the task
 5. System shows a feedback message (“Task `index` updated”) and displays the updated list
 6. Use case ends.
 
@@ -476,7 +477,7 @@ Priority | As a ... | I want to ... | So that I can...
 1. Actor requests to list tasks
 2. System shows a list of tasks
 3. Actor inputs index and the new start/end time or deadline of the task to be modified
-4. System updates the task 
+4. System updates the task
 5. System shows a feedback message (“Task `index`'s time/date has been updated”) and displays the updated list
 6. Use case ends.
 
@@ -620,21 +621,20 @@ Priority | As a ... | I want to ... | So that I can...
 ## Appendix C : Non Functional Requirements
 
 1.  Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
-2.	Should be able to hold up to 500 tasks.
+2.	Should be able to hold up to 800 tasks in total (including completed tasks).
 3.	Should come with automated unit tests.
 4.	Should use a Continuous Integration server for real time status of master’s health.
 5.	Should be kept open source code.
 6.	Should favour DOS style commands over Unix-style commands.
-7.	Should be able to accept minor mistakes in the commands entered.
-8.	Should adopt an object oriented design.
-9.	Should not violate any copyrights.
-10.	Should have a response time of less than 1 second, for every action performed.
-11.	Should work offline without an internet connection.
-12.	Should work as a standalone application.
-13.	Should not use relational databases to store data.
-14.	Should store data in an editable text file.
-15.	Should not require an installer.
-16.	Should not use paid libraries and frameworks.
+7.	Should adopt an object oriented design.
+8.	Should not violate any copyrights.
+9.	Should have a response time of less than 1 second, for every action performed.
+10.	Should work offline without an internet connection.
+11.	Should work as a standalone application.
+12.	Should not use relational databases to store data.
+13.	Should store data in an editable text file.
+14.	Should not require an installer.
+15.	Should not use paid libraries and frameworks.
 
 
 &nbsp;
@@ -642,7 +642,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 ## Appendix D : Glossary
 
-##### Mainstream OS: 
+##### Mainstream OS:
 
 Windows, Linux, Unix, OS-X
 
@@ -656,6 +656,8 @@ This means you can do other things on the Computer while the tests are running.
 
 
 ## Appendix E : Product Survey
+
+We conducted a product survey on other task managers. Here is a summary of the strengths and weaknesses of each application. The criteria used for evaluation are own preferences and Jim's requirements.
 
 #### Wunderlist
 
@@ -678,3 +680,24 @@ This means you can do other things on the Computer while the tests are running.
 
 * Wunderlist has a complex interface and might require multiple clicks to get specific tasks done. For example, it has separate field to add tasks, search for tasks and a sort button. There are various lists & sub-lists. Each list has a completed/uncompleted  section and each task needs to be clicked to display the associated subtasks, notes, files and comment.
 * New users might not know how to use the advanced features e.g. creating recurring tasks
+
+#### Google calendar
+
+*Strengths:*
+
+* Have a weekly/monthly/daily calendar view which will make it easy for users to visualize their schedules
+* Can create recurring events
+* Integrated with Gmail. A user can add events from emails easily and this is desirable since Jim's to do items arrive by emails
+* Can be used offline
+* Possible to synchronize across devices
+* Calendar can be exported to CSV/iCal for other users
+* CLI to quick add an event to a calendar instead of clicking through the screen
+* Comprehensive search by name/details/people involved/location/time
+
+
+*Weaknesses:*
+
+* Not possible to mark tasks as completed
+* Not possible to add tasks without deadline or time
+* CLI does not support updating of tasks/deleting etc. Still requires clicking.
+* New users might not know of the keyboard shortcuts
