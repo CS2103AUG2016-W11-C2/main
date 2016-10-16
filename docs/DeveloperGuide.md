@@ -572,41 +572,46 @@ Priority | As a ... | I want to ... | So that I can...
 
 **MSS**
 
-1. Actor enters store command followed by a file path
-2. System updates data storage location to the specified file path
-3. System shows a feedback message ("New save location: `file-path`")
+1. Actor enters store command followed by a path to file
+2. System updates data storage location to the specified path to file
+3. System shows a feedback message ("New save location: `path-to-file`")
 4. Use case ends.
 
 **Extensions**
 
-1a. File path is input as 'default'
+1a. Path to file is input as 'default'
 
 > 1a1. System updates data storage location to default <br>
-> 1a2. System shows a feedback message ("Save location set to default: `file-path`") <br>
+> 1a2. System shows a feedback message ("Save location set to default: `path-to-file`") <br>
 > Use case ends
 
-1b. File path is invalid
-
-> 1b1. System shows an error message ("The specified file path is invalid.") <br>
+1b. File exists
+> 1b1. System shows an error message ("The specified file exists; would you like to use LOAD instead?") <br>
 > Use case ends
+
+1c. Path to file is invalid
+
+> 1c1. System shows an error message ("The specified path to file is invalid.") <br>
+> Use case ends
+
 
 
 ### Use case 09 - Load from data file
 
 **MSS**
 
-1. Actor enters load command followed by a file path
+1. Actor enters load command followed by a path to file
 2. System saves current task list into existing data storage location
-3. System loads task list from specified file path
-2. System updates data storage location to the specified file path
-3. System shows a feedback message ("Data successfully loaded from: `file-path`")
+3. System loads task list from specified path to file
+2. System updates data storage location to the specified path to file
+3. System shows a feedback message ("Data successfully loaded from: `path-to-file`")
 4. Use case ends.
 
 **Extensions**
 
-1a. File path is invalid
+1a. Path to file is invalid
 
-> 1a1. System shows an error message ("The specified file path is invalid.") <br>
+> 1a1. System shows an error message ("The specified path to file is invalid.") <br>
 > Use case ends
 
 3a. File is in the wrong format
