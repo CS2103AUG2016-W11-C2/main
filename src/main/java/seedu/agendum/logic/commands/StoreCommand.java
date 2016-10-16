@@ -1,7 +1,5 @@
 package seedu.agendum.logic.commands;
 
-import java.io.File;
-
 import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
@@ -13,27 +11,35 @@ public class StoreCommand extends Command {
     
     public static final String COMMAND_WORD = "store";
     public static final String MESSAGE_SUCCESS = "New save location: %1$s";
-    public static final String MESSAGE_LOCATION_INVALID = "The specified location is invalid.";
     public static final String MESSAGE_LOCATION_DEFAULT = "Save location set to default: %1$s";
+
+    public static final String MESSAGE_LOCATION_INVALID = "The specified location is invalid.";
+    public static final String MESSAGE_FILE_EXISTS = "The specified file exists; would you like to use LOAD instead?";
     
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Specify a save location. \n"
-            + "Parameters: FILE_PATH\n" 
+            + "Parameters: PATH_TO_FILE\n" 
             + "Example: " + COMMAND_WORD 
             + "agendum/todolist.xml";
-    private String newSaveLocation;
+    
+    private String pathToFile;
 
     public StoreCommand(String location) {
-        newSaveLocation = location.trim();
+        this.pathToFile = location.trim();
     }
 
     @Override
     public CommandResult execute() {
-        assert newSaveLocation != null;
+        assert pathToFile != null;
         
-        if(newSaveLocation.equalsIgnoreCase("default")) {
+        if(pathToFile.equalsIgnoreCase("default")) {
             String defaultLocation = Config.DEFAULT_SAVE_LOCATION;
             model.changeSaveLocation(defaultLocation);
             return new CommandResult(String.format(MESSAGE_LOCATION_DEFAULT, defaultLocation));
+        }
+        
+        if(!isFileExists()) {
+            indicateAttemptToExecuteIncorrectCommand();
+            return new CommandResult(MESSAGE_FILE_EXISTS);
         }
 
         if(!isLocationValid()) {
@@ -41,22 +47,22 @@ public class StoreCommand extends Command {
             return new CommandResult(MESSAGE_LOCATION_INVALID);
         }
 
-        model.changeSaveLocation(newSaveLocation);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, newSaveLocation));
+        model.changeSaveLocation(pathToFile);
+        return new CommandResult(String.format(MESSAGE_SUCCESS, pathToFile));
     }
     
     private boolean isLocationValid() {
-        boolean isValidFilePath = StringUtil.isValidFilePath(newSaveLocation);
+        boolean isValidFilePath = StringUtil.isValidFilePath(pathToFile);
         if(!isValidFilePath) {// Don't do the more expensive check if this one fails
             return false;
         }
-        boolean isPathAvailable = FileUtil.isPathAvailable(newSaveLocation);
+        boolean isPathAvailable = FileUtil.isPathAvailable(pathToFile);
         
         return isValidFilePath && isPathAvailable;
     }
     
     private boolean isFileExists() {
-        return FileUtil.isFileExists(new File(newSaveLocation));
+        return FileUtil.isFileExists(pathToFile);
     }
     
 }
