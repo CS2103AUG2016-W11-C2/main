@@ -235,7 +235,7 @@ They are further separated into sub-packages - namely `core`, `events`, `excepti
 This package consists of the essential classes that are required by multiple components.
 
 * `ComponentManager` - This is a base class of manager classes, namely `LogicManager`, `ModelManager`, `StorageManager` and `UiManager`
-* `Config` - This file stores the configuration values of Agendum; these include: 
+* `Config` - This file stores the configuration values of Agendum; these include:
    * Application title
    * Logging level
    * User preferences file path
@@ -374,12 +374,12 @@ See [UsingGradle.md](UsingGradle.md#running-tests)  for instructions on how to r
 
 ### 1. Build Automation
 
-See [UsingGradle.md](UsingGradle.md) for instructions on how to use Gradle for build automation. We use Gradle to run tests and manage library dependencies.
+We use Gradle to run tests and manage library dependencies. The Gradle configuration for this project is defined in _build.gradle_. Refer to [UsingGradle.md](UsingGradle.md) for more instructions on how to use Gradle for build automation.
 
 ### 2. Continuous Integration
 
-We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our project.
-See [UsingTravis.md](UsingTravis.md) for more details.
+We use [Travis CI](https://travis-ci.org/) to perform _Continuous Integration_ on our project. When code is pushed to this repository, Travis CI will run the project tests automatically to ensure that existing functionality will not be negatively affected by the changes.
+Refer to [UsingTravis.md](UsingTravis.md) for more details.
 
 ### 3. Making a Release
 
