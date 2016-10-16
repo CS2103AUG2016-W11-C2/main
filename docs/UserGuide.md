@@ -293,10 +293,10 @@ Examples:
 
 If you want to store the task list data in a different location, you can specifiy it using this command.
 The task list data will be moved to the specific directory, and future data will be saved in that location.<br>
-Format: `store FILE_PATH`
+Format: `store PATH_TO_FILE`
 
-> * FILE_PATH must be a valid path on the local computer.
-> * If a file at FILE_PATH exists, it will be overriden.
+> * PATH_TO_FILE must be a valid path to a file on the local computer.
+> * If a file at PATH_TO_FILE exists, it will be overriden.
 > * The previous data storage file will not be deleted.
 
 Examples:
@@ -306,12 +306,12 @@ Examples:
 #### Loading from another data storage location : `load`
 
 If you have another data file with existing task data, you can load it into Agendum. <br><br>
-Format: `load FILE_PATH`
+Format: `load PATH_TO_FILE`
 
-> * FILE_PATH must be a valid path on the local computer.
+> * PATH_TO_FILE must be a valid path to a file on the local computer.
 > * Existing data will be saved and stored in the existing data storage location.
 > * The task list in Agendum will be replaced by the loaded task list.
-> * Future data will be stored in the specified file.
+> * Future data will be stored in PATH_TO_FILE.
 
 Examples:
 * `load data/mytasklist.xml`
@@ -367,12 +367,12 @@ Exit     | `exit`
 Find     | `find KEYWORD...`
 Help     | `help`
 List     | `list [TYPE]`
-Load     | `load FILE_PATH`
+Load     | `load PATH_TO_FILE`
 Mark     | `mark INDEX...`
 Rename   | `rename INDEX NEW_NAME`
 Schedule | `schedule INDEX [by DATE_TIME] [from START_DATE_TIME to END_DATE_TIME]`
 Select   | `select INDEX`
-Store    | `store FILE_PATH`
+Store    | `store PATH_TO_FILE`
 Unalias  | `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
 Undo     | `undo`
 Unmark   | `unmark INDEX...`
