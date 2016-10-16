@@ -37,7 +37,7 @@ public class StoreCommand extends Command {
             return new CommandResult(String.format(MESSAGE_LOCATION_DEFAULT, defaultLocation));
         }
         
-        if(!isFileExists()) {
+        if(isFileExists()) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(MESSAGE_FILE_EXISTS);
         }
