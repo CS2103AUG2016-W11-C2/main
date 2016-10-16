@@ -198,19 +198,24 @@ and logging destinations.
   (See [Configuration](#2-configuration))
 * The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to
   the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
+* Currently log messages are output through `Console` and to a `.log` file.
 
 **Logging Levels**
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging
-  e.g. print the actual list instead of just its size
+Currently, Agendum has 4 logging levels: `SEVERE`, `WARNING`, `INFO` and `FINE`. They record information pertaining to:
+
+* `SEVERE` : A critical problem which may cause the termination of Agendum
+   e.g. fatal error during the initialization of Agendum's main window
+* `WARNING` : A problem which requires attention and caution but allows Agendum to continue working
+   e.g. error reading from/saving to config file
+* `INFO` : Noteworthy actions by Agendum
+  e.g. valid and invalid commands executed and their results
+* `FINE` : Less significant details that may be useful in debugging
+  e.g. print the elements in actual list instead of just its size
 
 ### 2. Configuration
 
-Certain properties of the application can be controlled (e.g. App name, logging level) through the configuration file
+You can alter certain properties of our Agendum application (e.g. logging level) through the configuration file.
 (default: `config.json`):
 
 
@@ -511,7 +516,7 @@ Priority | As a ... | I want to ... | So that I can...
 ## Appendix C : Non Functional Requirements
 
 1.  Should work on any [mainstream OS](#mainstream-os) as long as it has Java `1.8.0_60` or higher installed.
-2.	Should be able to hold up to 800 tasks in total (including completed).
+2.	Should be able to hold up to 800 tasks in total (including completed tasks).
 3.	Should come with automated unit tests.
 4.	Should use a Continuous Integration server for real time status of master’s health.
 5.	Should be kept open source code.
