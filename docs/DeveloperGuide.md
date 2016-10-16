@@ -534,6 +534,8 @@ Windows, Linux, Unix, OS-X
 
 ## Appendix E : Product Survey
 
+We conducted a product survey on other task managers. Here is a summary of the strengths and weaknesses of each application. The criteria used for evaluation are own preferences and Jim's requirements.
+
 #### Wunderlist
 
 *Strengths:*
@@ -555,3 +557,24 @@ Windows, Linux, Unix, OS-X
 
 * Wunderlist has a complex interface and might require multiple clicks to get specific tasks done. For example, it has separate field to add tasks, search for tasks and a sort button. There are various lists & sub-lists. Each list has a completed/uncompleted  section and each task needs to be clicked to display the associated subtasks, notes, files and comment.
 * New users might not know how to use the advanced features e.g. creating recurring tasks
+
+#### Google calendar
+
+*Strengths:*
+
+* Have a weekly/monthly/daily calendar view which will make it easy for users to visualize their schedules
+* Can create recurring events
+* Integrated with Gmail. A user can add events from emails easily and this is desirable since Jim's to do items arrive by emails
+* Can be used offline
+* Possible to synchronize across devices
+* Calendar can be exported to CSV/iCal for other users
+* CLI to quick add an event to a calendar instead of clicking through the screen
+* Comprehensive search by name/details/people involved/location/time
+
+
+*Weaknesses:*
+
+* Not possible to mark tasks as completed
+* Not possible to add tasks without deadline or time
+* CLI does not support updating of tasks/deleting etc. Still requires clicking.
+* New users might not know of the keyboard shortcuts
