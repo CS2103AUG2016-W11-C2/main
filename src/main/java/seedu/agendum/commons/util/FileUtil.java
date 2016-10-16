@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import seedu.agendum.commons.exceptions.FileDeletionException;
 
 /**
- * Writes and reads file
+ * Writes, reads and deletes file
  */
 public class FileUtil {
     private static final String CHARSET = "UTF-8";
