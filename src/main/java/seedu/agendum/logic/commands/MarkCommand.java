@@ -49,12 +49,10 @@ public class MarkCommand extends Command {
             tasksToMark.add(taskToMark);
         }
         
-        for (ReadOnlyTask taskToMark: tasksToMark) {
-            try {
-                model.markTask(taskToMark);
-            } catch (TaskNotFoundException pnfe) {
-                assert false : "The target task cannot be missing";
-            }           
+        try {
+            model.markTasks(tasksToMark);
+        } catch (TaskNotFoundException pnfe) {
+            assert false : "The target task cannot be missing";
         }
 
         return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, targetIndexes.toString()));

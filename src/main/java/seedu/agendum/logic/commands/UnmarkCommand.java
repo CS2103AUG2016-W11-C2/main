@@ -49,12 +49,10 @@ public class UnmarkCommand extends Command {
             tasksToUnmark.add(taskToUnmark);
         }
         
-        for (ReadOnlyTask taskToUnmark: tasksToUnmark) {
-            try {
-                model.unmarkTask(taskToUnmark);
-            } catch (TaskNotFoundException pnfe) {
-                assert false : "The target task cannot be missing";
-            }           
+        try {
+            model.unmarkTasks(tasksToUnmark);
+        } catch (TaskNotFoundException pnfe) {
+            assert false : "The target task cannot be missing";
         }
 
         return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS, targetIndexes.toString()));
