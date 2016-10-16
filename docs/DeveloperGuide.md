@@ -176,17 +176,41 @@ You can view the Sequence Diagram below for interactions within the `Logic` comp
 
 ### 4. Model component
 
+The structure and relationship of the various classes in the Model component is described in the diagram below.
 <img src="images/ModelClassDiagram.png" width="800"><br>
 
+To modify the in-app data and retrieve the various task lists, other components such as Logic and UI will have to make use of the API provided by the model interface.
 **API** : [`Model.java`](../src/main/java/seedu/agendum/model/Model.java)
 
 The `Model` has the following functions:
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Agendum data.
-* exposes a `UnmodifiableObservableList<ReadOnlyTask>` that can be 'observed' e.g. the UI can be bound to this list
-  so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* stores and manages Agendum's task list data.
+* exposes a `UnmodifiableObservableList<ReadOnlyTask>` that can be 'observed' by other components e.g. the UI can be bound to this list
+  so that the UI will automatically update when the data in the list change.
+
+The `Model` component does not depend on any of the other three components and has the following classes and interfaces.
+
+#### `Model Manager` class
+The `Model Manager` class implements the `Model` interface. When the in-memory model of the to-do list data is updated, a ToDoListChangedEvent will be raised.
+
+#### `User Pref`
+This class represents user's preferences such as their preferences about `Gui Settings`.
+
+#### `ToDoList`
+This class wraps all the data at the to-do list level. Currently, each `ToDoList` object has a single `UniqueTaskList`. In the future, this class can be extended to keep track of the tags associated with tasks (`UniqueTagList`) and sync the tasks and tags.
+
+#### `ReadOnlyToDoList` class
+This interface provides an unmodifiable view of the internal to-do list. It will return a task list consisting of read-only tasks.
+
+#### `Unique Task List` class
+This class represents a list of tasks. Each task must be unique and must not be null. It supports a minimal set of list operations such as adding a `Task` to the list and deleting or replacing a `Task` in the list. Exceptions will be raised if any of the list operations invoked violates the 'no duplicates' property of the list or when a target task cannot be found.
+
+#### `Task` class
+This class represents a task in the Unique Task List. Each `Task` must have a name and a completion status. It is optional for a `Task` to have a start time and a end time. Accessor methods are also defined for other classes such as the `Model Manager` class to identify if a task is overdue, upcoming or incomplete.
+
+#### `ReadOnlyTask` interface
+This interface allows other Objects to view the details of a `Task` but does not allow them to modify the details. For example, an unmodifiable observable list of read-only tasks will be shown on the UI.
 
 
 ### 5. Storage component
