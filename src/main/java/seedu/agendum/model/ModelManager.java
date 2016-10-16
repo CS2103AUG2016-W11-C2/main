@@ -101,7 +101,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         config.setToDoListFilePath(location);
         indicateSaveLocationChanged(location);
-        indicateToDoListChanged();
         saveConfigFile();
     }
 
