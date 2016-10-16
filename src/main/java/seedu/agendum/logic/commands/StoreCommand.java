@@ -1,5 +1,7 @@
 package seedu.agendum.logic.commands;
 
+import java.io.File;
+
 import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
@@ -17,7 +19,7 @@ public class StoreCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Specify a save location. \n"
             + "Parameters: FILE_PATH\n" 
             + "Example: " + COMMAND_WORD 
-            + "C:/agendum";
+            + "agendum/todolist.xml";
     private String newSaveLocation;
 
     public StoreCommand(String location) {
@@ -34,7 +36,7 @@ public class StoreCommand extends Command {
             return new CommandResult(String.format(MESSAGE_LOCATION_DEFAULT, defaultLocation));
         }
 
-        if(!isNewSaveLocationValid()) {
+        if(!isLocationValid()) {
             indicateAttemptToExecuteIncorrectCommand();
             return new CommandResult(MESSAGE_LOCATION_INVALID);
         }
@@ -43,14 +45,18 @@ public class StoreCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, newSaveLocation));
     }
     
-    private boolean isNewSaveLocationValid() {
-        boolean stringValid = StringUtil.isValidFilePath(newSaveLocation);
-        if(!stringValid) {// Don't do the more expensive check if this one fails
+    private boolean isLocationValid() {
+        boolean isValidFilePath = StringUtil.isValidFilePath(newSaveLocation);
+        if(!isValidFilePath) {// Don't do the more expensive check if this one fails
             return false;
         }
-        boolean locationValid = FileUtil.isPathAvailable(newSaveLocation);
+        boolean isPathAvailable = FileUtil.isPathAvailable(newSaveLocation);
         
-        return stringValid && locationValid;
+        return isValidFilePath && isPathAvailable;
+    }
+    
+    private boolean isFileExists() {
+        return FileUtil.isFileExists(new File(newSaveLocation));
     }
     
 }
