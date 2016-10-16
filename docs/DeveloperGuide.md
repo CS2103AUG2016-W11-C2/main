@@ -234,17 +234,50 @@ They are further separated into sub-packages - namely `core`, `events`, `excepti
 #### Core
 This package consists of the essential classes that are required by multiple components.
 
+* `ComponentManager` - This is a base class of manager classes, namely `LogicManager`, `ModelManager`, `StorageManager` and `UiManager`
+* `Config` - This file stores the configuration values of Agendum; these include: 
+   * Application title
+   * Logging level
+   * User preferences file path
+   * ToDoList data path
+* `EventsCenter` - This class uses _Event Driven_ design. It manages all the events of the app. Whenever an event is raised, it will be dispatched to all the classes that have subscribed to this event. It is written using [Google's Event Bus library](https://github.com/google/guava/wiki/EventBusExplained)
+* `GuiSettings` - This class saves the setting of the GUI, such as the width, height and coordinates on the screen.
+* `LogsCenter` -  Used by many classes to write log messages to the App's log file.
+* `Messages` - Stores generalised messages that will be visible to the user.
+* `UnmodifiableObservableList` - This class is a container of oberservable list, making it an unmodifiable obervable list
+* `Version` - Stores some information about the version of the App
 
 #### Events
 This package consists of the different type of events that can occur; these are used mainly by EventManager and EventBus.
 
+* `SaveLocationChangedEvent` - This event will be dispatched to the UI and Storage classes when the user uses the `store` command.
+* `ToDoListChangedEvent` - This event will be dispatch to UI and Storage when the user mutates the todo list
+* `DataSavingExceptionEvent` - This event indicates an exception during a file saving
+* `ExitAppRequestEvent` - This event indicates the user has requested to exit the app.
+* `IncorrectCommandAttemptedEvent` - This event represents an incorrect input by the user
+* `JumpToListRequestEvent` - This event indicates a request to jump to the list of tasks
+* `ShowHelpRequestEvent` - This event indicates user has used the help `command`
+* `TaskPanelSelectionChangedEvent` - This event indicates the user has selected a different panel
 
 #### Exceptions
 This package consists of exceptions that may occur with the use of Agendum.
 
+* `DataConversionException` - This exception is thrown when conversion from one data format to another has failed.
+* `DuplicateDataException` - This exception is thrown when there are multiple occurrences of the same data, when it is not allowed.
+* `FileDeletionException` - This exception is thrown when a valid file cannot be deleted.
+* `IllegalValueException` - This exception is thrown when given data does not fulfil requirements, e.g. Only positive numbers allowed, but -1 is given
 
 #### Util
 This package consists of additional utilities for the different components.
+* `AppUtil` - Used for app specific functions, e.g. loading an image
+* `CollectionUtil` - Used for checking or validating collections, e.g. ensure no null objects in a list
+* `ConfigUtil` - Used for accessing the Config file, such as loading and saving
+* `FileUtil` - Used for writing, reading and deleting files, as well as checking existence and validation
+* `FxViewUtil` - Used for JavaFX views
+* `JsonUtil` - Used for conversion between Java Objects and json files
+* `StringUtil` - Used for additional functions in handling strings, such as checking if the string has only unsigned integers
+* `UrlUtil` - Used for handling URLs to websites
+* `XmlUtil` - Used for reading and writing XML files.
 
 
 &nbsp;
@@ -267,13 +300,13 @@ and logging destinations.
 
 Currently, Agendum has 4 logging levels: `SEVERE`, `WARNING`, `INFO` and `FINE`. They record information pertaining to:
 
-* `SEVERE` : A critical problem which may cause the termination of Agendum
+* `SEVERE` : A critical problem which may cause the termination of Agendum<br>
    e.g. fatal error during the initialization of Agendum's main window
-* `WARNING` : A problem which requires attention and caution but allows Agendum to continue working
+* `WARNING` : A problem which requires attention and caution but allows Agendum to continue working<br>
    e.g. error reading from/saving to config file
-* `INFO` : Noteworthy actions by Agendum
+* `INFO` : Noteworthy actions by Agendum<br>
   e.g. valid and invalid commands executed and their results
-* `FINE` : Less significant details that may be useful in debugging
+* `FINE` : Less significant details that may be useful in debugging<br>
   e.g. print the elements in actual list instead of just its size
 
 ### 2. Configuration
@@ -596,41 +629,46 @@ Priority | As a ... | I want to ... | So that I can...
 
 **MSS**
 
-1. Actor enters store command followed by a file path
-2. System updates data storage location to the specified file path
-3. System shows a feedback message ("New save location: `file-path`")
+1. Actor enters store command followed by a path to file
+2. System updates data storage location to the specified path to file
+3. System shows a feedback message ("New save location: `path-to-file`")
 4. Use case ends.
 
 **Extensions**
 
-1a. File path is input as 'default'
+1a. Path to file is input as 'default'
 
 > 1a1. System updates data storage location to default <br>
-> 1a2. System shows a feedback message ("Save location set to default: `file-path`") <br>
+> 1a2. System shows a feedback message ("Save location set to default: `path-to-file`") <br>
 > Use case ends
 
-1b. File path is invalid
-
-> 1b1. System shows an error message ("The specified file path is invalid.") <br>
+1b. File exists
+> 1b1. System shows an error message ("The specified file exists; would you like to use LOAD instead?") <br>
 > Use case ends
+
+1c. Path to file is invalid
+
+> 1c1. System shows an error message ("The specified path to file is invalid.") <br>
+> Use case ends
+
 
 
 ### Use case 09 - Load from data file
 
 **MSS**
 
-1. Actor enters load command followed by a file path
+1. Actor enters load command followed by a path to file
 2. System saves current task list into existing data storage location
-3. System loads task list from specified file path
-2. System updates data storage location to the specified file path
-3. System shows a feedback message ("Data successfully loaded from: `file-path`")
+3. System loads task list from specified path to file
+2. System updates data storage location to the specified path to file
+3. System shows a feedback message ("Data successfully loaded from: `path-to-file`")
 4. Use case ends.
 
 **Extensions**
 
-1a. File path is invalid
+1a. Path to file is invalid
 
-> 1a1. System shows an error message ("The specified file path is invalid.") <br>
+> 1a1. System shows an error message ("The specified path to file is invalid.") <br>
 > Use case ends
 
 3a. File is in the wrong format
