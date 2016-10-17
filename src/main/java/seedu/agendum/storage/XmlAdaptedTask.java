@@ -40,15 +40,11 @@ public class XmlAdaptedTask {
     public XmlAdaptedTask(ReadOnlyTask source) {
         name = source.getName().fullName;
         isCompleted = Boolean.toString(source.isCompleted());
-        tagged = new ArrayList<>();
         if (source.getStartDateTime().isPresent()) {
             startDateTime = source.getStartDateTime().get().format(formatter);
         }
         if (source.getEndDateTime().isPresent()) {
             endDateTime = source.getEndDateTime().get().format(formatter);
-        }
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
         }
     }
 
