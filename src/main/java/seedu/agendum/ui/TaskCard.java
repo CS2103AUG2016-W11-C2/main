@@ -16,8 +16,6 @@ public class TaskCard extends UiPart{
     private Label name;
     @FXML
     private Label id;
-    @FXML
-    private Label tags;
 
     private ReadOnlyTask task;
     private int displayedIndex;
