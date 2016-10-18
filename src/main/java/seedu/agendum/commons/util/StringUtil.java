@@ -52,7 +52,7 @@ public class StringUtil {
      * @param s should be trimmed
      * @return true if it is a valid file path
      */
-    public static boolean isValidFilePath(String s) {
+    public static boolean isValidPathToFile(String s) {
         return s != null && !s.isEmpty() && s.matches("([A-z]\\:)?(\\/?[\\w-_()]+(\\s[\\w-_()])?)+(\\.[\\w]+)");
     }
 }

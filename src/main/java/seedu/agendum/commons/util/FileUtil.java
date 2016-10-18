@@ -13,7 +13,7 @@ public class FileUtil {
     private static final String CHARSET = "UTF-8";
     
     public static void deleteFile(String filePath) throws FileDeletionException {
-        assert StringUtil.isValidFilePath(filePath);
+        assert StringUtil.isValidPathToFile(filePath);
         
         File file = new File(filePath);
         if (!file.delete()) {
@@ -30,7 +30,7 @@ public class FileUtil {
      * @return true if the path is exists and user has sufficient privileges.
      */
     public static boolean isPathAvailable(String path) {
-        assert StringUtil.isValidFilePath(path);
+        assert StringUtil.isValidPathToFile(path);
         
         File file = new File(path);
         boolean exists = file.exists();

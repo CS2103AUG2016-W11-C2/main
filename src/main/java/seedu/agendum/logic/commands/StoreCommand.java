@@ -52,13 +52,13 @@ public class StoreCommand extends Command {
     }
     
     private boolean isLocationValid() {
-        boolean isValidFilePath = StringUtil.isValidFilePath(pathToFile);
-        if(!isValidFilePath) {// Don't do the more expensive check if this one fails
+        boolean isValidPathToFile = StringUtil.isValidPathToFile(pathToFile);
+        if(!isValidPathToFile) {// Don't do the more expensive check if this one fails
             return false;
         }
         boolean isPathAvailable = FileUtil.isPathAvailable(pathToFile);
         
-        return isValidFilePath && isPathAvailable;
+        return isValidPathToFile && isPathAvailable;
     }
     
     private boolean isFileExists() {

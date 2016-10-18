@@ -97,7 +97,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void changeSaveLocation(String location){
-        assert StringUtil.isValidFilePath(location);
+        assert StringUtil.isValidPathToFile(location);
 
         config.setToDoListFilePath(location);
         indicateSaveLocationChanged(location);

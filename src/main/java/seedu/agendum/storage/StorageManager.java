@@ -78,7 +78,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     public void setToDoListFilePath(String filePath){
-        assert StringUtil.isValidFilePath(filePath);
+        assert StringUtil.isValidPathToFile(filePath);
         toDoListStorage.setToDoListFilePath(filePath);
     }
 
