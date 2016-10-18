@@ -4,22 +4,18 @@ import javafx.collections.transformation.FilteredList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.util.ConfigUtil;
-import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.util.StringUtil;
-import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
-import seedu.agendum.commons.exceptions.FileDeletionException;
 import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.Config;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -83,8 +79,10 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteTask(ReadOnlyTask target) throws TaskNotFoundException {
-        toDoList.removeTask(target);
+    public synchronized void deleteTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+        for (ReadOnlyTask target: targets) {
+            toDoList.removeTask(target);
+        }
         indicateToDoListChanged();
     }
 
@@ -121,14 +119,18 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void markTask(ReadOnlyTask target) throws TaskNotFoundException {
-        toDoList.markTask(target);
+    public synchronized void markTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+        for (ReadOnlyTask target: targets) {
+            toDoList.markTask(target);
+        }
         indicateToDoListChanged();
     }
     
     @Override
-    public synchronized void unmarkTask(ReadOnlyTask target) throws TaskNotFoundException {
-        toDoList.unmarkTask(target);
+    public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+        for (ReadOnlyTask target: targets) {
+            toDoList.unmarkTask(target);
+        }
         indicateToDoListChanged();
     }
 
