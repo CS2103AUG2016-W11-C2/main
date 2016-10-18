@@ -11,6 +11,9 @@ public interface ReadOnlyTask {
 
     Name getName();
     boolean isCompleted();
+    boolean isUpcoming();
+    boolean isOverdue();
+    boolean hasTime();
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
 
@@ -32,6 +35,13 @@ public interface ReadOnlyTask {
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName());
+        if (getStartDateTime().isPresent()) {
+            builder.append("\nStart time: ").append(this.getStartDateTime().get());
+        }
+        if (getEndDateTime().isPresent()) {
+            builder.append("\nEnd time: ").append(this.getEndDateTime().get());
+        }
+        builder.append("\n");
         return builder.toString();
     }
 }

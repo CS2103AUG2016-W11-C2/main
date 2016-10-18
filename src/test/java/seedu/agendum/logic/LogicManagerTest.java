@@ -1,12 +1,14 @@
 package seedu.agendum.logic;
 
 import com.google.common.eventbus.Subscribe;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import seedu.agendum.commons.core.EventsCenter;
+import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
@@ -108,7 +110,8 @@ public class LogicManagerTest {
 
         //Confirm the ui display elements should contain the right data
         assertEquals(expectedMessage, result.feedbackToUser);
-        assertEquals(expectedShownList, model.getFilteredTaskList());
+        TestDataHelper helper = new TestDataHelper();
+        assertEquals(helper.generateSortedList(expectedShownList), model.getFilteredTaskList());
 
         //Confirm the state of data (saved and in-memory) is as expected
         assertEquals(expectedToDoList, model.getToDoList());
@@ -475,6 +478,7 @@ public class LogicManagerTest {
     public void execute_unmark_UnmarksCorrectSingleTaskFromCompleted() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(2);
+        //completed task is usually at the end of the list
         threeTasks.add(helper.generateCompletedTask(3));
 
         // expectedTDL does not have any tasks marked as completed
@@ -496,20 +500,20 @@ public class LogicManagerTest {
         // indexes provided are startIndex-endIndex.
         // Tasks with visible index in range [startIndex, endIndex] are marked
         TestDataHelper helper = new TestDataHelper();
-        List<Task> fourTasks = helper.generateTaskList(helper.generateCompletedTask(1), helper.generateCompletedTask(2),
-                helper.generateCompletedTask(3), helper.generateTask(4));
+        List<Task> fourTasks = helper.generateTaskList(helper.generateTask(1), helper.generateTask(2),
+                helper.generateCompletedTask(3), helper.generateCompletedTask(4));
 
         // expectedTDL does not have any tasks marked as completed
         ToDoList expectedTDL = helper.generateToDoList(fourTasks);
-        expectedTDL.unmarkTask(fourTasks.get(0));
-        expectedTDL.unmarkTask(fourTasks.get(1));
+        // Completed tasks will be at the bottom of the list
+        expectedTDL.unmarkTask(fourTasks.get(2));
+        expectedTDL.unmarkTask(fourTasks.get(3));
         helper.addToModel(model, fourTasks);
         ArrayList<Integer> unmarkedTaskVisibleIndices = new ArrayList<Integer>();
-        unmarkedTaskVisibleIndices.add(1);
-        unmarkedTaskVisibleIndices.add(2);
+        unmarkedTaskVisibleIndices.add(3);
+        unmarkedTaskVisibleIndices.add(4);
 
-        // test boundary value - range starting/including first task in the list
-        assertCommandBehavior("unmark 1-2",
+        assertCommandBehavior("unmark 3-4",
                 String.format(UnmarkCommand.MESSAGE_UNMARK_TASK_SUCCESS, unmarkedTaskVisibleIndices),
                 expectedTDL,
                 expectedTDL.getTaskList());
@@ -704,6 +708,15 @@ public class LogicManagerTest {
             return newTask;
         }
 
+        /**
+         * Generates a Task object with given name. Other fields will have some dummy values.
+         */
+        Task generateTaskWithName(String name) throws Exception {
+            return new Task(
+                    new Name(name)
+            );
+        }
+
         /** Generates the correct add command based on the task given */
         String generateAddCommand(Task p) {
             StringBuffer cmd = new StringBuffer();
@@ -782,13 +795,14 @@ public class LogicManagerTest {
             return Arrays.asList(tasks);
         }
 
-        /**
-         * Generates a Task object with given name. Other fields will have some dummy values.
-         */
-        Task generateTaskWithName(String name) throws Exception {
-            return new Task(
-                    new Name(name)
-            );
+        UnmodifiableObservableList<Task> generateSortedList(List<? extends ReadOnlyTask> expectedShownList) throws Exception {
+            List<Task> taskList = new ArrayList<Task>();
+            for (int i = 0; i < expectedShownList.size(); i++) {
+                taskList.add(new Task(expectedShownList.get(i)));
+            }
+            ToDoList toDoList = generateToDoList(taskList); 
+            return new UnmodifiableObservableList<>(toDoList.getTasks().sorted());
         }
+
     }
 }

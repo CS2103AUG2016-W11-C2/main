@@ -10,6 +10,8 @@ import seedu.agendum.model.task.*;
  */
 public class TestTask implements ReadOnlyTask {
 
+    private static final int UPCOMING_DAYS_THRESHOLD = 7;
+
     private Name name;
     private boolean isCompleted;
     private LocalDateTime startDateTime;
@@ -61,6 +63,21 @@ public class TestTask implements ReadOnlyTask {
         return isCompleted;
     }
 
+    public boolean isUpcoming() {
+        return  !isCompleted() && hasTime() && getTaskTime().isBefore(
+                LocalDateTime.now().plusDays(UPCOMING_DAYS_THRESHOLD));
+    }
+
+    @Override
+    public boolean isOverdue() {
+        return !isCompleted() && hasTime() && getTaskTime().isBefore(LocalDateTime.now());
+    }
+
+    @Override
+    public boolean hasTime() {
+        return (getStartDateTime().isPresent() || getEndDateTime().isPresent());
+    }
+
     @Override
     public Optional<LocalDateTime> getStartDateTime() {
         return Optional.ofNullable(startDateTime);
@@ -69,6 +86,15 @@ public class TestTask implements ReadOnlyTask {
     @Override
     public Optional<LocalDateTime> getEndDateTime() {
         return Optional.ofNullable(endDateTime);
+    }
+
+    /**
+     * Pre-condition: Task has a start or end time
+     * Return the (earlier) time associated with the task
+     */
+    private LocalDateTime getTaskTime() {
+        assert hasTime();
+        return getStartDateTime().orElse(getEndDateTime().get());
     }
 
     @Override
