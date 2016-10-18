@@ -1,7 +1,6 @@
 package seedu.agendum.model.task;
 
 import seedu.agendum.commons.util.CollectionUtil;
-import seedu.agendum.model.tag.UniqueTagList;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -20,45 +19,40 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     
-    private UniqueTagList tags;
-    
     // ================ Constructor methods ==============================
 
     /**
      * Constructor for a floating task (with no deadline/start time or end time)
      */
-    public Task(Name name, UniqueTagList tags) {
-        assert !CollectionUtil.isAnyNull(name, tags);
+    public Task(Name name) {
+        assert !CollectionUtil.isAnyNull(name);
         this.name = name;
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = null;
-        this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
     
     /**
      * Constructor for a task with deadline only
      */
-    public Task(Name name, Optional<LocalDateTime> deadline, UniqueTagList tags) {
-        assert !CollectionUtil.isAnyNull(name, tags);
+    public Task(Name name, Optional<LocalDateTime> deadline) {
+        assert !CollectionUtil.isAnyNull(name);
         this.name = name;
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
-        this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
     
     /**
      * Constructor for a task (event) with both a start and end time
      */
     public Task(Name name, Optional<LocalDateTime> startDateTime,
-            Optional<LocalDateTime> endDateTime, UniqueTagList tags) {
-        assert !CollectionUtil.isAnyNull(name, tags);
+            Optional<LocalDateTime> endDateTime) {
+        assert !CollectionUtil.isAnyNull(name);
         this.name = name;
         this.isCompleted = false;
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
-        this.tags = new UniqueTagList(tags); // protect internal tags from changes in the arg list
     }
 
     /**
@@ -66,7 +60,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      */
     public Task(ReadOnlyTask source) {
         this(source.getName(), source.getStartDateTime(),
-                source.getEndDateTime(), source.getTags());
+                source.getEndDateTime());
         if (source.isCompleted()) {
             this.markAsCompleted();
         }
@@ -110,11 +104,6 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     public Optional<LocalDateTime> getEndDateTime() {
         return Optional.ofNullable(endDateTime);
     }
-
-    @Override
-    public UniqueTagList getTags() {
-        return new UniqueTagList(tags);
-    }
     
     private Optional<LocalDateTime> getTaskTime() {
         if (getStartDateTime().isPresent()) {
@@ -146,13 +135,6 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.endDateTime = endDateTime.orElse(null);
     }
 
-    /**
-     * Replaces this task's tags with the tags in the argument tag list.
-     */
-    public void setTags(UniqueTagList replacement) {
-        tags.setTags(replacement);
-    }
-    
     // ================ Other methods ==============================
 
     @Override
@@ -165,7 +147,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, tags);
+        return Objects.hash(name);
     }
 
     @Override

@@ -3,7 +3,6 @@ package seedu.agendum.testutil;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-import seedu.agendum.model.tag.UniqueTagList;
 import seedu.agendum.model.task.*;
 
 /**
@@ -17,13 +16,11 @@ public class TestTask implements ReadOnlyTask {
     private boolean isCompleted;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
-    private UniqueTagList tags;
 
     public TestTask() {
         isCompleted = false;
         startDateTime = null;
         endDateTime = null;
-        tags = new UniqueTagList();
     }
 
     /**
@@ -34,7 +31,6 @@ public class TestTask implements ReadOnlyTask {
         this.isCompleted = other.isCompleted;
         this.startDateTime = other.startDateTime;
         this.endDateTime = other.endDateTime;
-        this.tags = other.tags;
     }    
 
     public void setName(Name name) {
@@ -103,11 +99,6 @@ public class TestTask implements ReadOnlyTask {
     }
 
     @Override
-    public UniqueTagList getTags() {
-        return tags;
-    }
-
-    @Override
     public String toString() {
         return getAsText();
     }
@@ -115,7 +106,6 @@ public class TestTask implements ReadOnlyTask {
     public String getAddCommand() {
         StringBuilder sb = new StringBuilder();
         sb.append("add " + this.getName().fullName + " ");
-        this.getTags().getInternalList().stream().forEach(s -> sb.append("t/" + s.tagName + " "));
         return sb.toString();
     }
 
