@@ -39,8 +39,6 @@ public class MainWindow extends UiPart {
 
     private Logic logic;
     
-    private static StageFactory factory;
-
     // Independent Ui parts residing in this Ui container
     private AllTasksPanel allTasksPanel;
     private CompletedTasksPanel completedTasksPanel;
@@ -93,10 +91,6 @@ public class MainWindow extends UiPart {
     }
 
     public static MainWindow load(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
-        
-        factory = StageFactory.INSTANCE ;
-        factory.registerStage(primaryStage);
-
         MainWindow mainWindow = UiPartLoader.loadUiPart(primaryStage, new MainWindow());
         mainWindow.configure(config.getAppTitle(), config.getToDoListName(), config, prefs, logic);
         return mainWindow;
@@ -218,50 +212,5 @@ public class MainWindow extends UiPart {
     
     public CompletedTasksPanel getCompletedTasksPanel() {
         return this.completedTasksPanel;
-    }
-    
-    public enum StageFactory {
-        INSTANCE ;
-
-        private final ObservableList<Stage> openStages = FXCollections.observableArrayList();
-
-        public ObservableList<Stage> getOpenStages() {
-            return openStages ;
-        }
-
-        private final ObjectProperty<Stage> currentStage = new SimpleObjectProperty<>(null);
-        
-        public final ObjectProperty<Stage> currentStageProperty() {
-            return this.currentStage;
-        }
-        
-        public final javafx.stage.Stage getCurrentStage() {
-            return this.currentStageProperty().get();
-        }
-        
-        public final void setCurrentStage(final javafx.stage.Stage currentStage) {
-            this.currentStageProperty().set(currentStage);
-        }
-
-        public void registerStage(Stage stage) {
-            stage.addEventHandler(WindowEvent.WINDOW_SHOWN, e -> 
-                    openStages.add(stage));
-            stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> 
-                    openStages.remove(stage));
-            stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-                if (isNowFocused) {
-                    currentStage.set(stage);
-                } else {
-                    currentStage.set(null);
-                }
-            });
-        }
-
-        public Stage createStage() {
-            Stage stage = new Stage();
-            registerStage(stage);
-            return stage ;
-        }
-
     }
 }
