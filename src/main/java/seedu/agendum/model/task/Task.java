@@ -10,7 +10,9 @@ import java.util.Optional;
  * Represents a Task in the to do list.
  * Only the task name is compulsory and it cannot be an empty string.
  */
-public class Task implements ReadOnlyTask {
+public class Task implements ReadOnlyTask, Comparable<Task> {
+
+    private static final int UPCOMING_DAYS_THRESHOLD = 7;
 
     private Name name;
     private boolean isCompleted;
@@ -40,12 +42,12 @@ public class Task implements ReadOnlyTask {
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
     }
-    
+
     /**
-     * Constructor for a task (event) with both a start and end time
+     * Constructor for a task with start and end datetime
      */
     public Task(Name name, Optional<LocalDateTime> startDateTime,
-            Optional<LocalDateTime> endDateTime) {
+        Optional<LocalDateTime> endDateTime) {
         assert !CollectionUtil.isAnyNull(name);
         this.name = name;
         this.isCompleted = false;
@@ -77,6 +79,22 @@ public class Task implements ReadOnlyTask {
     }
 
     @Override
+    public boolean isUpcoming() {
+        return !isCompleted() && hasTime() && getTaskTime().isBefore(
+                LocalDateTime.now().plusDays(UPCOMING_DAYS_THRESHOLD));
+    }
+
+    @Override
+    public boolean isOverdue() {
+        return !isCompleted() && hasTime() && getTaskTime().isBefore(LocalDateTime.now());
+    }
+
+    @Override
+    public boolean hasTime() {
+        return (getStartDateTime().isPresent() || getEndDateTime().isPresent());
+    }
+
+    @Override
     public Optional<LocalDateTime> getStartDateTime() {
         return Optional.ofNullable(startDateTime);
     }
@@ -84,6 +102,15 @@ public class Task implements ReadOnlyTask {
     @Override
     public Optional<LocalDateTime> getEndDateTime() {
         return Optional.ofNullable(endDateTime);
+    }
+
+    /**
+     * Pre-condition: Task has a start or end time
+     * Return the (earlier) time associated with the task
+     */
+    private LocalDateTime getTaskTime() {
+        assert hasTime();
+        return getStartDateTime().orElse(getEndDateTime().get());
     }
     
     // ================ Setter methods ==============================
@@ -107,7 +134,7 @@ public class Task implements ReadOnlyTask {
     public void setEndDateTime(Optional<LocalDateTime> endDateTime) {
         this.endDateTime = endDateTime.orElse(null);
     }
-
+    
     // ================ Other methods ==============================
 
     @Override
@@ -115,6 +142,39 @@ public class Task implements ReadOnlyTask {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyTask // instanceof handles nulls
                 && this.isSameStateAs((ReadOnlyTask) other));
+    }
+
+    @Override
+    public int compareTo(Task other) {
+        int comparedCompletionStatus = compareCompletionStatus(other);
+        if (comparedCompletionStatus != 0) {
+            return comparedCompletionStatus;
+        }
+        int comparedTime = compareTime(other);
+        if (comparedTime != 0) {
+            return comparedTime;
+        }
+        return compareName(other);
+    }
+
+    public int compareCompletionStatus(Task other) {
+        return Boolean.compare(this.isCompleted(), other.isCompleted);
+    }
+
+    public int compareTime(Task other) {
+        if (this.hasTime() && other.hasTime()) {
+            return this.getTaskTime().compareTo(other.getTaskTime());
+        } else if (this.hasTime()) {
+            return -1;
+        } else if (other.hasTime()) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
+    public int compareName(Task other) {
+        return this.getName().toString().compareTo(other.getName().toString());
     }
 
     @Override

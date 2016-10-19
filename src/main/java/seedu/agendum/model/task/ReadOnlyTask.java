@@ -1,6 +1,7 @@
 package seedu.agendum.model.task;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
 /**
@@ -11,6 +12,9 @@ public interface ReadOnlyTask {
 
     Name getName();
     boolean isCompleted();
+    boolean isUpcoming();
+    boolean isOverdue();
+    boolean hasTime();
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
 
@@ -31,7 +35,14 @@ public interface ReadOnlyTask {
      */
     default String getAsText() {
         final StringBuilder builder = new StringBuilder();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM HH:mm");
         builder.append(getName());
+        if (getStartDateTime().isPresent()) {
+            builder.append("\nStart time: ").append(this.getStartDateTime().get().format(formatter));
+        }
+        if (getEndDateTime().isPresent()) {
+            builder.append("\nEnd time: ").append(this.getEndDateTime().get().format(formatter));
+        }
         return builder.toString();
     }
 }

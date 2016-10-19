@@ -3,6 +3,9 @@ package seedu.agendum.logic.commands;
 import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.model.task.*;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -12,7 +15,11 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task with no time and date. "
+    public static String COMMAND_FORMAT = "add <name> \nadd <name> by <deadline> \nadd <name> from <start-time> to <end-time>";
+    public static String COMMAND_DESCRIPTION = "adds a task to Agendum";
+
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task. Deadline/Event time is optional "
             + "Parameters: NAME\n"
             + "Example: " + COMMAND_WORD
             + " Watch Star Wars t/movies";
@@ -20,10 +27,12 @@ public class AddCommand extends Command {
     public static final String MESSAGE_SUCCESS = "New task added: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists";
 
-    private final Task toAdd;
+    private Task toAdd = null;
+
+    public AddCommand() {}
 
     /**
-     * Convenience constructor using raw values.
+     * Convenience constructor using name
      *
      * @throws IllegalValueException if any of the raw values are invalid
      */
@@ -31,6 +40,33 @@ public class AddCommand extends Command {
             throws IllegalValueException {
         this.toAdd = new Task(
                 new Name(name)
+        );
+    }
+
+    /**
+     * Convenience constructor using name, end datetime
+     *
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, Optional<LocalDateTime> deadlineDate)
+            throws IllegalValueException {
+        this.toAdd = new Task(
+                new Name(name),
+                deadlineDate
+        );
+    }
+
+    /**
+     * Convenience constructor using name, start datetime, end datetime
+     *
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime)
+            throws IllegalValueException {
+        this.toAdd = new Task(
+                new Name(name),
+                startDateTime,
+                endDateTime
         );
     }
 
@@ -45,5 +81,21 @@ public class AddCommand extends Command {
         }
 
     }
+	
+    @Override
+    public String getName() {
+        return COMMAND_WORD;
+    }
+	
+    @Override
+    public String getFormat() {
+        return COMMAND_FORMAT;
+    }
+	
+    @Override
+    public String getDescription() {
+        return COMMAND_DESCRIPTION;
+    }
 
 }
+

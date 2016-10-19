@@ -14,8 +14,10 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
  */
 public class MarkCommand extends Command {
 
+ // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "mark";
-
+    public static String COMMAND_FORMAT = "mark <index> \nmark <index> <more-indexes>";
+    public static String COMMAND_DESCRIPTION ="mark task(s) as completed";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Marks the tasks(s) identified by their index numbers used in the last task listing.\n"
             + "Parameters: INDEX... (must be a positive number)\n"
@@ -55,12 +57,26 @@ public class MarkCommand extends Command {
             assert false : "The target task cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, targetIndexes.toString()));
+        return new CommandResult(String.format(MESSAGE_MARK_TASK_SUCCESS, tasksToMark));
     }
 
     private boolean isAnyIndexInvalid(UnmodifiableObservableList<ReadOnlyTask> lastShownList) {
         return targetIndexes.stream().anyMatch(index -> index > lastShownList.size());
     }
 
+    @Override
+    public String getName() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getFormat() {
+        return COMMAND_FORMAT;
+    }
+
+    @Override
+    public String getDescription() {
+        return COMMAND_DESCRIPTION;
+    }
 
 }

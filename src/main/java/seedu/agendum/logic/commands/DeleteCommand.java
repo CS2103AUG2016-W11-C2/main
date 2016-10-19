@@ -14,8 +14,10 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
  */
 public class DeleteCommand extends Command {
 
+    // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "delete";
-
+    public static String COMMAND_FORMAT = "delete <index> \ndelete <index> <more-indexes>";
+    public static String COMMAND_DESCRIPTION = "delete task(s) from Agendum";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the tasks(s) identified by their index numbers used in the last task listing.\n"
             + "Parameters: INDEX... (must be a positive number)\n"
@@ -60,6 +62,21 @@ public class DeleteCommand extends Command {
 
     private boolean isAnyIndexInvalid(UnmodifiableObservableList<ReadOnlyTask> lastShownList) {
         return targetIndexes.stream().anyMatch(index -> index > lastShownList.size());
+    }
+
+    @Override
+    public String getName() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getFormat() {
+        return COMMAND_FORMAT;
+    }
+
+    @Override
+    public String getDescription() {
+        return COMMAND_DESCRIPTION;
     }
 
 }
