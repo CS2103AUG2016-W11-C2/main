@@ -1,6 +1,12 @@
 package seedu.agendum.ui;
 
+import com.sun.javafx.stage.StageHelper;
+
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -12,6 +18,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.GuiSettings;
 import seedu.agendum.commons.events.ui.ExitAppRequestEvent;
@@ -31,6 +38,8 @@ public class MainWindow extends UiPart {
     public static final int MIN_WIDTH = 450;
 
     private Logic logic;
+    
+    private static StageFactory factory;
 
     // Independent Ui parts residing in this Ui container
     private AllTasksPanel allTasksPanel;
@@ -84,6 +93,9 @@ public class MainWindow extends UiPart {
     }
 
     public static MainWindow load(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+        
+        factory = StageFactory.INSTANCE ;
+        factory.registerStage(primaryStage);
 
         MainWindow mainWindow = UiPartLoader.loadUiPart(primaryStage, new MainWindow());
         mainWindow.configure(config.getAppTitle(), config.getToDoListName(), config, prefs, logic);
@@ -118,8 +130,6 @@ public class MainWindow extends UiPart {
     }
 
     void fillInnerParts() {
-        
-//        browserPanel = BrowserPanel.load(browserPlaceholder);
         allTasksPanel = AllTasksPanel.load(primaryStage, getAllTasksPlaceHolder(), logic.getFilteredTaskList());
         completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), logic.getFilteredTaskList());
         otherTasksPanel = OtherTasksPanel.load(primaryStage, getOtherTasksPlaceHolder(), logic.getFilteredTaskList());
@@ -181,10 +191,13 @@ public class MainWindow extends UiPart {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
+    @SuppressWarnings("restriction")
     @FXML
     public void handleHelp() {
         HelpWindow helpWindow = HelpWindow.load(primaryStage);
-        helpWindow.show();
+        if(helpWindow != null) {
+            helpWindow.show();
+        }
     }
 
     public void show() {
@@ -205,5 +218,50 @@ public class MainWindow extends UiPart {
     
     public CompletedTasksPanel getCompletedTasksPanel() {
         return this.completedTasksPanel;
+    }
+    
+    public enum StageFactory {
+        INSTANCE ;
+
+        private final ObservableList<Stage> openStages = FXCollections.observableArrayList();
+
+        public ObservableList<Stage> getOpenStages() {
+            return openStages ;
+        }
+
+        private final ObjectProperty<Stage> currentStage = new SimpleObjectProperty<>(null);
+        
+        public final ObjectProperty<Stage> currentStageProperty() {
+            return this.currentStage;
+        }
+        
+        public final javafx.stage.Stage getCurrentStage() {
+            return this.currentStageProperty().get();
+        }
+        
+        public final void setCurrentStage(final javafx.stage.Stage currentStage) {
+            this.currentStageProperty().set(currentStage);
+        }
+
+        public void registerStage(Stage stage) {
+            stage.addEventHandler(WindowEvent.WINDOW_SHOWN, e -> 
+                    openStages.add(stage));
+            stage.addEventHandler(WindowEvent.WINDOW_HIDDEN, e -> 
+                    openStages.remove(stage));
+            stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+                if (isNowFocused) {
+                    currentStage.set(stage);
+                } else {
+                    currentStage.set(null);
+                }
+            });
+        }
+
+        public Stage createStage() {
+            Stage stage = new Stage();
+            registerStage(stage);
+            return stage ;
+        }
+
     }
 }

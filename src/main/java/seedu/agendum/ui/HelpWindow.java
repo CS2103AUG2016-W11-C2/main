@@ -39,6 +39,10 @@ import seedu.agendum.commons.core.LogsCenter;
 
 import java.util.logging.Logger;
 
+import com.sun.javafx.stage.StageHelper;
+
+import guitests.guihandles.GuiHandle;
+
 /**
  * Controller for a help page
  */
@@ -54,7 +58,7 @@ public class HelpWindow extends UiPart {
 
     private AnchorPane mainPane;
 
-    private Stage dialogStage;
+    private static Stage dialogStage;
     
     @FXML
     private TableView<Command> commandTable;
@@ -90,10 +94,15 @@ public class HelpWindow extends UiPart {
     }
     
     public static HelpWindow load(Stage primaryStage) {
-        logger.fine("Showing help page about the application.");
-        HelpWindow helpWindow = UiPartLoader.loadUiPart(primaryStage, new HelpWindow());
-        helpWindow.configure();
-        return helpWindow;
+        if (!StageHelper.getStages().contains(dialogStage)) {
+            logger.fine("Showing help page about the application.");
+            HelpWindow helpWindow = UiPartLoader.loadUiPart(primaryStage, new HelpWindow());
+            helpWindow.configure();
+            return helpWindow;
+        } else {
+            dialogStage.requestFocus();
+            return null;
+        }
     }
     
 
@@ -149,6 +158,6 @@ public class HelpWindow extends UiPart {
     }
 
     public void show() {
-        dialogStage.showAndWait();
+        dialogStage.show();
     }
 }
