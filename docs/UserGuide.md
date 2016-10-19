@@ -88,9 +88,8 @@ The event “project meeting” will start at 12pm on 10 October and end at 2pm 
 
 #### Retrieving task list : `list`
 
-You might want to update the lists to reflect all overdue, upcoming and completed tasks again.<br>
+You might want to view the lists to all overdue, upcoming and completed tasks again.<br>
 Format: `list`
-
 
 #### Finding tasks containing keywords: `find`
 
