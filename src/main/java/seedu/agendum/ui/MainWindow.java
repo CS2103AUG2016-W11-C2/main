@@ -114,7 +114,7 @@ public class MainWindow extends UiPart {
         
         primaryStage.setScene(scene);
         
-        primaryStage.setOnHidden(e -> Platform.exit());
+        primaryStage.setOnCloseRequest(e -> Platform.exit());
 
         setAccelerators();
     }
