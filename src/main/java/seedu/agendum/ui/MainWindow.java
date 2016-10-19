@@ -1,5 +1,6 @@
 package seedu.agendum.ui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -104,7 +105,10 @@ public class MainWindow extends UiPart {
         setWindowMinSize();
         setWindowDefaultSize(prefs);
         scene = new Scene(rootLayout);
+        
         primaryStage.setScene(scene);
+        
+        primaryStage.setOnHidden(e -> Platform.exit());
 
         setAccelerators();
     }
