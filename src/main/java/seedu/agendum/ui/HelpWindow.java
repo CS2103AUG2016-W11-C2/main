@@ -41,8 +41,6 @@ import java.util.logging.Logger;
 
 import com.sun.javafx.stage.StageHelper;
 
-import guitests.guihandles.GuiHandle;
-
 /**
  * Controller for a help page
  */
