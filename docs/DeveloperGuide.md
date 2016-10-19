@@ -104,8 +104,8 @@ Two of those classes play important roles at the architecture level.
 
 The rest of the App comprises four components:
 
-* [**`UI`**](#2-ui-component) - The UI of the App.
-* [**`Logic`**](#3-logic-component) - The command executor.
+* [**`UI`**](#2-ui-component) - Interacts with and display results to the user.
+* [**`Logic`**](#3-logic-component) - Processes and executes the command of the user.
 * [**`Model`**](#4-model-component) - Holds the data of the App in-memory.
 * [**`Storage`**](#5-storage-component) - Reads data from, and writes data to, the hard disk.
 
@@ -251,7 +251,7 @@ This package consists of the essential classes that are required by multiple com
 This package consists of the different type of events that can occur; these are used mainly by EventManager and EventBus.
 
 * `SaveLocationChangedEvent` - Indicate the user uses the `store` command to request a change of data save location; will be dispatched to the UI and Storage classes.
-* `ToDoListChangedEvent` - Indicates the user has mutated the todo list; will be dispatch to UI and Storage. 
+* `ToDoListChangedEvent` - Indicates the user has mutated the todo list; will be dispatch to UI and Storage.
 * `DataSavingExceptionEvent` - Indicates an exception during a file saving.
 * `ExitAppRequestEvent` - Indicates the user has requested to exit the app.
 * `IncorrectCommandAttemptedEvent` - TRepresents an incorrect input by the user
