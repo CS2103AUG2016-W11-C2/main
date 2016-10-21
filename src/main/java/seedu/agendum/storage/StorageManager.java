@@ -8,7 +8,7 @@ import com.google.common.eventbus.Subscribe;
 
 import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.LogsCenter;
-import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
+import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.events.storage.DataSavingExceptionEvent;
 import seedu.agendum.commons.exceptions.DataConversionException;
@@ -95,7 +95,7 @@ public class StorageManager extends ComponentManager implements Storage {
 
     @Override
     @Subscribe
-    public void handleSaveLocationChangedEvent(SaveLocationChangedEvent event) {
+    public void handleChangeSaveLocationRequestEvent(ChangeSaveLocationRequestEvent event) {
         String saveLocation = event.saveLocation;
         setToDoListFilePath(saveLocation);
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting save location to: " + saveLocation));

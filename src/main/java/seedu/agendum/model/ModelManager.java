@@ -10,7 +10,7 @@ import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
-import seedu.agendum.commons.events.model.SaveLocationChangedEvent;
+import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.Config;
@@ -106,8 +106,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     /** Raises an event to indicate that save location has changed */
-    private void indicateSaveLocationChanged(String location) {
-        raise(new SaveLocationChangedEvent(location));
+    private void indicateChangeSaveLocationRequest(String location) {
+        raise(new ChangeSaveLocationRequestEvent(location));
     }
 
     @Override
