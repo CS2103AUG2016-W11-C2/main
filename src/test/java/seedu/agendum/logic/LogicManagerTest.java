@@ -7,11 +7,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+
+import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
+import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.model.ToDoList;
 import seedu.agendum.model.Model;
@@ -20,6 +23,7 @@ import seedu.agendum.model.ReadOnlyToDoList;
 import seedu.agendum.model.task.*;
 import seedu.agendum.storage.StorageManager;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -353,6 +357,42 @@ public class LogicManagerTest {
     }
 
     @Test
+    public void execute_store_successful() throws Exception {
+        // setup expectations
+        ToDoList expectedTDL = new ToDoList();
+        String location = "data/test.xml";
+
+        // execute command and verify result
+        assertCommandBehavior("store " + location,
+                String.format(StoreCommand.MESSAGE_SUCCESS, location),
+                expectedTDL,
+                expectedTDL.getTaskList());
+
+        // execute command and verify result
+        assertCommandBehavior("store default",
+                String.format(StoreCommand.MESSAGE_LOCATION_DEFAULT, Config.DEFAULT_SAVE_LOCATION),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
+    
+    public void execute_store_fail_fileExists() throws Exception {
+        // setup expectations
+        ToDoList expectedTDL = new ToDoList();
+        String location = "data/test.xml";
+
+        // create file
+        FileUtil.createIfMissing(new File(location));
+        
+        // error that file already exists
+        assertCommandBehavior("store " + location,
+                String.format(StoreCommand.MESSAGE_FILE_EXISTS, location),
+                expectedTDL,
+                expectedTDL.getTaskList());
+
+        // delete file
+        FileUtil.deleteFile(location);
+    }
+    
     public void execute_delete_removesCorrectRangeOfTasks() throws Exception {
         // indexes provided are startIndex-endIndex.
         // Tasks with visible index in range [startIndex, endIndex] are deleted
@@ -673,6 +713,56 @@ public class LogicManagerTest {
                 Command.getMessageForTaskListShownSummary(expectedList.size()),
                 expectedTDL,
                 expectedList);
+    }
+
+
+    @Test
+    public void execute_undo_identifiesNoPreviousCommand() throws Exception {
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_FAILURE, new ToDoList(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_undo_reversePreviousMutatingCommand() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task p1 = helper.generateTaskWithName("old name");
+        List<Task> listWithOneTask = helper.generateTaskList(p1);
+        ToDoList expectedTDL = helper.generateToDoList(listWithOneTask);
+        ArrayList<ReadOnlyTask> arrayListWithOneTask = new ArrayList<ReadOnlyTask>();
+        arrayListWithOneTask.add(p1);
+
+        //Undo add command
+        model.addTask(p1);
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, new ToDoList(), Collections.emptyList());
+
+        //Undo delete command
+        model.addTask(p1);
+        model.deleteTasks(arrayListWithOneTask);
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
+        //Undo clear command
+        model.resetData(new ToDoList());
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
+        //Undo rename command
+        Task p2 = new Task(p1);
+        p2.setName(new Name("new name"));
+        model.updateTask(p1, p2);
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
+        //Undo mark command
+        model.markTasks(arrayListWithOneTask);
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
+        //Undo unmark command
+        model.markTasks(arrayListWithOneTask);
+        Task p3 = helper.generateTaskWithName("old name"); //p1 clone
+        p3.markAsCompleted();
+        listWithOneTask = helper.generateTaskList(p3);
+        expectedTDL = helper.generateToDoList(listWithOneTask);
+        arrayListWithOneTask.set(0,p3);
+        model.unmarkTasks(arrayListWithOneTask);
+        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
+
     }
 
 
