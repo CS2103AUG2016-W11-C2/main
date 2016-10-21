@@ -107,23 +107,6 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void changeSaveLocation(String location){
-        assert StringUtil.isValidPathToFile(location);
-
-        config.setToDoListFilePath(location);
-        indicateSaveLocationChanged(location);
-        saveConfigFile();
-    }
-
-    private void saveConfigFile() {
-        try {
-            ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
-        } catch (IOException e) {
-            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
-        }        
-    }
-
-    @Override
     public synchronized void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         toDoList.updateTask(target, updatedTask);
@@ -165,6 +148,24 @@ public class ModelManager extends ComponentManager implements Model {
  
     private void backupNewToDoList() {
         previousLists.push(new ToDoList(this.getToDoList()));
+    }
+    
+    // Storage
+    @Override
+    public synchronized void changeSaveLocation(String location){
+        assert StringUtil.isValidPathToFile(location);
+
+        config.setToDoListFilePath(location);
+        indicateSaveLocationChanged(location);
+        saveConfigFile();
+    }
+
+    private void saveConfigFile() {
+        try {
+            ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
+        } catch (IOException e) {
+            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
+        }        
     }
 
     //=========== Filtered Task List Accessors ===============================================================
