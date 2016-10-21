@@ -130,18 +130,7 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public synchronized void changeSaveLocation(String location){
         assert StringUtil.isValidPathToFile(location);
-
-        config.setToDoListFilePath(location);
-        indicateSaveLocationChanged(location);
-        saveConfigFile();
-    }
-
-    private void saveConfigFile() {
-        try {
-            ConfigUtil.saveConfig(config, Config.DEFAULT_CONFIG_FILE);
-        } catch (IOException e) {
-            logger.warning("Failed to save config file : " + StringUtil.getDetails(e));
-        }        
+        indicateChangeSaveLocationRequest(location);
     }
 
     @Override
