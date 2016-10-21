@@ -72,7 +72,7 @@ public class LogicManagerTest {
         model = new ModelManager();
         String tempToDoListFile = saveFolder.getRoot().getPath() + "TempToDoList.xml";
         String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
-        logic = new LogicManager(model, new StorageManager(tempToDoListFile, tempPreferencesFile));
+        logic = new LogicManager(model, new StorageManager(tempToDoListFile, tempPreferencesFile, new Config()));
         EventsCenter.getInstance().registerHandler(this);
 
         latestSavedToDoList = new ToDoList(model.getToDoList()); // last saved assumed to be up to date before.
