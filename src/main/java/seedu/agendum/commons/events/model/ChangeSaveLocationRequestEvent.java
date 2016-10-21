@@ -5,14 +5,14 @@ import seedu.agendum.commons.events.BaseEvent;
 /** Indicates the ToDoList in the model has changed*/
 public class ChangeSaveLocationRequestEvent extends BaseEvent {
 
-    public final String saveLocation;
+    public final String location;
 
     public ChangeSaveLocationRequestEvent(String saveLocation){
-        this.saveLocation = saveLocation;
+        this.location = saveLocation;
     }
 
     @Override
     public String toString() {
-        return "Request to change save location to: " + saveLocation;
+        return "Request to change save location to: " + location;
     }
 }
