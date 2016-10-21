@@ -160,8 +160,8 @@ public class LogicManagerTest {
 
     @Test
     public void execute_add_invalidTaskData() throws Exception {
-        assertCommandBehavior(
-                "add []\\[;]", Name.MESSAGE_NAME_CONSTRAINTS);
+        // TODO
+        // check for invalid task data e.g. empty name invalid time
 
     }
 
