@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import seedu.agendum.commons.events.ui.IncorrectCommandAttemptedEvent;
@@ -22,7 +24,7 @@ public class CommandBox extends UiPart {
     private AnchorPane placeHolderPane;
     private AnchorPane commandPane;
     private ResultPopUp resultPopUp;
-    String previousCommandTest;
+    private static CommandBoxHistory commandBoxHistory;
 
     private Logic logic;
 
@@ -35,6 +37,7 @@ public class CommandBox extends UiPart {
         CommandBox commandBox = UiPartLoader.loadUiPart(primaryStage, commandBoxPlaceholder, new CommandBox());
         commandBox.configure(resultPopUp, logic);
         commandBox.addToPlaceholder();
+        commandBoxHistory = new CommandBoxHistory();
         return commandBox;
     }
 
@@ -69,7 +72,8 @@ public class CommandBox extends UiPart {
     @FXML
     private void handleCommandInputChanged() {
         //Take a copy of the command text
-        previousCommandTest = commandTextField.getText();
+        commandBoxHistory.saveNewCommand(commandTextField.getText());
+        String previousCommandTest = commandBoxHistory.getLastCommand();
 
         /* We assume the command is correct. If it is incorrect, the command box will be changed accordingly
          * in the event handling code {@link #handleIncorrectCommandAttempted}
@@ -82,6 +86,18 @@ public class CommandBox extends UiPart {
         logger.info("Result: " + mostRecentResult.feedbackToUser);
     }
 
+    @FXML
+    private void handleCommandBoxKeyPressedEvent(KeyEvent event) {
+        KeyCode keyCode = event.getCode();
+        if (keyCode.equals(KeyCode.UP)) {
+            String previousCommand = commandBoxHistory.getPreviousCommand();
+            commandTextField.setText(previousCommand);
+        } else if (keyCode.equals(KeyCode.DOWN)) {
+            String nextCommand = commandBoxHistory.getNextCommand();
+            commandTextField.setText(nextCommand);
+        }     
+    }
+
     /**
      * Sets the command box style to indicate a correct command.
      */
@@ -92,7 +108,7 @@ public class CommandBox extends UiPart {
 
     @Subscribe
     private void handleIncorrectCommandAttempted(IncorrectCommandAttemptedEvent event){
-        logger.info(LogsCenter.getEventHandlingLogMessage(event,"Invalid command: " + previousCommandTest));
+        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Invalid command: " + commandBoxHistory.getLastCommand()));
         setStyleToIndicateIncorrectCommand();
         restoreCommandText();
     }
@@ -101,7 +117,7 @@ public class CommandBox extends UiPart {
      * Restores the command box text to the previously entered command
      */
     private void restoreCommandText() {
-        commandTextField.setText(previousCommandTest);
+        commandTextField.setText(commandBoxHistory.getLastCommand());
         commandTextField.selectEnd();
     }
 
