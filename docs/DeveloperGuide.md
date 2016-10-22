@@ -226,11 +226,11 @@ The `Storage` component has the following functions:
 
 The Object Diagram below shows what it looks like during runtime.
 
-<img src="images/StorageManagerObjectDiagram.png" width="800"><br>
+<img src="images/StorageManagerObjectDiagram.png" width="400"><br>
 
 The Sequence Diagram below shows how the storage class will interact with model when `Load` command is executed.
 
-<img src="images/SDforLoad.png" width="800"><br>
+<img src="images/SDforLoad.png" width="700"><br>
 
 
 ### 6. Common classes
