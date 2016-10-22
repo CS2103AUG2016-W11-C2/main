@@ -144,10 +144,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
 
     private void setLastUpdatedTime() {
-        this.lastUpdatedTime = LocalDateTime.now();
+        this.lastUpdatedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
     }
     
-    public void setLastUpdatedTimeFromStorage(LocalDateTime updatedTime) {
+    public void setLastUpdatedTime(LocalDateTime updatedTime) {
+        assert updatedTime != null;
         this.lastUpdatedTime = updatedTime;
     }
 

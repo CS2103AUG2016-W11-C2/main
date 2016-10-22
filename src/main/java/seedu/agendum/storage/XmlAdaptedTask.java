@@ -67,7 +67,7 @@ public class XmlAdaptedTask {
             newTask.markAsCompleted();
         }
 
-        newTask.setLastUpdatedTimeFromStorage(LocalDateTime.parse(this.lastUpdatedTime, formatter));
+        newTask.setLastUpdatedTime(LocalDateTime.parse(this.lastUpdatedTime, formatter));
 
         if (startDateTime != null) {
             newTask.setStartDateTime(Optional.ofNullable(LocalDateTime.parse(this.startDateTime, formatter)));
