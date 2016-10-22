@@ -51,6 +51,7 @@ public class ModelManager extends ComponentManager implements Model {
         sortedTasks = filteredTasks.sorted();
         previousLists = new Stack<ToDoList>();
         backupNewToDoList();
+
         this.config = config;
     }
 
@@ -64,6 +65,7 @@ public class ModelManager extends ComponentManager implements Model {
         sortedTasks = filteredTasks.sorted();
         previousLists = new Stack<ToDoList>();
         backupNewToDoList();
+
         this.config = config;
     }
 
@@ -72,6 +74,7 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList.resetData(newData);
         indicateToDoListChanged();
         backupNewToDoList();
+        logger.fine("MODEL --- succesfully reset data of the to-do list");
     }
 
     @Override
@@ -96,6 +99,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateToDoListChanged();
         backupNewToDoList();
+        logger.fine("MODEL --- succesfully deleted all specified targets from the to-do list");
     }
 
     @Override
@@ -104,6 +108,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredListToShowAll();
         indicateToDoListChanged();
         backupNewToDoList();
+        logger.fine("MODEL --- succesfully added the new task to the to-do list");
     }
 
     @Override
@@ -113,6 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredListToShowAll();
         indicateToDoListChanged();
         backupNewToDoList();
+        logger.fine("MODEL --- succesfully updated the target task in the to-do list");
     }
 
     @Override
@@ -122,6 +128,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateToDoListChanged();
         backupNewToDoList();
+        logger.fine("MODEL --- succesfully marked all specified targets from the to-do list");
     }
     
     @Override
@@ -131,6 +138,7 @@ public class ModelManager extends ComponentManager implements Model {
         }
         indicateToDoListChanged();
         backupNewToDoList();
+        logger.fine("MODEL --- succesfully unmarked all specified targets from the to-do list");
     }
 
     @Override
@@ -142,12 +150,14 @@ public class ModelManager extends ComponentManager implements Model {
             previousLists.pop();
             toDoList.resetData(previousLists.peek());
             indicateToDoListChanged();
+            logger.fine("MODEL --- succesfully restored the previous the to-do list from this session");
             return true;
         }
     }
  
     private void backupNewToDoList() {
-        previousLists.push(new ToDoList(this.getToDoList()));
+        ToDoList latestList = new ToDoList(this.getToDoList());
+        previousLists.push(latestList);
     }
     
     // Storage
