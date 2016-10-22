@@ -29,10 +29,12 @@ public interface Model {
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
        
     /** Marks the given task(s) as completed */
-    void markTasks(ArrayList<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException;
+    void markTasks(ArrayList<ReadOnlyTask> targets)
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
     
     /** Unmarks the given task(s) */
-    void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException;
+    void unmarkTasks(ArrayList<ReadOnlyTask> targets)
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException;
 
     /** Restores the previous to do list saved. Returns true if successful; false if no previous saved list*/
     boolean restorePreviousToDoList();

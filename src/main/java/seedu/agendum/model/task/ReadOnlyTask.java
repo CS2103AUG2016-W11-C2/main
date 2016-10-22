@@ -16,6 +16,7 @@ public interface ReadOnlyTask {
     boolean hasTime();
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
+    LocalDateTime getLastUpdatedTime();
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)

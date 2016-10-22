@@ -7,6 +7,7 @@ import java.util.Set;
 import seedu.agendum.commons.core.Messages;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.UniqueTaskList;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
@@ -24,6 +25,8 @@ public class UnmarkCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1 2 5-6";
 
     public static final String MESSAGE_UNMARK_TASK_SUCCESS = "Ununmarked Task(s): %1$s";
+    
+    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists";
 
     public ArrayList<Integer> targetIndexes;
 
@@ -56,6 +59,8 @@ public class UnmarkCommand extends Command {
             model.unmarkTasks(tasksToUnmark);
         } catch (TaskNotFoundException pnfe) {
             assert false : "The target task cannot be missing";
+        } catch (UniqueTaskList.DuplicateTaskException e) {
+            return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
 
         return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS,

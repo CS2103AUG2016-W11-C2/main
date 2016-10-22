@@ -122,7 +122,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void markTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void markTasks(ArrayList<ReadOnlyTask> targets)
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         for (ReadOnlyTask target: targets) {
             toDoList.markTask(target);
         }
@@ -132,7 +133,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
     
     @Override
-    public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets)
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         for (ReadOnlyTask target: targets) {
             toDoList.unmarkTask(target);
         }
