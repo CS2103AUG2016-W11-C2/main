@@ -108,7 +108,7 @@ The [**`UI`**](#2-ui-component) component is responsible for interacting with th
 
 
 #### `Logic`
-The [**`Logic`**](#3-logic-component) component is responsible for processing and executing the user's commands
+The [**`Logic`**](#3-logic-component) component is responsible for processing and executing the user's commands.
 
 
 #### `Model`
@@ -116,7 +116,7 @@ The [**`Model`**](#4-model-component) component is responsible for representing 
 
 
 #### `Storage`
-The [**`Storage`**](#5-storage-component) component is responsible for reading data from and writing data to the hard disk..
+The [**`Storage`**](#5-storage-component) component is responsible for reading data from and writing data to the hard disk.
 
 
 Each of the `UI`, `Logic`, `Model` and `Storage` components:
@@ -138,7 +138,7 @@ command `delete 1` to delete the first task in the displayed list. The `UI` comp
 <img src="images\SDforDeleteTask.png" width="800">
 
 > Note: When Agendum's data is changed, the `Model` simply raises a `ToDoListChangedEvent`.
-  It does not directly requested the `Storage` component to save the updates to the hard disk.
+  It does not directly request the `Storage` component to save the updates to the hard disk.
   Hence, `Model` is not directly coupled to `Storage`.
 
 The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `EventsCenter` will inform the subscribers (the `UI` and `Storage` components). Both components will then respond accordingly. `UI` will update the status bar to reflect the 'Last Updated' time while `Storage` will save the updates to the task data to hard disk. <br>
@@ -191,17 +191,23 @@ As mentioned above, the `Model` component stores and manage Agendum's task list 
 
 The `Model` class is the interface of the `Model` component. It provides several APIs for the `Logic` and `UI` components to update and retrieve Agendum’s task list data. The **API** of the model component can be found at [`Model.java`](../src/main/java/seedu/agendum/model/Model.java).  
 
-The structure and relationship of the various classes in the `Model` component is described in the diagram below.   
+The structure and relationship of the various classes in the `Model` component is described in the diagram below.    
+
 <img src="images/ModelClassDiagram.png" width="800"><br>
 
-`ModelManager` implements the `Model` Interface. It stores a `UserPref` Object which represents the user’s preference. It stores multiple `ToDoList` objects, including the current and recent lists. Each `ToDoList` object has one `UniqueTaskList` object. A `UniqueTaskList` can contain multiple `Task` objects but does not allow duplicates. The `ReadOnlyToDoList` and `ReadOnlyTask` interfaces allow other classes and components, such as the `UI`, to access but not modify the list of tasks and their details.  
+`ModelManager` implements the `Model` Interface. It stores a `UserPref` Object which represents the user’s preference. It stores multiple `ToDoList` objects, including the current and recent lists.  
+Each `ToDoList` object has one `UniqueTaskList` object. A `UniqueTaskList` can contain multiple `Task` objects but does not allow duplicates.  
+The `ReadOnlyToDoList` and `ReadOnlyTask` interfaces allow other classes and components, such as the `UI`, to access but not modify the list of tasks and their details.  
+> * `ToDoList` can potentially be extended to have another `UniqueTagList` object to keep track of tags associated with each task and `ToDoList` will be responsible for syncing the tasks and tags.
+> `Name` is a class as it might be modified to have its own validation regex e.g. can only contain alphanumeric characters.
 
 Using the same example, if the `Logic` component requests `Model` to _deleteTasks(task)_, the subsequent interactions between objects can be described by the following sequence diagram.  
+
 <img src="images\SDforDeleteTaskModelComponent.png" width="800">
 
 The identified task is removed from the `UniqueTaskList`. The `ModelManager` raises a `ToDoListChangedEvent` and back up the new to-do list to its history of saved lists.  
 
-> `Model`’s _deleteTasks_ methods actually take in an _ArrayList_ of `ReadOnlyTask` instead of a single task. We use _deleteTasks(task)_ for simplicity in the sequence diagram.
+> `Model`’s _deleteTasks_ methods actually take in `ArrayList<ReadOnlyTask>` instead of a single task. We use _deleteTasks(task)_ for simplicity in the sequence diagram.
 
 
 ### 5. Storage component
