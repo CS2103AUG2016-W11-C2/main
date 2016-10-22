@@ -31,7 +31,7 @@ public class TestTask implements ReadOnlyTask {
         this.isCompleted = other.isCompleted;
         this.startDateTime = other.startDateTime;
         this.endDateTime = other.endDateTime;
-    }    
+    }
 
     public void setName(Name name) {
         this.name = name;
