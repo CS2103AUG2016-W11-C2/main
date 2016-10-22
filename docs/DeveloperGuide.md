@@ -202,7 +202,7 @@ Each `ToDoList` object has one `UniqueTaskList` object. A `UniqueTaskList` can c
 The `ReadOnlyToDoList` and `ReadOnlyTask` interfaces allow other classes and components, such as the `UI`, to access but not modify the list of tasks and their details.  
 
 > * `ToDoList` can potentially be extended to have another `UniqueTagList` object to keep track of tags associated with each task and `ToDoList` will be responsible for syncing the tasks and tags.
-> `Name` is a class as it might be modified to have its own validation regex e.g. can only contain alphanumeric characters.
+> * `Name` is a class as it might be modified to have its own validation regex e.g. can only contain alphanumeric characters.
 
 Using the same example, if the `Logic` component requests `Model` to _deleteTasks(task)_, the subsequent interactions between objects can be described by the following sequence diagram.  
 
