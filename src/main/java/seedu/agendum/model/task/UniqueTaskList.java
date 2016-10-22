@@ -105,44 +105,31 @@ public class UniqueTaskList implements Iterable<Task> {
      * Marks the equivalent task in the list.
      *
      * @throws TaskNotFoundException if no such task could be found in the list.
+     * @throws DuplicateTaskException if marking the task would result in a duplicate in the unique task list.
      */
-    public boolean mark(ReadOnlyTask toMark) throws TaskNotFoundException {
+    public boolean mark(ReadOnlyTask toMark) throws TaskNotFoundException, DuplicateTaskException {
         assert toMark != null;
-
-        final int taskIndex = internalList.indexOf(toMark);
-        final boolean taskFoundAndMarked = (taskIndex != -1);
-
-        if (!taskFoundAndMarked) {
-            throw new TaskNotFoundException();
-        }
 
         Task markedTask = new Task(toMark);
         markedTask.markAsCompleted();
-        internalList.set(taskIndex, markedTask);
 
-        return taskFoundAndMarked;
+        return update(toMark, markedTask);
     }
     
     /**
      * Unmarks the equivalent task in the list.
      *
      * @throws TaskNotFoundException if no such task could be found in the list.
+     * @throws DuplicateTaskException DuplicateTaskException if unmarking the task would result
+     * in a duplicate in the unique task list.
      */
-    public boolean unmark(ReadOnlyTask toUnmark) throws TaskNotFoundException {
+    public boolean unmark(ReadOnlyTask toUnmark) throws TaskNotFoundException, DuplicateTaskException {
         assert toUnmark != null;
-
-        final int taskIndex = internalList.indexOf(toUnmark);
-        final boolean taskFoundAndUnmarked = (taskIndex != -1);
-
-        if (!taskFoundAndUnmarked) {
-            throw new TaskNotFoundException();
-        }
 
         Task unmarkedTask = new Task(toUnmark);
         unmarkedTask.markAsUncompleted();
-        internalList.set(taskIndex, unmarkedTask);
 
-        return taskFoundAndUnmarked;
+        return update(toUnmark, unmarkedTask);
     }
 
     public ObservableList<Task> getInternalList() {

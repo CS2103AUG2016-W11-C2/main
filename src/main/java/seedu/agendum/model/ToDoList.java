@@ -90,20 +90,16 @@ public class ToDoList implements ReadOnlyToDoList {
         return tasks.update(key, updatedTask);
     }
 
-    public boolean markTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
-        if (tasks.mark(key)) {
-            return true;
-        } else {
-            throw new UniqueTaskList.TaskNotFoundException();
-        }
+    public boolean markTask(ReadOnlyTask key)
+            throws UniqueTaskList.TaskNotFoundException,
+            UniqueTaskList.DuplicateTaskException {
+        return tasks.mark(key); 
     }
 
-    public boolean unmarkTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
-        if (tasks.unmark(key)) {
-            return true;
-        } else {
-            throw new UniqueTaskList.TaskNotFoundException();
-        }
+    public boolean unmarkTask(ReadOnlyTask key)
+            throws UniqueTaskList.TaskNotFoundException,
+            UniqueTaskList.DuplicateTaskException {
+        return tasks.unmark(key);
     }
 
 //// util methods
