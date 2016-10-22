@@ -17,6 +17,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     private boolean isCompleted;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private LocalDateTime lastUpdatedTime;
     
     // ================ Constructor methods ==============================
 
@@ -29,6 +30,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = null;
+        setLastUpdatedTime();
     }
     
     /**
@@ -40,6 +42,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
+        setLastUpdatedTime();
     }
     
     /**
@@ -52,6 +55,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
+        setLastUpdatedTime();
     }
 
     /**
@@ -62,6 +66,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         if (source.isCompleted()) {
             this.markAsCompleted();
         }
+        setLastUpdatedTime();
     }
     
     // ================ Getter methods ==============================
@@ -102,6 +107,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return Optional.ofNullable(endDateTime);
     }
 
+    @Override
+    public LocalDateTime getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
     /**
      * Pre-condition: Task has a start or end time
      * Return the (earlier) time associated with the task (assumed to be start time)
@@ -133,6 +143,14 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.endDateTime = endDateTime.orElse(null);
     }
 
+    private void setLastUpdatedTime() {
+        this.lastUpdatedTime = LocalDateTime.now();
+    }
+    
+    public void setLastUpdatedTimeFromStorage(LocalDateTime updatedTime) {
+        this.lastUpdatedTime = updatedTime;
+    }
+
     // ================ Other methods ==============================
 
     @Override
@@ -154,6 +172,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
             return comparedTime;
         }
         
+        int comparedLastUpdatedTime = compareLastUpdatedTime(other);
+        if (comparedLastUpdatedTime != 0) {
+            return comparedLastUpdatedTime;
+        }
+        
         return compareName(other);
     }
 
@@ -173,6 +196,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         }
     }
 
+    public int compareLastUpdatedTime(Task other) {
+        return other.getLastUpdatedTime().compareTo(this.getLastUpdatedTime());
+    }
+
+    // for LogicManagerTest to sort tasks as time is insufficient
     public int compareName(Task other) {
         return this.getName().toString().compareTo(other.getName().toString());
     }
