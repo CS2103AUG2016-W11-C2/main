@@ -8,7 +8,6 @@ import java.util.Optional;
 
 /**
  * Represents a Task in the to do list.
- * Only the task name is compulsory and it cannot be an empty string.
  */
 public class Task implements ReadOnlyTask, Comparable<Task> {
 
@@ -59,8 +58,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      * Copy constructor.
      */
     public Task(ReadOnlyTask source) {
-        this(source.getName(), source.getStartDateTime(),
-                source.getEndDateTime());
+        this(source.getName(), source.getStartDateTime(), source.getEndDateTime());
         if (source.isCompleted()) {
             this.markAsCompleted();
         }
@@ -106,7 +104,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     /**
      * Pre-condition: Task has a start or end time
-     * Return the (earlier) time associated with the task
+     * Return the (earlier) time associated with the task (assumed to be start time)
      */
     private LocalDateTime getTaskTime() {
         assert hasTime();
@@ -150,10 +148,12 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         if (comparedCompletionStatus != 0) {
             return comparedCompletionStatus;
         }
+
         int comparedTime = compareTime(other);
         if (comparedTime != 0) {
             return comparedTime;
         }
+        
         return compareName(other);
     }
 
@@ -180,7 +180,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name);
+        return Objects.hash(name, isCompleted, startDateTime, endDateTime);
     }
 
     @Override
