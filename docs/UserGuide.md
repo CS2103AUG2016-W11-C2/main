@@ -57,7 +57,7 @@ As shown below, Agendum has 3 panels: **"Do It Soon"**, **"Do It Anytime"** and 
 > **Command Format**
 > * Words in `UPPER_CASE` are the parameters.
 > * Parameters in `SQUARE_BRACKETS` are optional.
-> * Parameters with `...` after them can have multiple instances.
+> * Parameters with `...` after them can have multiple instances (separated by whitespace).
 > * The order of parameters is fixed.
 > * Commands and parameters are not case-sensitive e.g `list` will match `List`  
 
@@ -384,4 +384,4 @@ Unmark   | `unmark INDEX...`
 
 For a quick reference,
 > * Words in `UPPER_CASE` are the parameters.
-> * Parameters with `...` after them can have multiple instances.
+> * Parameters with `...` after them can have multiple instances (separated by whitespace).
