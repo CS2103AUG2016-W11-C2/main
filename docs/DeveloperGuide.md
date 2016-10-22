@@ -196,8 +196,11 @@ The structure and relationship of the various classes in the `Model` component i
 <img src="images/ModelClassDiagram.png" width="800"><br>
 
 `ModelManager` implements the `Model` Interface. It stores a `UserPref` Object which represents the user’s preference. It stores multiple `ToDoList` objects, including the current and recent lists.  
+
 Each `ToDoList` object has one `UniqueTaskList` object. A `UniqueTaskList` can contain multiple `Task` objects but does not allow duplicates.  
+
 The `ReadOnlyToDoList` and `ReadOnlyTask` interfaces allow other classes and components, such as the `UI`, to access but not modify the list of tasks and their details.  
+s
 > * `ToDoList` can potentially be extended to have another `UniqueTagList` object to keep track of tags associated with each task and `ToDoList` will be responsible for syncing the tasks and tags.
 > `Name` is a class as it might be modified to have its own validation regex e.g. can only contain alphanumeric characters.
 
