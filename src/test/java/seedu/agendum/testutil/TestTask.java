@@ -38,22 +38,27 @@ public class TestTask implements ReadOnlyTask {
 
     public void setName(Name name) {
         this.name = name;
+        setLastUpdatedTime();
     }
     
     public void markAsCompleted() {
         this.isCompleted = true;
+        setLastUpdatedTime();
     }
 
     public void markAsUncompleted() {
         this.isCompleted = false;
+        setLastUpdatedTime();
     }
 
     public void setStartDateTime(Optional<LocalDateTime> startDateTime) {
         this.startDateTime = startDateTime.orElse(null);
+        setLastUpdatedTime();
     }
     
     public void setEndDateTime(Optional<LocalDateTime> endDateTime) {
         this.endDateTime = endDateTime.orElse(null);
+        setLastUpdatedTime();
     }
 
     private void setLastUpdatedTime() {

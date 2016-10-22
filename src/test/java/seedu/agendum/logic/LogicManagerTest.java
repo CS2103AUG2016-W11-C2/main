@@ -857,7 +857,6 @@ public class LogicManagerTest {
 
         Task generateClonedTask(ReadOnlyTask other) {
             Task clone = new Task(other);
-            clone.setLastUpdatedTime(other.getLastUpdatedTime());
             return clone;
         }
 
