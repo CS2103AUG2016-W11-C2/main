@@ -62,7 +62,7 @@ public class TestTask implements ReadOnlyTask {
     }
 
     private void setLastUpdatedTime() {
-        this.lastUpdatedTime = LocalDateTime.now();
+        this.lastUpdatedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
     }
 
     @Override
