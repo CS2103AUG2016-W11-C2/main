@@ -10,9 +10,14 @@ import java.util.ListIterator;
 public class CommandBoxHistory {
     
     private static final int MAX_PREVIOUS_LINES = 15;
+    private static final String PREVIOUS_QUERY = "previous";
+    private static final String NEXT_QUERY = "next";
+    private static final String EMPTY_QUERY = "";
+    private static final String EMPTY_COMMAND = "";
     private LinkedList<String> pastCommands;
     private ListIterator<String> iterator;
     private String lastCommand = "";
+    private String lastQuery = EMPTY_QUERY;
     
     public CommandBoxHistory() {
         pastCommands = new LinkedList<String>();
@@ -32,11 +37,14 @@ public class CommandBoxHistory {
      * If there is no previous command, returns an empty string to clear the command box
      */
     public String getPreviousCommand() {
-        if (!iterator.hasNext()) {
-            return null;
-        } else {
-            return iterator.next();
-        }
+        if(!iterator.hasNext()) {
+            lastQuery = EMPTY_QUERY;
+            return EMPTY_COMMAND;
+        } else if(lastQuery == NEXT_QUERY) {
+            iterator.next();
+        } 
+        lastQuery = PREVIOUS_QUERY;
+        return iterator.next();
     }
 
     /**
@@ -46,10 +54,14 @@ public class CommandBoxHistory {
      */
     public String getNextCommand() {
         if (!iterator.hasPrevious()) {
-            return null;
-        } else {
-            return iterator.previous();
-        }        
+            lastQuery = EMPTY_QUERY;
+            return EMPTY_COMMAND;
+        } else if(lastQuery == PREVIOUS_QUERY) {
+            iterator.previous();
+        }  
+        lastQuery = NEXT_QUERY;
+        return iterator.previous();
+
     }
 
     /**

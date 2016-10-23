@@ -96,17 +96,11 @@ public class CommandBox extends UiPart {
             public void handle(KeyEvent event) {
                 KeyCode keyCode = event.getCode();
                 if (keyCode.equals(KeyCode.UP)) {
-                    System.out.println("pressing up");
                     String previousCommand = commandBoxHistory.getPreviousCommand();
-                    if(previousCommand != null) {
-                        commandTextField.setText(previousCommand);
-                    }
+                    commandTextField.setText(previousCommand);
                 } else if (keyCode.equals(KeyCode.DOWN)) {
-                    System.out.println("pressing down");
                     String nextCommand = commandBoxHistory.getNextCommand();
-                    if(nextCommand != null) {
-                        commandTextField.setText(nextCommand);
-                    }
+                    commandTextField.setText(nextCommand);
                 } else {
                     return;
                 }
