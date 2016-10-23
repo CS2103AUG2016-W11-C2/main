@@ -16,7 +16,7 @@ import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.Config;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Logger;
@@ -31,12 +31,7 @@ public class ModelManager extends ComponentManager implements Model {
     private final ToDoList toDoList;
     private final Stack<ToDoList> previousLists;
     private final FilteredList<Task> filteredTasks;
-    private final FilteredList<Task> completedTasks;
     private final SortedList<Task> sortedTasks;
-    private final FilteredList<Task> uncompletedUpcomingTasks;
-    private final FilteredList<Task> uncompletedOverdueTasks;
-    private final SortedList<Task> upcomingTasks;
-    private final SortedList<Task> overdueTasks;
     private final Config config;
 
     /**
@@ -54,16 +49,9 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(src);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        completedTasks = new FilteredList<>(toDoList.getTasks());
-        completedTasks.setPredicate(task -> task.isCompleted());
-        uncompletedUpcomingTasks = new FilteredList<>(toDoList.getTasks());
-        uncompletedOverdueTasks = new FilteredList<>(toDoList.getTasks());
-        uncompletedUpcomingTasks.setPredicate(task -> task.isUpcoming());
-        uncompletedOverdueTasks.setPredicate(task -> task.isOverdue());
-        upcomingTasks = uncompletedUpcomingTasks.sorted();
-        overdueTasks = uncompletedOverdueTasks.sorted();
         previousLists = new Stack<ToDoList>();
         backupNewToDoList();
+
         this.config = config;
     }
 
@@ -75,24 +63,18 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        completedTasks = new FilteredList<>(toDoList.getTasks());
-        completedTasks.setPredicate(task -> task.isCompleted());
-        uncompletedUpcomingTasks = new FilteredList<>(toDoList.getTasks());
-        uncompletedOverdueTasks = new FilteredList<>(toDoList.getTasks());
-        uncompletedUpcomingTasks.setPredicate(task -> task.isUpcoming());
-        uncompletedOverdueTasks.setPredicate(task -> task.isOverdue());
-        upcomingTasks = uncompletedUpcomingTasks.sorted();
-        overdueTasks = uncompletedOverdueTasks.sorted();
         previousLists = new Stack<ToDoList>();
         backupNewToDoList();
+
         this.config = config;
     }
 
     @Override
     public void resetData(ReadOnlyToDoList newData) {
         toDoList.resetData(newData);
-        indicateToDoListChanged();
+        logger.fine("[MODEL] --- succesfully reset data of the to-do list");
         backupNewToDoList();
+        indicateToDoListChanged();
     }
 
     @Override
@@ -111,53 +93,52 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void deleteTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void deleteTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             toDoList.removeTask(target);
         }
-        indicateToDoListChanged();
         backupNewToDoList();
+        logger.fine("[MODEL] --- succesfully deleted all specified targets from the to-do list");
+        indicateToDoListChanged();
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
-        toDoList.addTask(task);
+        toDoList.addTask(task);      
+        logger.fine("[MODEL] --- succesfully added the new task to the to-do list");
+        backupNewToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
-        backupNewToDoList();
-    }
-
-    @Override
-    public synchronized void changeSaveLocation(String location){
-        assert StringUtil.isValidPathToFile(location);
-        indicateChangeSaveLocationRequest(location);
     }
 
     @Override
     public synchronized void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         toDoList.updateTask(target, updatedTask);
+        logger.fine("[MODEL] --- succesfully updated the target task in the to-do list");
+        backupNewToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
-        backupNewToDoList();
     }
 
     @Override
-    public synchronized void markTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void markTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             toDoList.markTask(target);
-        }
-        indicateToDoListChanged();
+        } 
+        logger.fine("[MODEL] --- succesfully marked all specified targets from the to-do list");
         backupNewToDoList();
+        indicateToDoListChanged();
     }
     
     @Override
-    public synchronized void unmarkTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void unmarkTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             toDoList.unmarkTask(target);
         }
-        indicateToDoListChanged();
+        logger.fine("[MODEL] --- succesfully unmarked all specified targets from the to-do list");
         backupNewToDoList();
+        indicateToDoListChanged();
     }
 
     @Override
@@ -168,14 +149,24 @@ public class ModelManager extends ComponentManager implements Model {
         } else {
             previousLists.pop();
             toDoList.resetData(previousLists.peek());
+            logger.fine("[MODEL] --- succesfully restored the previous the to-do list from this session");
             indicateToDoListChanged();
             return true;
         }
     }
  
     private void backupNewToDoList() {
-        previousLists.push(new ToDoList(this.getToDoList()));
+        ToDoList latestList = new ToDoList(this.getToDoList());
+        previousLists.push(latestList);
     }
+
+    // Storage method
+    @Override
+    public synchronized void changeSaveLocation(String location){
+        assert StringUtil.isValidPathToFile(location);
+        indicateChangeSaveLocationRequest(location);
+    }
+
 
     //=========== Filtered Task List Accessors ===============================================================
 
@@ -188,26 +179,6 @@ public class ModelManager extends ComponentManager implements Model {
     public void updateFilteredListToShowAll() {
         filteredTasks.setPredicate(null);
     }
-    
-    @Override
-    public void updateFilteredListToShowUncompleted() {
-        filteredTasks.setPredicate(task -> !task.isCompleted());
-    }
-
-    @Override
-    public void updateFilteredListToShowCompleted() {
-        filteredTasks.setPredicate(task -> task.isCompleted());
-    }
-
-    @Override
-    public void updateFilteredListToShowOverdue() {
-        filteredTasks.setPredicate(task -> task.isOverdue());
-    }
-
-    @Override
-    public void updateFilteredListToShowUpcoming() {
-        filteredTasks.setPredicate(task -> task.isUpcoming());
-    }
 
     @Override
     public void updateFilteredTaskList(Set<String> keywords){
@@ -216,23 +187,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void updateFilteredTaskList(Expression expression) {
         filteredTasks.setPredicate(expression::satisfies);
-    }
-    
-    //=========== Other Task List Accessors ===================================================================
-
-    @Override
-    public UnmodifiableObservableList<ReadOnlyTask> getCompletedTaskList() {
-        return new UnmodifiableObservableList<>(completedTasks);
-    }
-
-    @Override
-    public UnmodifiableObservableList<ReadOnlyTask> getUpcomingTaskList() {
-        return new UnmodifiableObservableList<>(upcomingTasks);
-    }
-
-    @Override
-    public UnmodifiableObservableList<ReadOnlyTask> getOverdueTaskList() {
-        return new UnmodifiableObservableList<>(overdueTasks);
     }
 
     //========== Inner classes/interfaces used for filtering ==================================================
