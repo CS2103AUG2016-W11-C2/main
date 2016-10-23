@@ -561,7 +561,6 @@ public class LogicManagerTest {
     public void execute_unmark_UnmarksCorrectSingleTaskFromCompleted() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(2);
-        //completed task is usually at the end of the list
         threeTasks.add(helper.generateCompletedTask(3));
 
         // prepare expectedTDL - does not have any tasks marked as completed
