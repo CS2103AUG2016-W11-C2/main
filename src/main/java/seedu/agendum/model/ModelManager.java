@@ -72,9 +72,9 @@ public class ModelManager extends ComponentManager implements Model {
     @Override
     public void resetData(ReadOnlyToDoList newData) {
         toDoList.resetData(newData);
-        indicateToDoListChanged();
+        logger.fine("[MODEL] --- succesfully reset data of the to-do list");
         backupNewToDoList();
-        logger.fine("MODEL --- succesfully reset data of the to-do list");
+        indicateToDoListChanged();
     }
 
     @Override
@@ -97,38 +97,38 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyTask target: targets) {
             toDoList.removeTask(target);
         }
-        indicateToDoListChanged();
+        logger.fine("[MODEL] --- succesfully deleted all specified targets from the to-do list");
         backupNewToDoList();
-        logger.fine("MODEL --- succesfully deleted all specified targets from the to-do list");
+        indicateToDoListChanged();
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
-        toDoList.addTask(task);
+        toDoList.addTask(task);      
+        logger.fine("[MODEL] --- succesfully added the new task to the to-do list");
+        backupNewToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
-        backupNewToDoList();
-        logger.fine("MODEL --- succesfully added the new task to the to-do list");
     }
 
     @Override
     public synchronized void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         toDoList.updateTask(target, updatedTask);
+        logger.fine("[MODEL] --- succesfully updated the target task in the to-do list");
+        backupNewToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
-        backupNewToDoList();
-        logger.fine("MODEL --- succesfully updated the target task in the to-do list");
     }
 
     @Override
     public synchronized void markTasks(ArrayList<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             toDoList.markTask(target);
-        }
-        indicateToDoListChanged();
+        } 
+        logger.fine("[MODEL] --- succesfully marked all specified targets from the to-do list");
         backupNewToDoList();
-        logger.fine("MODEL --- succesfully marked all specified targets from the to-do list");
+        indicateToDoListChanged();
     }
     
     @Override
@@ -136,9 +136,9 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyTask target: targets) {
             toDoList.unmarkTask(target);
         }
-        indicateToDoListChanged();
+        logger.fine("[MODEL] --- succesfully unmarked all specified targets from the to-do list");
         backupNewToDoList();
-        logger.fine("MODEL --- succesfully unmarked all specified targets from the to-do list");
+        indicateToDoListChanged();
     }
 
     @Override
@@ -149,8 +149,8 @@ public class ModelManager extends ComponentManager implements Model {
         } else {
             previousLists.pop();
             toDoList.resetData(previousLists.peek());
+            logger.fine("[MODEL] --- succesfully restored the previous the to-do list from this session");
             indicateToDoListChanged();
-            logger.fine("MODEL --- succesfully restored the previous the to-do list from this session");
             return true;
         }
     }
