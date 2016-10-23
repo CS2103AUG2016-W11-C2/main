@@ -1,6 +1,8 @@
 package seedu.agendum.ui;
 
 import com.google.common.eventbus.Subscribe;
+
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.SplitPane;
@@ -45,6 +47,7 @@ public class CommandBox extends UiPart {
         this.resultPopUp = resultPopUp;
         this.logic = logic;
         registerAsAnEventHandler(this);
+        registerKeyEventFilter();
     }
 
     private void addToPlaceholder() {
@@ -78,6 +81,8 @@ public class CommandBox extends UiPart {
         /* We assume the command is correct. If it is incorrect, the command box will be changed accordingly
          * in the event handling code {@link #handleIncorrectCommandAttempted}
          */
+        System.out.println("command executed!");
+        
         setStyleToIndicateCorrectCommand();
         mostRecentResult = logic.execute(previousCommandTest);
         if(!previousCommandTest.toLowerCase().equals("help")) {
@@ -86,16 +91,25 @@ public class CommandBox extends UiPart {
         logger.info("Result: " + mostRecentResult.feedbackToUser);
     }
 
-    @FXML
-    private void handleCommandBoxKeyPressedEvent(KeyEvent event) {
-        KeyCode keyCode = event.getCode();
-        if (keyCode.equals(KeyCode.UP)) {
-            String previousCommand = commandBoxHistory.getPreviousCommand();
-            commandTextField.setText(previousCommand);
-        } else if (keyCode.equals(KeyCode.DOWN)) {
-            String nextCommand = commandBoxHistory.getNextCommand();
-            commandTextField.setText(nextCommand);
-        }     
+    private void registerKeyEventFilter() {
+        commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent event) {
+                KeyCode keyCode = event.getCode();
+                if (keyCode.equals(KeyCode.UP)) {
+                    System.out.println("pressing up");
+                    String previousCommand = commandBoxHistory.getPreviousCommand();
+                    commandTextField.setText(previousCommand);
+                } else if (keyCode.equals(KeyCode.DOWN)) {
+                    System.out.println("pressing down");
+                    String nextCommand = commandBoxHistory.getNextCommand();
+                    commandTextField.setText(nextCommand);
+                } else {
+                    return;
+                }
+                commandTextField.end();
+                event.consume();
+            }
+        });  
     }
 
     /**
