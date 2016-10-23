@@ -33,7 +33,7 @@ public class CommandBoxHistory {
      */
     public String getPreviousCommand() {
         if (!iterator.hasNext()) {
-            return "";
+            return null;
         } else {
             return iterator.next();
         }
@@ -46,7 +46,7 @@ public class CommandBoxHistory {
      */
     public String getNextCommand() {
         if (!iterator.hasPrevious()) {
-            return "";
+            return null;
         } else {
             return iterator.previous();
         }        
