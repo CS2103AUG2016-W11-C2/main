@@ -40,7 +40,8 @@ public interface ReadOnlyTask {
     }
 
     /**
-     * 
+     * Format the tasks as text, showing all details including name, 
+     * completion status, start and end time if any
      */
     default String getDetailedText() {
         String completionStatus = isCompleted() ? "Completed" : "Incomplete";
