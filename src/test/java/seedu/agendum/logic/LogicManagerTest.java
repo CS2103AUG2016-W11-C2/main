@@ -657,6 +657,7 @@ public class LogicManagerTest {
         for (Task p : taskList) {
             model.addTask(p);
         }
+
         // a valid index is provided since we are testing for invalid name (empty string) here
         assertCommandBehavior("rename 1 ", expectedMessage, model.getToDoList(), taskList);
         
@@ -676,7 +677,7 @@ public class LogicManagerTest {
         List<Task> twoTasks = helper.generateTaskList(toBeDuplicated, toBeRenamed);
         ToDoList expectedTDL = helper.generateToDoList(twoTasks);
 
-        model.resetData(expectedTDL);
+        helper.addToModel(model, twoTasks);
 
         // execute command and verify result
         // a valid index must be provided to check if the name is invalid (due to a duplicate)
@@ -695,12 +696,14 @@ public class LogicManagerTest {
         //TODO: replace taskToRename with a task with deadlines etc. Check if other attributes are preserved
         threeTasks.add(taskToRename);
 
+        // prepare expected TDL
         ToDoList expectedTDL = helper.generateToDoList(threeTasks);
         Task renamedTask = new Task(taskToRename);
         String newTaskName = "a brand new task name";
         renamedTask.setName(new Name(newTaskName));
         expectedTDL.updateTask(taskToRename, renamedTask);
-        model.resetData(new ToDoList());
+
+        // prepare model
         helper.addToModel(model, threeTasks);
 
         //boundary value: use the last task
