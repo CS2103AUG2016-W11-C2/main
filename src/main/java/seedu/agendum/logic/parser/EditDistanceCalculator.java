@@ -1,27 +1,49 @@
+//@@author A0003878Y
+
 package seedu.agendum.logic.parser;
 
 import com.joestelmach.natty.DateGroup;
 import org.reflections.Reflections;
 import seedu.agendum.logic.commands.Command;
 
+import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * Created by vprem on 24/10/16.
- */
 public class EditDistanceCalculator {
+
+    private static final int EDIT_DISTANCE_THRESHOLD = 3;
+
     public static Optional<String> parseString(String input) {
         Reflections reflections = new Reflections("seedu.agendum");
         Set<Class<? extends Command>> classes = reflections.getSubTypesOf(Command.class);
 
-        for (Class c:classes) {
-            c.COMMAND_WORD;
+        String bestCommand = "";
+        int bestCommandDistance = 999;
+
+        for (Class<? extends Command> c :classes) {
+            for (Field f : c.getFields()) {
+                if (f.getName().equals("COMMAND_WORD")) {
+                    try {
+                        String commandWord = (String) f.get(null);
+                        int commandWordDistance = distance(input, commandWord);
+
+                        if (commandWordDistance < bestCommandDistance) {
+                            bestCommand = commandWord;
+                            bestCommandDistance = commandWordDistance;
+                        }
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
 
-        classes.stream().map(map)
-
-        return "test";
+        if (bestCommandDistance < EDIT_DISTANCE_THRESHOLD) {
+            return Optional.of(bestCommand);
+        } else {
+            return Optional.empty();
+        }
     }
 
     public static int distance(String a, String b) {

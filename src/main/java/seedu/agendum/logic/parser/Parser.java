@@ -109,7 +109,12 @@ public class Parser {
             return new LoadCommand(arguments);
 
         default:
-            return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
+            Optional<String> alternativeCommand = EditDistanceCalculator.parseString(commandWord);
+            if (alternativeCommand.isPresent()) {
+                return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND + ", did you mean '" + alternativeCommand.get() + "'?");
+            } else {
+                return new IncorrectCommand(MESSAGE_UNKNOWN_COMMAND);
+            }
         }
     }
 
