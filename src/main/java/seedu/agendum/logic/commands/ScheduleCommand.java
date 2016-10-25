@@ -35,6 +35,7 @@ public class ScheduleCommand extends Command {
     //for help message
     public ScheduleCommand() {}
 
+    //@@author A0133367E
     public ScheduleCommand(int targetIndex, Optional<LocalDateTime> startTime,
             Optional<LocalDateTime> endTime) {
         this.targetIndex = targetIndex;
@@ -70,6 +71,7 @@ public class ScheduleCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex, updatedTask));
     }
 
+    //@author
     @Override
     public String getName() {
         return COMMAND_WORD;

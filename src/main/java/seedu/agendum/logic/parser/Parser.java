@@ -33,6 +33,7 @@ public class Parser {
 
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>.+)");
 
+    //@@author A0003878Y
     private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
 
     private static final Pattern SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
@@ -41,7 +42,8 @@ public class Parser {
     private static final String ARGS_BY = "by";
     private static final String ARGS_TO = "to";
     private static final String[] TIME_TOKENS = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY };
-
+	
+    //@@author
     public Parser() {}
 
     /**
@@ -108,6 +110,7 @@ public class Parser {
         }
     }
 
+    //@@author A0003878Y
     /**
      * Parses arguments in the context of the add task command.
      *
@@ -155,6 +158,7 @@ public class Parser {
             return new IncorrectCommand(ive.getMessage());
         }
     }
+
 
     /**
      * Parses arguments in the context of the schedule task command.
@@ -207,6 +211,8 @@ public class Parser {
         }
     }
 	
+
+    //@@author A0133367E
     /**
      * Parses arguments in the context of the delete task command.
      *
@@ -282,6 +288,7 @@ public class Parser {
         }
     }
 
+    //@@author
     /**
      * Parses arguments in the context of the select task command.
      *
@@ -316,6 +323,7 @@ public class Parser {
         return Optional.of(Integer.parseInt(index));
     }
 
+    //@@author A0133367E
     /**
      * Returns the specified indices in the {@code command} if positive unsigned integer(s) are given.
      *   Returns an empty set otherwise.
@@ -349,7 +357,8 @@ public class Parser {
 
         return taskIds;
     }
-
+    
+    //@@author
     /**
      * Parses arguments in the context of the find task command.
      *
