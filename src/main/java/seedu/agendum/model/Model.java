@@ -19,7 +19,7 @@ public interface Model {
 
     /** Returns the ToDoList */
     ReadOnlyToDoList getToDoList();
-
+  
     /** Deletes the given task(s) */
     void deleteTasks(List<ReadOnlyTask> targets) throws UniqueTaskList.TaskNotFoundException;
 
