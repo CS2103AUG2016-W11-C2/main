@@ -96,6 +96,7 @@ public class MainWindow extends UiPart {
         return mainWindow;
     }
 
+    //@@author A0148031R
     private void configure(String appTitle, String toDoListName, Config config, UserPrefs prefs,
                            Logic logic) {
 
@@ -161,6 +162,7 @@ public class MainWindow extends UiPart {
         primaryStage.setTitle(appTitle);
     }
 
+    //@@author
     /**
      * Sets the default size based on user preferences.
      */
@@ -186,7 +188,6 @@ public class MainWindow extends UiPart {
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
-    @SuppressWarnings("restriction")
     @FXML
     public void handleHelp() {
         HelpWindow helpWindow = HelpWindow.load(primaryStage);
