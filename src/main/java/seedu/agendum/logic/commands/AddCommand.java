@@ -4,9 +4,7 @@ import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.model.task.*;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * Adds a task to the to do list.

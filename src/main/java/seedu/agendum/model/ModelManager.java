@@ -4,7 +4,6 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
-import seedu.agendum.commons.util.ConfigUtil;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
@@ -15,7 +14,6 @@ import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.core.ComponentManager;
 import seedu.agendum.commons.core.Config;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -32,7 +30,6 @@ public class ModelManager extends ComponentManager implements Model {
     private final Stack<ToDoList> previousLists;
     private final FilteredList<Task> filteredTasks;
     private final SortedList<Task> sortedTasks;
-    private final Config config;
 
     /**
      * Initializes a ModelManager with the given ToDoList
