@@ -51,7 +51,34 @@ public class DateTimeParserTest {
         Optional<LocalDateTime> t = DateTimeParser.parseString("january 10 2017 5:15pm");
         assertSameDateAndTime(t.get(), LocalDateTime.of(2017,1,10,17,15));
     }
-
-    // TODO: Missing relative date time tests
-
+    
+    @Test
+    public void relativeDayDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeParser.parseString("day from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2016,10,27,17,15));
+    }
+    
+    @Test
+    public void relativeWeekDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeParser.parseString("tuesday from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2016,11,1,17,15));
+    }
+    
+    @Test
+    public void relativeAnyDaysDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeParser.parseString("5 days from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2016,10,31,17,15));
+    }
+    
+    @Test
+    public void relativeMonthDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeParser.parseString("month from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2016,11,26,17,15));
+    }
+    
+    @Test
+    public void relativeYearDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeParser.parseString("year from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2017,10,26,17,15));
+    }
 }

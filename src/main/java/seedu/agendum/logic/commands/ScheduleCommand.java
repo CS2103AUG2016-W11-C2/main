@@ -71,7 +71,6 @@ public class ScheduleCommand extends Command {
         return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex, updatedTask));
     }
 
-    //@author
     @Override
     public String getName() {
         return COMMAND_WORD;

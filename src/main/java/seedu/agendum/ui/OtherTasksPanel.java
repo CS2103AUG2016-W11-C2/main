@@ -23,6 +23,7 @@ public class OtherTasksPanel extends UiPart {
     private static final String FXML = "OtherTasksPanel.fxml";
     private AnchorPane panel;
     private AnchorPane placeHolderPane;
+    private static ObservableList<ReadOnlyTask> mainTaskList;
 
     @FXML
     private ListView<ReadOnlyTask> otherTasksListView;
@@ -48,13 +49,14 @@ public class OtherTasksPanel extends UiPart {
 
     public static OtherTasksPanel load(Stage primaryStage, AnchorPane OtherTasksPlaceholder,
             ObservableList<ReadOnlyTask> taskList) {
+        mainTaskList = taskList;
         OtherTasksPanel otherTasksPanel = UiPartLoader.loadUiPart(primaryStage, OtherTasksPlaceholder, new OtherTasksPanel());
         otherTasksPanel.configure(taskList);
         return otherTasksPanel;
     }
 
     private void configure(ObservableList<ReadOnlyTask> taskList) {
-        setConnections(taskList.filtered(task -> !task.isCompleted()));
+        setConnections(taskList.filtered(task -> !task.isCompleted() && !task.hasTime()));
         addToPlaceholder();
     }
 
@@ -88,7 +90,7 @@ public class OtherTasksPanel extends UiPart {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(TaskCard.load(task).getLayout());
+                setGraphic(TaskCard.load(task, mainTaskList.indexOf(task) + 1).getLayout());
             }
         }
     }

@@ -1,8 +1,10 @@
 package seedu.agendum.model.task;
 
 import seedu.agendum.commons.util.CollectionUtil;
+import seedu.agendum.logic.parser.DateTimeParser;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -16,8 +18,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     private Name name;
     private boolean isCompleted;
+    private boolean isRecurring;
+    private boolean isChild;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private LocalDateTime lastUpdatedTime;
     
     // ================ Constructor methods ==============================
 
@@ -30,6 +35,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = null;
+        this.isRecurring = false;
+        this.isChild = false;
+
+        setLastUpdatedTimeToNow();
+
     }
     
     /**
@@ -39,8 +49,14 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         assert !CollectionUtil.isAnyNull(name);
         this.name = name;
         this.isCompleted = false;
+        this.isRecurring = false;
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
+
+        this.isChild = false;
+
+        setLastUpdatedTimeToNow();
+
     }
     
     /**
@@ -51,8 +67,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         assert !CollectionUtil.isAnyNull(name);
         this.name = name;
         this.isCompleted = false;
+        this.isRecurring = false;
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
+        this.isChild = false;
+        setLastUpdatedTimeToNow();
     }
 
     /**
@@ -63,7 +82,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         if (source.isCompleted()) {
             this.markAsCompleted();
         }
+        setLastUpdatedTime(source.getLastUpdatedTime());
     }
+    
+    public Task(RecurringTask task) {}
     
     // ================ Getter methods ==============================
 
@@ -93,6 +115,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return (getStartDateTime().isPresent() || getEndDateTime().isPresent());
     }
 
+    public boolean isRecurring() {
+        return isRecurring;
+    }
+
     @Override
     public Optional<LocalDateTime> getStartDateTime() {
         return Optional.ofNullable(startDateTime);
@@ -101,6 +127,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public Optional<LocalDateTime> getEndDateTime() {
         return Optional.ofNullable(endDateTime);
+    }
+
+    @Override
+    public LocalDateTime getLastUpdatedTime() {
+        return lastUpdatedTime;
     }
 
     /**
@@ -116,22 +147,35 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     
     public void setName(Name name) {
         this.name = name;
+        setLastUpdatedTimeToNow();
     }
     
     public void markAsCompleted() {
         this.isCompleted = true;
+        setLastUpdatedTimeToNow();
     }
     
     public void markAsUncompleted() {
         this.isCompleted = false;
+        setLastUpdatedTimeToNow();
     }
     
     public void setStartDateTime(Optional<LocalDateTime> startDateTime) {
         this.startDateTime = startDateTime.orElse(null);
+        setLastUpdatedTimeToNow();
     }
     
     public void setEndDateTime(Optional<LocalDateTime> endDateTime) {
         this.endDateTime = endDateTime.orElse(null);
+        setLastUpdatedTimeToNow();
+    }
+
+    public void setLastUpdatedTime(LocalDateTime updatedTime) {
+        this.lastUpdatedTime = updatedTime;
+    }
+
+    public void setLastUpdatedTimeToNow() {
+        this.lastUpdatedTime = LocalDateTime.now();
     }
 
     // ================ Other methods ==============================
@@ -154,12 +198,17 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         if (comparedTime != 0) {
             return comparedTime;
         }
+
+        int comparedLastUpdatedTime = compareLastUpdatedTime(other);
+        if (comparedLastUpdatedTime != 0) {
+            return comparedLastUpdatedTime;
+        }
         
         return compareName(other);
     }
 
     public int compareCompletionStatus(Task other) {
-        return Boolean.compare(this.isCompleted(), other.isCompleted);
+        return Boolean.compare(this.isCompleted(), other.isCompleted());
     }
 
     public int compareTime(Task other) {
@@ -174,6 +223,15 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         }
     }
 
+    public int compareLastUpdatedTime(Task other) {
+        // to fix erratic behavior for logic manager test
+        long seconds = ChronoUnit.SECONDS.between(this.getLastUpdatedTime(), other.getLastUpdatedTime());
+        if (Math.abs(seconds) < 2) {
+            return 0;
+        }
+        return other.getLastUpdatedTime().compareTo(this.getLastUpdatedTime());
+    }
+
     public int compareName(Task other) {
         return this.getName().toString().compareTo(other.getName().toString());
     }
@@ -181,7 +239,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, isCompleted, startDateTime, endDateTime);
+        return Objects.hash(name, isCompleted, isRecurring, isChild, startDateTime, endDateTime);
     }
 
     @Override
@@ -189,4 +247,28 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return getAsText();
     }
 
+    @Override
+    public boolean isLatestChild() {
+        return false;
+    }
+
+    @Override
+    public ChildRecurringTask getChild() {
+        return null;
+    }
+
+    @Override
+    public RecurringTask getParent() {
+        return null;
+    }
+
+    @Override
+    public boolean isChild() {
+        return false;
+    }
+
+    @Override
+    public String getPeriod() {
+        return null;
+    }
 }

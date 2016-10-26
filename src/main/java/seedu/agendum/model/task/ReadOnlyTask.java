@@ -13,9 +13,20 @@ public interface ReadOnlyTask {
     boolean isCompleted();
     boolean isUpcoming();
     boolean isOverdue();
+    boolean isRecurring();
+    boolean isChild();
+    boolean isLatestChild();
     boolean hasTime();
+    String getPeriod();
     Optional<LocalDateTime> getStartDateTime();
     Optional<LocalDateTime> getEndDateTime();
+
+    
+    ChildRecurringTask getChild();
+    RecurringTask getParent();
+
+    LocalDateTime getLastUpdatedTime();
+
 
     /**
      * Returns true if both have the same state. (interfaces cannot override .equals)
@@ -57,7 +68,9 @@ public interface ReadOnlyTask {
                .append(" Start Time: ")
                .append(startTime)
                .append(" End Time: ")
-               .append(endTime);
+               .append(endTime)
+               .append(" Last Updated Time: ")
+               .append(getLastUpdatedTime().toString());
          return builder.toString();      
     }
 }

@@ -24,6 +24,8 @@ public class LoadCommand extends Command {
     
     private String pathToFile;
 
+    public LoadCommand() { }
+
     public LoadCommand(String pathToFile) {
         this.pathToFile = pathToFile.trim();
     }

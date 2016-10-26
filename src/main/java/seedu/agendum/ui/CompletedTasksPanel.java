@@ -24,6 +24,7 @@ public class CompletedTasksPanel extends UiPart {
     private static final String FXML = "CompletedTasksPanel.fxml";
     private AnchorPane panel;
     private AnchorPane placeHolderPane;
+    private static ObservableList<ReadOnlyTask> mainTaskList;
 
     @FXML
     private ListView<ReadOnlyTask> completedTasksListView;
@@ -49,6 +50,7 @@ public class CompletedTasksPanel extends UiPart {
 
     public static CompletedTasksPanel load(Stage primaryStage, AnchorPane CompletedTasksPlaceholder,
             ObservableList<ReadOnlyTask> taskList) {
+        mainTaskList = taskList;
         CompletedTasksPanel completedTasksPanel = UiPartLoader.loadUiPart(primaryStage, CompletedTasksPlaceholder, new CompletedTasksPanel());
         completedTasksPanel.configure(taskList);
         return completedTasksPanel;
@@ -89,7 +91,7 @@ public class CompletedTasksPanel extends UiPart {
                 setGraphic(null);
                 setText(null);
             } else {
-                setGraphic(TaskCard.load(task).getLayout());
+                setGraphic(TaskCard.load(task, mainTaskList.indexOf(task) + 1).getLayout());
             }
         }
     }

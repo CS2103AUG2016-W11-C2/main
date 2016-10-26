@@ -16,6 +16,7 @@ public class TestTask implements ReadOnlyTask {
     private boolean isCompleted;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
+    private LocalDateTime lastUpdatedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
 
     public TestTask() {
         isCompleted = false;
@@ -31,6 +32,7 @@ public class TestTask implements ReadOnlyTask {
         this.isCompleted = other.isCompleted;
         this.startDateTime = other.startDateTime;
         this.endDateTime = other.endDateTime;
+        this.lastUpdatedTime = other.getLastUpdatedTime();
     }
 
     public void setName(Name name) {
@@ -87,6 +89,11 @@ public class TestTask implements ReadOnlyTask {
     public Optional<LocalDateTime> getEndDateTime() {
         return Optional.ofNullable(endDateTime);
     }
+    
+    @Override
+    public LocalDateTime getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
 
     /**
      * Pre-condition: Task has a start or end time
@@ -106,6 +113,36 @@ public class TestTask implements ReadOnlyTask {
         StringBuilder sb = new StringBuilder();
         sb.append("add " + this.getName().fullName + " ");
         return sb.toString();
+    }
+
+    @Override
+    public boolean isRecurring() {
+        return false;
+    }
+
+    @Override
+    public ChildRecurringTask getChild() {
+        return null;
+    }
+
+    @Override
+    public RecurringTask getParent() {
+        return null;
+    }
+
+    @Override
+    public boolean isLatestChild() {
+        return false;
+    }
+
+    @Override
+    public boolean isChild() {
+        return false;
+    }
+
+    @Override
+    public String getPeriod() {
+        return null;
     }
 
 }

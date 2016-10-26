@@ -34,6 +34,17 @@ public class UniqueTaskList implements Iterable<Task> {
      * there is no such matching task in the list.
      */
     public static class TaskNotFoundException extends Exception {}
+    
+    /**
+     * Signals that an operation trying to mark a recurring task would fail because recurring tasks cannot be marked
+     */
+    public static class CannotMarkRecurringTaskException extends Exception {}
+    
+    /**
+     * Signals that an operation trying to mark a child recurring task when its future tasks have 
+     * already been marked as completed.
+     */
+    public static class NotLatestRecurringTaskException extends Exception{}
 
     private final ObservableList<Task> internalList = FXCollections.observableArrayList();
 
@@ -171,6 +182,14 @@ public class UniqueTaskList implements Iterable<Task> {
     //@@author
     public ObservableList<Task> getInternalList() {
         return internalList;
+    }
+    
+    public List<Task> getInternalListAsList() {
+        List<Task> tasks = new ArrayList<Task>();
+        for(Task task : internalList) {
+            tasks.add(task);
+        }
+        return tasks;
     }
 
     @Override

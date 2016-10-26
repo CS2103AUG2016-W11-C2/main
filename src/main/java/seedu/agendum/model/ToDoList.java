@@ -1,12 +1,10 @@
 package seedu.agendum.model;
 
 import javafx.collections.ObservableList;
-import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,7 +33,8 @@ public class ToDoList implements ReadOnlyToDoList {
      * Tasks are copied into this to do list
      */
     public ToDoList(UniqueTaskList tasks) {
-        resetData(tasks.getInternalList());
+//        resetData(tasks.getInternalList());
+        setTasks(tasks.getInternalListAsList());
     }
 
     public static ReadOnlyToDoList getEmptyToDoList() {

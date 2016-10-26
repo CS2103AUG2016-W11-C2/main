@@ -11,7 +11,7 @@
       <ListView fx:id="allTasksListView" layoutX="2.0" layoutY="48.0" styleClass="list" stylesheets="@TasksPanel.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="48.0" />
       <HBox alignment="CENTER" layoutX="130.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="All Tasks" textAlignment="CENTER" wrappingWidth="199.0" HBox.hgrow="ALWAYS">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Do It Soon ~" textAlignment="CENTER" wrappingWidth="199.0" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="20.0" />
                </font>
