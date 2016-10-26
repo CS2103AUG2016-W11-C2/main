@@ -63,11 +63,20 @@ public class AddCommand extends Command {
      */
     public AddCommand(String name, Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime)
             throws IllegalValueException {
+        endDateTime = incrementEndTimeIfNecessary(startDateTime, endDateTime);
         this.toAdd = new Task(
                 new Name(name),
                 startDateTime,
                 endDateTime
         );
+    }
+
+    public Optional<LocalDateTime> incrementEndTimeIfNecessary(Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime) {
+        if (startDateTime.get().compareTo(endDateTime.get()) >= 1) {
+            return Optional.of(endDateTime.get().plusDays(1));
+        } else {
+            return endDateTime;
+        }
     }
 
     @Override
