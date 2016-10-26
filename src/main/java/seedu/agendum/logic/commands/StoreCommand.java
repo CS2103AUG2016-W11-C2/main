@@ -35,7 +35,7 @@ public class StoreCommand extends Command {
     public CommandResult execute() {
         assert pathToFile != null;
         
-        if(pathToFile.equalsIgnoreCase("default")) {
+        if(pathToFile.equalsIgnoreCase("default")) { // for debug
             String defaultLocation = Config.DEFAULT_SAVE_LOCATION;
             model.changeSaveLocation(defaultLocation);
             return new CommandResult(String.format(MESSAGE_LOCATION_DEFAULT, defaultLocation));
