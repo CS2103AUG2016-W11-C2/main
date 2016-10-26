@@ -176,7 +176,6 @@ public class ModelManager extends ComponentManager implements Model {
         indicateChangeSaveLocationRequest(location);
     }
 
-    //@@author A0148095X
     @Override
     public synchronized void loadFromLocation(String location) {
         assert StringUtil.isValidPathToFile(location);
@@ -185,7 +184,8 @@ public class ModelManager extends ComponentManager implements Model {
         changeSaveLocation(location);
         indicateLoadDataRequest(location);
     }
-
+    //@@author
+    
     //=========== Filtered Task List Accessors ===============================================================
 
     @Override
