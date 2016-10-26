@@ -174,14 +174,15 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void changeSaveLocation(String location){
         assert StringUtil.isValidPathToFile(location);
         indicateChangeSaveLocationRequest(location);
+        indicateToDoListChanged();
     }
 
     @Override
     public synchronized void loadFromLocation(String location) {
         assert StringUtil.isValidPathToFile(location);
         assert XmlUtil.isFileCorrectFormat(location);
-        
-        changeSaveLocation(location);
+
+        indicateChangeSaveLocationRequest(location);
         indicateLoadDataRequest(location);
     }
     //@@author
