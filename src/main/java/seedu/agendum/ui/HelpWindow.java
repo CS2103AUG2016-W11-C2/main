@@ -17,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import seedu.agendum.logic.commands.AddCommand;
+import seedu.agendum.logic.commands.AliasCommand;
 import seedu.agendum.logic.commands.ClearCommand;
 import seedu.agendum.logic.commands.Command;
 import seedu.agendum.logic.commands.DeleteCommand;
@@ -24,9 +25,12 @@ import seedu.agendum.logic.commands.ExitCommand;
 import seedu.agendum.logic.commands.FindCommand;
 import seedu.agendum.logic.commands.HelpCommand;
 import seedu.agendum.logic.commands.ListCommand;
+import seedu.agendum.logic.commands.LoadCommand;
 import seedu.agendum.logic.commands.MarkCommand;
 import seedu.agendum.logic.commands.RenameCommand;
 import seedu.agendum.logic.commands.ScheduleCommand;
+import seedu.agendum.logic.commands.StoreCommand;
+import seedu.agendum.logic.commands.UnaliasCommand;
 import seedu.agendum.logic.commands.UnmarkCommand;
 import seedu.agendum.commons.core.LogsCenter;
 
@@ -146,6 +150,10 @@ public class HelpWindow extends UiPart {
        commandList.add(new ListCommand());
        commandList.add(new FindCommand());
        commandList.add(new ClearCommand());
+       commandList.add(new AliasCommand());
+       commandList.add(new UnaliasCommand());
+       commandList.add(new StoreCommand());
+       commandList.add(new LoadCommand());
        commandList.add(new HelpCommand());
        commandList.add(new ExitCommand());
     }
