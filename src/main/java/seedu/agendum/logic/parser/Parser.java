@@ -133,7 +133,7 @@ public class Parser {
         }
     }
 
-	//@@author A0003878Y
+    //@@author A0003878Y
     /**
      * Parses arguments in the context of the add task command.
      *
@@ -332,6 +332,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAlias(String args) {
+        args = args.toLowerCase();
         final Matcher matcher = ALIAS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(
@@ -351,6 +352,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareUnalias(String args) {
+        args = args.toLowerCase();
         final Matcher matcher = UNALIAS_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(
