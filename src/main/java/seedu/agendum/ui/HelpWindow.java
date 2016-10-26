@@ -4,26 +4,18 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Control;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import javafx.util.Callback;
 import seedu.agendum.logic.commands.AddCommand;
 import seedu.agendum.logic.commands.ClearCommand;
 import seedu.agendum.logic.commands.Command;
@@ -34,6 +26,7 @@ import seedu.agendum.logic.commands.HelpCommand;
 import seedu.agendum.logic.commands.ListCommand;
 import seedu.agendum.logic.commands.MarkCommand;
 import seedu.agendum.logic.commands.RenameCommand;
+import seedu.agendum.logic.commands.ScheduleCommand;
 import seedu.agendum.logic.commands.UnmarkCommand;
 import seedu.agendum.commons.core.LogsCenter;
 
@@ -41,6 +34,7 @@ import java.util.logging.Logger;
 
 import com.sun.javafx.stage.StageHelper;
 
+//@@author A0148031R
 /**
  * Controller for a help page
  */
@@ -145,6 +139,7 @@ public class HelpWindow extends UiPart {
     private void loadHelpList() {
        commandList.add(new AddCommand());
        commandList.add(new RenameCommand());
+       commandList.add(new ScheduleCommand());
        commandList.add(new MarkCommand());
        commandList.add(new UnmarkCommand());
        commandList.add(new DeleteCommand());

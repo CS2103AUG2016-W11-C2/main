@@ -95,6 +95,7 @@ public class StatusBarFooter extends UiPart {
         syncStatusBarPane.getChildren().add(syncStatus);
     }
     
+    //@@author A0148031R
     private void addTimeStatus() {
         this.timeStatus = new DigitalClock();
         FxViewUtil.applyAnchorBoundaryParameters(timeStatus, 0.0, 0.0, 0.0, 0.0);
@@ -123,15 +124,18 @@ public class StatusBarFooter extends UiPart {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting last updated status to " + lastUpdated));
         setSyncStatus("Last Updated: " + lastUpdated);
     }
-    
+
+    //@@author A0148095X
     @Subscribe
     public void handleChangeSaveLocationRequestEvent(ChangeSaveLocationRequestEvent event) {
         String saveLocation = event.location;
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Setting save location to: " + saveLocation));
         setSaveLocation(saveLocation);
     }
+    //@@author
 }
 
+//@@author A0148031R
 class DigitalClock extends Label {
     public DigitalClock() {
       bindToTime();
