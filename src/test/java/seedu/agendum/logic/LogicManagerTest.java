@@ -22,12 +22,15 @@ import seedu.agendum.model.ModelManager;
 import seedu.agendum.model.ReadOnlyToDoList;
 import seedu.agendum.model.task.*;
 import seedu.agendum.storage.StorageManager;
+import seedu.agendum.storage.XmlToDoListStorage;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -423,7 +426,7 @@ public class LogicManagerTest {
     }
     //@author
 
-
+    //@@author A0148095X
     @Test
     public void execute_store_successful() throws Exception {
         // setup expectations
@@ -460,7 +463,7 @@ public class LogicManagerTest {
         // delete file
         FileUtil.deleteFile(location);
     }
-
+    //@@author
 
     //@@author A0133367E
     @Test
@@ -717,6 +720,86 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
 
+ 
+    @Test
+    public void execute_scheduleInvalidArgsFormat_errorMessageShown() throws Exception {
+        // invalid index format
+        // a valid time is provided since invalid input values must be tested one at a time
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE);
+        assertIncorrectIndexFormatBehaviorForCommand("schedule", expectedMessage, "by 9pm");
+        
+        // invalid time format provided
+        TestDataHelper helper = new TestDataHelper();
+        List<Task> taskList = helper.generateTaskList(2);
+
+        // set AB state to 2 tasks
+        model.resetData(new ToDoList());
+        for (Task p : taskList) {
+            model.addTask(p);
+        }
+        // a valid index is provided since we are testing for invalid time format here
+        assertCommandBehavior("schedule 1 blue", expectedMessage, model.getToDoList(), taskList);
+        
+    }
+
+    @Test
+    public void execute_scheduleIndexNotFound_errorMessageShown() throws Exception {
+        // a valid time is provided to only test for invalid index
+        assertIndexNotFoundBehaviorForCommand("schedule", "by 9pm");
+    }
+
+    @Test
+    public void  execute_scheduleToGetDuplicate_notAllowed() throws Exception {
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeDuplicated = helper.generateTask(1);
+        LocalDateTime time = LocalDateTime.of(2016, 10, 10, 10, 10);
+        toBeDuplicated.setEndDateTime(Optional.ofNullable(time));
+        Task toBeScheduled = helper.generateTask(1);
+        List<Task> twoTasks = helper.generateTaskList(toBeDuplicated, toBeScheduled);
+
+        // prepare expected TDL
+        ToDoList expectedTDL = helper.generateToDoList(twoTasks);
+
+        // prepare model
+        model.resetData(expectedTDL);
+
+        // execute command and verify result
+        // a valid index must be provided to check if the time is invalid (due to a duplicate)
+        assertCommandBehavior(
+                "schedule 2 by Oct 10 10:10",
+                ScheduleCommand.MESSAGE_DUPLICATE_TASK,
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
+
+    @Test
+    public void execute_schedule_ScheduleCorrectTask() throws Exception {
+        TestDataHelper helper = new TestDataHelper();       
+        List<Task> threeTasks = helper.generateTaskList(2);
+
+        Task floatingTask = helper.generateTask(3);
+        threeTasks.add(floatingTask);
+
+        LocalDateTime endTime = LocalDateTime.of(2016, 10, 10, 10, 10); 
+        LocalDateTime startTime = LocalDateTime.of(2016, 9, 9, 9, 10);
+        Task eventTask = helper.generateTask(3);
+        eventTask.setStartDateTime(Optional.ofNullable(startTime));
+        eventTask.setEndDateTime(Optional.ofNullable(endTime)); 
+        
+        // prepare expected TDL
+        ToDoList expectedTDL = helper.generateToDoList(threeTasks);
+        expectedTDL.updateTask(floatingTask, eventTask);
+
+        //prepare model
+        model.resetData(new ToDoList());
+        helper.addToModel(model, threeTasks);
+
+        assertCommandBehavior("schedule 3 from Sep 9 9:10 to Oct 10 10:10",
+                String.format(ScheduleCommand.MESSAGE_SUCCESS, "3", eventTask),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
+
 
     //@@author
     @Test
@@ -832,7 +915,30 @@ public class LogicManagerTest {
     }
     //@@author
 
+    //@@author A0148095X
+    @Test
+    public void execute_load_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.generateTask(999);
+        ToDoList expectedTDL = new ToDoList();
+        expectedTDL.addTask(toBeAdded);
 
+        // setup storage file
+        String filePath = "data/test/load.xml";
+        XmlToDoListStorage xmltdls = new XmlToDoListStorage(filePath);
+        xmltdls.saveToDoList(expectedTDL);
+
+        // execute command and verify result
+        assertCommandBehavior("load " + filePath,
+                String.format(LoadCommand.MESSAGE_SUCCESS, filePath),
+                expectedTDL,
+                expectedTDL.getTaskList());
+        
+        FileUtil.deleteFile(filePath);
+    }
+    
+    //@@author
     /**
      * A utility class to generate test data.
      */
