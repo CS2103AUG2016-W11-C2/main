@@ -19,6 +19,12 @@ public class FindCommandTest extends ToDoListGuiTest {
     }
 
     @Test
+    public void find_emptyList(){
+        commandBox.runCommand("delete 1-7");
+        assertFindResult("find Jean"); //no results
+    }
+
+    @Test
     public void find_invalidCommand_fail() {
         commandBox.runCommand("findgeorge");
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
