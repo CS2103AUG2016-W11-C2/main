@@ -12,10 +12,7 @@ public class UndoCommand extends Command {
 	
     public static final String MESSAGE_SUCCESS = "Previous command undone!";
     public static final String MESSAGE_FAILURE = "Nothing to undo!";
-
-    public UndoCommand() {}
-
-
+	
     @Override
     public CommandResult execute() {
         assert model != null;

@@ -32,9 +32,6 @@ public class ScheduleCommand extends Command {
     private Optional<LocalDateTime> newStartDateTime = Optional.empty();
     private Optional<LocalDateTime> newEndDateTime = Optional.empty();
 
-    //for help message
-    public ScheduleCommand() {}
-
     //@@author A0133367E
     public ScheduleCommand(int targetIndex, Optional<LocalDateTime> startTime,
             Optional<LocalDateTime> endTime) {

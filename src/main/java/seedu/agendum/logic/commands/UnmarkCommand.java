@@ -29,8 +29,6 @@ public class UnmarkCommand extends Command {
 
     public ArrayList<ReadOnlyTask> tasksToUnmark;
 
-    public UnmarkCommand() {}
-
     //@@author A0133367E    
     public UnmarkCommand(Set<Integer> targetIndexes) {
         this.targetIndexes = new ArrayList<Integer>(targetIndexes);

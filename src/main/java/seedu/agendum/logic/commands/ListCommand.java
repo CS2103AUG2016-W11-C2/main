@@ -12,8 +12,6 @@ public class ListCommand extends Command {
     public static final String COMMAND_DESCRIPTION = "list all your tasks";
     public static final String MESSAGE_SUCCESS = "Listed all tasks";
 
-    public ListCommand() {}
-
     @Override
     public CommandResult execute() {
         model.updateFilteredListToShowAll();

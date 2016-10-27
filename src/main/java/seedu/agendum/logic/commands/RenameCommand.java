@@ -27,8 +27,6 @@ public class RenameCommand extends Command {
     public int targetIndex = -1;;
     public Name newTaskName = null;
 
-    public RenameCommand() {};
-
     //@@author A0133367E
     /**
      * Constructor for rename command

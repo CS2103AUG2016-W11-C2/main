@@ -28,8 +28,6 @@ public class MarkCommand extends Command {
     public ArrayList<Integer> targetIndexes;
 
     public ArrayList<ReadOnlyTask> tasksToMark;
-    
-    public MarkCommand() {}
 
     //@@author A0133367E
     public MarkCommand(Set<Integer> targetIndexes) {

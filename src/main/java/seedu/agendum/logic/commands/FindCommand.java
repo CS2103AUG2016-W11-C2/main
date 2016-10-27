@@ -18,8 +18,6 @@ public class FindCommand extends Command {
             + "Example: " + COMMAND_WORD + " star wars";
 
     private Set<String> keywords = null;
-
-    public FindCommand() {};
     
     public FindCommand(Set<String> keywords) {
         this.keywords = keywords;

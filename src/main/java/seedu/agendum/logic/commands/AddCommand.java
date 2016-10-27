@@ -28,8 +28,6 @@ public class AddCommand extends Command {
 
     private Task toAdd = null;
 
-    public AddCommand() {}
-
 	//@@author A0003878Y
     /**
      * Convenience constructor using name

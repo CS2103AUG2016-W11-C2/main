@@ -13,8 +13,6 @@ public class ExitCommand extends Command {
     public static final String COMMAND_FORMAT = "exit";
     public static final String COMMAND_DESCRIPTION = "exit Agendum";
     public static final String MESSAGE_EXIT_ACKNOWLEDGEMENT = "Exiting Agendum as requested ...";
-    
-    public ExitCommand() {}
 
     @Override
     public CommandResult execute() {

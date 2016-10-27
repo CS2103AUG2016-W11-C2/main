@@ -29,8 +29,6 @@ public class DeleteCommand extends Command {
 
     public ArrayList<ReadOnlyTask> tasksToDelete;
 
-    public DeleteCommand() {}
-
     //@@author A0133367E
     public DeleteCommand(Set<Integer> targetIndexes) {
         this.targetIndexes = new ArrayList<Integer>(targetIndexes);
