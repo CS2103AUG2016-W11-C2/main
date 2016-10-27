@@ -32,6 +32,9 @@ public class ScheduleCommand extends Command {
     private Optional<LocalDateTime> newStartDateTime = Optional.empty();
     private Optional<LocalDateTime> newEndDateTime = Optional.empty();
 
+    //for help message
+    public ScheduleCommand() {}
+
     //@@author A0133367E
     public ScheduleCommand(int targetIndex, Optional<LocalDateTime> startTime,
             Optional<LocalDateTime> endTime) {
@@ -69,15 +72,18 @@ public class ScheduleCommand extends Command {
     }
 
     //@author
-    public static String getName() {
+    @Override
+    public String getName() {
         return COMMAND_WORD;
     }
         
-    public static String getFormat() {
+    @Override
+    public String getFormat() {
         return COMMAND_FORMAT;
     }
         
-    public static String getDescription() {
+    @Override
+    public String getDescription() {
         return COMMAND_DESCRIPTION;
     }
 

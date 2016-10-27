@@ -11,12 +11,14 @@ public class HelpCommand extends Command {
 
  // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "help";
-    public static final String COMMAND_FORMAT = "help";
-    public static final String COMMAND_DESCRIPTION = "view Agendum’s command summary";
+    public static String COMMAND_FORMAT = "help";
+    public static String COMMAND_DESCRIPTION = "view Agendum’s command summary";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
             + "Example: " + COMMAND_WORD;
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
+    
+    public HelpCommand() {}
 
     @Override
     public CommandResult execute() {
@@ -24,15 +26,18 @@ public class HelpCommand extends Command {
         return new CommandResult(SHOWING_HELP_MESSAGE);
     }
 
-    public static String getName() {
+    @Override
+    public String getName() {
         return COMMAND_WORD;
     }
 
-    public static String getFormat() {
+    @Override
+    public String getFormat() {
         return COMMAND_FORMAT;
     }
 
-    public static String getDescription() {
+    @Override
+    public String getDescription() {
         return COMMAND_DESCRIPTION;
     }
 }

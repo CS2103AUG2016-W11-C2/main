@@ -14,22 +14,18 @@ public abstract class Command {
     /**
      * Return the name of this command.
      */
-    public static String getName() {
-        return null;
-    }
-
+    public abstract String getName();
+    
     /**
      * Return the format of this command.
      */
-    public static String getFormat() {
-        return null;
-    }
+    public abstract String getFormat();
     /**
      * Return the description of this command.
      */
-    public static String getDescription() {
-        return null;
-    }
+    public abstract String getDescription();
+    
+    public Command() {};
     
     /**
      * Constructs a feedback message to summarise an operation that displayed a listing of tasks.
