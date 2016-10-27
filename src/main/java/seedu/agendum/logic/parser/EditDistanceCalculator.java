@@ -21,7 +21,7 @@ public class EditDistanceCalculator {
         Set<Class<? extends Command>> classes = reflections.getSubTypesOf(Command.class);
 
         String bestCommand = "";
-        int bestCommandDistance = 999;
+        int bestCommandDistance = Integer.MAX_VALUE;
 
         for (Class<? extends Command> c :classes) {
             for (Field f : c.getFields()) {
