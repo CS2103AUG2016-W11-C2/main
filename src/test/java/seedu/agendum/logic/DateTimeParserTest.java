@@ -52,6 +52,4 @@ public class DateTimeParserTest {
         assertSameDateAndTime(t.get(), LocalDateTime.of(2017,1,10,17,15));
     }
 
-    // TODO: Missing relative date time tests
-
 }
