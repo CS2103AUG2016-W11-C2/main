@@ -32,6 +32,8 @@ public class EditDistanceCalculator {
                     bestCommand = commandWord;
                     bestCommandDistance = commandWordDistance;
                 }
+            } catch (NoSuchFieldException e) {
+                continue;
             } catch (Exception e) {
                 logger.severe("Java reflection for Command class failed");
             }
@@ -45,7 +47,7 @@ public class EditDistanceCalculator {
     }
 
     // Code from https://rosettacode.org/wiki/Levenshtein_distance#Java
-    public static int distance(String a, String b) {
+    private static int distance(String a, String b) {
         a = a.toLowerCase();
         b = b.toLowerCase();
         int [] costs = new int [b.length() + 1];
