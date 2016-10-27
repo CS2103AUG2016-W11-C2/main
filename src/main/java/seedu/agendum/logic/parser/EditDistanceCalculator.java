@@ -25,14 +25,14 @@ public class EditDistanceCalculator {
 
         for (Class<? extends Command> c :classes) {
             try {
-                String commandWord = c.getMethod("getName").invoke(null).toString();
+                String commandWord = (String) c.getField("COMMAND_WORD").get(null);
                 int commandWordDistance = distance(input, commandWord);
 
                 if (commandWordDistance < bestCommandDistance) {
                     bestCommand = commandWord;
                     bestCommandDistance = commandWordDistance;
                 }
-            } catch (NoSuchMethodException e) {
+            } catch (NoSuchFieldException e) {
                 continue;
             } catch (Exception e) {
                 logger.severe("Java reflection for Command class failed");
