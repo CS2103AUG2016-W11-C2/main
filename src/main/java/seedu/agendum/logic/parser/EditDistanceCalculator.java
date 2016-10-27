@@ -24,20 +24,16 @@ public class EditDistanceCalculator {
         int bestCommandDistance = Integer.MAX_VALUE;
 
         for (Class<? extends Command> c :classes) {
-            for (Field f : c.getFields()) {
-                if (f.getName().equals("COMMAND_WORD")) {
-                    try {
-                        String commandWord = (String) f.get(null);
-                        int commandWordDistance = distance(input, commandWord);
+            try {
+                String commandWord = (String) c.getField("COMMAND_WORD").get(null);
+                int commandWordDistance = distance(input, commandWord);
 
-                        if (commandWordDistance < bestCommandDistance) {
-                            bestCommand = commandWord;
-                            bestCommandDistance = commandWordDistance;
-                        }
-                    } catch (Exception e) {
-                        logger.severe("Java reflection for Command class failed");
-                    }
+                if (commandWordDistance < bestCommandDistance) {
+                    bestCommand = commandWord;
+                    bestCommandDistance = commandWordDistance;
                 }
+            } catch (Exception e) {
+                logger.severe("Java reflection for Command class failed");
             }
         }
 
