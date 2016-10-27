@@ -34,6 +34,14 @@ public class DateTimeUtils {
         return Optional.ofNullable(localDateTime);
     }
 
+    public static LocalDateTime balanceStartAndEndDateTime(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        LocalDateTime newEndDateTime = endDateTime;
+        while (startDateTime.compareTo(newEndDateTime) >= 1) {
+            newEndDateTime = newEndDateTime.plusDays(1);
+        }
+        return newEndDateTime;
+    }
+
     public static boolean containsTime(String input) {
         return parseNaturalLanguageDateTimeString(input).isPresent();
     }
