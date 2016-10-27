@@ -145,6 +145,8 @@ public class HelpWindow extends UiPart {
                 map.put(CommandColumns.FORMAT, c.getMethod("getFormat").invoke(null).toString());
                 map.put(CommandColumns.DESCRIPTION, c.getMethod("getDescription").invoke(null).toString());
                 commandList.add(map);
+            } catch (NullPointerException e) {
+                    continue;
             } catch (Exception e) {
                 logger.severe("Java reflection for Command class failed");
             }
