@@ -63,7 +63,9 @@ public class AddCommand extends Command {
      */
     public AddCommand(String name, Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime)
             throws IllegalValueException {
-        endDateTime = incrementEndTimeIfNecessary(startDateTime, endDateTime);
+        if (startDateTime.isPresent() && endDateTime.isPresent()) {
+            endDateTime = Optional.of(incrementEndTimeIfNecessary(startDateTime.get(), endDateTime.get()));
+        }
         this.toAdd = new Task(
                 new Name(name),
                 startDateTime,
@@ -71,12 +73,12 @@ public class AddCommand extends Command {
         );
     }
 
-    public Optional<LocalDateTime> incrementEndTimeIfNecessary(Optional<LocalDateTime> startDateTime, Optional<LocalDateTime> endDateTime) {
-        if (startDateTime.get().compareTo(endDateTime.get()) >= 1) {
-            return Optional.of(endDateTime.get().plusDays(1));
-        } else {
-            return endDateTime;
+    private LocalDateTime incrementEndTimeIfNecessary(LocalDateTime startDateTime, LocalDateTime endDateTime) {
+        LocalDateTime newEndDateTime = endDateTime;
+        while (startDateTime.compareTo(newEndDateTime) >= 1) {
+            newEndDateTime = newEndDateTime.plusDays(1);
         }
+        return newEndDateTime;
     }
 
     @Override
