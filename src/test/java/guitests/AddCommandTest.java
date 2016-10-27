@@ -29,6 +29,10 @@ public class AddCommandTest extends ToDoListGuiTest {
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertTrue(taskListPanel.isListMatching(currentList));
 
+        //add to empty list
+        commandBox.runCommand("delete 1-9");
+        assertAddSuccess(td.alice);
+
         //invalid command
         commandBox.runCommand("adds Johnny");
         assertResultMessage(String.format(Messages.MESSAGE_UNKNOWN_COMMAND_WITH_SUGGESTION, "add"));
