@@ -2,16 +2,18 @@
 
 package seedu.agendum.logic.parser;
 
-import com.joestelmach.natty.DateGroup;
 import org.reflections.Reflections;
+import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.logic.commands.Command;
 
 import java.lang.reflect.Field;
 import java.util.Optional;
 import java.util.Set;
+import java.util.logging.Logger;
 
 public class EditDistanceCalculator {
 
+    private static final Logger logger = LogsCenter.getLogger(EditDistanceCalculator.class);
     private static final int EDIT_DISTANCE_THRESHOLD = 3;
 
     public static Optional<String> parseString(String input) {
@@ -32,8 +34,8 @@ public class EditDistanceCalculator {
                             bestCommand = commandWord;
                             bestCommandDistance = commandWordDistance;
                         }
-                    } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                    } catch (Exception e) {
+                        logger.severe("Java reflection for Command class failed");
                     }
                 }
             }
