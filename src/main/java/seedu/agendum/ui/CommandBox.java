@@ -73,25 +73,6 @@ public class CommandBox extends UiPart {
         this.placeHolderPane = pane;
     }
 
-    @FXML
-    private void handleCommandInputChanged() {
-        //Take a copy of the command text
-        commandBoxHistory.saveNewCommand(commandTextField.getText());
-        String previousCommandTest = commandBoxHistory.getLastCommand();
-
-        /* We assume the command is correct. If it is incorrect, the command box will be changed accordingly
-         * in the event handling code {@link #handleIncorrectCommandAttempted}
-         */
-        System.out.println("command executed!");
-        
-        setStyleToIndicateCorrectCommand();
-        mostRecentResult = logic.execute(previousCommandTest);
-        if(!previousCommandTest.toLowerCase().equals("help")) {
-            resultPopUp.postMessage(mostRecentResult.feedbackToUser);
-        }
-        logger.info("Result: " + mostRecentResult.feedbackToUser);
-    }
-
     private void registerKeyEventFilter() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             public void handle(KeyEvent event) {
