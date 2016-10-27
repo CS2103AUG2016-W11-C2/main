@@ -32,7 +32,7 @@ public class EditDistanceCalculator {
                     bestCommand = commandWord;
                     bestCommandDistance = commandWordDistance;
                 }
-            } catch (NullPointerException e) {
+            } catch (NoSuchMethodException e) {
                 continue;
             } catch (Exception e) {
                 logger.severe("Java reflection for Command class failed");
