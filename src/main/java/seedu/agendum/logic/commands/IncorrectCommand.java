@@ -18,15 +18,18 @@ public class IncorrectCommand extends Command {
         return new CommandResult(feedbackToUser);
     }
 
-    public static String getName() {
+    @Override
+    public String getName() {
         return null;
     }
 
-    public static String getFormat() {
+    @Override
+    public String getFormat() {
         return null;
     }
 
-    public static String getDescription() {
+    @Override
+    public String getDescription() {
         return null;
     }
 
