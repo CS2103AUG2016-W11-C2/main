@@ -37,6 +37,7 @@ allprojects {
         monocleVersion = '1.8.0_20'
         nattyVersion = '0.12'
 		reflectionsVersion = '0.9.10'
+		googleCalendarVersion = 'v3-rev220-1.22.0'
 
         libDir = 'lib'
     }
@@ -56,6 +57,7 @@ allprojects {
         compile "com.google.guava:guava:$guavaVersion"
         compile "com.joestelmach:natty:$nattyVersion"
 		compile "org.reflections:reflections:$reflectionsVersion"
+		compile "com.google.apis:google-api-services-calendar:$googleCalendarVersion"
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
