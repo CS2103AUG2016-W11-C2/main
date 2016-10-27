@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class DateTimeUtilsTest {
 
@@ -51,6 +50,16 @@ public class DateTimeUtilsTest {
         assertSameDateAndTime(t.get(), LocalDateTime.of(2017,1,10,17,15));
     }
 
-    // TODO: Missing relative date time tests
+    @Test
+    public void balanceStartEndDateTimeTest() throws Exception {
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime end = start;
+
+        start = start.plusDays(1);
+        end = start.plusHours(1);
+
+        end = DateTimeUtils.balanceStartAndEndDateTime(start, end);
+        assertSameDateAndTime(end, start.plusHours(1));
+    }
 
 }
