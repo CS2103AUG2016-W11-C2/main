@@ -74,8 +74,8 @@ public class EditDistanceCalculator {
                         throw new RuntimeException();
                     }
                 })
-                .filter(p -> p != null)
-                .forEach(f);
+                .filter(p -> p != null) // remove nulls
+                .forEach(f); // execute given lambda on each nonnull String.
     }
 
 
