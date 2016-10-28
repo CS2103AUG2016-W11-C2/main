@@ -7,17 +7,11 @@ import seedu.agendum.commons.core
         .LogsCenter;
 import seedu.agendum.logic.commands.Command;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Function;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 public class EditDistanceCalculator {
 
