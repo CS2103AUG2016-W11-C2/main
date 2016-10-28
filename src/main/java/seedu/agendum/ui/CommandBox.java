@@ -85,7 +85,6 @@ public class CommandBox extends UiPart {
         /* We assume the command is correct. If it is incorrect, the command box will be changed accordingly
          * in the event handling code {@link #handleIncorrectCommandAttempted}
          */
-        System.out.println("command executed!");
         
         setStyleToIndicateCorrectCommand();
         mostRecentResult = logic.execute(previousCommandTest);
@@ -119,7 +118,6 @@ public class CommandBox extends UiPart {
             public void handle(KeyEvent event) {
                 KeyCode keyCode = event.getCode();
                 if (keyCode.equals(KeyCode.TAB)) {
-                    System.out.println("tab pressed");
                     Optional<String> parsedString = EditDistanceCalculator.parseString(commandTextField.getText());
                     if(parsedString.isPresent()) {
                         commandTextField.setText(parsedString.get());
