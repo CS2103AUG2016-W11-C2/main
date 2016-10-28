@@ -30,12 +30,12 @@ public class AddCommandTest extends ToDoListGuiTest {
         assertTrue(taskListPanel.isListMatching(currentList));
 
         //add to empty list
-        commandBox.runCommand("clear");
+        commandBox.runCommand("delete 1-9");
         assertAddSuccess(td.alice);
 
         //invalid command
         commandBox.runCommand("adds Johnny");
-        assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
+        assertResultMessage(String.format(Messages.MESSAGE_UNKNOWN_COMMAND_WITH_SUGGESTION, "add"));
     }
 
     private void assertAddSuccess(TestTask taskToAdd, TestTask... currentList) {
@@ -46,6 +46,7 @@ public class AddCommandTest extends ToDoListGuiTest {
         assertMatching(taskToAdd, addedCard);
 
         //confirm the list now contains all previous tasks plus the new task
+        taskToAdd.setLastUpdatedTimeToNow();
         TestTask[] expectedList = TestUtil.addTasksToList(currentList, taskToAdd);
         assertTrue(taskListPanel.isListMatching(expectedList));
     }
