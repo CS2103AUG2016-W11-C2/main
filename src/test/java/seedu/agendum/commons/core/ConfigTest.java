@@ -13,9 +13,7 @@ public class ConfigTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void toString_defaultObject_stringReturned() {
-        Config config = new Config();
-        
+    public void toString_defaultObject_stringReturned() {        
         StringBuilder sb = new StringBuilder();
         sb.append("App title : Agendum");
         sb.append("\nCurrent log level : INFO");
