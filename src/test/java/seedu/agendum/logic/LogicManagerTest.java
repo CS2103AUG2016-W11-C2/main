@@ -15,14 +15,15 @@ import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
 import seedu.agendum.commons.util.FileUtil;
+import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.model.ToDoList;
 import seedu.agendum.model.Model;
 import seedu.agendum.model.ModelManager;
 import seedu.agendum.model.ReadOnlyToDoList;
 import seedu.agendum.model.task.*;
-import seedu.agendum.storage.StorageManager;
 import seedu.agendum.storage.XmlToDoListStorage;
+import seedu.agendum.testutil.EventsCollector;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -155,7 +156,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_add_invalidArgsFormat() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+        // String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
         // TODO
         // currently, there are no invalid add argument format
     }
@@ -429,21 +430,31 @@ public class LogicManagerTest {
     public void execute_store_successful() throws Exception {
         // setup expectations
         ToDoList expectedTDL = new ToDoList();
-        String location = "data/test_store_successful.xml";
-
-        // execute command and verify result
-        assertCommandBehavior("store " + location,
-                String.format(StoreCommand.MESSAGE_SUCCESS, location),
-                expectedTDL,
-                expectedTDL.getTaskList());
-
-        // execute command and verify result
-        assertCommandBehavior("store default",
-                String.format(StoreCommand.MESSAGE_LOCATION_DEFAULT, Config.DEFAULT_SAVE_LOCATION),
-                expectedTDL,
-                expectedTDL.getTaskList());
+        Task testTask = new Task(new Name("test_store"));
+        expectedTDL.addTask(testTask);
+        model.addTask(testTask);
         
-        FileUtil.deleteFile(location);
+        String location = "data/test_store_successful.xml";
+        CommandResult result;
+        String inputCommand;
+        String feedback;
+        EventsCollector eventCollector = new EventsCollector();
+        
+        // execute command and verify result
+        inputCommand = "store " + location;
+        result = logic.execute(inputCommand);
+        feedback = String.format(StoreCommand.MESSAGE_SUCCESS, location);
+        assertEquals(feedback, result.feedbackToUser);
+        assertTrue(eventCollector.get(0) instanceof ChangeSaveLocationRequestEvent);
+        assertTrue(eventCollector.get(1) instanceof ToDoListChangedEvent);
+
+        // execute command and verify result
+        inputCommand = "store default";
+        result = logic.execute(inputCommand);
+        feedback = String.format(StoreCommand.MESSAGE_LOCATION_DEFAULT, Config.DEFAULT_SAVE_LOCATION);
+        assertEquals(feedback, result.feedbackToUser);
+        assertTrue(eventCollector.get(2) instanceof ChangeSaveLocationRequestEvent);
+        assertTrue(eventCollector.get(3) instanceof ToDoListChangedEvent);
     }
     
     public void execute_store_fail_fileExists() throws Exception {
@@ -923,6 +934,7 @@ public class LogicManagerTest {
         Task toBeAdded = helper.generateTask(999);
         ToDoList expectedTDL = new ToDoList();
         expectedTDL.addTask(toBeAdded);
+        model.addTask(toBeAdded);
 
         // setup storage file
         String filePath = "data/test/load.xml";
