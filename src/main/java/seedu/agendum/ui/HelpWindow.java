@@ -42,7 +42,6 @@ public class HelpWindow extends UiPart {
     private static final String ICON = "/images/help_icon.png";
     private static final String FXML = "HelpWindow.fxml";
     private static final String TITLE = "Help";
-    private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
     private double xOffset = 0;
     private double yOffset = 0;
@@ -90,8 +89,8 @@ public class HelpWindow extends UiPart {
     }
     
     public static HelpWindow load(Stage primaryStage) {
+        logger.fine("Showing help page about the application.");
         if (!StageHelper.getStages().contains(dialogStage)) {
-            logger.fine("Showing help page about the application.");
             HelpWindow helpWindow = UiPartLoader.loadUiPart(primaryStage, new HelpWindow());
             helpWindow.configure();
             return helpWindow;
@@ -114,9 +113,7 @@ public class HelpWindow extends UiPart {
 
     private void configure(){
         Scene scene = new Scene(mainPane);
-        //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-//        dialogStage.setWidth(WIDTH);
         dialogStage.setHeight(HEIGHT);
         dialogStage.setResizable(false);
         
@@ -138,7 +135,7 @@ public class HelpWindow extends UiPart {
                 yOffset = dialogStage.getY() - event.getScreenY();
             }
         });
-        
+
         mainPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -150,13 +147,15 @@ public class HelpWindow extends UiPart {
 
     private void handleKeyInput(Scene scene) {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            
             KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
+
             @Override
             public void handle(KeyEvent evt) {
                 if (evt.getCode().equals(KeyCode.ESCAPE)) {
                     dialogStage.close();
-                } else if(toggleHelpWindow.match(evt)) {
-                    if(dialogStage.isFocused()) {
+                } else if (toggleHelpWindow.match(evt)) {
+                    if (dialogStage.isFocused()) {
                         primaryStage.requestFocus();
                     } else {
                         dialogStage.requestFocus();
