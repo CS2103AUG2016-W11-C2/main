@@ -118,7 +118,7 @@ public class CommandBox extends UiPart {
             public void handle(KeyEvent event) {
                 KeyCode keyCode = event.getCode();
                 if (keyCode.equals(KeyCode.TAB)) {
-                    Optional<String> parsedString = EditDistanceCalculator.parseString(commandTextField.getText());
+                    Optional<String> parsedString = EditDistanceCalculator.commandCompletion(commandTextField.getText());
                     if(parsedString.isPresent()) {
                         commandTextField.setText(parsedString.get());
                     }
