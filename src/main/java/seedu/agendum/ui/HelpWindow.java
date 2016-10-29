@@ -11,11 +11,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import org.reflections.Reflections;
 import seedu.agendum.logic.commands.Command;
 import seedu.agendum.commons.core.LogsCenter;
@@ -38,8 +42,9 @@ public class HelpWindow extends UiPart {
     private static final String ICON = "/images/help_icon.png";
     private static final String FXML = "HelpWindow.fxml";
     private static final String TITLE = "Help";
-    private static final int WIDTH = 1000;
-    private static final int HEIGHT = 650;
+    private static final int HEIGHT = 600;
+    private double xOffset = 0;
+    private double yOffset = 0;
     private ObservableList<Map<CommandColumns, String>> commandList = FXCollections.observableArrayList();
 
     private AnchorPane mainPane;
@@ -84,8 +89,8 @@ public class HelpWindow extends UiPart {
     }
     
     public static HelpWindow load(Stage primaryStage) {
+        logger.fine("Showing help page about the application.");
         if (!StageHelper.getStages().contains(dialogStage)) {
-            logger.fine("Showing help page about the application.");
             HelpWindow helpWindow = UiPartLoader.loadUiPart(primaryStage, new HelpWindow());
             helpWindow.configure();
             return helpWindow;
@@ -108,9 +113,7 @@ public class HelpWindow extends UiPart {
 
     private void configure(){
         Scene scene = new Scene(mainPane);
-        //Null passed as the parent stage to make it non-modal.
         dialogStage = createDialogStage(TITLE, null, scene);
-        dialogStage.setWidth(WIDTH);
         dialogStage.setHeight(HEIGHT);
         dialogStage.setResizable(false);
         
@@ -118,45 +121,79 @@ public class HelpWindow extends UiPart {
         dialogStage.initStyle(StageStyle.TRANSPARENT);
         
         setIcon(dialogStage, ICON);
+        configureDrag();
         loadHelpList();
         
-        handleEscape(scene);
+        handleKeyInput(scene);
     }
-
-    private void handleEscape(Scene scene) {
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+    
+    private void configureDrag() {
+        mainPane.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(KeyEvent evt) {
-                if (evt.getCode().equals(KeyCode.ESCAPE)) {
-                    dialogStage.close();
-                }
+            public void handle(MouseEvent event) {
+                xOffset = dialogStage.getX() - event.getScreenX();
+                yOffset = dialogStage.getY() - event.getScreenY();
+            }
+        });
+
+        mainPane.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                dialogStage.setX(event.getScreenX() + xOffset);
+                dialogStage.setY(event.getScreenY() + yOffset);
             }
         });
     }
 
-    //@@author A0003878Y
-    private void loadHelpList() {
-        Reflections reflections = new Reflections("seedu.agendum");
-        Set<Class<? extends Command>> classes = reflections.getSubTypesOf(Command.class);
+    private void handleKeyInput(Scene scene) {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            
+            KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
 
-        for (Class<? extends Command> c :classes) {
-            try {
-                Map<CommandColumns, String> map = new HashMap<CommandColumns, String>();
-                map.put(CommandColumns.COMMAND, c.getMethod("getName").invoke(null).toString());
-                map.put(CommandColumns.FORMAT, c.getMethod("getFormat").invoke(null).toString());
-                map.put(CommandColumns.DESCRIPTION, c.getMethod("getDescription").invoke(null).toString());
-                commandList.add(map);
-            } catch (NullPointerException e) {
-                    continue;
-            } catch (Exception e) {
-                logger.severe("Java reflection for Command class failed");
+            @Override
+            public void handle(KeyEvent evt) {
+                if (evt.getCode().equals(KeyCode.ESCAPE)) {
+                    dialogStage.close();
+                } else if (toggleHelpWindow.match(evt)) {
+                    if (dialogStage.isFocused()) {
+                        primaryStage.requestFocus();
+                    } else {
+                        dialogStage.requestFocus();
+                    }
+                }
             }
-        }
-        
-        Collections.sort(commandList, (lhs, rhs) -> lhs.get(CommandColumns.COMMAND).compareTo(rhs.get(CommandColumns.COMMAND)));
+        });
     }
-
+    
     public void show() {
         dialogStage.show();
+    }
+    
+    public Stage getStage() {
+        return this.dialogStage;
+    }
+
+    //@@author A0003878Y
+    private void loadHelpList() {
+
+        new Reflections("seedu.agendum").getSubTypesOf(Command.class)
+                .stream()
+                .map(s -> {
+                    try {
+                        Map<CommandColumns, String> map = new HashMap<CommandColumns, String>();
+                        map.put(CommandColumns.COMMAND, s.getMethod("getName").invoke(null).toString());
+                        map.put(CommandColumns.FORMAT, s.getMethod("getFormat").invoke(null).toString());
+                        map.put(CommandColumns.DESCRIPTION, s.getMethod("getDescription").invoke(null).toString());
+                        return map;
+                    } catch (NullPointerException e) {
+                        return null;
+                    } catch (Exception e) {
+                        logger.severe("Java reflection for Command class failed");
+                        throw new RuntimeException();
+                    }
+                })
+                .filter(p -> p != null) // remove nulls
+                .sorted((lhs, rhs) -> lhs.get(CommandColumns.COMMAND).compareTo(rhs.get(CommandColumns.COMMAND)))
+                .forEach(m -> commandList.add(m));
     }
 }
