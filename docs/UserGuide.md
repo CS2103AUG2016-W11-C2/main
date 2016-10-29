@@ -7,6 +7,7 @@
 
 &nbsp;
 
+[comment]: # (@@author A0148095X)
 ## Introduction
 Hi there! Do you have too many tasks and are unable to keep track of all of them? Are you looking for a hassle-free task maanger which works swiftly?  
 
@@ -23,7 +24,7 @@ As shown below, Agendum has 3 panels: **"Do It Soon"**, **"Do It Anytime"** and 
 
 &nbsp;
 
-
+[comment]: # (@@author A0003878Y)
 ## Quick Start
 
 0. Ensure you have Java version `1.8.0_60` or above installed in your Computer.
@@ -103,7 +104,7 @@ Examples:
 
 The event “project meeting” will start at 12pm on 10 October and end at 2pm on 10 October.
 
-
+[comment]: # (@@author A0148031R)
 #### Retrieving task list : `list`
 
 You might want to view the lists to all overdue, upcoming and completed tasks again.<br>
@@ -128,7 +129,7 @@ Examples:
 * `find Nemo Dory` <br>
   Returns all tasks that contain `Dory` or `Nemo`  
 
-
+[comment]: # (@@author A0133367E)
 #### Deleting a task : `delete`
 
 You can delete tasks that you no longer want to keep track of.<br>
@@ -260,6 +261,7 @@ Examples:
   The task "homework" which has been added previously, will be removed.
 
 
+[comment]: # (@@author A0148095X)
 #### Creating an alias for a command : `alias`
 
 If you are looking for alternatives or want to type a command faster, you can use the `alias` comand.<br>
@@ -331,7 +333,6 @@ Format: `exit`
 
 1. Use the <kbd>UP ARROW</kbd> and <kbd>DOWN ARROW</kbd> to scroll through earlier commands.
 2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line.
-3. Use <kbd>TAB</kbd> to switch between the various task lists e.g. uncompleted, overdue, upcoming
 
 
 #### Saving the data
@@ -360,7 +361,7 @@ Agendum saves its data into the specified data storage location, or by default i
 
 &nbsp;
 
-
+[comment]: # (@@author A0133367E)
 ## Command Summary
 
 Command  | Format  
