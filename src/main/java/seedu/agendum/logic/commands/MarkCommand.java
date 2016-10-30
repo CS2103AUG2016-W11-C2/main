@@ -16,13 +16,12 @@ public class MarkCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "mark";    
-    public static final String COMMAND_FORMAT = "mark <index>\n"
-                                              + "mark <index> <more-indexes>";
+    public static final String COMMAND_FORMAT = "mark <id> <more-ids>";
     public static final String COMMAND_DESCRIPTION = "mark task(s) as completed";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " - "
             + COMMAND_DESCRIPTION + "\n"
             + COMMAND_FORMAT + "\n"
-            + "(The index must be a positive number)\n"
+            + "(The id must be a positive number)\n"
             + "Example: " + COMMAND_WORD + " 1 3 5-6";
 
     public static final String MESSAGE_MARK_TASK_SUCCESS = "Marked Task(s): %1$s";

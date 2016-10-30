@@ -16,16 +16,16 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 public class ScheduleCommand extends Command {
 
     public static final String COMMAND_WORD = "schedule";
-    public static final String COMMAND_FORMAT = "schedule <index>\n"
-                                              + "schedule <index> by <deadline>\n"
-                                              + "schedule <index> from <start-time>\n"
+    public static final String COMMAND_FORMAT = "schedule <id>\n"
+                                              + "schedule <id> by <deadline>\n"
+                                              + "schedule <id> from <start-time>\n"
                                               + "to <end-time>";
     public static final String COMMAND_DESCRIPTION = "update the time of a task";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " - "
             + COMMAND_DESCRIPTION + "\n"
             + COMMAND_FORMAT + "\n"
-            + "(The index must be a positive number)\n"
+            + "(The id must be a positive number)\n"
             + "Example: " + COMMAND_WORD + " 2 from 7am to 9am";
 
     public static final String MESSAGE_SUCCESS = "Rescheduled Task #%1$s: %2$s";
