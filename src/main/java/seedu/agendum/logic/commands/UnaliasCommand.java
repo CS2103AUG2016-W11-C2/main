@@ -1,7 +1,6 @@
 //@@author A0133367E
 package seedu.agendum.logic.commands;
 
-import seedu.agendum.commons.core.Messages;
 import seedu.agendum.model.Model;
 
 /**
@@ -11,8 +10,8 @@ public class UnaliasCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "unalias";
-    public static String COMMAND_FORMAT = "unalias <your-command>";
-    public static String COMMAND_DESCRIPTION = "remove your own shorthand command";
+    public static final String COMMAND_FORMAT = "unalias <your-command>";
+    public static final String COMMAND_DESCRIPTION = "remove your own shorthand command";
     public static final String MESSAGE_SUCCESS = "Alias <%1$s> is gone";
     public static final String MESSAGE_FAILURE_NO_ALIAS_KEY = 
             "The alias <%1$s> does not exist";

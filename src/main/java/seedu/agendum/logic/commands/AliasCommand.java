@@ -1,7 +1,6 @@
 //@@author A0133367E
 package seedu.agendum.logic.commands;
 
-import seedu.agendum.commons.core.Messages;
 import seedu.agendum.model.Model;
 
 /**
@@ -11,8 +10,8 @@ public class AliasCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "alias";
-    public static String COMMAND_FORMAT = "alias <original-command> <your-command>";
-    public static String COMMAND_DESCRIPTION = "specify your own shorthand command";
+    public static final String COMMAND_FORMAT = "alias <original-command> <your-command>";
+    public static final String COMMAND_DESCRIPTION = "specify your own shorthand command";
     public static final String MESSAGE_SUCCESS = "New alias <%1$s> created for <%2$s>";
     public static final String MESSAGE_FAILURE_ALIAS_IN_USE = "<%1$s> is already an alias for <%2$s>";
     public static final String MESSAGE_FAILURE_UNAVAILABLE_ALIAS = "<%1$s> is a reserved command word";
