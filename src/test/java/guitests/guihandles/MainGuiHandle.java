@@ -1,8 +1,6 @@
 package guitests.guihandles;
 
 import guitests.GuiRobot;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
 import javafx.stage.Stage;
 import seedu.agendum.TestApp;
 
@@ -17,8 +15,16 @@ public class MainGuiHandle extends GuiHandle {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
     }
 
-    public TaskListPanelHandle getTaskListPanel() {
-        return new TaskListPanelHandle(guiRobot, primaryStage);
+    public UpcomingTasksHandle getDoItSoonPanel() {
+        return new UpcomingTasksHandle(guiRobot, primaryStage);
+    }
+
+    public FloatingTasksPanelHandle getDoItAnytimePanel() {
+        return new FloatingTasksPanelHandle(guiRobot, primaryStage);
+    }
+
+    public CompletedTasksPanelHandle getCompletedTasksPanel() {
+        return new CompletedTasksPanelHandle(guiRobot, primaryStage);
     }
 
     public ResultDisplayHandle getResultDisplay() {

@@ -12,7 +12,6 @@ import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.logic.commands.*;
-import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
 import seedu.agendum.commons.util.FileUtil;
 import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
@@ -32,6 +31,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -51,7 +52,6 @@ public class LogicManagerTest {
     //These are for checking the correctness of the events raised
     private ReadOnlyToDoList latestSavedToDoList;
     private boolean helpShown;
-    private int targetedJumpIndex;
 
     @Subscribe
     private void handleLocalModelChangedEvent(ToDoListChangedEvent tdl) {
@@ -63,11 +63,6 @@ public class LogicManagerTest {
         helpShown = true;
     }
 
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent je) {
-        targetedJumpIndex = je.targetIndex;
-    }
-
     @Before
     public void setup() {
         model = new ModelManager();
@@ -76,11 +71,10 @@ public class LogicManagerTest {
 
         latestSavedToDoList = new ToDoList(model.getToDoList()); // last saved assumed to be up to date before.
         helpShown = false;
-        targetedJumpIndex = -1; // non yet
     }
 
     @After
-    public void teardown() {
+    public void tearDown() {
         EventsCenter.clearSubscribers();
     }
 
@@ -143,19 +137,19 @@ public class LogicManagerTest {
         assertCommandBehavior("exit", ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT);
     }
 
-    @Test
-    public void executeAddInvalidArgsFormat() throws Exception {
-        // String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
-        // TODO
-        // currently, there are no invalid add argument format
-    }
-
-    @Test
-    public void executeAddInvalidTaskData() throws Exception {
-        // TODO
-        // check for invalid task data e.g. empty name invalid time
-
-    }
+//    @Test
+//    public void executeAddInvalidArgsFormat() throws Exception {
+//        // String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+//        // TODO
+//        // currently, there are no invalid add argument format
+//    }
+//
+//    @Test
+//    public void executeAddInvalidTaskData() throws Exception {
+//        // TODO
+//        // check for invalid task data e.g. empty name invalid time
+//
+//    }
 
     @Test
     public void executeAddSuccessful() throws Exception {
@@ -254,7 +248,6 @@ public class LogicManagerTest {
      * This (overloaded) method is created for rename/schedule
      */
     private void assertIndexNotFoundBehaviorForCommand(String commandWord, String wordsAfterIndex) throws Exception {
-        String expectedMessage = MESSAGE_INVALID_TASK_DISPLAYED_INDEX;
         TestDataHelper helper = new TestDataHelper();
         List<Task> taskList = helper.generateTaskList(2);
 
@@ -264,7 +257,7 @@ public class LogicManagerTest {
             model.addTask(p);
         }
         // test boundary value (one-based index is 3 when list is of size 2)
-        assertCommandBehavior(commandWord + " 3 " + wordsAfterIndex, expectedMessage, model.getToDoList(), taskList);
+        assertCommandBehavior(commandWord + " 3 " + wordsAfterIndex, MESSAGE_INVALID_TASK_DISPLAYED_INDEX, model.getToDoList(), taskList);
     }
     
     /**
@@ -295,35 +288,7 @@ public class LogicManagerTest {
         //invalid index is part of range
         assertCommandBehavior(commandWord + " 1-6", expectedMessage, model.getToDoList(), taskList);
     }
-
     //@@author
-    @Test
-    public void executeSelectInvalidArgsFormatErrorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE);
-        assertIncorrectIndexFormatBehaviorForCommand("select", expectedMessage, " ");
-    }
-
-    @Test
-    public void executeSelectIndexNotFoundErrorMessageShown() throws Exception {
-        assertIndexNotFoundBehaviorForCommand("select", " ");
-    }
-
-    @Test
-    public void executeSelectJumpsToCorrectTask() throws Exception {
-        TestDataHelper helper = new TestDataHelper();
-        List<Task> threeTasks = helper.generateTaskList(3);
-
-        ToDoList expectedTDL = helper.generateToDoList(threeTasks);
-        helper.addToModel(model, threeTasks);
-
-        assertCommandBehavior("select 2",
-                String.format(SelectCommand.MESSAGE_SELECT_TASK_SUCCESS, 2),
-                expectedTDL,
-                expectedTDL.getTaskList());
-        assertEquals(1, targetedJumpIndex);
-        assertEquals(model.getFilteredTaskList().get(1), threeTasks.get(1));
-    }
-
 
     @Test
     public void executeDeleteInvalidArgsFormatErrorMessageShown() throws Exception {
@@ -841,13 +806,12 @@ public class LogicManagerTest {
 
         List<Task> fourTasks = helper.generateTaskList(p3, p1, p4, p2);
         ToDoList expectedTDL = helper.generateToDoList(fourTasks);
-        List<Task> expectedList = fourTasks;
         helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("find KEY",
-                Command.getMessageForTaskListShownSummary(expectedList.size()),
+                Command.getMessageForTaskListShownSummary(fourTasks.size()),
                 expectedTDL,
-                expectedList);
+                fourTasks);
     }
 
     @Test
@@ -951,7 +915,7 @@ public class LogicManagerTest {
 
         private LocalDateTime fixedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
 
-        Task adam() throws Exception {
+        private Task adam() throws Exception {
             Name name = new Name("Adam Brown");
             Task adam = new Task(name);
             adam.setLastUpdatedTime(fixedTime);
@@ -965,7 +929,7 @@ public class LogicManagerTest {
          *
          * @param seed used to generate the task data field values
          */
-        Task generateTask(int seed) throws Exception {
+        private Task generateTask(int seed) throws Exception {
             Task task =  new Task(
                     new Name("Task " + seed)
             );
@@ -976,7 +940,7 @@ public class LogicManagerTest {
         /**
          * Generates a valid completed task with the given seed
          */
-        Task generateCompletedTask(int seed) throws Exception {
+        private Task generateCompletedTask(int seed) throws Exception {
             Task newTask = generateTask(seed);
             newTask.markAsCompleted();
             newTask.setLastUpdatedTime(fixedTime);
@@ -986,7 +950,7 @@ public class LogicManagerTest {
         /**
          * Generates a Task object with given name. Other fields will have some dummy values.
          */
-        Task generateTaskWithName(String name) throws Exception {
+        private Task generateTaskWithName(String name) throws Exception {
             Task namedTask = new Task(
                     new Name(name)
             );
@@ -995,20 +959,16 @@ public class LogicManagerTest {
         }
 
         /** Generates the correct add command based on the task given */
-        String generateAddCommand(Task p) {
-            StringBuffer cmd = new StringBuffer();
+        private String generateAddCommand(Task p) {
 
-            cmd.append("add ");
-
-            cmd.append(p.getName().toString());
-
-            return cmd.toString();
+            return "add " +
+                    p.getName().toString();
         }
 
         /**
          * Generates an ToDoList with auto-generated tasks.
          */
-        ToDoList generateToDoList(int numGenerated) throws Exception{
+        private ToDoList generateToDoList(int numGenerated) throws Exception{
             ToDoList toDoList = new ToDoList();
             addToToDoList(toDoList, numGenerated);
             return toDoList;
@@ -1017,7 +977,7 @@ public class LogicManagerTest {
         /**
          * Generates an ToDoList based on the list of Tasks given.
          */
-        ToDoList generateToDoList(List<Task> tasks) throws Exception{
+        private ToDoList generateToDoList(List<Task> tasks) throws Exception{
             ToDoList toDoList = new ToDoList();
             addToToDoList(toDoList, tasks);
             return toDoList;
@@ -1027,14 +987,14 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given ToDoList
          * @param toDoList The ToDoList to which the Tasks will be added
          */
-        void addToToDoList(ToDoList toDoList, int numGenerated) throws Exception{
+        private void addToToDoList(ToDoList toDoList, int numGenerated) throws Exception{
             addToToDoList(toDoList, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given ToDoList
          */
-        void addToToDoList(ToDoList toDoList, List<Task> tasksToAdd) throws Exception{
+        private void addToToDoList(ToDoList toDoList, List<Task> tasksToAdd) throws Exception{
             for(Task p: tasksToAdd){
                 toDoList.addTask(p);
             }
@@ -1044,14 +1004,14 @@ public class LogicManagerTest {
          * Adds auto-generated Task objects to the given model
          * @param model The model to which the Tasks will be added
          */
-        void addToModel(Model model, int numGenerated) throws Exception{
+        private void addToModel(Model model, int numGenerated) throws Exception{
             addToModel(model, generateTaskList(numGenerated));
         }
 
         /**
          * Adds the given list of Tasks to the given model
          */
-        void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
+        private void addToModel(Model model, List<Task> tasksToAdd) throws Exception{
             for(Task p: tasksToAdd){
                 model.addTask(p);
             }
@@ -1060,7 +1020,7 @@ public class LogicManagerTest {
         /**
          * Generates a list of Tasks based on the flags.
          */
-        List<Task> generateTaskList(int numGenerated) throws Exception{
+        private List<Task> generateTaskList(int numGenerated) throws Exception{
             List<Task> tasks = new ArrayList<>();
             for(int i = 1; i <= numGenerated; i++){
                 tasks.add(generateTask(i));
@@ -1068,28 +1028,25 @@ public class LogicManagerTest {
             return tasks;
         }
 
-        List<Task> generateTaskList(Task... tasks) {
+        private List<Task> generateTaskList(Task... tasks) {
             return Arrays.asList(tasks);
         }
  
         //@@author A0133367E
-        List<ReadOnlyTask> generateReadOnlyTaskList(ReadOnlyTask... tasks) {
+        private List<ReadOnlyTask> generateReadOnlyTaskList(ReadOnlyTask... tasks) {
             return Arrays.asList(tasks);
         }
 
-        List<Integer> generateNumberList(Integer... numbers){
+        private List<Integer> generateNumberList(Integer... numbers){
             return Arrays.asList(numbers);
         }
 
         /**
          * Generate a sorted UnmodifiableObservableList from expectedShownList
          */
-        UnmodifiableObservableList<Task> generateSortedList(List<? extends ReadOnlyTask> expectedShownList) throws Exception {
-            List<Task> taskList = new ArrayList<Task>();
-            for (int i = 0; i < expectedShownList.size(); i++) {
-                taskList.add(new Task(expectedShownList.get(i)));
-            }
-            ToDoList toDoList = generateToDoList(taskList); 
+        private UnmodifiableObservableList<Task> generateSortedList(List<? extends ReadOnlyTask> expectedShownList) throws Exception {
+            List<Task> taskList = expectedShownList.stream().map((Function<ReadOnlyTask, Task>) Task::new).collect(Collectors.toList());
+            ToDoList toDoList = generateToDoList(taskList);
             return new UnmodifiableObservableList<>(toDoList.getTasks().sorted());
         }
 

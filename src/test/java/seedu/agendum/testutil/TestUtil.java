@@ -27,6 +27,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
@@ -306,14 +307,42 @@ public class TestUtil {
 
     private static <T> List<T> asList(T[] objs) {
         List<T> list = new ArrayList<>();
-        for(T obj : objs) {
-            list.add(obj);
-        }
+        Collections.addAll(list, objs);
         return list;
     }
 
     private static void sortTasks(TestTask[] tasks) {
         Arrays.sort(tasks);
+    }
+
+    public static TestTask[] getDoItSoonTasks(TestTask[] tasks) {
+        ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
+        for (TestTask task: tasks) {
+            if (!task.isCompleted() && task.hasTime()) {
+                filteredTasks.add(task);
+            }
+        }
+        return filteredTasks.toArray(new TestTask[filteredTasks.size()]);
+    }
+
+    public static TestTask[] getDoItAnytimeTasks(TestTask[] tasks) {
+        ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
+        for (TestTask task: tasks) {
+            if (!task.isCompleted() && !task.hasTime()) {
+                filteredTasks.add(task);
+            }
+        }
+        return filteredTasks.toArray(new TestTask[filteredTasks.size()]);
+    }
+
+    public static TestTask[] getDoneTasks(TestTask[] tasks) {
+        ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
+        for (TestTask task: tasks) {
+            if (task.isCompleted()) {
+                filteredTasks.add(task);
+            }
+        }
+        return filteredTasks.toArray(new TestTask[filteredTasks.size()]);
     }
 
     public static boolean compareCardAndTask(TaskCardHandle card, ReadOnlyTask task) {
