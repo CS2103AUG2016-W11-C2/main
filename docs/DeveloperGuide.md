@@ -158,6 +158,8 @@ The following sections will then give more details of each individual component.
 [comment]: # (@@author A0148031R)
 ### 2. UI component
 
+The `UI` is the entry point of Agendum which is responsible for showing updates to the user; changes in data in the `Model` automatically updates `UI` as well. `UI` executes user commands using the Logic Component. In addition, `UI` responds to events raised from various other parts of Agendum and updates the display accordingly.
+
 <img src="images/UiClassDiagram.png" width="800"><br>
 
 **API** : [`Ui.java`](../src/main/java/seedu/agendum/ui/Ui.java)
@@ -170,24 +172,16 @@ The `UI` component uses JavaFx UI framework. The layout of these UI parts are de
  For example, the layout of the [`MainWindow`](../src/main/java/seedu/agendum/ui/MainWindow.java) is specified in
  [`MainWindow.fxml`](../src/main/resources/view/MainWindow.fxml)
 
-The `UI` component has the following functions:
-
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
-
 
 [comment]: # (@@author A0003878Y)
 ### 3. Logic component
 
+`Logic` provides several APIs for `UI` to execute the commands entered by the user. It also obtains information about the to-do list to render to the user.
+The **API** of the logic component can be found at [`Logic.java`](../src/main/java/seedu/agendum/logic/Logic.java)
+
+The class diagram of the Logic Component is given below. `LogicManager` implements the `Logic Interface` and has exactly one `Parser`. `Parser` is responsible for processing the user command and creating instances of concrete `Command` objects (such as `AddCommand`) which will then be executed by the `LogicManager`. New command types must implement the `Command` class. Each `Command` class produces exactly one `CommandResult`.
+
 <img src="images/LogicClassDiagram.png" width="800"><br>
-
-**API** : [`Logic.java`](../src/main/java/seedu/agendum/logic/Logic.java)
-
-1. `Logic` uses the `Parser` class to parse the user command.
-2. This results in a `Command` object which is executed by the `LogicManager`.
-3. The command execution can affect the `Model` (e.g. adding a task) and/or raise events.
-4. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 You can view the Sequence Diagram below for interactions within the `Logic` component for the `execute("delete 1")` API call.<br>
 
@@ -200,7 +194,9 @@ The Parser creates concrete Command objects such as `AddCommand` objects. `Logic
 [comment]: # (@@author A0133367E)
 ### 4. Model component
 
-As mentioned above, the `Model` component stores and manage Agendum's task list data and user's preferences. It also exposes a `UnmodifiableObservableList<ReadOnlyTask>` that can be 'observed' by other components e.g. the UI can be bound to this list and will automatically update when the data in the list change. It does not depend on other components such as `Logic` and `Storage`.  
+As mentioned above, the `Model` component stores and manages Agendum's task list data and user's preferences. It also exposes a `UnmodifiableObservableList<ReadOnlyTask>` that can be 'observed' by other components e.g. the `UI` can be bound to this list and will automatically update when the data in the list change.
+
+Due to the application of the **Observer Pattern**, it does not depend on other components such as `Storage`. The model interact with the `Storage` components by raising events such as `ToDoListChangedEvent`, `ChangeSaveLocationRequestEvent` and `LoadDataRequestEvent` to save and load data from the hard disk.
 
 The `Model` class is the interface of the `Model` component. It provides several APIs for the `Logic` and `UI` components to update and retrieve Agendum’s task list data. The **API** of the model component can be found at [`Model.java`](../src/main/java/seedu/agendum/model/Model.java).  
 
@@ -208,22 +204,25 @@ The structure and relationship of the various classes in the `Model` component i
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
 
-`ModelManager` implements the `Model` Interface. It stores a `UserPref` Object which represents the user’s preference. It stores multiple `ToDoList` objects, including the current and recent lists.  
+`ModelManager` implements the `Model` Interface. It stores a `UserPref` Object which represents the user’s preference. It also stores the current `ToDoList` which the `UI` indirectly refer to. `ModelManager` has a **Stack** of `ToDoList` objects. These are copies of previous to-do lists to support [`undo`](#### undo).
 
 Each `ToDoList` object has one `UniqueTaskList` object. A `UniqueTaskList` can contain multiple `Task` objects but does not allow duplicates.  
 
 The `ReadOnlyToDoList` and `ReadOnlyTask` interfaces allow other classes and components, such as the `UI`, to access but not modify the list of tasks and their details.  
 
 > * `ToDoList` can potentially be extended to have another `UniqueTagList` object to keep track of tags associated with each task and `ToDoList` will be responsible for syncing the tasks and tags.
-> * `Name` is a class as it might be modified to have its own validation regex e.g. can only contain alphanumeric characters.
+> * `Name` is a class on its own as it might be modified to have its own validation regex e.g. can only contain alphanumeric characters.
 
 Using the same example, if the `Logic` component requests `Model` to _deleteTasks(task)_, the subsequent interactions between objects can be described by the following sequence diagram.  
 
 <img src="images\SDforDeleteTaskModelComponent.png" width="800">
 
-The identified task is removed from the `UniqueTaskList`. The `ModelManager` raises a `ToDoListChangedEvent` and back up the new to-do list to its history of saved lists.  
+The identified task is removed from the `UniqueTaskList`. The `ModelManager` raises a `ToDoListChangedEvent` and back up the new to-do list to its stack of lists.  
 
 > `Model`’s _deleteTasks_ methods actually take in `ArrayList<ReadOnlyTask>` instead of a single task. We use _deleteTasks(task)_ for simplicity in the sequence diagram.
+
+#### undo
+
 
 
 [comment]: # (@@author A0148095X)
@@ -290,12 +289,12 @@ Currently, Agendum has 4 logging levels: `SEVERE`, `WARNING`, `INFO` and `FINE`.
 * `INFO` : Noteworthy actions by Agendum<br>
   e.g. valid and invalid commands executed and their results
 * `FINE` : Less significant details that may be useful in debugging<br>
-  e.g. print the elements in actual list instead of just its size
+  e.g. all fine details of the tasks including their last updated time
 
 ### 2. Configuration
 
 You can alter certain properties of our Agendum application (e.g. logging level) through the configuration file.
-(default: `config.json`):
+(default:`config.json`).
 
 
 &nbsp;
@@ -610,7 +609,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 1. Actor enters a alias command and specify the name and new alias name of the command
 2. System alias the command
-3. System shows a feedback message (“The command `original-command` can now be keyed in as `alias-command`”)
+3. System shows a feedback message (“The command `original-command` can now be keyed in as `alias-key`”)
 4. Use case ends.
 
 **Extensions**
@@ -622,7 +621,7 @@ Priority | As a ... | I want to ... | So that I can...
 
 1b. The new alias name is already reserved/used for other commands
 
-> 1b1. System shows an error message ("The alias `alias-command` is already in use") <br>
+> 1b1. System shows an error message ("The alias `alias-key` is already in use") <br>
 > Use case ends
 
 
@@ -631,9 +630,9 @@ Priority | As a ... | I want to ... | So that I can...
 
 **MSS**
 
-1. Actor enters the unalias command followed by `alias-command`
+1. Actor enters the unalias command followed by `alias-key`
 2. System removes the alias for the command
-3. System shows a feedback message ("The alias `alias-command` for `original-command` has been removed.")
+3. System shows a feedback message ("The alias `alias-key` for `original-command` has been removed.")
 4. Use case ends.
 
 **Extensions**
@@ -757,7 +756,7 @@ We conducted a product survey on other task managers. Here is a summary of the s
     * Tab for autocomplete
     * Scroll through command history or task list with up and down
     * Allow users to specify their own shorthand commands so they will remember
-    * Summoning the help window with a keyboard shortcuts
+    * Summoning the help window with a keyboard shortcut
 * Clear visual feedback on the status of the task
     * Overdue and upcoming tasks should stand out
     * Should also be able to see if a task is completed or recurring
