@@ -7,7 +7,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.Task;
 
 //@@author A0148031R
 /**
@@ -32,10 +34,16 @@ public class UpcomingTasksPanel extends TasksPanel {
         upcomingTasksListView.setCellFactory(listView -> new upcomingTasksListViewCell());
     }
 
-    public void scrollTo(int index) {
+    public void scrollTo(Task task, boolean isMultipleTasks) {
         Platform.runLater(() -> {
-            upcomingTasksListView.scrollTo(index);
-            upcomingTasksListView.getSelectionModel().clearAndSelect(index);
+            upcomingTasksListView.scrollTo(mainTaskList.indexOf(task));
+            if(isMultipleTasks) {
+                upcomingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                upcomingTasksListView.getSelectionModel().select(mainTaskList.indexOf(task));
+            } else {
+                upcomingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                upcomingTasksListView.getSelectionModel().clearAndSelect(mainTaskList.indexOf(task));
+            }
         });
     }
 

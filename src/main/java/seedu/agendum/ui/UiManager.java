@@ -12,6 +12,7 @@ import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.events.storage.DataLoadingExceptionEvent;
 import seedu.agendum.commons.events.storage.DataSavingExceptionEvent;
+import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.logic.Logic;
@@ -102,7 +103,7 @@ public class UiManager extends ComponentManager implements Ui {
     private void handleDataLoadingExceptionEvent(DataLoadingExceptionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait("Could not load data", "Could not load data from file", event.exception);
-    }    
+    }
 
     //@@author
     @Subscribe
@@ -115,5 +116,18 @@ public class UiManager extends ComponentManager implements Ui {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.handleHelp();
+    }
+    
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+//        System.out.println("event received, index is :" + event.targetIndex);
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if(event.targetTask.isCompleted()) {
+            mainWindow.getCompletedTasksPanel().scrollTo(event.targetTask, event.isMultipleTasks);
+        } else if(event.targetTask.hasTime()) {
+            mainWindow.getUpcomingTasksPanel().scrollTo(event.targetTask, event.isMultipleTasks);
+        } else {
+            mainWindow.getFloatingasksPanel().scrollTo(event.targetTask, event.isMultipleTasks);
+        }
     }
 }

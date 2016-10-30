@@ -233,15 +233,15 @@ public class MainWindow extends UiPart {
         raise(new ExitAppRequestEvent());
     }
 
-    public TasksPanel getUpcomingTasksPanel() {
+    public UpcomingTasksPanel getUpcomingTasksPanel() {
         return (UpcomingTasksPanel)this.upcomingTasksPanel;
     }
     
-    public TasksPanel getCompletedTasksPanel() {
+    public CompletedTasksPanel getCompletedTasksPanel() {
         return (CompletedTasksPanel)this.completedTasksPanel;
     }
     
-    public TasksPanel getFloatingasksPanel() {
+    public FloatingTasksPanel getFloatingasksPanel() {
         return (FloatingTasksPanel)this.floatingTasksPanel;
     }
 }

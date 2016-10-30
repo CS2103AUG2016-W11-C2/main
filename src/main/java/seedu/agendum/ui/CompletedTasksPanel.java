@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.Task;
 
 //@@author A0148031R
 /**
@@ -31,10 +33,16 @@ public class CompletedTasksPanel extends TasksPanel {
         completedTasksListView.setCellFactory(listView -> new CompletedTasksListViewCell());
     }
 
-    public void scrollTo(int index) {
+    public void scrollTo(Task task, boolean isMultipleTasks) {
         Platform.runLater(() -> {
+            int index = mainTaskList.indexOf(task) - mainTaskList.filtered(t -> !t.isCompleted()).size();
             completedTasksListView.scrollTo(index);
-            completedTasksListView.getSelectionModel().clearAndSelect(index);
+            if(isMultipleTasks) {
+                completedTasksListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            } else {
+                completedTasksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            }
+            completedTasksListView.getSelectionModel().select(index);
         });
     }
     

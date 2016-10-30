@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.Task;
 
 //@@author A0148031R
 /**
@@ -31,10 +33,18 @@ public class FloatingTasksPanel extends TasksPanel {
         floatingTasksListView.setCellFactory(listView -> new FloatingTasksListViewCell());
     }
 
-    public void scrollTo(int index) {
+    public void scrollTo(Task task, boolean isMultipleTasks) {
         Platform.runLater(() -> {
+            int index = mainTaskList.indexOf(task) - 
+                    mainTaskList.filtered(t -> (t.hasTime() && !t.isCompleted())).size();
             floatingTasksListView.scrollTo(index);
-            floatingTasksListView.getSelectionModel().clearAndSelect(index);
+            if(isMultipleTasks) {
+                floatingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+                floatingTasksListView.getSelectionModel().select(index);
+            } else {
+                floatingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                floatingTasksListView.getSelectionModel().clearAndSelect(index);
+            }
         });
     }
     
@@ -53,6 +63,7 @@ public class FloatingTasksPanel extends TasksPanel {
                 setText(null);
             } else {
                 setGraphic(TaskCard.load(task, mainTaskList.indexOf(task) + 1).getLayout());
+//                scrollTo();
             }
         }
     }

@@ -3,7 +3,9 @@ package seedu.agendum.model.task;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.agendum.commons.util.CollectionUtil;
+import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.LogsCenter;
+import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
 import seedu.agendum.commons.exceptions.DuplicateDataException;
 
 import java.util.*;
@@ -64,6 +66,8 @@ public class UniqueTaskList implements Iterable<Task> {
         }
 
         internalList.add(toAdd);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(toAdd, false));
+        
         logger.fine("[TASK LIST] --- Added a Task: " + toAdd.getDetailedText());
     }
 
@@ -136,6 +140,7 @@ public class UniqueTaskList implements Iterable<Task> {
         Task markedTask = new Task(toMark);
         markedTask.markAsCompleted();
         internalList.set(taskIndex, markedTask);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(markedTask, true));
 
         logger.fine("[TASK LIST] --- Marked Task: " + markedTask.getDetailedText());
 
@@ -161,6 +166,7 @@ public class UniqueTaskList implements Iterable<Task> {
         Task unmarkedTask = new Task(toUnmark);
         unmarkedTask.markAsUncompleted();
         internalList.set(taskIndex, unmarkedTask);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(unmarkedTask, true));
 
         logger.fine("[TASK LIST] --- Unmarked Task: " + unmarkedTask.getDetailedText());
 
