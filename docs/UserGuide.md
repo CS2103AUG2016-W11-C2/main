@@ -103,7 +103,7 @@ Agendum will move the task _return "Animal Farm"_ to the **Done** panel.
 
 Continue exploring Agendum. Add more tasks to your Agendum to-do list and try out the various convenient commands given in the next section. Do note that the ID of the task might change as new tasks are added, updated and marked. Agendum takes care of it for you but you should always refer to the current ID displayed.
 
-**summary of all the visual changes**
+**Summary of all the visual changes**
 
 Here is a **summary of all the visual changes** you should see at every step:
 <img src="images/userguide/startAgendum.png" width="800"><br>
@@ -172,6 +172,7 @@ Agendum supports a wide variety of date time formats. Combine any of the date fo
  > The day of the week refers to the following week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
 
 *Time Format*
+
 | Time Format     | Example(s)                              |
 |-----------------|-----------------------------------------|
 | Hour            | 10, 22                                  |
@@ -417,7 +418,8 @@ Examples:
 ```
 If mark is aliased with `m` and `mk`.
 > unalias mk
-Result m can no longer be used to mark tasks; now you can only use the original command `mark` or `m` to mark a task as completed.
+Result m can no longer be used to mark tasks; now you can only use the
+original command `mark` or `m` to mark a task as completed.
 ```
 
 
@@ -474,7 +476,7 @@ To leave Agendum, type `exit`. See you soon!
 
 To work even faster,
 1. Use the <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through your past commands. You don't need to remember or enter them again <br>
-2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line and start afresh. <br>
+2. If you are entering a new command, use the <kbd>↓</kbd> to instantly clear the command line and start afresh. <br>
 3. <kbd>Tab</kbd> will autocomplete the command word for you. <br>
 
 
