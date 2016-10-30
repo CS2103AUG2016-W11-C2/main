@@ -103,8 +103,11 @@ Agendum will move the task _return "Animal Farm"_ to the **Done** panel.
 
 Continue exploring Agendum. Add more tasks to your Agendum to-do list and try out the various convenient commands given in the next section. Do note that the ID of the task might change as new tasks are added, updated and marked. Agendum takes care of it for you but you should always refer to the current ID displayed.
 
+**summary of all the visual changes**
+
 Here is a **summary of all the visual changes** you should see at every step:
 <img src="images/userguide/startAgendum.png" width="800"><br>
+
 
 &nbsp;
 
@@ -141,7 +144,7 @@ Description: I need to return my library books by the end of this week. There is
 Result: Agendum will add a task "return library books" to the "Do It Soon" panel.
 It will have a deadline set to the nearest upcoming Friday and with time 8pm.
 
-Description: I have a wedding dinner which will take place on the night of 30 Oct.
+Description: I have a wedding dinner which will take place on 30 Oct night.
 > add attend wedding dinner from 30 Oct 7pm to 9.30pm
 Result: Agendum will add a task "attend wedding dinner" to the "Do It Soon" panel.
 It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
@@ -151,7 +154,9 @@ It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 
 
 #### Date Time Format
-How do you specify the `<deadline>`, `<start-time>` and `<end-time>`? Agendum supports a wide variety of date time formats. Combine any of the date format and time format below. Note that the date/time formats are not case sensitive.
+How do you specify the `<deadline>`, `<start-time>` and `<end-time>` of a task?
+
+Agendum supports a wide variety of date time formats. Combine any of the date format and time format below. Note that the date/time formats are not case sensitive.
 
 *Date Format*
 
@@ -198,11 +203,10 @@ However, with Agendum, you can skip typing the second date:
 ### Renaming a task : `rename`
 
 Agendum understands that plans and tasks change all the time. <br>
-If you wish to update or enhance the description of a task, you can use the following command.
 
-Here is the *format*:
+If you wish to update or enhance the description of a task, you can use the following *format*:
 
-* `rename <id> <new-name>` - give a new name to the task identified by `<id>`. The `<id>` must be a positive number and in the most recent to-do list displayed.
+* `rename <id> <new-name>` - give a new name to the task identified by `<id>`. The `<id>` must be a positive number and be in the most recent to-do list displayed.
 
 Here is an *example*:<br>
 <img src="images/userguide/beforeRenaming.png" width="500"><br>
@@ -213,7 +217,7 @@ To update the name of the task,
 > rename 2 Watch Harry Potter
 ```
 
-Agendum will promptly update the displayed <br>
+Agendum will promptly update the displayed task list! <br>
 <img src="images/userguide/afterRenaming.png" width="500"><br>
 
 
@@ -223,15 +227,16 @@ Agendum recognizes that your schedule might change, and therefore allows you to 
 
 Here are the *acceptable format(s)*:
 
-* `schedule <id>` - re-schedule the task identified by <id>. It can now be done anytime and not by a deadline or within a specific time.
+* `schedule <id>` - re-schedule the task identified by <id>. It can now be done anytime.  It is no longer bounded by a deadline or event time!
 * `schedule <id> by <deadline>` - set or update the deadline for the task identified. Note the keyword `by`.
 * `schedule <id> from <start-time> to <end-time>` - update the start/end time of the task identified by id. Note the keyword `from` and `to`.
 
-  > * Again, `<id>` must be a positive number and in the most recent to-do list displayed.
+  > * Again, `<id>` must be a positive number and be in the most recent to-do list displayed.
   > * `<deadline>`, `<start-time>` and `<end-time>` must follow the format previously defined in [Date Time Format](#date-time-format)
   > * A task cannot have a deadline and a event time at the same time. A wrong start and end time might be saved.  
 
 Here are some *examples*:<br>
+
 <img src="images/userguide/beforeScheduling.png" width="300"><br>
 
 ```
@@ -273,6 +278,7 @@ Description: I had a really productive day and did all the other tasks too.
 Result: Agendum will save you the hassle of marking each individual task as
 completed one by one. It is satisfying to watch how all the tasks move to the
 "Done" panel together.
+
 You can also try out any of the following examples:
 > mark 1,2,3
 > mark 1-3
@@ -327,7 +333,7 @@ The tasks with display ids 1, 2 and 3 will be deleted.
 
 Agendum understands that you might make mistakes and change your mind. Hence, Agendum does offer some flexibility and allow you to reverse the effects of a few commands by simply typing `undo`. Multiple and successive `undo` are supported.
 
-The commands include:
+Commands that can be "undone" include:
 * `add`
 * `rename`
 * `schedule`
@@ -335,21 +341,20 @@ The commands include:
 * `unmark`
 * `delete`
 
-However, some commands are not reversible but you can still reverse the effect manually.
+Although some commands cannot be undone, you can still reverse the effect manually and easily.
 * `store` - choose to `store` in your previous location again
 * `load` - choose to `load` data from your previous location
 * `alias` - `unalias` the shorthand command you just defined
 * `unalias` - `alias` the shorthand command you just removed
-If you have accidentally made a mistake in the previous command, you can use 'undo' to remedy it.<br>
-Multiple undo actions are also supported.
 * `undo` - scroll through your previous commands using the <kbd>↑</kbd> and <kbd>↓</kbd> again and enter the command to execute it again
 * `list`/`find` - there is only a change in your view but no change in the task data. To go back to the previous view, use <kbd>ESC</kbd>
 
 Examples:
 ```
 > add homework
+Result: Agendum adds the task "homework"
 > undo
-Result: The task "homework" which has been added previously, will be removed.
+Result: Agendum removes the task "homework"
 ```
 
 ### Finding tasks containing keywords: `find`
@@ -359,6 +364,7 @@ Fortunately, Agendum can search and bring up these tasks to you (if only you rem
 
 Here is the *format*:
 * `find <keyword>...` - filter out all tasks containing any of the keyword(s) given
+
   > * The search is not case sensitive. e.g `assignment` will match `Assignment`
   > * The order of the keywords does not matter. e.g. `2 essay` will match `essay 2`
   > * Only the name is searched
@@ -378,32 +384,32 @@ The format is simply `list`.
 [comment]: # (@@author A0148095X)
 ### Creating an alias for a command : `alias`
 
-Is `schedule` too long to type?  <br>
-Perhaps you want to type a command faster, or change the name of a command to suit your needs; <br>
+Perhaps you want to type a command (e.g. schedule) faster, or change the name of a command to suit your needs; <br>
 fret not, Agendum allows you to define your own aliases for commands. <br>
-You can use both the original command and your own alias to carry out the same action.
+You can use both the original command and your own shorthand alias to carry out the same action.
 
 To create an alias, here is the *format*:
 * `alias <original-command> <shorthand>`
 
-> * `<shorthand>` must be a single alphanumeric word. It cannnot be a original command and already aliased to another command.
+> * `<shorthand>` must be a single alphanumeric word. It cannot be a original-command and already aliased to another command.
 > * `<original-command>` must be a command word that is specified in the Command Summary section
 
 Examples:
 ```
 > alias mark m <br>
-Result: you can now use m or mark to mark a task as completed.
+Result: you can now use `m` or `mark` to mark a task as completed.
 > alias mark mk <br>
-Result: Now you can use m, mk or mark to mark a task.
+Result: Now you can use `m`, `mk` or `mark` to mark a task.
 ```
 
 ### Removing an alias command : `unalias`
 
 Is a current alias inconvenient? Have you thought of a better one? <br>
-Or perhaps you are thinking of using an alias for another command. <br>
+Or perhaps you are thinking of using an alias for another command instead. <br>
 
 To remove a previously defined alias, here is the *format*:
 * `unalias <shorthand>`
+
 > * `<shorthand>` should be an alias you previously defined.
 > * After removing this particular alias, you can still use the original command word or other unremoved aliases.
 
@@ -411,43 +417,52 @@ Examples:
 ```
 If mark is aliased with `m` and `mk`.
 > unalias mk
-Result m can no longer be used to mark tasks; now you can only use the original command (mark) or (m) to mark a task as completed.
+Result m can no longer be used to mark tasks; now you can only use the original command `mark` or `m` to mark a task as completed.
 ```
+
 
 ### Viewing help : `help`
 
-If you need some reminder or more information about the features available, you can use the `help` command.
+At any point in time, if you need some reminder about the commands available, you can use the `help` command. Type `help` or use the <kbd> F5 </kbd> to summon the help screen.
 
-#### Specifying the data storage location : `store`
+
+### Specifying the data storage location : `store`
 
 Are you considering moving Agendum’s data files to another file directory?
 You might want to save your Agendum task list to a Cloud Storage service so you can easily access from another device.
 Agendum offers you the flexibility in choosing where the task list data will be stored.
 The task list data will be saved to the specific directory, and future data will be saved in that location.
 
-Format: `store PATH_TO_FILE`
+Here is the *format*:
+* `store <path-to-file>`
 
-> * PATH_TO_FILE must be a valid path to a file on the local computer.
-> * If a file at PATH_TO_FILE exists, it will be overriden.
-> * The previous data storage file will not be deleted.
+> * `<path-to-file>` must be a valid path to a file on the local computer.
+> * If there is an existing file at `<path-to-file>`, it will be overriden.
+> * The data storage file at the original location will not be deleted. This is similar to a "Save as..." in other applications.
 
 Examples:
-* `store C:/Dropbox/mytasklist.xml`
+```
+> store C:/Dropbox/mytasklist.xml
+```
 
 
-#### Loading from another data storage location : `load`
+### Loading from another data storage location : `load`
 
 After relocating Agendum’s data files, you might want to load that exact copy of Agendum’s task list from a certain location, or from a Cloud Storage service. Agendum also offers you the flexibility to choose which data files to import.
 
-Format: `load PATH_TO_FILE`
+Here is the *format*:
+* `load <path-to-file>`
 
-> * PATH_TO_FILE must be a valid path to a file on the local computer.
-> * Existing data will be saved and stored in the existing data storage location.
-> * The task list in Agendum will be replaced by the loaded task list.
-> * Future data will be stored in PATH_TO_FILE.
+> * <path-to-file> must be a valid path to a file on the local computer.
+> * Your current data would have already been saved automatically in its original data storage location.
+> * Agendum will then show data loaded from <path-to-file> and save data there in the future.
+> * You will not be able to `undo` immediately after loading as there have been no changes to the loaded list.
 
 Examples:
-* `load C:/Dropbox/mytasklist.xml`
+```
+> `load C:/Dropbox/mytasklist.xml`
+```
+
 
 #### Exiting the program : `exit`
 
@@ -461,7 +476,6 @@ To work even faster,
 1. Use the <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through your past commands. You don't need to remember or enter them again <br>
 2. If you are entering a new command, use the <kbd>DOWN ARROW</kbd> to instantly clear the command line and start afresh. <br>
 3. <kbd>Tab</kbd> will autocomplete the command word for you. <br>
-
 
 
 ### Saving the data
@@ -501,23 +515,22 @@ Agendum saves its data into the specified data storage location, or by default i
 
 Command  | Format  
 :-------:| :--------
-Add      | `add TASK_NAME` or `add TASK_NAME by DATE_TIME` or `add TASK_NAME from START_DATE_TIME to END_DATE_TIME`
-Alias    | `alias ORIGINAL_COMMAND_NAME NEW_COMMAND_NAME`
-Delete   | `delete INDEX...`
+Add      | `add <name>` or `add <name> by <deadline>` or `add <name> from <start-time> to <end-time>`
+Alias    | `alias <original-command> <shorthand>`
+Delete   | `delete <id>...`
 Exit     | `exit`
-Find     | `find KEYWORD...`
+Find     | `find <keyword>...`
 Help     | `help`
 List     | `list`
-Load     | `load PATH_TO_FILE`
-Mark     | `mark INDEX...`
-Rename   | `rename INDEX NEW_NAME`
-Schedule | `schedule INDEX` or `schedule INDEX by DATE_TIME` or `schedule INDEX from START_DATE_TIME to END_DATE_TIME`
-Select   | `select INDEX`
-Store    | `store PATH_TO_FILE`
-Unalias  | `unalias NEW_COMMAND_NAME` or `unalias ORIGINAL_COMMAND_NAME`
+Load     | `load <path-to-file>`
+Mark     | `mark <id>...`
+Rename   | `rename <id> <name>`
+Schedule | `schedule <id>` or `schedule <id> by <deadline>` or `schedule <id> from <start-time> to <end-time>`
+Store    | `store <path-to-file>`
+Unalias  | `unalias <shorthand>`
 Undo     | `undo`
-Unmark   | `unmark INDEX...`
+Unmark   | `unmark <id>...`
 
 For a quick reference,
-> * Words in `UPPER_CASE` are the parameters.
 > * Parameters with `...` after them can have multiple instances (separated by whitespace).
+> * `<deadline>`, `<start-time>` and `<end-time>` must follow the format previously defined in [Date Time Format](#date-time-format)
