@@ -120,7 +120,6 @@ public class UiManager extends ComponentManager implements Ui {
     
     @Subscribe
     private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-//        System.out.println("event received, index is :" + event.targetIndex);
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if(event.targetTask.isCompleted()) {
             mainWindow.getCompletedTasksPanel().scrollTo(event.targetTask, event.hasMultipleTasks);
