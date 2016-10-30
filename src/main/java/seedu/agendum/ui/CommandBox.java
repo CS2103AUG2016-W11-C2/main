@@ -3,6 +3,7 @@ package seedu.agendum.ui;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
@@ -116,6 +117,7 @@ public class CommandBox extends UiPart {
             Label label = new Label(message);
             label.setTextFill(Color.web("#ffffff"));
             label.setContentDisplay(ContentDisplay.CENTER);
+            this.messagePlaceHolder.setAlignment(Pos.CENTER_LEFT);
             this.messagePlaceHolder.getChildren().add(label);
         }
     }
