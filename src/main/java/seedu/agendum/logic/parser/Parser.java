@@ -52,6 +52,7 @@ public class Parser {
     private CommandLibrary commandLibrary;
        	
     //@@author
+
     public Parser(CommandLibrary commandLibrary) {
         this.commandLibrary = commandLibrary;
     }
@@ -79,9 +80,6 @@ public class Parser {
 
         case AddCommand.COMMAND_WORD:
             return prepareAdd(arguments);
-
-        case SelectCommand.COMMAND_WORD:
-            return prepareSelect(arguments);
 
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
@@ -126,7 +124,7 @@ public class Parser {
             return new LoadCommand(arguments);
 
         default:
-            Optional<String> alternativeCommand = EditDistanceCalculator.parseString(commandWord);
+            Optional<String> alternativeCommand = EditDistanceCalculator.closestCommandMatch(commandWord);
             if (alternativeCommand.isPresent()) {
                 return new IncorrectCommand(String.format(MESSAGE_UNKNOWN_COMMAND_WITH_SUGGESTION, alternativeCommand.get()));
             } else {
@@ -313,24 +311,6 @@ public class Parser {
         }
     }
 
-    //@@author
-    /**
-     * Parses arguments in the context of the select task command.
-     *
-     * @param args full command args string
-     * @return the prepared command
-     */
-    private Command prepareSelect(String args) {
-        Optional<Integer> index = parseIndex(args);
-        if(!index.isPresent()){
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-        }
-
-        return new SelectCommand(index.get());
-    }
-
-    //@@author A0133367E
     /**
      * Parses arguments in the context of the alias command.
      *
@@ -394,7 +374,7 @@ public class Parser {
      */
     private Set<Integer> parseIndexes(String args) {
         final Matcher matcher = TASK_INDEXES_ARGS_FORMAT.matcher(args.trim());
-        Set<Integer> taskIds = new HashSet<Integer>();
+        Set<Integer> taskIds = new HashSet<>();
 
         if (!matcher.matches()) {
             return taskIds;
@@ -416,7 +396,7 @@ public class Parser {
         }
 
         if (taskIds.remove(0)) {
-            return new HashSet<Integer>();
+            return new HashSet<>();
         }
 
         return taskIds;

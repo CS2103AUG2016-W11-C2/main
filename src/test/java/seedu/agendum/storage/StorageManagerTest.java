@@ -13,7 +13,6 @@ import java.util.Hashtable;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.agendum.commons.core.Config;
@@ -37,9 +36,6 @@ public class StorageManagerTest {
 
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
-    
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setup() {
@@ -96,7 +92,7 @@ public class StorageManagerTest {
     }
 
     @Test
-    public void handleToDoListChangedEvent_exceptionThrown_eventRaised() throws IOException {
+    public void handleToDoListChangedEventExceptionThrownEventRaised() throws IOException {
         //Create a StorageManager while injecting a stub that throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlToDoListStorageExceptionThrowingStub("dummy"), 
                 new JsonCommandLibraryStorage("dummy"), new JsonUserPrefsStorage("dummy"), new Config());
@@ -107,14 +103,14 @@ public class StorageManagerTest {
 
     //@@author A0148095X
     @Test
-    public void handleSaveLocationChangedEvent_validFilePath() {
+    public void handleSaveLocationChangedEventValidFilePath() {
         String validPath = "data/test.xml";
         storageManager.handleChangeSaveLocationRequestEvent(new ChangeSaveLocationRequestEvent(validPath));
         assertEquals(storageManager.getToDoListFilePath(), validPath);
     }
     
     @Test
-    public void handleLoadDataRequestEvent_validPathToFile_invalidFile() throws IOException, FileDeletionException {
+    public void handleLoadDataRequestEventValidPathToFileInvalidFile() throws IOException, FileDeletionException {
         EventsCollector eventCollector = new EventsCollector();
         String validPath = "data/testLoad.xml";
         assert !FileUtil.isFileExists(validPath);
@@ -131,20 +127,26 @@ public class StorageManagerTest {
         assertTrue(dlee.exception instanceof DataConversionException);
         FileUtil.deleteFile(validPath);
     }
-    
-    public void setToDoListFilePath() {
+
+    @Test(expected = AssertionError.class)
+    public void setToDoListFilePathNull() {
         // null
-        thrown.expect(AssertionError.class);
         storageManager.setToDoListFilePath(null);
+    }
 
+    @Test(expected = AssertionError.class)
+    public void setToDoListFilePathEmpty() {
         // empty string
-        thrown.expect(AssertionError.class);
         storageManager.setToDoListFilePath("");
+    }
 
+    @Test(expected = AssertionError.class)
+    public void setToDoListFilePathInvalid() {
         // invalid file path
-        thrown.expect(AssertionError.class);
         storageManager.setToDoListFilePath("1:/.xml");
-        
+    }
+
+    public void setToDoListFilePathValid() {
         // valid file path
         String validPath = "test/test.xml";
         storageManager.setToDoListFilePath(validPath);

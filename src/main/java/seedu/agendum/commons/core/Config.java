@@ -23,9 +23,6 @@ public class Config {
     private String toDoListFilePath = DEFAULT_SAVE_LOCATION;
     private String toDoListName = "MyToDoList";
 
-    public Config() {
-    }
-
     public String getAppTitle() {
         return appTitle;
     }

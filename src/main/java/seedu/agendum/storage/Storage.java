@@ -35,7 +35,7 @@ public interface Storage extends ToDoListStorage, UserPrefsStorage, CommandLibra
     String getToDoListFilePath();
     
     @Override
-    public void setToDoListFilePath(String filePath);
+    void setToDoListFilePath(String filePath);
 
     @Override
     Optional<ReadOnlyToDoList> readToDoList() throws DataConversionException, IOException;
@@ -58,8 +58,8 @@ public interface Storage extends ToDoListStorage, UserPrefsStorage, CommandLibra
     void handleCommandLibraryChangedEvent(CommandLibraryChangedEvent event);
 
     /** Loads todo list data from the file **/
-    public void handleLoadDataRequestEvent(LoadDataRequestEvent event);
+    void handleLoadDataRequestEvent(LoadDataRequestEvent event);
     
     /** Sets the save location **/
-    public void handleChangeSaveLocationRequestEvent(ChangeSaveLocationRequestEvent event);
+    void handleChangeSaveLocationRequestEvent(ChangeSaveLocationRequestEvent event);
 }

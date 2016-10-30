@@ -1,8 +1,6 @@
 package seedu.agendum.commons.util;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import seedu.agendum.model.ToDoList;
 import seedu.agendum.storage.XmlSerializableToDoList;
 import seedu.agendum.testutil.ToDoListBuilder;
@@ -22,59 +20,49 @@ public class XmlUtilTest {
     private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validToDoList.xml");
     private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempToDoList.xml"));
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void getDataFromFile_nullFile_AssertionError() throws Exception {
-        thrown.expect(AssertionError.class);
+    @Test(expected = AssertionError.class)
+    public void getDataFromFileNullFileAssertionError() throws Exception {
         XmlUtil.getDataFromFile(null, ToDoList.class);
     }
 
-    @Test
-    public void getDataFromFile_nullClass_AssertionError() throws Exception {
-        thrown.expect(AssertionError.class);
+    @Test(expected = AssertionError.class)
+    public void getDataFromFileNullClassAssertionError() throws Exception {
         XmlUtil.getDataFromFile(VALID_FILE, null);
     }
 
-    @Test
-    public void getDataFromFile_missingFile_FileNotFoundException() throws Exception {
-        thrown.expect(FileNotFoundException.class);
+    @Test(expected = FileNotFoundException.class)
+    public void getDataFromFileMissingFileFileNotFoundException() throws Exception {
         XmlUtil.getDataFromFile(MISSING_FILE, ToDoList.class);
     }
 
-    @Test
-    public void getDataFromFile_emptyFile_DataFormatMismatchException() throws Exception {
-        thrown.expect(JAXBException.class);
+    @Test(expected = JAXBException.class)
+    public void getDataFromFileEmptyFileDataFormatMismatchException() throws Exception {
         XmlUtil.getDataFromFile(EMPTY_FILE, ToDoList.class);
     }
 
     @Test
-    public void getDataFromFile_validFile_validResult() throws Exception {
+    public void getDataFromFileValidFileValidResult() throws Exception {
         XmlSerializableToDoList dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableToDoList.class);
         assertEquals(9, dataFromFile.getTaskList().size());
     }
 
-    @Test
-    public void saveDataToFile_nullFile_AssertionError() throws Exception {
-        thrown.expect(AssertionError.class);
+    @Test(expected = AssertionError.class)
+    public void saveDataToFileNullFileAssertionError() throws Exception {
         XmlUtil.saveDataToFile(null, new ToDoList());
     }
 
-    @Test
-    public void saveDataToFile_nullClass_AssertionError() throws Exception {
-        thrown.expect(AssertionError.class);
+    @Test(expected = AssertionError.class)
+    public void saveDataToFileNullClassAssertionError() throws Exception {
         XmlUtil.saveDataToFile(VALID_FILE, null);
     }
 
-    @Test
-    public void saveDataToFile_missingFile_FileNotFoundException() throws Exception {
-        thrown.expect(FileNotFoundException.class);
+    @Test(expected = FileNotFoundException.class)
+    public void saveDataToFileMissingFileFileNotFoundException() throws Exception {
         XmlUtil.saveDataToFile(MISSING_FILE, new ToDoList());
     }
 
     @Test
-    public void saveDataToFile_validFile_dataSaved() throws Exception {
+    public void saveDataToFileValidFileDataSaved() throws Exception {
         TEMP_FILE.createNewFile();
         XmlSerializableToDoList dataToWrite = new XmlSerializableToDoList(new ToDoList());
         XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);

@@ -5,17 +5,13 @@ import com.google.common.eventbus.Subscribe;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -143,14 +139,12 @@ class DigitalClock extends Label {
     
     private void bindToTime() {
         Timeline timeline = new Timeline(
-                new KeyFrame(Duration.seconds(0), 
-                        new EventHandler<ActionEvent>() {
-                            @Override public void handle(ActionEvent actionEvent) {
-                                Calendar time = Calendar.getInstance();
-                                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss, EEE d MMM yyyy");
-                                setText(simpleDateFormat.format(time.getTime()));
-                                setTextFill(Color.web("#ffffff"));
-            }
+                new KeyFrame(Duration.seconds(0),
+                        actionEvent -> {
+                            Calendar time = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss, EEE d MMM yyyy");
+                            setText(simpleDateFormat.format(time.getTime()));
+                            setTextFill(Color.web("#ffffff"));
         }), new KeyFrame(Duration.seconds(1)));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();

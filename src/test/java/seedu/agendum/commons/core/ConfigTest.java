@@ -1,16 +1,12 @@
 package seedu.agendum.commons.core;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ConfigTest {
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void toString_defaultObject_stringReturned() {        
@@ -23,7 +19,6 @@ public class ConfigTest {
         sb.append("\nToDoList name : MyToDoList");
 
         assertEquals(sb.toString(), new Config().toString());
-
     }
 
     @Test

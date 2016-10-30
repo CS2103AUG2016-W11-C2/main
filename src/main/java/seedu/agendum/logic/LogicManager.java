@@ -11,7 +11,6 @@ import seedu.agendum.logic.commands.UnaliasCommand;
 import seedu.agendum.logic.parser.Parser;
 import seedu.agendum.model.Model;
 import seedu.agendum.model.task.ReadOnlyTask;
-import seedu.agendum.storage.Storage;
 
 import java.util.logging.Logger;
 
@@ -25,7 +24,7 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Parser parser;
     private CommandLibrary commandLibrary;
 
-    public LogicManager(Model model, Storage storage, CommandLibrary commandLibrary) {
+    public LogicManager(Model model, CommandLibrary commandLibrary) {
         this.model = model;
         this.commandLibrary = commandLibrary;
         this.parser = new Parser(this.commandLibrary);

@@ -2,9 +2,7 @@ package seedu.agendum.model;
 
 import javafx.collections.FXCollections;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 
 import java.util.*;
@@ -14,11 +12,8 @@ import static seedu.agendum.testutil.TestUtil.assertThrows;
 
 public class UnmodifiableObservableListTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    List<Integer> backing;
-    UnmodifiableObservableList<Integer> list;
+    private List<Integer> backing;
+    private UnmodifiableObservableList<Integer> list;
 
     @Before
     public void setup() {
@@ -28,13 +23,13 @@ public class UnmodifiableObservableListTest {
     }
 
     @Test
-    public void transformationListGenerators_correctBackingList() {
+    public void transformationListGeneratorsCorrectBackingList() {
         assertSame(list.sorted().getSource(), list);
         assertSame(list.filtered(i -> true).getSource(), list);
     }
 
     @Test
-    public void mutatingMethods_disabled() {
+    public void mutatingMethodsDisabled() {
 
         final Class<UnsupportedOperationException> ex = UnsupportedOperationException.class;
 

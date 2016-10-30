@@ -6,7 +6,6 @@ import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -55,6 +54,6 @@ public interface Model {
     void loadFromLocation(String location);
 
     /** Updates the current todolist to the loaded data**/
-    public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event);
+    void handleLoadDataCompleteEvent(LoadDataCompleteEvent event);
 
 }
