@@ -62,6 +62,7 @@ public class UniqueTaskList implements Iterable<Task> {
  
         if (contains(toAdd)) {
             logger.fine("[TASK LIST] --- Duplicate Task: " + toAdd.getDetailedText());
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(toAdd, false));
             throw new DuplicateTaskException();
         }
 
