@@ -36,11 +36,11 @@ public class UpcomingTasksPanel extends TasksPanel {
         upcomingTasksListView.setCellFactory(listView -> new upcomingTasksListViewCell());
     }
 
-    public void scrollTo(Task task, boolean isMultipleTasks) {
+    public void scrollTo(Task task, boolean hasMultipleTasks) {
         Platform.runLater(() -> {
             int index = mainTaskList.indexOf(task);
             upcomingTasksListView.scrollTo(index);
-            if(isMultipleTasks) {
+            if(hasMultipleTasks) {
                 upcomingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
                 upcomingTasksListView.getSelectionModel().select(index);
             } else {

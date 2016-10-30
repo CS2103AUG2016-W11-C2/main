@@ -35,11 +35,11 @@ public class CompletedTasksPanel extends TasksPanel {
         completedTasksListView.setCellFactory(listView -> new CompletedTasksListViewCell());
     }
 
-    public void scrollTo(Task task, boolean isMultipleTasks) {
+    public void scrollTo(Task task, boolean hasMultipleTasks) {
         Platform.runLater(() -> {
             int index = mainTaskList.indexOf(task) - mainTaskList.filtered(t -> !t.isCompleted()).size();
             completedTasksListView.scrollTo(index);
-            if(isMultipleTasks) {
+            if(hasMultipleTasks) {
                 completedTasksListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
                 completedTasksListView.getSelectionModel().select(index);
             } else {

@@ -35,12 +35,12 @@ public class FloatingTasksPanel extends TasksPanel {
         floatingTasksListView.setCellFactory(listView -> new FloatingTasksListViewCell());
     }
 
-    public void scrollTo(Task task, boolean isMultipleTasks) {
+    public void scrollTo(Task task, boolean hasMultipleTasks) {
         Platform.runLater(() -> {
             int index = mainTaskList.indexOf(task) - 
                     mainTaskList.filtered(t -> (t.hasTime() && !t.isCompleted())).size();
             floatingTasksListView.scrollTo(index);
-            if(isMultipleTasks) {
+            if(hasMultipleTasks) {
                 floatingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
                 floatingTasksListView.getSelectionModel().select(index);
             } else {

@@ -123,11 +123,11 @@ public class UiManager extends ComponentManager implements Ui {
 //        System.out.println("event received, index is :" + event.targetIndex);
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         if(event.targetTask.isCompleted()) {
-            mainWindow.getCompletedTasksPanel().scrollTo(event.targetTask, event.isMultipleTasks);
+            mainWindow.getCompletedTasksPanel().scrollTo(event.targetTask, event.hasMultipleTasks);
         } else if(event.targetTask.hasTime()) {
-            mainWindow.getUpcomingTasksPanel().scrollTo(event.targetTask, event.isMultipleTasks);
+            mainWindow.getUpcomingTasksPanel().scrollTo(event.targetTask, event.hasMultipleTasks);
         } else {
-            mainWindow.getFloatingasksPanel().scrollTo(event.targetTask, event.isMultipleTasks);
+            mainWindow.getFloatingasksPanel().scrollTo(event.targetTask, event.hasMultipleTasks);
         }
     }
 }

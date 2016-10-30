@@ -10,11 +10,11 @@ import seedu.agendum.model.task.Task;
 public class JumpToListRequestEvent extends BaseEvent {
 
     public final Task targetTask;
-    public final boolean isMultipleTasks;
+    public final boolean hasMultipleTasks;
 
-    public JumpToListRequestEvent(Task task, boolean isMultipleTasks) {
+    public JumpToListRequestEvent(Task task, boolean hasMultipleTasks) {
         this.targetTask = task;
-        this.isMultipleTasks = isMultipleTasks;
+        this.hasMultipleTasks = hasMultipleTasks;
     }
 
     @Override
