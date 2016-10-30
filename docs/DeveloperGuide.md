@@ -105,7 +105,7 @@ The **`Main`** component has only one class called [`MainApp`](../src/main/java/
 Two of those classes play important roles at the architecture level.
 
 * `EventsCentre` : This class (written using [Google's Event Bus library](https://github.com/google/guava/wiki/EventBusExplained))
-  is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+  is used by components to communicate with other components using events.
 * `LogsCenter` : This class is used by many classes to write log messages to Agendum's log file to record noteworthy system information and events.
 
 
@@ -136,20 +136,21 @@ interface and exposes its functionality using the `LogicManager.java` class.<br>
 
 
 #### Event Driven Approach
-Agendum applies an Event-Driven approach to reduce direct coupling between components. For example, consider the scenario where the user inputs `delete 1` described in the  _Sequence Diagram_ below. The `UI` component will invoke the `Logic` component’s  _execute_ method to carry out the given command, `delete 1`. The `Logic` component will identify the corresponding task and will call the `Model` component _deleteTasks_ method to update Agendum’s data and raise a `ToDoListChangedEvent`.
+Agendum applies an Event-Driven approach and the **Observer Pattern** to reduce direct coupling between the various components. In Agendum, the `UI` and `Storage` components are interested in observing and receiving notifications when there is a change in the to-do list in the `Model`. However, it will be an anti-pattern if `Model` has to inform both components directly (e.g. request the `Storage` component to save updates to the hard disk). This is because it will cause `Model` to be coupled to `Storage`. To avoid bidirectional coupling, the `Model` (Observable) will raises a `ToDoListChangedEvent` and the EventsCenter is responsible for notifying the register Observers, the `Storage` and `UI` sub-components.
 
-The _Sequence Diagram_ below illustrates how the components interact for the scenario where the user issues the
-command `delete 1` to delete the first task in the displayed list. The `UI` component will invoke the `Logic` component's _execute_ method to carry out the given command. In this scenario, the `Logic` component will identify the corresponding task and invoke `Model`'s  _deleteTask(task)_ method to update the in-app memory and raise a `ToDoListChangedEvent`.
+For example, consider the scenario where the user inputs `delete 1` described in the  _Sequence Diagram_ below. The `UI` component will invoke the `Logic` component’s  _execute_ method to carry out the given command, `delete 1`. The `Logic` component will identify the corresponding task and will call the `Model` component _deleteTasks_ method to update Agendum’s data and raise a `ToDoListChangedEvent`.
 
 <img src="images\SDforDeleteTask.png" width="800">
-
-> Note: When Agendum's data is changed, the `Model` simply raises a `ToDoListChangedEvent`.
-  It does not directly request the `Storage` component to save the updates to the hard disk.
-  Hence, `Model` is not directly coupled to `Storage`.
 
 The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `EventsCenter` will inform the subscribers (the `UI` and `Storage` components). Both components will then respond accordingly. `UI` will update the status bar to reflect the 'Last Updated' time while `Storage` will save the updates to the task data to hard disk. <br>
 
 <img src="images\SDforDeleteTaskEventHandling.png" width="800">
+
+#### Model-View-Controller approach
+To further reduce coupling between components, the Model View Controller pattern is also applied.
+* Model: The `Model` component as previously described, maintains and holds Agendum's data.
+* View: Part of the `UI` components and resources such as the .fxml file is responsible for displaying Agendum's data and interacting with the user. Through events, the `UI` component is able to get data updates from the model
+* Controller: Parts of the `UI` component such as (`CommandBox`) act as 'Controllers' for part of the UI. The `CommandBox` accepts user command input and request `Logic` to execute the command entered. This execution may result in changes in the model.
 
 The following sections will then give more details of each individual component.
 
@@ -192,6 +193,9 @@ You can view the Sequence Diagram below for interactions within the `Logic` comp
 
 <img src="images/DeleteTaskSdForLogic.png" width="800"><br>
 
+#### Command Pattern
+The Parser creates concrete Command objects such as `AddCommand` objects. `LogicManager` will then execute the various commands, such as `AddCommand` and `UndoCommand`. Each command does a different task and gives a different result. However, as all command types inherit from the abstract class `Command` and implement the _`execute`_ method, LogicManager (the invoker) can treat all of them as Command Object without knowing each specific Command type. By calling the _`execute`_ method, different actions result.
+
 
 [comment]: # (@@author A0133367E)
 ### 4. Model component
@@ -233,6 +237,8 @@ The `Storage` component has the following functions:
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Agendum data in xml format and read it back.
+
+Other components such as `Model` need to access functionalities defined inside the `Storage` component in order to save the task data and GUI settings to the hard disk. The `StorageManager` is a Facade class. Components such as `Model` will have to access storage sub-components through `StorageManager` which will then redirect method calls to its internal component such as `JsonUserPrefsStorage`. The `StorageManager` also shields the internal details of the Storage Component, such as the implementation of `XmlToDoListStorage` from external classes.
 
 The Object Diagram below shows what it looks like during runtime.
 
