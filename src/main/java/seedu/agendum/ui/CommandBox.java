@@ -32,6 +32,7 @@ public class CommandBox extends UiPart {
     private static final String FIND_COMMAND = "find ";
     private static final String HELP_COMMAND = "help";
     private static final String RESULT_FEEDBACK = "Result: ";
+    private static final String ERROR = "error";
     private static final String FIND_COMMAND_REMINDER_MESSAGE = "Showing search results now, press ESC to go back and"
             + " view all tasks";
 
@@ -182,7 +183,7 @@ public class CommandBox extends UiPart {
      * Sets the command box style to indicate an error
      */
     private void setStyleToIndicateIncorrectCommand() {
-        commandTextField.getStyleClass().add("error");
+        commandTextField.getStyleClass().add(ERROR);
     }
 
 }

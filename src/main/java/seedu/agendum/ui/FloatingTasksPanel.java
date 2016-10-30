@@ -1,5 +1,6 @@
 package seedu.agendum.ui;
 
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -7,6 +8,7 @@ import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.util.Duration;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 
@@ -45,6 +47,10 @@ public class FloatingTasksPanel extends TasksPanel {
                 floatingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                 floatingTasksListView.getSelectionModel().clearAndSelect(index);
             }
+            PauseTransition delay = new PauseTransition(Duration.seconds(5));
+            delay.setOnFinished(event -> floatingTasksListView.getSelectionModel().clearSelection(index));
+            delay.play();
+            
         });
     }
     

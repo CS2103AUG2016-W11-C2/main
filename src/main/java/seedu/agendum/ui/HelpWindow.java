@@ -136,7 +136,7 @@ public class HelpWindow extends UiPart {
 
     private void handleKeyInput(Scene scene) {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            
+
             KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
 
             @Override
@@ -154,7 +154,7 @@ public class HelpWindow extends UiPart {
             }
         });
     }
-    
+
     public void show() {
         dialogStage.show();
     }
