@@ -51,12 +51,12 @@ public class DeleteCommandTest extends ToDoListGuiTest {
         commandBox.runCommand("delete " + targetIndexOneIndexed);
 
         //confirm the list now contains all previous tasks except the deleted task
-        assertTrue(taskListPanel.isListMatching(expectedRemainder));
+        assertAllPanelsMatch(expectedRemainder);
 
         //confirm the result message is correct
-        ArrayList<Integer> deletedTaskVisibleIndices = new ArrayList<Integer>();
+        ArrayList<Integer> deletedTaskVisibleIndices = new ArrayList<>();
         deletedTaskVisibleIndices.add(targetIndexOneIndexed);
-        ArrayList<ReadOnlyTask> deletedTasks = new ArrayList<ReadOnlyTask>();
+        ArrayList<ReadOnlyTask> deletedTasks = new ArrayList<>();
         deletedTasks.add(taskToDelete);
 
         assertResultMessage(String.format(DeleteCommand.MESSAGE_DELETE_TASK_SUCCESS,

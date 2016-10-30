@@ -49,7 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(src);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        previousLists = new Stack<ToDoList>();
+        previousLists = new Stack<>();
         backupNewToDoList();
     }
 
@@ -61,7 +61,7 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        previousLists = new Stack<ToDoList>();
+        previousLists = new Stack<>();
         backupNewToDoList();
     }
 
@@ -82,6 +82,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate the model has changed */
     private void indicateToDoListChanged() {
+        // force a reset/refresh for list view in UI
+        toDoList.resetData(toDoList);
         raise(new ToDoListChangedEvent(toDoList));
     }
     
@@ -164,6 +166,10 @@ public class ModelManager extends ComponentManager implements Model {
     private void backupNewToDoList() {
         ToDoList latestList = new ToDoList(this.getToDoList());
         previousLists.push(latestList);
+    }
+
+    private void clearPreviousToDoLists() {
+        previousLists.clear();
     }
 
 
@@ -267,6 +273,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event) {
         this.toDoList.resetData(event.data);
         indicateToDoListChanged();
+        clearPreviousToDoLists();
+        backupNewToDoList();
         logger.info("Loading completed - Todolist updated.");
     }
 }
