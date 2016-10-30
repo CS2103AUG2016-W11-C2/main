@@ -19,10 +19,6 @@ public class CompletedTasksPanel extends TasksPanel {
     @FXML
     private ListView<ReadOnlyTask> completedTasksListView;
 
-    public CompletedTasksPanel() {
-        super();
-    }
-
     @Override
     public String getFxmlPath() {
         return FXML;

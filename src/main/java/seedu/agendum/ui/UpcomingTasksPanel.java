@@ -20,10 +20,6 @@ public class UpcomingTasksPanel extends TasksPanel {
     @FXML
     private ListView<ReadOnlyTask> upcomingTasksListView;
 
-    public UpcomingTasksPanel() {
-        super();
-    }
-
     @Override
     public String getFxmlPath() {
         return FXML;
