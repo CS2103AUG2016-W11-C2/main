@@ -1,5 +1,6 @@
 package seedu.agendum.ui;
 
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,16 +11,16 @@ import seedu.agendum.model.task.ReadOnlyTask;
 
 //@@author A0148031R
 /**
- * Panel contains the list of completed tasks
+ * Panel contains the list of all uncompleted tasks with time
  */
-public class CompletedTasksPanel extends TasksPanel {
-    private static final String FXML = "CompletedTasksPanel.fxml";
+public class UpcomingTasksPanel extends TasksPanel {
+    private static final String FXML = "UpcomingTasksPanel.fxml";
     private static ObservableList<ReadOnlyTask> mainTaskList;
 
     @FXML
-    private ListView<ReadOnlyTask> completedTasksListView;
+    private ListView<ReadOnlyTask> upcomingTasksListView;
 
-    public CompletedTasksPanel() {
+    public UpcomingTasksPanel() {
         super();
     }
 
@@ -31,20 +32,21 @@ public class CompletedTasksPanel extends TasksPanel {
     @Override
     protected void setConnections(ObservableList<ReadOnlyTask> taskList) {
         mainTaskList = taskList;
-        completedTasksListView.setItems(taskList.filtered(task -> task.isCompleted()));
-        completedTasksListView.setCellFactory(listView -> new CompletedTasksListViewCell());
+        upcomingTasksListView.setItems(taskList.filtered(task -> task.hasTime() && !task.isCompleted()));
+        upcomingTasksListView.setCellFactory(listView -> new upcomingTasksListViewCell());
     }
 
     public void scrollTo(int index) {
         Platform.runLater(() -> {
-            completedTasksListView.scrollTo(index);
-            completedTasksListView.getSelectionModel().clearAndSelect(index);
+            upcomingTasksListView.scrollTo(index);
+            upcomingTasksListView.getSelectionModel().clearAndSelect(index);
         });
     }
-    
-    class CompletedTasksListViewCell extends ListCell<ReadOnlyTask> {
-        public CompletedTasksListViewCell() {
-            prefWidthProperty().bind(completedTasksListView.widthProperty());
+
+    class upcomingTasksListViewCell extends ListCell<ReadOnlyTask> {
+
+        public upcomingTasksListViewCell() {
+            prefWidthProperty().bind(upcomingTasksListView.widthProperty());
             setMaxWidth(Control.USE_PREF_SIZE);
         }
 
@@ -60,4 +62,5 @@ public class CompletedTasksPanel extends TasksPanel {
             }
         }
     }
+
 }

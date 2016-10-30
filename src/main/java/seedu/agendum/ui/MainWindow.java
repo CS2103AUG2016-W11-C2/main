@@ -33,9 +33,9 @@ public class MainWindow extends UiPart {
     private Logic logic;
     
     // Independent Ui parts residing in this Ui container
-    private TasksPanel allTasksPanel;
+    private TasksPanel upcomingTasksPanel;
     private TasksPanel completedTasksPanel;
-    private TasksPanel otherTasksPanel;
+    private TasksPanel floatingTasksPanel;
     private ResultPopUp resultPopUp;
     private StatusBarFooter statusBarFooter;
     private CommandBox commandBox;
@@ -57,13 +57,13 @@ public class MainWindow extends UiPart {
     private MenuItem helpMenuItem;
 
     @FXML
-    private AnchorPane allTasksPlaceHolder;
+    private AnchorPane upcomingTasksPlaceHolder;
     
     @FXML
     private AnchorPane completedTasksPlaceHolder;
     
     @FXML
-    private AnchorPane otherTasksPlaceHolder;
+    private AnchorPane floatingTasksPlaceHolder;
     
     @FXML
     private AnchorPane statusbarPlaceholder;
@@ -134,12 +134,12 @@ public class MainWindow extends UiPart {
 
   //@@author A0148031R
     void fillInnerParts() {
-        allTasksPanel = AllTasksPanel.load(primaryStage, getAllTasksPlaceHolder(), 
-                logic.getFilteredTaskList(), new AllTasksPanel());
+        upcomingTasksPanel = UpcomingTasksPanel.load(primaryStage, getUpcomingTasksPlaceHolder(), 
+                logic.getFilteredTaskList(), new UpcomingTasksPanel());
         completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), 
-                logic.getFilteredTaskList().filtered(p -> p.isCompleted()), new CompletedTasksPanel());
-        otherTasksPanel = OtherTasksPanel.load(primaryStage, getOtherTasksPlaceHolder(), 
-                logic.getFilteredTaskList().filtered(p -> !p.isCompleted()), new OtherTasksPanel());
+                logic.getFilteredTaskList(), new CompletedTasksPanel());
+        floatingTasksPanel = FloatingTasksPanel.load(primaryStage, getFloatingTasksPlaceHolder(), 
+                logic.getFilteredTaskList(), new FloatingTasksPanel());
         resultPopUp = ResultPopUp.load(primaryStage);
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getToDoListFilePath());
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), messagePlaceHolder, resultPopUp, logic);
@@ -157,16 +157,16 @@ public class MainWindow extends UiPart {
         return statusbarPlaceholder;
     }
     
-    public AnchorPane getAllTasksPlaceHolder() {
-        return allTasksPlaceHolder;
+    public AnchorPane getUpcomingTasksPlaceHolder() {
+        return upcomingTasksPlaceHolder;
     }
     
     public AnchorPane getCompletedTasksPlaceHolder() {
         return completedTasksPlaceHolder;
     }
     
-    public AnchorPane getOtherTasksPlaceHolder() {
-        return otherTasksPlaceHolder;
+    public AnchorPane getFloatingTasksPlaceHolder() {
+        return floatingTasksPlaceHolder;
     }
 
     public void hide() {
@@ -233,15 +233,15 @@ public class MainWindow extends UiPart {
         raise(new ExitAppRequestEvent());
     }
 
-    public AllTasksPanel getAllTasksPanel() {
-        return (AllTasksPanel)this.allTasksPanel;
+    public TasksPanel getUpcomingTasksPanel() {
+        return (UpcomingTasksPanel)this.upcomingTasksPanel;
     }
     
     public TasksPanel getCompletedTasksPanel() {
         return (CompletedTasksPanel)this.completedTasksPanel;
     }
     
-    public TasksPanel getOhterTasksPanel() {
-        return (OtherTasksPanel)this.otherTasksPanel;
+    public TasksPanel getFloatingasksPanel() {
+        return (FloatingTasksPanel)this.floatingTasksPanel;
     }
 }
