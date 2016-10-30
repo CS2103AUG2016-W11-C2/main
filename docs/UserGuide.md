@@ -474,10 +474,10 @@ To leave Agendum, type `exit`. See you soon!
 
 ### Keyboard Shortcuts
 
-To work even faster,
+To work even faster, <br>
 1. Use the <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through your past commands. You don't need to remember or enter them again <br>
 2. If you are entering a new command, use the <kbd>↓</kbd> to instantly clear the command line and start afresh. <br>
-3. <kbd>Tab</kbd> will autocomplete the command word for you. <br>
+3. Use<kbd>Tab</kbd> to autocomplete a command word. <br>
 
 
 ### Saving the data
