@@ -752,6 +752,27 @@ This means you can do other things on the Computer while the tests are running.
 
 We conducted a product survey on other task managers. Here is a summary of the strengths and weaknesses of each application. The criteria used for evaluation are own preferences and Jim's requirements.
 
+#### Main insights
+* Keyboard friendliness of our application is extremely important. It is useful to distinguish our application from the rest. Keyboard shortcuts must be intuitive, easy to learn and remember.
+    * Tab for autocomplete
+    * Scroll through command history or task list with up and down
+    * Allow users to specify their own shorthand commands so they will remember
+    * Summoning the help window with a keyboard shortcuts
+* Clear visual feedback on the status of the task
+    * Overdue and upcoming tasks should stand out
+    * Should also be able to see if a task is completed or recurring
+    * Identify if the task is selected/has just been updated
+* Organized overview of all tasks
+    * Tasks should be sorted by their deadline/happening time
+    * Users might like to see their recently updated/completed tasks at the top of the list
+    * Allow user to see these various types of tasks and distinguish them without having to switch between lists (i.e. have multiple lists)
+* Will be nice to allow more details for tasks
+    * detailed task descriptions
+    * tagging
+* Commands should be intuitive and simple enough for new users
+    * more natural language like parsing for dates with prepositions as keywords
+
+
 #### Wunderlist
 
 *Strengths:*
