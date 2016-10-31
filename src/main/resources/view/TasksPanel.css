@@ -40,14 +40,8 @@
 
 .cell_small_label {
     -fx-font-size: 11pt;
-    -fx-text-fill: #555555;
+    -fx-text-fill: #3a3d42;
     -fx-opacity: 0.9;
-}
-
-.cell_time_label {
-    -fx-text-fill: #5284f2;
-    -fx-font-family: "Segoe UI Light";
-	-fx-opacity: 0.9;
 }
 
 .hbox {

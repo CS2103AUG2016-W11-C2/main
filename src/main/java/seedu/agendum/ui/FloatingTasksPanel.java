@@ -65,7 +65,6 @@ public class FloatingTasksPanel extends TasksPanel {
             } else {
                 floatingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                 floatingTasksListView.getSelectionModel().clearAndSelect(index);
-                floatingTasksListView.setSelectionModel(null);
             }
             
             PauseTransition delay = new PauseTransition(Duration.seconds(4));

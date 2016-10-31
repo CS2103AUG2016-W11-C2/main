@@ -64,7 +64,6 @@ public class CompletedTasksPanel extends TasksPanel {
             } else {
                 completedTasksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                 completedTasksListView.getSelectionModel().clearAndSelect(index);
-                completedTasksListView.setSelectionModel(null);
             }
             
             PauseTransition delay = new PauseTransition(Duration.seconds(5));

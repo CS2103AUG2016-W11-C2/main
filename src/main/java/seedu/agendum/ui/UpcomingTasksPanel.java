@@ -56,6 +56,7 @@ public class UpcomingTasksPanel extends TasksPanel {
         Platform.runLater(() -> {
             
             int index = mainTaskList.indexOf(task);
+            System.out.println(index);
             upcomingTasksListView.scrollTo(index);
             upcomingTasksListView.setSelectionModel(selectionModel);
             
@@ -65,7 +66,6 @@ public class UpcomingTasksPanel extends TasksPanel {
             } else {
                 upcomingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                 upcomingTasksListView.getSelectionModel().clearAndSelect(index);
-                upcomingTasksListView.setSelectionModel(null);
             }
             
             PauseTransition delay = new PauseTransition(Duration.seconds(5));
