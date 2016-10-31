@@ -12,19 +12,21 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import seedu.agendum.model.task.ReadOnlyTask;
 
 //@@author A0148031R
 public class TaskCard extends UiPart {
     
     private static final String FXML = "TaskCard.fxml";
-    private static final String OVERDUE_PREFIX = "Overdue";
+    private static final String OVERDUE_PREFIX = "Overdue\n";
     private static final String COMPLETED_PREFIX = "Completed ";
     private static final String NAME_COLOR = "#3a3d42";
     private static final String TIME_COLOR = "#4172c1";
     private static final String NON_COMPLETED_TIME_PATTERN = "HH:mm EEE, dd MMM";
     private static final String COMPLETED_TIME_PATTERN = "EEE, dd MMM";
-    private static final String START_TIME_PREFIX = " from ";
+    private static final String START_TIME_PREFIX = "from ";
     private static final String END_TIME_PREFIX = " to ";
     private static final String DEADLINE_PREFIX = "by ";
     private static final String EMPTY_PREFIX = "";
@@ -87,6 +89,7 @@ public class TaskCard extends UiPart {
             taskVbox.getChildren().add(time);
             taskVbox.setAlignment(Pos.CENTER_LEFT);
             time.setAlignment(Pos.CENTER_LEFT);
+            time.setFont(Font.font("Verdana", FontPosture.ITALIC, 11));
         }
     }
     

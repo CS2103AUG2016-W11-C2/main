@@ -1,11 +1,11 @@
 /* @@author A0148031R */
 .all-pane {
-	-fx-background-color:  #F39C12;
+	-fx-background-color:  #FFA000;
 	-fx-background-radius: 10;
 }
 
 .completed-pane {
-	-fx-background-color:  #03C9A9;
+	-fx-background-color:  #727a87;
 	-fx-background-radius: 10;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: #f93636;
+    -fx-background-color: #4DD0E1;
     -fx-text-fill: red;
 }
 
@@ -39,7 +39,6 @@
 }
 
 .cell_small_label {
-    -fx-font-size: 11pt;
     -fx-text-fill: #3a3d42;
     -fx-opacity: 0.9;
 }
