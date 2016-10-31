@@ -38,6 +38,9 @@ allprojects {
         nattyVersion = '0.12'
 		reflectionsVersion = '0.9.10'
 		googleCalendarVersion = 'v3-rev220-1.22.0'
+		googleHttpVersion = '1.21.0'
+		googleOauthVersion = '1.21.0'
+		
 
         libDir = 'lib'
     }
@@ -58,6 +61,8 @@ allprojects {
         compile "com.joestelmach:natty:$nattyVersion"
 		compile "org.reflections:reflections:$reflectionsVersion"
 		compile "com.google.apis:google-api-services-calendar:$googleCalendarVersion"
+		compile "com.google.http-client:google-http-client-jackson2:$googleHttpVersion"
+		compile "com.google.oauth-client:google-oauth-client-jetty:$googleOauthVersion"
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
