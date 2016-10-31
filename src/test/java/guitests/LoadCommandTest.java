@@ -16,24 +16,16 @@ import seedu.agendum.storage.XmlToDoListStorage;
 //@@author A0148095X
 public class LoadCommandTest extends ToDoListGuiTest {
 
-    private String command;
-    
-    private String fileThatExists;
-    private String fileThatDoesNotExist;
-    private String fileInWrongFormat;
-    
-    private String missingFileType;
-    private String missingFileName;
+    private final String command = LoadCommand.COMMAND_WORD + " ";
+    private final String fileThatExists = "data/test/FileThatExists.xml";
+    private final String fileThatDoesNotExist = "data/test/DoesNotExist.xml";
+    private final String fileInWrongFormat = "data/test/WrongFormat.xml";
+    private final String missingFileType = "data/test/invalid";
+    private final String missingFileName = "data/test/.bad";    
 
     @Before
     public void setup() throws Exception {
-        super.setup();
-        command = LoadCommand.COMMAND_WORD + " ";
-        fileThatExists = "data/test/FileThatExists.xml";
-        fileThatDoesNotExist = "data/test/DoesNotExist.xml";
-        fileInWrongFormat = "data/test/WrongFormat.xml";
-        missingFileType = "data/test/invalid";
-        missingFileName = "data/test/.bad";        
+        super.setup();    
 
         // setup storage file
         Task toBeAdded = new Task(new Name("test"));

@@ -3,7 +3,6 @@ package guitests;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import seedu.agendum.commons.core.Config;
@@ -14,16 +13,9 @@ import seedu.agendum.logic.commands.StoreCommand;
 //@@author A0148095X
 public class StoreCommandTest extends ToDoListGuiTest {
 
-    String validLocation;
-    String badLocation;
-    String inaccessibleLocation;
-    
-    @Before
-    public void setup() {
-        validLocation = "data/test.xml";
-        badLocation = "test/.xml";
-        inaccessibleLocation = "C:/windows/system32/agendum/todolist.xml";
-    }
+    private final String validLocation = "data/test.xml";
+    private final String badLocation = "test/.xml";
+    private final String inaccessibleLocation = "C:/windows/system32/agendum/todolist.xml";
     
     @Test
     public void store_validLocation_messageSuccess() {
