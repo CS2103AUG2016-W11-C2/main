@@ -15,14 +15,14 @@
       <ListView fx:id="floatingTasksListView" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="60.0" />
       <HBox alignment="CENTER" layoutX="130.0" layoutY="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="50.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/floatingTasksPanel.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Do It Anytime ~" textAlignment="CENTER" wrappingWidth="208.0" HBox.hgrow="ALWAYS">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Do It Anytime ~" textAlignment="CENTER" wrappingWidth="190.0" HBox.hgrow="ALWAYS">
                <font>
-                  <Font size="25.0" />
+                  <Font size="22.0" />
                </font>
             </Text>
          </children>
