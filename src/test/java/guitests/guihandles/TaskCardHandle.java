@@ -17,6 +17,14 @@ public class TaskCardHandle extends GuiHandle {
     private static final String NAME_FIELD_ID = "#name";
     private static final String INDEX_FIELD_ID = "#id";
     private static final String TIME_FIELD_ID = "#time";
+    private static final String NON_COMPLETED_TIME_PATTERN = "HH:mm EEE, dd MMM";
+    private static final String COMPLETED_TIME_PATTERN = "EEE, dd MMM";
+    private static final String START_TIME_PREFIX = " from ";
+    private static final String END_TIME_PREFIX = " to ";
+    private static final String DEADLINE_PREFIX = "by ";
+    private static final String EMPTY_PREFIX = "";
+    private static final String OVERDUE_PREFIX = "Overdue\n";
+    private static final String COMPLETED_PREFIX = "Completed ";
 
     private Node node;
 
@@ -43,8 +51,20 @@ public class TaskCardHandle extends GuiHandle {
 
     public boolean isSameTask(ReadOnlyTask task){
         // the completion status will be checked by which panel it belongs in
-        return getName().equals(task.getName().fullName)
-            && getTime().equals(formatTime(task));
+        if (task.isOverdue()) {
+            return getName().equals(task.getName().fullName) && getTime().equals(OVERDUE_PREFIX
+                    + formatTime(task, NON_COMPLETED_TIME_PATTERN, START_TIME_PREFIX, task.getStartDateTime())
+                    + formatTime(task, NON_COMPLETED_TIME_PATTERN, END_TIME_PREFIX, task.getEndDateTime()));
+        } else if (task.hasTime()) {
+            return getName().equals(task.getName().fullName) && getTime()
+                    .equals(formatTime(task, NON_COMPLETED_TIME_PATTERN, START_TIME_PREFIX, task.getStartDateTime())
+                            + formatTime(task, NON_COMPLETED_TIME_PATTERN, END_TIME_PREFIX, task.getEndDateTime()));
+        } else if (task.isCompleted()) {
+            return getName().equals(task.getName().fullName) && getTime().equals(COMPLETED_PREFIX + formatTime(task,
+                    COMPLETED_TIME_PATTERN, EMPTY_PREFIX, Optional.ofNullable(task.getLastUpdatedTime())));
+        } else {
+            return getName().equals(task.getName().fullName);
+        }
     }
     
 
@@ -64,21 +84,21 @@ public class TaskCardHandle extends GuiHandle {
         return getTaskIndex() + " " + getName() + "Time: " + getTime();
     }
 
-    private String formatTime(ReadOnlyTask task) {
+    public String formatTime(ReadOnlyTask task, String dateTimePattern, String prefix, Optional<LocalDateTime> dateTime) {
+        
         StringBuilder sb = new StringBuilder();
-        Optional<LocalDateTime> start = task.getStartDateTime();
-        Optional<LocalDateTime> end = task.getEndDateTime();
-
-        DateTimeFormatter startFormat = DateTimeFormatter.ofPattern("HH:mm EEE, dd MMM");
-
-        if (start.isPresent()) {
-            sb.append("from ").append(start.get().format(startFormat));
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(dateTimePattern);
+        
+        if(task.isCompleted()) {
+            sb.append(dateTime.get().format(format));
+        } else if (dateTime.isPresent() && task.getStartDateTime().isPresent()) {
+            sb.append(prefix).append(dateTime.get().format(format));
+        } else if(dateTime.isPresent()) {
+            sb.append(DEADLINE_PREFIX).append(dateTime.get().format(format));
+        } else {
+            sb.append(EMPTY_PREFIX);
         }
-        if (end.isPresent()) {
-            sb.append(sb.length() > 0 ? " to " : "by ");
-            sb.append(end.get().format(startFormat));
-        }
-
-        return sb.toString().replace("AM", "am").replace("PM", "pm");
+        
+        return sb.toString().toLowerCase();
     }
 }

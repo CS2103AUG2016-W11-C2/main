@@ -18,7 +18,7 @@ import seedu.agendum.model.task.ReadOnlyTask;
 public class TaskCard extends UiPart {
     
     private static final String FXML = "TaskCard.fxml";
-    private static final String OVERDUE_PREFIX = "Overdue\nScheduled: ";
+    private static final String OVERDUE_PREFIX = "Overdue";
     private static final String COMPLETED_PREFIX = "Completed ";
     private static final String NAME_COLOR = "#3a3d42";
     private static final String TIME_COLOR = "#4172c1";
