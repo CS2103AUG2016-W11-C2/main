@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.SelectionMode;
 import javafx.util.Duration;
 import seedu.agendum.model.task.ReadOnlyTask;
@@ -19,6 +20,7 @@ import seedu.agendum.model.task.Task;
 public class FloatingTasksPanel extends TasksPanel {
     private static final String FXML = "FloatingTasksPanel.fxml";
     private static ObservableList<ReadOnlyTask> mainTaskList;
+    private MultipleSelectionModel<ReadOnlyTask> selectionModel;
 
     @FXML
     private ListView<ReadOnlyTask> floatingTasksListView;
@@ -33,6 +35,8 @@ public class FloatingTasksPanel extends TasksPanel {
         mainTaskList = taskList;
         floatingTasksListView.setItems(taskList.filtered(task -> !task.isCompleted() && !task.hasTime()));
         floatingTasksListView.setCellFactory(listView -> new FloatingTasksListViewCell());
+        selectionModel = floatingTasksListView.getSelectionModel();
+        floatingTasksListView.setSelectionModel(null);
     }
 
     public void scrollTo(Task task, boolean hasMultipleTasks) {
@@ -40,6 +44,7 @@ public class FloatingTasksPanel extends TasksPanel {
             int index = mainTaskList.indexOf(task) - 
                     mainTaskList.filtered(t -> (t.hasTime() && !t.isCompleted())).size();
             floatingTasksListView.scrollTo(index);
+            floatingTasksListView.setSelectionModel(selectionModel);
             if(hasMultipleTasks) {
                 floatingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
                 floatingTasksListView.getSelectionModel().select(index);
@@ -47,10 +52,9 @@ public class FloatingTasksPanel extends TasksPanel {
                 floatingTasksListView.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
                 floatingTasksListView.getSelectionModel().clearAndSelect(index);
             }
-            PauseTransition delay = new PauseTransition(Duration.seconds(5));
+            PauseTransition delay = new PauseTransition(Duration.seconds(4));
             delay.setOnFinished(event -> floatingTasksListView.getSelectionModel().clearSelection(index));
             delay.play();
-            
         });
     }
     
