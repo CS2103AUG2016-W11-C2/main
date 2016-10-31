@@ -68,9 +68,6 @@ public class LogicManagerTest {
     public void setup() {
         model = new ModelManager();
         commandLibrary = new CommandLibrary();
-        String tempToDoListFile = saveFolder.getRoot().getPath() + "TempToDoList.xml";
-        String tempPreferencesFile = saveFolder.getRoot().getPath() + "TempPreferences.json";
-        String tempCommandLibraryFile = saveFolder.getRoot().getPath() + "TempCommandLibrary.json";
         logic = new LogicManager(model, commandLibrary);
         EventsCenter.getInstance().registerHandler(this);
 
