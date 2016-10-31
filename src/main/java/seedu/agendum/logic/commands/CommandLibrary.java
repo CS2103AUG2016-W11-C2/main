@@ -14,7 +14,7 @@ import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.events.logic.AliasTableChangedEvent;
 
 /**
- * Manages and stores the various aliases for Agendum's reserved command keywords
+ * Manages and stores the various Agendum's reserved command keywords and their aliases
  */
 public class CommandLibrary {
 
@@ -25,8 +25,10 @@ public class CommandLibrary {
     // The values of the has table are Agendum's reserved command keywords
     private Hashtable<String, String> aliasTable = new Hashtable<String, String>();
 
+    private static CommandLibrary commandLibrary = new CommandLibrary();
+
     //@@author A0003878Y
-    public CommandLibrary() {
+    private CommandLibrary() {
         allCommandWords = new Reflections("seedu.agendum").getSubTypesOf(Command.class)
                 .stream()
                 .map(s -> {
@@ -41,6 +43,10 @@ public class CommandLibrary {
                 })
                 .filter(p -> p != null) // remove nulls
                 .collect(Collectors.toList());
+    }
+
+    public static CommandLibrary getInstance() {
+        return commandLibrary;
     }
 
     //@@author A0133367E

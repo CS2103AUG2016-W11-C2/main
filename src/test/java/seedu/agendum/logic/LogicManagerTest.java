@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
@@ -48,7 +49,6 @@ public class LogicManagerTest {
 
     private Model model;
     private Logic logic;
-    private CommandLibrary commandLibrary;
 
     //These are for checking the correctness of the events raised
     private ReadOnlyToDoList latestSavedToDoList;
@@ -67,9 +67,9 @@ public class LogicManagerTest {
     @Before
     public void setup() {
         model = new ModelManager();
-        commandLibrary = new CommandLibrary();
-        logic = new LogicManager(model, commandLibrary);
+        logic = new LogicManager(model);
         EventsCenter.getInstance().registerHandler(this);
+        CommandLibrary.getInstance().loadAliasTable(new Hashtable<String, String>());
 
         latestSavedToDoList = new ToDoList(model.getToDoList()); // last saved assumed to be up to date before.
         helpShown = false;
@@ -796,7 +796,7 @@ public class LogicManagerTest {
     public void execute_aliasKeyIsInUse_errorMessageShown() throws Exception {
         String expectedMessage = String.format(AliasCommand.MESSAGE_FAILURE_ALIAS_IN_USE,
                                     "r", RenameCommand.COMMAND_WORD);
-        commandLibrary.addNewAlias("r", RenameCommand.COMMAND_WORD);
+        CommandLibrary.getInstance().addNewAlias("r", RenameCommand.COMMAND_WORD);
         assertCommandBehavior("alias " + AddCommand.COMMAND_WORD + " r",
                 expectedMessage, new ToDoList(), Collections.emptyList());
     }
@@ -835,7 +835,7 @@ public class LogicManagerTest {
     @Test
     public void execute_unaliasExistingAliasKey_successfullyRemoved() throws Exception {
         String expectedMessage = String.format(UnaliasCommand.MESSAGE_SUCCESS, "wow");
-        commandLibrary.addNewAlias("wow", AddCommand.COMMAND_WORD);
+        CommandLibrary.getInstance().addNewAlias("wow", AddCommand.COMMAND_WORD);
         assertCommandBehavior("unalias wow", expectedMessage, new ToDoList(), Collections.emptyList());
         expectedMessage = MESSAGE_UNKNOWN_COMMAND;
         assertCommandBehavior("wow new task", expectedMessage, new ToDoList(), Collections.emptyList());

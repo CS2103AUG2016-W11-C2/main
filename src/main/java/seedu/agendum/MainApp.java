@@ -56,13 +56,13 @@ public class MainApp extends Application {
 
         userPrefs = initPrefs(config);
         
-        commandLibrary = initCommandLibrary(config);
+        initAliasTable(config);
 
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model, commandLibrary);
+        logic = new LogicManager(model);
 
         ui = new UiManager(logic, config, userPrefs);
 
@@ -158,7 +158,7 @@ public class MainApp extends Application {
         return initializedPrefs;
     }
 
-    protected CommandLibrary initCommandLibrary(Config config) {
+    protected void initAliasTable(Config config) {
         assert config != null;
 
         String aliasTableFilePath = config.getAliasTableFilePath();
@@ -177,16 +177,14 @@ public class MainApp extends Application {
             initializedAliasTable = new Hashtable<String, String>();
         }
 
-        CommandLibrary commandLibrary = new CommandLibrary();
-        commandLibrary.loadAliasTable(initializedAliasTable);
-        
+        CommandLibrary.getInstance().loadAliasTable(initializedAliasTable);
+
         //Update alias table file in case it was missing initially or there are new/unused fields
         try {
             storage.saveAliasTable(initializedAliasTable);
         } catch (IOException e) {
             logger.warning("Failed to save alias table file : " + StringUtil.getDetails(e));
         }
-        return commandLibrary;
     }
 
     private void initEventsCenter() {

@@ -24,9 +24,9 @@ public class LogicManager extends ComponentManager implements Logic {
     private final Parser parser;
     private CommandLibrary commandLibrary;
 
-    public LogicManager(Model model, CommandLibrary commandLibrary) {
+    public LogicManager(Model model) {
         this.model = model;
-        this.commandLibrary = commandLibrary;
+        this.commandLibrary = CommandLibrary.getInstance();
         this.parser = new Parser(this.commandLibrary);
     }
 
