@@ -112,10 +112,12 @@ public class UniqueTaskList implements Iterable<Task> {
 
         if (contains(updatedTask)) {
             logger.fine("[TASK LIST] --- Duplicate Task: " + toUpdate.getDetailedText());
+            EventsCenter.getInstance().post(new JumpToListRequestEvent(updatedTask, false));
             throw new DuplicateTaskException();
         }
 
         internalList.set(taskIndex, updatedTask);
+        EventsCenter.getInstance().post(new JumpToListRequestEvent(updatedTask, false));
         logger.fine("[TASK LIST] --- Updated Task: " + toUpdate.getDetailedText()
                 + " updated to " + updatedTask.getDetailedText());
 
