@@ -11,15 +11,15 @@ public class UnaliasCommand extends Command {
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "unalias";
     public static final String COMMAND_FORMAT = "unalias <your-command>";
-    public static final String COMMAND_DESCRIPTION = "remove your own shorthand command";
-    public static final String MESSAGE_SUCCESS = "Alias <%1$s> is gone";
+    public static final String COMMAND_DESCRIPTION = "remove a shorthand command";
+    public static final String MESSAGE_SUCCESS = "Removed alias <%1$s>";
     public static final String MESSAGE_FAILURE_NO_ALIAS_KEY = 
             "The alias <%1$s> does not exist";
-    public static final Object MESSAGE_USAGE = COMMAND_WORD 
-            + ": Unalias a shorthand command defined \n"
-            + "Parameters: SHORTHAND-COMMAND\n"
-            + "Example: " + COMMAND_WORD
-            + " m (if m is an alias for mark)";
+    public static final Object MESSAGE_USAGE = COMMAND_WORD + " - "
+            + COMMAND_DESCRIPTION + "\n"
+            + COMMAND_FORMAT + "\n"
+            + "Example: " + COMMAND_WORD + " m\n"
+            + "(if m is aliased to mark)";
 
     private String aliasKey;
     private CommandLibrary commandLibrary;

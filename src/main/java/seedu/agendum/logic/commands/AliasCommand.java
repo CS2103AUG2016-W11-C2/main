@@ -10,18 +10,18 @@ public class AliasCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "alias";
-    public static final String COMMAND_FORMAT = "alias <original-command> <your-command>";
-    public static final String COMMAND_DESCRIPTION = "specify your own shorthand command";
+    public static final String COMMAND_FORMAT = "alias <original-command>\n"
+                                              + "<your-command>";
+    public static final String COMMAND_DESCRIPTION = "create your shorthand command";
     public static final String MESSAGE_SUCCESS = "New alias <%1$s> created for <%2$s>";
     public static final String MESSAGE_FAILURE_ALIAS_IN_USE = "<%1$s> is already an alias for <%2$s>";
     public static final String MESSAGE_FAILURE_UNAVAILABLE_ALIAS = "<%1$s> is a reserved command word";
     public static final String MESSAGE_FAILURE_NON_ORIGINAL_COMMAND =
             "We don't recognise <%1$s> as an Agendum Command";
-    public static final Object MESSAGE_USAGE = COMMAND_WORD 
-            + ": Creates an alias for a reserved command word \n"
-            + "Parameters: ORIGINAL-COMMAND SHORTHAND-COMMAND\n"
-            + "Example: " + COMMAND_WORD
-            + " mark m";
+    public static final Object MESSAGE_USAGE = COMMAND_WORD + " - "
+            + COMMAND_DESCRIPTION + "\n"
+            + COMMAND_FORMAT + "\n"
+            + "Example: " + COMMAND_WORD + " mark m";
 
     private String aliasValue;
     private String aliasKey;
