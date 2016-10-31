@@ -6,13 +6,16 @@ import seedu.agendum.commons.events.BaseEvent;
 public class SaveLocationChangeEvent extends BaseEvent {
 
     public final String location;
+    
+    private String message;
 
     public SaveLocationChangeEvent(String saveLocation){
         this.location = saveLocation;
+        this.message = "Request to change save location to: " + location;
     }
 
     @Override
     public String toString() {
-        return "Request to change save location to: " + location;
+        return message;
     }
 }
