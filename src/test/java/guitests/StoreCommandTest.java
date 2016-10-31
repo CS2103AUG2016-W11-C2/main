@@ -3,6 +3,7 @@ package guitests;
 import java.io.File;
 import java.io.IOException;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.agendum.commons.core.Config;
@@ -13,33 +14,52 @@ import seedu.agendum.logic.commands.StoreCommand;
 //@@author A0148095X
 public class StoreCommandTest extends ToDoListGuiTest {
 
+    String validLocation;
+    String badLocation;
+    String inaccessibleLocation;
+    
+    @Before
+    public void setup() {
+        validLocation = "data/test.xml";
+        badLocation = "test/.xml";
+        inaccessibleLocation = "C:/windows/system32/agendum/todolist.xml";
+    }
+    
     @Test
-    public void store() throws IOException, FileDeletionException {
-        String testLocation = "data/test.xml";
-        String badLocation = "test/.xml";
-        String inaccessibleLocation = "C:/windows/system32/agendum/todolist.xml";
-        
+    public void store_validLocation_success() {
         //save to a valid directory
-        commandBox.runCommand("store " + testLocation);
-        assertResultMessage(String.format(StoreCommand.MESSAGE_SUCCESS, testLocation));
-
+        commandBox.runCommand("store " + validLocation);
+        assertResultMessage(String.format(StoreCommand.MESSAGE_SUCCESS, validLocation));        
+    }
+    
+    @Test
+    public void store_defaultLocation_success() {
         //save to default directory
         commandBox.runCommand("store default");
         assertResultMessage(String.format(StoreCommand.MESSAGE_LOCATION_DEFAULT, Config.DEFAULT_SAVE_LOCATION));
-                
-        //invalid directory
+    }
+    
+    @Test
+    public void store_invalidLocation_fail() {        
+        //invalid Location
         commandBox.runCommand("store " + badLocation);
         assertResultMessage(StoreCommand.MESSAGE_PATH_WRONG_FORMAT);
-        
+    }
+    
+    @Test
+    public void store_inaccessibleLocation_fail() {
         //inaccessible location
         commandBox.runCommand("store " + inaccessibleLocation);
-        //assertResultMessage(StoreCommand.MESSAGE_LOCATION_INACCESSIBLE);        
-        
+        //assertResultMessage(StoreCommand.MESSAGE_LOCATION_INACCESSIBLE);
+    }
+    
+    @Test
+    public void store_fileExists_fail() throws IOException, FileDeletionException {     
         //file exists
-        FileUtil.createIfMissing(new File(testLocation));
-        commandBox.runCommand("store " + testLocation);
+        FileUtil.createIfMissing(new File(validLocation));
+        commandBox.runCommand("store " + validLocation);
         assertResultMessage(StoreCommand.MESSAGE_FILE_EXISTS);
-        FileUtil.deleteFile(testLocation);
+        FileUtil.deleteFile(validLocation);
         
     }
 }
