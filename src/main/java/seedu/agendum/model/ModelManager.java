@@ -22,6 +22,10 @@ import java.util.Stack;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+import seedu.agendum.sync.Sync;
+import seedu.agendum.sync.SyncManager;
+import seedu.agendum.sync.SyncProvider;
+import seedu.agendum.sync.SyncProviderGoogle;
 
 /**
  * Represents the in-memory model of the to do list data.
@@ -34,6 +38,8 @@ public class ModelManager extends ComponentManager implements Model {
     private final Stack<ToDoList> previousLists;
     private final FilteredList<Task> filteredTasks;
     private final SortedList<Task> sortedTasks;
+
+    private final SyncManager syncManager;
 
     /**
      * Initializes a ModelManager with the given ToDoList
@@ -50,7 +56,9 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
         previousLists = new Stack<>();
-        backupCurrentToDoList();
+        backupNewToDoList();
+
+        syncManager = new SyncManager(new SyncProviderGoogle());
     }
 
     public ModelManager() {
@@ -62,7 +70,9 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
         previousLists = new Stack<>();
-        backupCurrentToDoList();
+        backupNewToDoList();
+
+        syncManager = new SyncManager(new SyncProviderGoogle());
     }
 
     //@@author A0133367E
@@ -211,8 +221,24 @@ public class ModelManager extends ComponentManager implements Model {
         indicateChangeSaveLocation(location);
         indicateLoadDataRequest(location);
     }
-    //@@author
-    
+    //@@author A0003878Y
+
+    //=========== Sync Methods ===============================================================================
+
+    @Override
+    public void activateModelSyncing() {
+        if (syncManager.getSyncStatus() != Sync.SyncStatus.RUNNING) {
+            syncManager.startSyncing();
+        }
+    }
+
+    @Override
+    public void deactivateModelSyncing() {
+        if (syncManager.getSyncStatus() != Sync.SyncStatus.NOTRUNNING) {
+            syncManager.stopSyncing();
+        }
+    }
+
     //=========== Filtered Task List Accessors ===============================================================
 
     @Override
