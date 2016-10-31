@@ -14,7 +14,7 @@ import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
 import seedu.agendum.commons.util.FileUtil;
-import seedu.agendum.commons.events.model.SaveLocationChangeEvent;
+import seedu.agendum.commons.events.model.ChangeSaveLocationEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.model.ToDoList;
 import seedu.agendum.model.Model;
@@ -399,7 +399,7 @@ public class LogicManagerTest {
         result = logic.execute(inputCommand);
         feedback = String.format(StoreCommand.MESSAGE_SUCCESS, location);
         assertEquals(feedback, result.feedbackToUser);
-        assertTrue(eventCollector.get(0) instanceof SaveLocationChangeEvent);
+        assertTrue(eventCollector.get(0) instanceof ChangeSaveLocationEvent);
         assertTrue(eventCollector.get(1) instanceof ToDoListChangedEvent);
 
         // execute command and verify result
@@ -407,7 +407,7 @@ public class LogicManagerTest {
         result = logic.execute(inputCommand);
         feedback = String.format(StoreCommand.MESSAGE_LOCATION_DEFAULT, Config.DEFAULT_SAVE_LOCATION);
         assertEquals(feedback, result.feedbackToUser);
-        assertTrue(eventCollector.get(2) instanceof SaveLocationChangeEvent);
+        assertTrue(eventCollector.get(2) instanceof ChangeSaveLocationEvent);
         assertTrue(eventCollector.get(3) instanceof ToDoListChangedEvent);
     }
     

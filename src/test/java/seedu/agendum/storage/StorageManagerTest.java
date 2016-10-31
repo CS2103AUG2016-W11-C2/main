@@ -15,7 +15,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.agendum.commons.core.Config;
-import seedu.agendum.commons.events.model.SaveLocationChangeEvent;
+import seedu.agendum.commons.events.model.ChangeSaveLocationEvent;
 import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.events.storage.DataLoadingExceptionEvent;
@@ -89,7 +89,7 @@ public class StorageManagerTest {
     @Test
     public void handleSaveLocationChangedEvent_validFilePath_success() {
         String validPath = "data/test.xml";
-        storageManager.handleSaveLocationChangeEvent(new SaveLocationChangeEvent(validPath));
+        storageManager.handleChangeSaveLocationEvent(new ChangeSaveLocationEvent(validPath));
         assertEquals(storageManager.getToDoListFilePath(), validPath);
     }
     
