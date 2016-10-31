@@ -22,20 +22,10 @@ public class MainMenuHandle extends GuiHandle {
         Arrays.stream(menuText).forEach((menuItem) -> guiRobot.clickOn(menuItem));
         return this;
     }
-
-    public HelpWindowHandle openHelpWindowUsingAccelerator() {
-        useAcceleratorToOpenHelpWindow();
-        return new HelpWindowHandle(guiRobot, primaryStage);
-    }
     
     public MainGuiHandle closeHelpWindowUsingAccelerator() {
         useAcceleratorToCloseHelpWindow();
         return new MainGuiHandle(guiRobot, primaryStage);
-    }
-
-    private void useAcceleratorToOpenHelpWindow() {
-        guiRobot.push(new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN));
-        guiRobot.sleep(1000);
     }
     
     private void useAcceleratorToCloseHelpWindow() {

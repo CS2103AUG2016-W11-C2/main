@@ -13,8 +13,6 @@ public class HelpWindowTest extends ToDoListGuiTest {
     @Test
     public void openHelpWindow() {
 
-        assertHelpWindowOpen(mainMenu.openHelpWindowUsingAccelerator());
-
         assertHelpWindowOpen(commandBox.runHelpCommand());
 
     }
