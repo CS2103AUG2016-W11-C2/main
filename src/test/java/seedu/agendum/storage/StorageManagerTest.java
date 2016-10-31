@@ -89,7 +89,7 @@ public class StorageManagerTest {
     @Test
     public void handleSaveLocationChangedEventValidFilePath() {
         String validPath = "data/test.xml";
-        storageManager.handleChangeSaveLocationRequestEvent(new SaveLocationChangeEvent(validPath));
+        storageManager.handleSaveLocationChangeEvent(new SaveLocationChangeEvent(validPath));
         assertEquals(storageManager.getToDoListFilePath(), validPath);
     }
     
