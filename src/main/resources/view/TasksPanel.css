@@ -29,7 +29,7 @@
 }
 
 .list-cell:filled:selected:focused, .list-cell:filled:selected {
-    -fx-background-color: #58729b;
+    -fx-background-color: #5f20b2;
     -fx-text-fill: red;
 }
 
