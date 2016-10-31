@@ -123,6 +123,10 @@ public class Parser {
         case LoadCommand.COMMAND_WORD:
             return new LoadCommand(arguments);
 
+        case SyncCommand.COMMAND_WORD: {
+            return prepareSync(arguments);
+        }
+
         default:
             //@@author A0003878Y
             Optional<String> alternativeCommand = EditDistanceCalculator.closestCommandMatch(commandWord);
@@ -421,6 +425,14 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
+    }
+
+    private Command prepareSync(String args) {
+        try {
+            return new SyncCommand(args);
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        }
     }
 
 }
