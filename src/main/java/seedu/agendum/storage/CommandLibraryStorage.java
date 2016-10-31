@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface CommandLibraryStorage {
 
     /**
-     * Returns the hash table of aliased commands from storage.
+     * Returns the alias table (map of alias key to original command) from storage.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
@@ -21,7 +21,7 @@ public interface CommandLibraryStorage {
             throws DataConversionException, IOException;
 
     /**
-     * Saves the hash table from {{@link seedu.agendum.logic.commands.CommandLibrary} to the storage.
+     * Saves the alias table from {{@link seedu.agendum.logic.commands.CommandLibrary} to the storage.
      * @param table cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */

@@ -178,7 +178,7 @@ public class MainApp extends Application {
         }
 
         CommandLibrary commandLibrary = new CommandLibrary();
-        commandLibrary.loadCommandTable(initializedCommandLibraryTable);
+        commandLibrary.loadAliasTable(initializedCommandLibraryTable);
         
         //Update commandLibrary file in case it was missing to begin with or there are new/unused fields
         try {

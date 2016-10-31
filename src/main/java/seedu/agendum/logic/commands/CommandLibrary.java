@@ -22,8 +22,8 @@ public class CommandLibrary {
     private static final Logger logger = LogsCenter.getLogger(CommandLibrary.class);
     private List<String> allCommandWords = new ArrayList<String>();
 
-    // Hashtable with key as user-defined aliases,
-    // value as Agendum's reserved command keywords
+    // The keys of the hash table are user-defined aliases
+    // The values of the has table are Agendum's reserved command keywords
     private Hashtable<String, String> aliasTable = new Hashtable<String, String>();
 
     //@@author A0003878Y
@@ -46,9 +46,9 @@ public class CommandLibrary {
 
     //@@author A0133367E
     /**
-     * Replace the current commandLibrary aliasTable with the new aliasTable provided
+     * Replace the current commandLibrary's aliasTable with the aliasTable provided
      */
-    public void loadCommandTable(Hashtable<String, String> aliasTable) {
+    public void loadAliasTable(Hashtable<String, String> aliasTable) {
         this.aliasTable = aliasTable;
     }
 
@@ -73,7 +73,7 @@ public class CommandLibrary {
     }
 
     /**
-     * Returns true if value is a reserved command keyword
+     * Returns true if value is a reserved command keyword, false otherwise
      */
     public boolean isReservedCommandKeyword(String value) {
         assert value != null;
