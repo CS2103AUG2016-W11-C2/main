@@ -11,14 +11,14 @@ public class Config {
     public static final String DEFAULT_DATA_DIR = "data/";
     public static final String DEFAULT_JSON_DIR = "json/";
     public static final String DEFAULT_CONFIG_FILE = DEFAULT_DATA_DIR + DEFAULT_JSON_DIR + "config.json";
-    public static final String DEFAULT_COMMAND_LIBRARY_FILE =  DEFAULT_DATA_DIR + DEFAULT_JSON_DIR + "commands.json";
+    public static final String DEFAULT_ALIAS_TABLE_FILE =  DEFAULT_DATA_DIR + DEFAULT_JSON_DIR + "commands.json";
     public static final String DEFAULT_USER_PREFS_FILE = DEFAULT_DATA_DIR + DEFAULT_JSON_DIR + "preferences.json";
     public static final String DEFAULT_SAVE_LOCATION = DEFAULT_DATA_DIR + "todolist.xml";
 
     // Config values customizable through config file
     private String appTitle = "Agendum";
     private Level logLevel = Level.INFO;
-    private String commandLibraryFilePath = DEFAULT_COMMAND_LIBRARY_FILE;
+    private String aliasTableFilePath = DEFAULT_ALIAS_TABLE_FILE;
     private String userPrefsFilePath = DEFAULT_USER_PREFS_FILE;
     private String toDoListFilePath = DEFAULT_SAVE_LOCATION;
     private String toDoListName = "MyToDoList";
@@ -39,12 +39,12 @@ public class Config {
         this.logLevel = logLevel;
     }
 
-    public String getCommandLibraryFilePath() {
-        return commandLibraryFilePath;
+    public String getAliasTableFilePath() {
+        return aliasTableFilePath;
     }
 
-    public void setCommandLibraryFilePath(String commandLibraryFilePath) {
-        this.commandLibraryFilePath = commandLibraryFilePath;
+    public void setAliasTableFilePath(String aliasTableFilePath) {
+        this.aliasTableFilePath = aliasTableFilePath;
     }
 
     public String getUserPrefsFilePath() {
@@ -85,7 +85,7 @@ public class Config {
 
         return Objects.equals(appTitle, o.appTitle)
                 && Objects.equals(logLevel, o.logLevel)
-                && Objects.equals(commandLibraryFilePath, o.commandLibraryFilePath)
+                && Objects.equals(aliasTableFilePath, o.aliasTableFilePath)
                 && Objects.equals(userPrefsFilePath, o.userPrefsFilePath)
                 && Objects.equals(toDoListFilePath, o.toDoListFilePath)
                 && Objects.equals(toDoListName, o.toDoListName);
@@ -93,7 +93,7 @@ public class Config {
 
     @Override
     public int hashCode() {
-        return Objects.hash(appTitle, logLevel, commandLibraryFilePath,
+        return Objects.hash(appTitle, logLevel, aliasTableFilePath,
                 userPrefsFilePath, toDoListFilePath, toDoListName);
     }
 
@@ -102,7 +102,7 @@ public class Config {
         StringBuilder sb = new StringBuilder();
         sb.append("App title : " + appTitle);
         sb.append("\nCurrent log level : " + logLevel);
-        sb.append("\nCommand Library file location: " + commandLibraryFilePath);
+        sb.append("\nAlias Table file location: " + aliasTableFilePath);
         sb.append("\nPreference file Location : " + userPrefsFilePath);
         sb.append("\nLocal data file location : " + toDoListFilePath);
         sb.append("\nToDoList name : " + toDoListName);

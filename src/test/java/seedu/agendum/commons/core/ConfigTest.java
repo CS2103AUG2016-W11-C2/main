@@ -13,7 +13,7 @@ public class ConfigTest {
         StringBuilder sb = new StringBuilder();
         sb.append("App title : Agendum");
         sb.append("\nCurrent log level : INFO");
-        sb.append("\nCommand Library file location: " + Config.DEFAULT_COMMAND_LIBRARY_FILE);
+        sb.append("\nAlias Table file location: " + Config.DEFAULT_ALIAS_TABLE_FILE);
         sb.append("\nPreference file Location : " + Config.DEFAULT_USER_PREFS_FILE);
         sb.append("\nLocal data file location : " + Config.DEFAULT_SAVE_LOCATION);
         sb.append("\nToDoList name : MyToDoList");

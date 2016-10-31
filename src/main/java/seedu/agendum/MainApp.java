@@ -51,7 +51,7 @@ public class MainApp extends Application {
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
-        storage = new StorageManager(config.getToDoListFilePath(), config.getCommandLibraryFilePath(),
+        storage = new StorageManager(config.getToDoListFilePath(), config.getAliasTableFilePath(),
                 config.getUserPrefsFilePath(), config);
 
         userPrefs = initPrefs(config);
@@ -161,30 +161,30 @@ public class MainApp extends Application {
     protected CommandLibrary initCommandLibrary(Config config) {
         assert config != null;
 
-        String commandLibraryFilePath = config.getCommandLibraryFilePath();
-        logger.info("Using command library file : " + commandLibraryFilePath);
+        String aliasTableFilePath = config.getAliasTableFilePath();
+        logger.info("Using alias table file : " + aliasTableFilePath);
 
-        Hashtable<String, String> initializedCommandLibraryTable;
+        Hashtable<String, String> initializedAliasTable;
         try {
-            Optional<Hashtable<String, String>> commandsOptional = storage.readCommandLibraryTable();
-            initializedCommandLibraryTable = commandsOptional.orElse(new Hashtable<String, String>());
+            Optional<Hashtable<String, String>> aliasTableOptional = storage.readAliasTable();
+            initializedAliasTable = aliasTableOptional.orElse(new Hashtable<String, String>());
         } catch (DataConversionException e) {
-            logger.warning("Command Library file at " + commandLibraryFilePath +
-                    " is not in the correct format. Using default command library");
-            initializedCommandLibraryTable = new Hashtable<String, String>();
+            logger.warning("Alias table file at " + aliasTableFilePath +
+                    " is not in the correct format. Using default empty alias table");
+            initializedAliasTable = new Hashtable<String, String>();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will start with an empty command library");
-            initializedCommandLibraryTable = new Hashtable<String, String>();
+            logger.warning("Problem while reading from the alias table file. Will start with an empty alias table");
+            initializedAliasTable = new Hashtable<String, String>();
         }
 
         CommandLibrary commandLibrary = new CommandLibrary();
-        commandLibrary.loadAliasTable(initializedCommandLibraryTable);
+        commandLibrary.loadAliasTable(initializedAliasTable);
         
-        //Update commandLibrary file in case it was missing to begin with or there are new/unused fields
+        //Update alias table file in case it was missing initially or there are new/unused fields
         try {
-            storage.saveCommandLibraryTable(initializedCommandLibraryTable);
+            storage.saveAliasTable(initializedAliasTable);
         } catch (IOException e) {
-            logger.warning("Failed to save command library file : " + StringUtil.getDetails(e));
+            logger.warning("Failed to save alias table file : " + StringUtil.getDetails(e));
         }
         return commandLibrary;
     }

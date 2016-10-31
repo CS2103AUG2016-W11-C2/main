@@ -7,9 +7,9 @@ import java.util.Hashtable;
 import java.util.Optional;
 
 /**
- * Represents a storage for {@link seedu.agendum.logic.commands.CommandLibrary}.
+ * Represents a storage for {@link seedu.agendum.logic.commands.CommandLibrary} alias table.
  */
-public interface CommandLibraryStorage {
+public interface AliasTableStorage {
 
     /**
      * Returns the alias table (map of alias key to original command) from storage.
@@ -17,14 +17,14 @@ public interface CommandLibraryStorage {
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<Hashtable<String, String>> readCommandLibraryTable()
+    Optional<Hashtable<String, String>> readAliasTable()
             throws DataConversionException, IOException;
 
     /**
-     * Saves the alias table from {{@link seedu.agendum.logic.commands.CommandLibrary} to the storage.
+     * Saves the alias table in {{@link seedu.agendum.logic.commands.CommandLibrary} to the storage.
      * @param table cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
-    void saveCommandLibraryTable(Hashtable<String, String> table) throws IOException;
+    void saveAliasTable(Hashtable<String, String> table) throws IOException;
 
 }

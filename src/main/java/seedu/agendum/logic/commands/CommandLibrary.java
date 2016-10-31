@@ -3,7 +3,6 @@
 package seedu.agendum.logic.commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Logger;
@@ -12,10 +11,10 @@ import java.util.stream.Collectors;
 import org.reflections.Reflections;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.LogsCenter;
-import seedu.agendum.commons.events.logic.CommandLibraryChangedEvent;
+import seedu.agendum.commons.events.logic.AliasTableChangedEvent;
 
 /**
- * Manage and store the various alias keys and values
+ * Manages and stores the various aliases for Agendum's reserved command keywords
  */
 public class CommandLibrary {
 
@@ -94,25 +93,25 @@ public class CommandLibrary {
 
         aliasTable.put(key, value);
 
-        indicateCommandLibraryChanged(key + " aliased");
+        indicateAliasTableChanged(key + " aliased");
     }
 
     /**
      * Precondition: key is aliased to a command keyword.
-     * Destroy the alias relationship (key can no longer be used in place of the command keyword)
+     * Destroy the alias relationship (key can no longer be used in place of command keyword)
      */
     public void removeExistingAlias(String key) {
         assert isExistingAliasKey(key);
 
         aliasTable.remove(key);
 
-        indicateCommandLibraryChanged(key + " unaliased");
+        indicateAliasTableChanged(key + " unaliased");
     }
 
     /** Raises an event to indicate that the aliasTable in the command library has changed */
-    private void indicateCommandLibraryChanged(String keyChanged) {
+    private void indicateAliasTableChanged(String keyChanged) {
         EventsCenter eventCenter = EventsCenter.getInstance();
-        eventCenter.post(new CommandLibraryChangedEvent(keyChanged, aliasTable));
+        eventCenter.post(new AliasTableChangedEvent(keyChanged, aliasTable));
     }
 
 }

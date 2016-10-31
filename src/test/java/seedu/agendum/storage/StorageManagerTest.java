@@ -65,15 +65,15 @@ public class StorageManagerTest {
     }
     
     /**
-     * Verifies that StorageManager is properly wired to {@link JsonCommandLibraryStorage} class
+     * Verifies that StorageManager is properly wired to {@link JsonAliasTableStorage} class
      */
     @Test
     public void commandLibraryReadSave() throws Exception {
         Hashtable<String, String> testingTable = new Hashtable<String, String>();
         testingTable.put("a", "add");
         testingTable.put("d", "delete");
-        storageManager.saveCommandLibraryTable(testingTable);
-        Hashtable<String, String> retrieved = storageManager.readCommandLibraryTable().get();
+        storageManager.saveAliasTable(testingTable);
+        Hashtable<String, String> retrieved = storageManager.readAliasTable().get();
         assertEquals(testingTable, retrieved); 
     }
 
@@ -95,7 +95,7 @@ public class StorageManagerTest {
     public void handleToDoListChangedEventExceptionThrownEventRaised() throws IOException {
         //Create a StorageManager while injecting a stub that throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlToDoListStorageExceptionThrowingStub("dummy"), 
-                new JsonCommandLibraryStorage("dummy"), new JsonUserPrefsStorage("dummy"), new Config());
+                new JsonAliasTableStorage("dummy"), new JsonUserPrefsStorage("dummy"), new Config());
         EventsCollector eventCollector = new EventsCollector();
         storage.handleToDoListChangedEvent(new ToDoListChangedEvent(new ToDoList()));
         assertTrue(eventCollector.get(0) instanceof DataSavingExceptionEvent);

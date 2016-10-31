@@ -1,7 +1,7 @@
 package seedu.agendum.storage;
 
 import seedu.agendum.commons.events.model.LoadDataRequestEvent;
-import seedu.agendum.commons.events.logic.CommandLibraryChangedEvent;
+import seedu.agendum.commons.events.logic.AliasTableChangedEvent;
 import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.events.storage.DataSavingExceptionEvent;
@@ -16,14 +16,14 @@ import java.util.Optional;
 /**
  * API of the Storage component
  */
-public interface Storage extends ToDoListStorage, UserPrefsStorage, CommandLibraryStorage {
+public interface Storage extends ToDoListStorage, UserPrefsStorage, AliasTableStorage {
 
     @Override
-    Optional<Hashtable<String, String>> readCommandLibraryTable()
+    Optional<Hashtable<String, String>> readAliasTable()
             throws DataConversionException, IOException;
 
     @Override
-    void saveCommandLibraryTable(Hashtable<String, String> table) throws IOException;
+    void saveAliasTable(Hashtable<String, String> table) throws IOException;
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -51,11 +51,11 @@ public interface Storage extends ToDoListStorage, UserPrefsStorage, CommandLibra
     void handleToDoListChangedEvent(ToDoListChangedEvent event);
 
     /**
-     * Saves the current version of the Command Library to the hard disk.
+     * Saves the current version of the alias table in Command Library to the hard disk.
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
-    void handleCommandLibraryChangedEvent(CommandLibraryChangedEvent event);
+    void handleAliasTableChangedEvent(AliasTableChangedEvent event);
 
     /** Loads todo list data from the file **/
     void handleLoadDataRequestEvent(LoadDataRequestEvent event);

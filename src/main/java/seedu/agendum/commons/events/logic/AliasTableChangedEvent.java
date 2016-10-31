@@ -6,14 +6,14 @@ import seedu.agendum.commons.events.BaseEvent;
 import java.util.*;
 
 /**
- * Indicate the (alias) command library in the logic has changed
+ * Indicate the alias table in Logic's command library has changed
  */
-public class CommandLibraryChangedEvent extends BaseEvent {
+public class AliasTableChangedEvent extends BaseEvent {
 
     public final String aliasedKeyChanged;
     public final Hashtable<String, String> aliasTable;
 
-    public CommandLibraryChangedEvent(String aliasedKeyChanged, Hashtable<String, String> aliasTable) {
+    public AliasTableChangedEvent(String aliasedKeyChanged, Hashtable<String, String> aliasTable) {
         this.aliasedKeyChanged = aliasedKeyChanged;
         this.aliasTable = aliasTable;
     }
