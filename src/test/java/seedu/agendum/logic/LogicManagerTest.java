@@ -381,7 +381,7 @@ public class LogicManagerTest {
 
     //@@author A0148095X
     @Test
-    public void executeStoreSuccessful() throws Exception {
+    public void executeStore_validLocation_successful() throws Exception {
         // setup expectations
         ToDoList expectedTDL = new ToDoList();
         Task testTask = new Task(new Name("test_store"));
@@ -411,7 +411,7 @@ public class LogicManagerTest {
         assertTrue(eventCollector.get(3) instanceof ToDoListChangedEvent);
     }
     
-    public void executeStoreFailFileExists() throws Exception {
+    public void executeStore_fileExists_fail() throws Exception {
         // setup expectations
         ToDoList expectedTDL = new ToDoList();
         String location = "data/test_store_fail.xml";
@@ -885,7 +885,7 @@ public class LogicManagerTest {
 
     //@@author A0148095X
     @Test
-    public void executeLoadSuccessful() throws Exception {
+    public void executeLoad_fileExists_successful() throws Exception {
         // setup expectations
         TestDataHelper helper = new TestDataHelper();
         Task toBeAdded = helper.generateTask(999);
@@ -906,8 +906,21 @@ public class LogicManagerTest {
         
         FileUtil.deleteFile(filePath);
     }
-    
+
+    @Test
+    public void executeLoad_fileDoesNotExist_fail() throws Exception {
+        // setup expectations
+        ToDoList expectedTDL = new ToDoList();
+        String filePath = "data/test/loadDoesNotExist.xml";
+
+        // execute command and verify result
+        assertCommandBehavior("load " + filePath,
+                String.format(LoadCommand.MESSAGE_FILE_DOES_NOT_EXIST, filePath),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
     //@@author
+    
     /**
      * A utility class to generate test data.
      */
