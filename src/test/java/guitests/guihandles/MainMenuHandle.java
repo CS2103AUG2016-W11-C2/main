@@ -35,7 +35,7 @@ public class MainMenuHandle extends GuiHandle {
 
     private void useAcceleratorToOpenHelpWindow() {
         guiRobot.push(new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN));
-        guiRobot.sleep(500);
+        guiRobot.sleep(1000);
     }
     
     private void useAcceleratorToCloseHelpWindow() {
