@@ -27,7 +27,7 @@ public class AddCommand extends Command {
             + "from 7pm to 9pm";
 
     public static final String MESSAGE_SUCCESS = "Task added: %1$s";
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists!";
+    public static final String MESSAGE_DUPLICATE_TASK = "Hey, the task already exists";
 
     private Task toAdd = null;
 
@@ -84,6 +84,8 @@ public class AddCommand extends Command {
             return new CommandResult(MESSAGE_DUPLICATE_TASK);
         }
     }
+
+    //@@author
 
     public static String getName() {
         return COMMAND_WORD;
