@@ -440,7 +440,8 @@ Here is the *format*:
 
 > * `<location>` must be a valid path to a file on the local computer.
 > * If there is an existing file at `<location>`, it will be overriden.
-> * The data storage file at the original location will not be deleted. This is similar to a "Save as..." in other applications.
+> * The data storage file at the original location will not be deleted. 
+> * This command is similar to a "Save as..." in other applications.
 
 Examples:
 ```
@@ -455,7 +456,7 @@ After relocating Agendum’s data files, you might want to load that exact copy 
 Here is the *format*:
 * `load <location>`
 
-> * <location> must be a valid path to a file on the local computer.
+> * `<location>` must be a valid path to a file on the local computer.
 > * Your current data would have already been saved automatically in its original data storage location.
 > * Agendum will then show data loaded from <location> and save data there in the future.
 > * You will not be able to `undo` immediately after loading as there have been no changes to the loaded list.
@@ -478,7 +479,7 @@ To work even faster you can also use keyboard shortcut: <br>
 1. Use <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through previously typed command. You don't need to remember or enter them again! <br>
 2. If you are entering a new command, use <kbd>↓</kbd> to instantly clear the command line and start afresh. <br>
 3. Use <kbd>Tab</kbd> to quickly auto-complete a command word when you are typing. <br>
-4. Wihle viewing the help window, use <kbd>Ctrl</kbd> + <kbd>H</kbd> to conveniently switch between the help window and the command box.
+4. While viewing the help window, use <kbd>Ctrl</kbd> + <kbd>H</kbd> to conveniently switch between the help window and the command box.
 
 
 ### Saving the data
