@@ -21,8 +21,8 @@ import seedu.agendum.logic.Logic;
 import seedu.agendum.model.UserPrefs;
 
 /**
- * The Main Window. Provides the basic application layout containing
- * a menu bar and space where other JavaFX elements can be placed.
+ * The Main Window. Provides the basic application layout containing a menu bar
+ * and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart {
 
@@ -31,7 +31,7 @@ public class MainWindow extends UiPart {
     public static final String LIST_COMMAND = "list";
 
     private Logic logic;
-    
+
     // Independent Ui parts residing in this Ui container
     private TasksPanel upcomingTasksPanel;
     private TasksPanel completedTasksPanel;
@@ -58,16 +58,16 @@ public class MainWindow extends UiPart {
 
     @FXML
     private AnchorPane upcomingTasksPlaceHolder;
-    
+
     @FXML
     private AnchorPane completedTasksPlaceHolder;
-    
+
     @FXML
     private AnchorPane floatingTasksPlaceHolder;
-    
+
     @FXML
     private AnchorPane statusbarPlaceholder;
-    
+
     @FXML
     private StackPane messagePlaceHolder;
 
@@ -92,15 +92,14 @@ public class MainWindow extends UiPart {
     }
 
     //@@author A0148031R
-    private void configure(String appTitle, String toDoListName, Config config, UserPrefs prefs,
-                           Logic logic) {
+    private void configure(String appTitle, String toDoListName, Config config, UserPrefs prefs, Logic logic) {
 
-        //Set dependencies
+        // Set dependencies
         this.logic = logic;
         this.config = config;
         this.userPrefs = prefs;
 
-        //Configure the UI
+        // Configure the UI
         setTitle(appTitle);
         setIcon(ICON);
         setWindowDefaultSize(prefs);
@@ -125,10 +124,11 @@ public class MainWindow extends UiPart {
     private void configureHelpWindowToggle() {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
+
             @Override
             public void handle(KeyEvent evt) {
-                if(toggleHelpWindow.match(evt) && helpWindowStage != null) {
-                    if(helpWindowStage.isFocused()) {
+                if (toggleHelpWindow.match(evt) && helpWindowStage != null) {
+                    if (helpWindowStage.isFocused()) {
                         primaryStage.requestFocus();
                     } else {
                         helpWindowStage.requestFocus();
@@ -160,11 +160,11 @@ public class MainWindow extends UiPart {
      * Loads the ui elements
      */
     void fillInnerParts() {
-        upcomingTasksPanel = UpcomingTasksPanel.load(primaryStage, getUpcomingTasksPlaceHolder(), 
+        upcomingTasksPanel = UpcomingTasksPanel.load(primaryStage, getUpcomingTasksPlaceHolder(),
                 logic.getFilteredTaskList(), new UpcomingTasksPanel());
-        completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), 
+        completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(),
                 logic.getFilteredTaskList(), new CompletedTasksPanel());
-        floatingTasksPanel = FloatingTasksPanel.load(primaryStage, getFloatingTasksPlaceHolder(), 
+        floatingTasksPanel = FloatingTasksPanel.load(primaryStage, getFloatingTasksPlaceHolder(),
                 logic.getFilteredTaskList(), new FloatingTasksPanel());
         resultPopUp = ResultPopUp.load(primaryStage);
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getToDoListFilePath());
@@ -174,7 +174,7 @@ public class MainWindow extends UiPart {
     private AnchorPane getCommandBoxPlaceholder() {
         return commandBoxPlaceholder;
     }
-    
+
     public StackPane getMessagePlaceHolder() {
         return messagePlaceHolder;
     }
@@ -182,29 +182,29 @@ public class MainWindow extends UiPart {
     private AnchorPane getStatusbarPlaceholder() {
         return statusbarPlaceholder;
     }
-    
+
     public AnchorPane getUpcomingTasksPlaceHolder() {
         return upcomingTasksPlaceHolder;
     }
-    
+
     public AnchorPane getCompletedTasksPlaceHolder() {
         return completedTasksPlaceHolder;
     }
-    
+
     public AnchorPane getFloatingTasksPlaceHolder() {
         return floatingTasksPlaceHolder;
     }
-    
+
     public TasksPanel getUpcomingTasksPanel() {
-        return (UpcomingTasksPanel)this.upcomingTasksPanel;
+        return (UpcomingTasksPanel) this.upcomingTasksPanel;
     }
-    
+
     public TasksPanel getCompletedTasksPanel() {
-        return (CompletedTasksPanel)this.completedTasksPanel;
+        return (CompletedTasksPanel) this.completedTasksPanel;
     }
-    
+
     public TasksPanel getFloatingasksPanel() {
-        return (FloatingTasksPanel)this.floatingTasksPanel;
+        return (FloatingTasksPanel) this.floatingTasksPanel;
     }
     
     /**
@@ -232,7 +232,7 @@ public class MainWindow extends UiPart {
     @FXML
     public void handleHelp() {
         HelpWindow helpWindow = HelpWindow.load(primaryStage);
-        if(helpWindow != null) {
+        if (helpWindow != null) {
             this.helpWindowStage = helpWindow.getStage();
             helpWindow.show();
         }
