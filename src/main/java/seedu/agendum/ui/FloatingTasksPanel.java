@@ -72,7 +72,7 @@ public class FloatingTasksPanel extends TasksPanel {
             delay.play();
         });
     }
-    
+
     class FloatingTasksListViewCell extends ListCell<ReadOnlyTask> {
         public FloatingTasksListViewCell() {
             prefWidthProperty().bind(floatingTasksListView.widthProperty());

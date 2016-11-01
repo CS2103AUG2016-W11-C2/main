@@ -8,7 +8,6 @@ import seedu.agendum.TestApp;
 
 import java.util.Arrays;
 
-//@@author A0148031R
 /**
  * Provides a handle to the main menu of the app.
  */

@@ -71,7 +71,7 @@ public class CompletedTasksPanel extends TasksPanel {
             delay.play();
         });
     }
-    
+
     class CompletedTasksListViewCell extends ListCell<ReadOnlyTask> {
         public CompletedTasksListViewCell() {
             prefWidthProperty().bind(completedTasksListView.widthProperty());

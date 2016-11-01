@@ -9,7 +9,6 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 import seedu.agendum.model.task.ReadOnlyTask;
 
-//@@author A0148031R
 /**
  * Provides a handle to a task card in the task list panel.
  */

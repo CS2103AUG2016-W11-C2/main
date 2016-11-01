@@ -53,7 +53,7 @@ public class CommandBox extends UiPart {
         CommandBox commandBox = UiPartLoader.loadUiPart(primaryStage, commandBoxPlaceholder, new CommandBox());
         commandBox.configure(resultPopUp, messagePlaceHolder, logic);
         commandBox.addToPlaceholder();
-        commandBoxHistory = new CommandBoxHistory();
+        commandBoxHistory = CommandBoxHistory.getInstance();
         return commandBox;
     }
 
@@ -166,7 +166,8 @@ public class CommandBox extends UiPart {
 
     @Subscribe
     private void handleIncorrectCommandAttempted(IncorrectCommandAttemptedEvent event){
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Invalid command: " + commandBoxHistory.getLastCommand()));
+        logger.info(LogsCenter.getEventHandlingLogMessage(
+                event, "Invalid command: " + commandBoxHistory.getLastCommand()));
         setStyleToIndicateIncorrectCommand();
         restoreCommandText();
     }
