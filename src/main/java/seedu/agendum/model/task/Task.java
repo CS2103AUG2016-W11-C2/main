@@ -204,11 +204,6 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
 
     public int compareLastUpdatedTime(Task other) {
-        // to fix erratic behavior for logic manager test
-        long nanoseconds = ChronoUnit.NANOS.between(this.getLastUpdatedTime(), other.getLastUpdatedTime());
-        if (Math.abs(nanoseconds) < 10) {
-            return 0;
-        }
         return other.getLastUpdatedTime().compareTo(this.getLastUpdatedTime());
     }
 
