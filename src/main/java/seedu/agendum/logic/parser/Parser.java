@@ -38,10 +38,8 @@ public class Parser {
     private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to|every)\\s|$)))+?");
     private static final Pattern SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
     
-    private static final String RELATIVE_FROM = "from ";
-    private static final String RELATIVE_NEXT = "next ";
-
     private static final String ARGS_FROM = "from";
+    private static final String ARGS_NEXT = "next";
     private static final String ARGS_BY = "by";
     private static final String ARGS_TO = "to";
     private static final String ARGS_EVERY = "every";
@@ -396,9 +394,9 @@ public class Parser {
                         String time = s.substring(token.length(), s.length());
                         if (token.equals(ARGS_EVERY) && DateTimeUtils.containsTime(time)) {
                             dateTimeMap.put(token, 
-                                    DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_FROM + s).isPresent()
-                                    ? DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_FROM + s)
-                                    : DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_NEXT + s));
+                                    DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_FROM + " " + s).isPresent()
+                                    ? DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_FROM + " " + s)
+                                    : DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_NEXT + " " + s));
                             LocalDateTime timeToAdd = dateTimeMap.get(token).get();
                             if(timeToAdd.getYear() == LocalDateTime.now().getYear() && 
                                     timeToAdd.getDayOfYear() == LocalDateTime.now().getDayOfYear()) {
@@ -406,11 +404,11 @@ public class Parser {
                             }
                         } else if (token.equals(ARGS_EVERY) && time.contains(ARGS_DAY)) {
                             dateTimeMap.put(token, 
-                                    DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_NEXT + ARGS_DAY));
+                                    DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_NEXT + " " + ARGS_DAY));
                             period = ARGS_DAY;
                         } else if (token.equals(ARGS_EVERY) && time.contains(ARGS_WEEK)) {
                             dateTimeMap.put(token, 
-                                    DateTimeUtils.parseNaturalLanguageDateTimeString(RELATIVE_NEXT + ARGS_WEEK));
+                                    DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_NEXT + " " + ARGS_WEEK));
                             period = ARGS_WEEK;
                         } else {
                             taskTitle = taskTitle + s;
