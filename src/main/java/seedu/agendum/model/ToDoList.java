@@ -33,7 +33,6 @@ public class ToDoList implements ReadOnlyToDoList {
      * Tasks are copied into this to do list
      */
     public ToDoList(UniqueTaskList tasks) {
-//        resetData(tasks.getInternalList());
         setTasks(tasks.getInternalListAsList());
     }
 
