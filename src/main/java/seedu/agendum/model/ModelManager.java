@@ -55,7 +55,7 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(src);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        previousLists = new Stack<ToDoList>();
+        previousLists = new Stack<>();
         backupNewToDoList();
     }
 
@@ -67,7 +67,7 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(initialData);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        previousLists = new Stack<ToDoList>();
+        previousLists = new Stack<>();
         backupNewToDoList();
     }
 
@@ -88,6 +88,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     /** Raises an event to indicate the model has changed */
     private void indicateToDoListChanged() {
+        // force a reset/refresh for list view in UI
+        resetToDoListTaskType(toDoList);
         raise(new ToDoListChangedEvent(toDoList));
     }
     
@@ -116,7 +118,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
-        toDoList.addTask(task);      
+        toDoList.addTask(task); 
         if(!task.isChild()) {
             backupNewToDoList();
         }
@@ -187,7 +189,6 @@ public class ModelManager extends ComponentManager implements Model {
             if (target.isChild() && !target.isLatestChild()) {
                 throw new NotLatestRecurringTaskException();
             } else if(target.isLatestChild()) {
-                // Delete the child recurring task, and update time of parent to previous
                 target.getParent().setPreviousDateTime();
                 ArrayList<ReadOnlyTask> taskToDelete = new ArrayList<ReadOnlyTask>();
                 taskToDelete.add(target);
@@ -211,7 +212,7 @@ public class ModelManager extends ComponentManager implements Model {
             return false;
         } else {
             previousLists.pop();
-            restorePreviousToDoListTaskType(previousLists.peek());
+            resetToDoListTaskType(previousLists.peek());
             logger.fine("[MODEL] --- succesfully restored the previous the to-do list from this session");
             indicateToDoListChanged();
             return true;
@@ -220,8 +221,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     //@@author A0148031R
     @Override
-    public void restorePreviousToDoListTaskType(ReadOnlyToDoList previousToDoList) {
-        List<ReadOnlyTask> readOnlyTasks = previousToDoList.getTaskList();
+    public void resetToDoListTaskType(ReadOnlyToDoList taskList) {
+        List<ReadOnlyTask> readOnlyTasks = taskList.getTaskList();
         List<Task> tasks = new ArrayList<Task>();
         HashMap<String, RecurringTask> parents = new HashMap<String, RecurringTask>();
         List<ReadOnlyTask> childWaitingList = new ArrayList<ReadOnlyTask>();
@@ -257,6 +258,10 @@ public class ModelManager extends ComponentManager implements Model {
     private void backupNewToDoList() {
         ToDoList latestList = new ToDoList(this.getToDoList());
         previousLists.push(latestList);
+    }
+
+    private void clearPreviousToDoLists() {
+        previousLists.clear();
     }
 
 
@@ -360,6 +365,8 @@ public class ModelManager extends ComponentManager implements Model {
     public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event) {
         this.toDoList.resetData(event.data);
         indicateToDoListChanged();
+        clearPreviousToDoLists();
+        backupNewToDoList();
         logger.info("Loading completed - Todolist updated.");
     }
 }

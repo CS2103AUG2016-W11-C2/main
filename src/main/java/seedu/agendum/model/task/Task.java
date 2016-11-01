@@ -17,7 +17,6 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     private Name name;
     private boolean isCompleted;
-    private boolean isRecurring;
     private boolean isChild;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
@@ -29,12 +28,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      * Constructor for a floating task (with no deadline/start time or end time)
      */
     public Task(Name name) {
-        assert !CollectionUtil.isAnyNull(name);
+        assert CollectionUtil.isNotNull(name);
         this.name = name;
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = null;
-        this.isRecurring = false;
         this.isChild = false;
         setLastUpdatedTimeToNow();
     }
@@ -43,10 +41,9 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      * Constructor for a task with deadline only
      */
     public Task(Name name, Optional<LocalDateTime> deadline) {
-        assert !CollectionUtil.isAnyNull(name);
+        assert CollectionUtil.isNotNull(name);
         this.name = name;
         this.isCompleted = false;
-        this.isRecurring = false;
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
         this.isChild = false;
@@ -58,10 +55,9 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      */
     public Task(Name name, Optional<LocalDateTime> startDateTime,
             Optional<LocalDateTime> endDateTime) {
-        assert !CollectionUtil.isAnyNull(name);
+        assert CollectionUtil.isNotNull(name);
         this.name = name;
         this.isCompleted = false;
-        this.isRecurring = false;
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
         this.isChild = false;
@@ -110,7 +106,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
 
     public boolean isRecurring() {
-        return isRecurring;
+        return false;
     }
 
     @Override
@@ -188,9 +184,9 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
             return comparedCompletionStatus;
         }
 
-        int comparedTime = compareTime(other);
-        if (comparedTime != 0) {
-            return comparedTime;
+        int comparedTaskTime = compareTaskTime(other);
+        if (!isCompleted() && comparedTaskTime != 0) {
+            return comparedTaskTime;
         }
 
         int comparedLastUpdatedTime = compareLastUpdatedTime(other);
@@ -205,7 +201,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return Boolean.compare(this.isCompleted(), other.isCompleted());
     }
 
-    public int compareTime(Task other) {
+    public int compareTaskTime(Task other) {
         if (this.hasTime() && other.hasTime()) {
             return this.getTaskTime().compareTo(other.getTaskTime());
         } else if (this.hasTime()) {
@@ -233,7 +229,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, isCompleted, isRecurring, isChild, startDateTime, endDateTime);
+        return Objects.hash(name, isCompleted, this.isRecurring(), isChild, startDateTime, endDateTime);
     }
 
     @Override

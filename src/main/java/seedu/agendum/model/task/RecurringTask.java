@@ -76,13 +76,10 @@ public class RecurringTask extends Task {
         }
         this.endDateTime = DateTimeUtils.parseNaturalLanguageDateTimeString(
                 period + BEFORE + this.endDateTime.toString()).get();
-        System.out.println("1: " + this.children.size());
         if(this.children.size() >= 2) {
             this.children.get(this.children.size() - 2).setLatestChild();
         }
-        System.out.println("2: " + this.children.size());
         this.children.remove(this.children.size() - 1);
-        System.out.println("3: " + this.children.size());
     }
     
     @Override

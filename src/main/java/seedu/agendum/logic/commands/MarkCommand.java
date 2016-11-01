@@ -17,13 +17,14 @@ import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 public class MarkCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
-    public static final String COMMAND_WORD = "mark";
-    public static final String COMMAND_FORMAT = "mark <index> \nmark <indexes>";
-    public static final String COMMAND_DESCRIPTION ="mark task(s) as completed";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Marks the tasks(s) identified by their index numbers used in the last task listing.\n"
-            + "Parameters: INDEX... (must be a positive number)\n"
-            + "Example: " + COMMAND_WORD + " 1 2 5-6";
+    public static final String COMMAND_WORD = "mark";    
+    public static final String COMMAND_FORMAT = "mark <id> <more-ids>";
+    public static final String COMMAND_DESCRIPTION = "mark task(s) as completed";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + " - "
+            + COMMAND_DESCRIPTION + "\n"
+            + COMMAND_FORMAT + "\n"
+            + "(The id must be a positive number)\n"
+            + "Example: " + COMMAND_WORD + " 1 3 5-6";
 
     public static final String MESSAGE_MARK_TASK_SUCCESS = "Marked Task(s): %1$s";
 
@@ -33,9 +34,9 @@ public class MarkCommand extends Command {
 
     //@@author A0133367E
     public MarkCommand(Set<Integer> targetIndexes) {
-        this.targetIndexes = new ArrayList<Integer>(targetIndexes);
+        this.targetIndexes = new ArrayList<>(targetIndexes);
         Collections.sort(this.targetIndexes);
-        this.tasksToMark = new ArrayList<ReadOnlyTask>();
+        this.tasksToMark = new ArrayList<>();
     }
 
     @Override

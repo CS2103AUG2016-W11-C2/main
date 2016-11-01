@@ -2,9 +2,7 @@ package seedu.agendum.model;
 
 import javafx.collections.FXCollections;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 
 import java.util.*;
@@ -14,11 +12,8 @@ import static seedu.agendum.testutil.TestUtil.assertThrows;
 
 public class UnmodifiableObservableListTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    List<Integer> backing;
-    UnmodifiableObservableList<Integer> list;
+    private List<Integer> backing;
+    private UnmodifiableObservableList<Integer> list;
 
     @Before
     public void setup() {

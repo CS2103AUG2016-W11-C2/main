@@ -70,9 +70,6 @@ public class Parser {
         case AddCommand.COMMAND_WORD:
             return prepareAdd(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-            return prepareSelect(arguments);
-
         case DeleteCommand.COMMAND_WORD:
             return prepareDelete(arguments);
 
@@ -175,8 +172,9 @@ public class Parser {
             } else if (dateTimeMap.containsKey(ARGS_EVERY) && dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(taskTitle, dateTimeMap.get(ARGS_BY),
                         args.substring(args.toLowerCase().lastIndexOf(ARGS_EVERY) + 6));
-            } else if (dateTimeMap.containsKey(ARGS_EVERY) && period != null) {
-                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_EVERY), ARGS_DAY);
+            } else if (dateTimeMap.containsKey(ARGS_EVERY) && period == null) {
+                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_EVERY), 
+                        args.substring(args.toLowerCase().lastIndexOf(ARGS_EVERY) + 6));
             } else if (dateTimeMap.containsKey(ARGS_EVERY)) {
                 return new AddCommand(taskTitle, dateTimeMap.get(ARGS_EVERY), ARGS_DAY);
             } else if (dateTimeMap.containsKey(ARGS_BY)) {
@@ -324,22 +322,6 @@ public class Parser {
 
     //@@author
     /**
-     * Parses arguments in the context of the select task command.
-     *
-     * @param args full command args string
-     * @return the prepared command
-     */
-    private Command prepareSelect(String args) {
-        Optional<Integer> index = parseIndex(args);
-        if(!index.isPresent()){
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-        }
-
-        return new SelectCommand(index.get());
-    }
-
-    /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
      *   Returns an {@code Optional.empty()} otherwise.
      */
@@ -364,7 +346,7 @@ public class Parser {
      */
     private Set<Integer> parseIndexes(String args) {
         final Matcher matcher = TASK_INDEXES_ARGS_FORMAT.matcher(args.trim());
-        Set<Integer> taskIds = new HashSet<Integer>();
+        Set<Integer> taskIds = new HashSet<>();
 
         if (!matcher.matches()) {
             return taskIds;
@@ -386,7 +368,7 @@ public class Parser {
         }
 
         if (taskIds.remove(0)) {
-            return new HashSet<Integer>();
+            return new HashSet<>();
         }
 
         return taskIds;

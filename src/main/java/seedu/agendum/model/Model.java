@@ -42,7 +42,7 @@ public interface Model {
     boolean restorePreviousToDoList();
     
     /** Restores the previous to do list task typesaved. Returns true if successful; false if no previous saved list*/
-    void restorePreviousToDoListTaskType(ReadOnlyToDoList previousToDoList);
+    void resetToDoListTaskType(ReadOnlyToDoList previousToDoList);
     
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();
@@ -60,6 +60,6 @@ public interface Model {
     void loadFromLocation(String location);
 
     /** Updates the current todolist to the loaded data**/
-    public void handleLoadDataCompleteEvent(LoadDataCompleteEvent event);
+    void handleLoadDataCompleteEvent(LoadDataCompleteEvent event);
 
 }
