@@ -5,7 +5,7 @@ import seedu.agendum.model.task.Task;
 
 //@@author A0148031R
 /**
- * Indicates a request to jump to the list of persons
+ * Indicates a request to jump to the list of tasks
  */
 public class JumpToListRequestEvent extends BaseEvent {
 

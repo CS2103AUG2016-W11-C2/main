@@ -156,7 +156,7 @@ public class UniqueTaskList implements Iterable<Task> {
         Task unmarkedTask = new Task(toUnmark);
         unmarkedTask.markAsUncompleted();
         boolean taskFoundAndUnmarked = update(toUnmark, unmarkedTask);
-        
+
         return taskFoundAndUnmarked;
     }
 

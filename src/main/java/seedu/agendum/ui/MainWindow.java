@@ -238,14 +238,14 @@ public class MainWindow extends UiPart {
     }
 
     public UpcomingTasksPanel getUpcomingTasksPanel() {
-        return (UpcomingTasksPanel)this.upcomingTasksPanel;
+        return (UpcomingTasksPanel) this.upcomingTasksPanel;
     }
-    
+
     public CompletedTasksPanel getCompletedTasksPanel() {
-        return (CompletedTasksPanel)this.completedTasksPanel;
+        return (CompletedTasksPanel) this.completedTasksPanel;
     }
-    
+
     public FloatingTasksPanel getFloatingasksPanel() {
-        return (FloatingTasksPanel)this.floatingTasksPanel;
+        return (FloatingTasksPanel) this.floatingTasksPanel;
     }
 }
