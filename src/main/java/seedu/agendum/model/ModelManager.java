@@ -171,7 +171,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * This is to reverse any temporary changes to the to-do list
-     * that have not been saved to storage (in the event of exceptions)
+     * that have not been saved to storage or stack of previous lists (in the event of exceptions)
      */
     @Override
     public synchronized void restoreCurrentToDoListClone() {
