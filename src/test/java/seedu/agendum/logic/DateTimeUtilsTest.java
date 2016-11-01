@@ -1,4 +1,3 @@
-//@@author A0003878Y
 package seedu.agendum.logic;
 
 import org.junit.Test;
@@ -11,6 +10,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+//@@author A0003878Y
 public class DateTimeUtilsTest {
 
     private void assertSameDateAndTime(LocalDateTime dateTime1, LocalDateTime dateTime2) {
