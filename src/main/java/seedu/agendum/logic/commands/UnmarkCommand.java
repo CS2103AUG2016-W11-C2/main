@@ -7,6 +7,7 @@ import java.util.Set;
 import seedu.agendum.commons.core.Messages;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.UniqueTaskList.NotLatestRecurringTaskException;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
@@ -24,7 +25,9 @@ public class UnmarkCommand extends Command {
             + "(The id must be a positive number)\n"
             + "Example: " + COMMAND_WORD + " 11-13 15";
 
-    public static final String MESSAGE_UNMARK_TASK_SUCCESS = "Unmarked Task(s): %1$s";
+    public static final String MESSAGE_UNMARK_TASK_SUCCESS = "Ununmarked Task(s): %1$s";
+    public static final String MESSAGE_MARK_CHILD_RECURRING_TASK_FAIL = "Failed to unmark Task(s): %1$s, "
+            + "because this future tasks of this recurring task has been marked";
 
     public ArrayList<Integer> targetIndexes;
 
@@ -56,6 +59,8 @@ public class UnmarkCommand extends Command {
             model.unmarkTasks(tasksToUnmark);
         } catch (TaskNotFoundException pnfe) {
             assert false : "The target task cannot be missing";
+        } catch (NotLatestRecurringTaskException e) {
+            return new CommandResult(String.format(MESSAGE_MARK_CHILD_RECURRING_TASK_FAIL, targetIndexes.toString()));
         }
 
         return new CommandResult(String.format(MESSAGE_UNMARK_TASK_SUCCESS,

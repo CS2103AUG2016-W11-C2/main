@@ -49,7 +49,39 @@ public class DateTimeUtilsTest {
         Optional<LocalDateTime> t = DateTimeUtils.parseNaturalLanguageDateTimeString("january 10 2017 5:15pm");
         assertSameDateAndTime(t.get(), LocalDateTime.of(2017,1,10,17,15));
     }
-
+    
+    //@@ author A0148031R
+    @Test
+    public void relativeDayDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeUtils.parseNaturalLanguageDateTimeString("day from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2016,10,27,17,15));
+    }
+    
+    @Test
+    public void relativeWeekDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeUtils.parseNaturalLanguageDateTimeString("tuesday from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2016,11,1,17,15));
+    }
+    
+    @Test
+    public void relativeAnyDaysDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeUtils.parseNaturalLanguageDateTimeString("5 days from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2016,10,31,17,15));
+    }
+    
+    @Test
+    public void relativeMonthDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeUtils.parseNaturalLanguageDateTimeString("month from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2016,11,26,17,15));
+    }
+    
+    @Test
+    public void relativeYearDateTimeTest() throws Exception {
+        Optional<LocalDateTime> t = DateTimeUtils.parseNaturalLanguageDateTimeString("year from October 26 2016 5:15pm");
+        assertSameDateAndTime(t.get(), LocalDateTime.of(2017,10,26,17,15));
+    }
+    
+    //@@author A0003878Y
     @Test
     public void balanceStartEndDateTimeTest() throws Exception {
         LocalDateTime start = LocalDateTime.now();
@@ -61,5 +93,4 @@ public class DateTimeUtilsTest {
         end = DateTimeUtils.balanceStartAndEndDateTime(start, end);
         assertSameDateAndTime(end, start.plusHours(1));
     }
-
 }

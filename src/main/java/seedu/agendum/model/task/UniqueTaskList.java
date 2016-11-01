@@ -35,6 +35,13 @@ public class UniqueTaskList implements Iterable<Task> {
      * there is no such matching task in the list.
      */
     public static class TaskNotFoundException extends Exception {}
+ 
+    //@@author A0148031R
+    /**
+     * Signals that an operation trying to mark a child recurring task when its future tasks have 
+     * already been marked as completed.
+     */
+    public static class NotLatestRecurringTaskException extends Exception{}
 
     /**
      * Constructs empty TaskList.
@@ -171,7 +178,17 @@ public class UniqueTaskList implements Iterable<Task> {
     public ObservableList<Task> getInternalList() {
         return internalList;
     }
+    
+   //@@author A0148031R
+    public List<Task> getInternalListAsList() {
+        List<Task> tasks = new ArrayList<Task>();
+        for(Task task : internalList) {
+            tasks.add(task);
+        }
+        return tasks;
+    }
 
+    //@@author
     @Override
     public Iterator<Task> iterator() {
         return internalList.iterator();

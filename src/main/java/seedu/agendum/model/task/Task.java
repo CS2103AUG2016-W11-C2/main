@@ -17,6 +17,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     private Name name;
     private boolean isCompleted;
+    private boolean isChild;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private LocalDateTime lastUpdatedTime;
@@ -32,6 +33,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = null;
+        this.isChild = false;
         setLastUpdatedTimeToNow();
     }
     
@@ -44,6 +46,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
+        this.isChild = false;
         setLastUpdatedTimeToNow();
     }
     
@@ -57,6 +60,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
+        this.isChild = false;
         setLastUpdatedTimeToNow();
     }
 
@@ -70,6 +74,8 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         }
         setLastUpdatedTime(source.getLastUpdatedTime());
     }
+    
+    public Task(RecurringTask task) {}
     
     // ================ Getter methods ==============================
 
@@ -97,6 +103,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public boolean hasTime() {
         return (getStartDateTime().isPresent() || getEndDateTime().isPresent());
+    }
+
+    public boolean isRecurring() {
+        return false;
     }
 
     @Override
@@ -219,7 +229,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, isCompleted, startDateTime, endDateTime);
+        return Objects.hash(name, isCompleted, this.isRecurring(), isChild, startDateTime, endDateTime);
     }
 
     @Override
@@ -227,4 +237,29 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return getAsText();
     }
 
+    //@@author A0148031R
+    @Override
+    public boolean isLatestChild() {
+        return false;
+    }
+
+    @Override
+    public ChildRecurringTask getChild() {
+        return null;
+    }
+
+    @Override
+    public RecurringTask getParent() {
+        return null;
+    }
+
+    @Override
+    public boolean isChild() {
+        return false;
+    }
+
+    @Override
+    public String getPeriod() {
+        return null;
+    }
 }

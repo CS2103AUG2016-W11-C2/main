@@ -1,27 +1,33 @@
 package seedu.agendum.model;
 
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
-import seedu.agendum.commons.core.LogsCenter;
-import seedu.agendum.commons.core.UnmodifiableObservableList;
-import seedu.agendum.commons.util.StringUtil;
-import seedu.agendum.commons.util.XmlUtil;
-import seedu.agendum.model.task.ReadOnlyTask;
-import seedu.agendum.model.task.Task;
-import seedu.agendum.model.task.UniqueTaskList;
-import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
-import seedu.agendum.commons.events.model.LoadDataRequestEvent;
-import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
-import seedu.agendum.commons.events.model.ToDoListChangedEvent;
-import seedu.agendum.commons.events.storage.LoadDataCompleteEvent;
-import seedu.agendum.commons.core.ComponentManager;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
+import seedu.agendum.commons.core.ComponentManager;
+import seedu.agendum.commons.core.LogsCenter;
+import seedu.agendum.commons.core.UnmodifiableObservableList;
+import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
+import seedu.agendum.commons.events.model.LoadDataRequestEvent;
+import seedu.agendum.commons.events.model.ToDoListChangedEvent;
+import seedu.agendum.commons.events.storage.LoadDataCompleteEvent;
+import seedu.agendum.commons.util.StringUtil;
+import seedu.agendum.commons.util.XmlUtil;
+import seedu.agendum.model.task.ChildRecurringTask;
+import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.RecurringTask;
+import seedu.agendum.model.task.Task;
+import seedu.agendum.model.task.UniqueTaskList;
+import seedu.agendum.model.task.UniqueTaskList.DuplicateTaskException;
+import seedu.agendum.model.task.UniqueTaskList.NotLatestRecurringTaskException;
+import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 /**
  * Represents the in-memory model of the to do list data.
@@ -83,7 +89,7 @@ public class ModelManager extends ComponentManager implements Model {
     /** Raises an event to indicate the model has changed */
     private void indicateToDoListChanged() {
         // force a reset/refresh for list view in UI
-        toDoList.resetData(toDoList);
+        resetToDoListTaskType(toDoList);
         raise(new ToDoListChangedEvent(toDoList));
     }
     
@@ -105,49 +111,99 @@ public class ModelManager extends ComponentManager implements Model {
             toDoList.removeTask(target);
         }
         backupNewToDoList();
-        logger.fine("[MODEL] --- succesfully deleted all specified targets from the to-do list");
+        updateFilteredListToShowAll();
         indicateToDoListChanged();
+        logger.fine("[MODEL] --- succesfully deleted all specified targets from the to-do list");
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
-        toDoList.addTask(task);      
-        logger.fine("[MODEL] --- succesfully added the new task to the to-do list");
-        backupNewToDoList();
+        toDoList.addTask(task); 
+        if(!task.isChild()) {
+            backupNewToDoList();
+        }
         updateFilteredListToShowAll();
         indicateToDoListChanged();
+        logger.fine("MODEL --- succesfully added the new task to the to-do list");
     }
     
     @Override
     public synchronized void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
-        toDoList.updateTask(target, updatedTask);
+        if(target.isRecurring() && !target.isChild()) {
+            updateRecurringTask(target,updatedTask);
+        } else {
+            toDoList.updateTask(target, updatedTask);
+        }
         logger.fine("[MODEL] --- succesfully updated the target task in the to-do list");
         backupNewToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
     }
+    
+    //@@author A0148031R
+    private void updateRecurringTask(ReadOnlyTask target, Task updatedTask) 
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
+        List<ReadOnlyTask> tasks = toDoList.getTaskList();
+        ArrayList<ReadOnlyTask> children = new ArrayList<ReadOnlyTask>();
+        String parentName = target.getName().fullName;
+        
+        for(ReadOnlyTask task : tasks) {
+            if(task.isChild() && task.getName().fullName.equals(parentName)) {
+                children.add(task);
+            }
+        }
+        
+        RecurringTask newParent = new RecurringTask(target);
+        newParent.setName(updatedTask.getName());
+        toDoList.updateTask(target, newParent);
+        
+        for(ReadOnlyTask task : children) {
+            ChildRecurringTask newChild = new ChildRecurringTask(newParent);
+            newChild.setStartDateTime(task.getStartDateTime());
+            newChild.setEndDateTime(task.getEndDateTime());
+            toDoList.updateTask(task, newChild);
+        }
+        
+    }
 
+    //@@author
     @Override
-    public synchronized void markTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
-        for (ReadOnlyTask target: targets) {
-            toDoList.markTask(target);
-        } 
-        logger.fine("[MODEL] --- succesfully marked all specified targets from the to-do list");
+    public synchronized void markTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException, DuplicateTaskException {
+        for (ReadOnlyTask target : targets) {
+            if (target.isRecurring() && !target.isChild()) {
+                addTask(target.getChild());
+            } else if (!target.isRecurring()) {
+                toDoList.markTask(target);
+            }
+        }
         backupNewToDoList();
         indicateToDoListChanged();
+        logger.fine("MODEL --- succesfully marked all specified targets from the to-do list");
     }
     
     @Override
-    public synchronized void unmarkTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
+    public synchronized void unmarkTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException, 
+    NotLatestRecurringTaskException {
         for (ReadOnlyTask target: targets) {
-            toDoList.unmarkTask(target);
+            if (target.isChild() && !target.isLatestChild()) {
+                throw new NotLatestRecurringTaskException();
+            } else if(target.isLatestChild()) {
+                target.getParent().setPreviousDateTime();
+                ArrayList<ReadOnlyTask> taskToDelete = new ArrayList<ReadOnlyTask>();
+                taskToDelete.add(target);
+                deleteTasks(taskToDelete);
+            } else if(!target.isRecurring()) {
+                toDoList.unmarkTask(target);
+            }
         }
         logger.fine("[MODEL] --- succesfully unmarked all specified targets from the to-do list");
-        backupNewToDoList();
         indicateToDoListChanged();
+        backupNewToDoList();
     }
 
+    
+    //@@author A0133367E
     @Override
     public synchronized boolean restorePreviousToDoList() {
         assert !previousLists.empty();
@@ -156,13 +212,49 @@ public class ModelManager extends ComponentManager implements Model {
             return false;
         } else {
             previousLists.pop();
-            toDoList.resetData(previousLists.peek());
+            resetToDoListTaskType(previousLists.peek());
             logger.fine("[MODEL] --- succesfully restored the previous the to-do list from this session");
             indicateToDoListChanged();
             return true;
         }
     }
+
+    //@@author A0148031R
+    @Override
+    public void resetToDoListTaskType(ReadOnlyToDoList taskList) {
+        List<ReadOnlyTask> readOnlyTasks = taskList.getTaskList();
+        List<Task> tasks = new ArrayList<Task>();
+        HashMap<String, RecurringTask> parents = new HashMap<String, RecurringTask>();
+        List<ReadOnlyTask> childWaitingList = new ArrayList<ReadOnlyTask>();
+        
+        for (ReadOnlyTask task : readOnlyTasks) {
+            if (task.isRecurring() && task.isChild()) {
+                childWaitingList.add(task);
+            } else if (task.isRecurring()) {
+                RecurringTask parent = new RecurringTask(task);
+                tasks.add(parent);
+                parents.put(task.getName().fullName, parent);
+            } else {
+                tasks.add(new Task(task));
+            }
+        }
+
+        for (ReadOnlyTask child : childWaitingList) {
+            if (parents.containsKey(child.getName().fullName)) {
+                RecurringTask parent = parents.get(child.getName().fullName);
+                ChildRecurringTask newChild = new ChildRecurringTask(parent);
+                newChild.setEndDateTime(child.getEndDateTime());
+                newChild.setStartDateTime(child.getStartDateTime());
+                tasks.add(newChild);
+            } else {
+                tasks.add(new Task(child));
+            }
+        }
+        
+        toDoList.setTasks(tasks);
+    }
  
+    //@@author
     private void backupNewToDoList() {
         ToDoList latestList = new ToDoList(this.getToDoList());
         previousLists.push(latestList);
@@ -191,8 +283,8 @@ public class ModelManager extends ComponentManager implements Model {
         indicateChangeSaveLocationRequest(location);
         indicateLoadDataRequest(location);
     }
+
     //@@author
-    
     //=========== Filtered Task List Accessors ===============================================================
 
     @Override

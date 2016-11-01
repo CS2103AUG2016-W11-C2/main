@@ -35,14 +35,17 @@ public class Parser {
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>.+)");
 
     //@@author A0003878Y
-    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
-
+    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to|every)\\s|$)))+?");
     private static final Pattern SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
-
+    
     private static final String ARGS_FROM = "from";
+    private static final String ARGS_NEXT = "next";
     private static final String ARGS_BY = "by";
     private static final String ARGS_TO = "to";
-    private static final String[] TIME_TOKENS = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY };
+    private static final String ARGS_EVERY = "every";
+    private static final String ARGS_DAY = "day";
+    private static final String ARGS_WEEK = "week";
+    private static final String[] TIME_TOKENS = new String[] {ARGS_FROM, ARGS_TO, ARGS_BY, ARGS_EVERY};
 	
     //@@author
 
@@ -121,6 +124,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args) {
+        
         Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
@@ -137,15 +141,19 @@ public class Parser {
                     String s = matcher.group(0).toLowerCase();
                     if (s.startsWith(token)) {
                         String time = s.substring(token.length(), s.length());
-                        if (DateTimeUtils.containsTime(time)) {
-                            dateTimeMap.put(token, DateTimeUtils.parseNaturalLanguageDateTimeString(time));
+                        if(token.equals(ARGS_EVERY) && DateTimeUtils.containsTime(time) 
+                                || token.equals(ARGS_EVERY) && time.trim().equals(ARGS_DAY)
+                                || token.equals(ARGS_EVERY) && time.trim().equals(ARGS_WEEK)) {
+                            return prepareRecurrence(args);
+                        } else if (DateTimeUtils.containsTime(time)) {
+                            dateTimeMap.put(token, DateTimeUtils.parseNaturalLanguageDateTimeString(s));
                         } else {
                             taskTitle = taskTitle + s;
                         }
                     }
                 }
             }
-
+            
             if (dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(taskTitle, dateTimeMap.get(ARGS_BY));
             } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
@@ -154,14 +162,12 @@ public class Parser {
                     && !dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(taskTitle);
             } else {
-                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        AddCommand.MESSAGE_USAGE));
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
             }
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
     }
-
 
     /**
      * Parses arguments in the context of the schedule task command.
@@ -363,6 +369,74 @@ public class Parser {
         final String[] keywords = matcher.group("keywords").split("\\s+");
         final Set<String> keywordSet = new HashSet<>(Arrays.asList(keywords));
         return new FindCommand(keywordSet);
+    }
+    
+    
+    //@@author A0148031R
+    /**
+     * Parses arguments in the context of adding a recurring task
+     * @param args full command args string
+     * @return the prepared add command
+     */
+    private Command prepareRecurrence(String args) {
+        String period = null;
+        Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
+        
+        try {
+            matcher.reset();
+            matcher.find();
+            String taskTitle = matcher.group(0);
+            HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
+
+            while (matcher.find()) {
+                for (String token : TIME_TOKENS) {
+                    String s = matcher.group(0).toLowerCase();
+                    if (s.startsWith(token)) {
+                        String time = s.substring(token.length(), s.length());
+                        if (token.equals(ARGS_EVERY) && DateTimeUtils.containsTime(time)) {
+                            dateTimeMap.put(token, 
+                                    DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_FROM + " " + s).isPresent()
+                                    ? DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_FROM + " " + s)
+                                    : DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_NEXT + " " + s));
+                            LocalDateTime timeToAdd = dateTimeMap.get(token).get();
+                            if(timeToAdd.getYear() == LocalDateTime.now().getYear() && 
+                                    timeToAdd.getDayOfYear() == LocalDateTime.now().getDayOfYear()) {
+                                period = ARGS_DAY;
+                            }
+                        } else if (token.equals(ARGS_EVERY) && time.contains(ARGS_DAY)) {
+                            dateTimeMap.put(token, 
+                                    DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_NEXT + " " + ARGS_DAY));
+                            period = ARGS_DAY;
+                        } else if (token.equals(ARGS_EVERY) && time.contains(ARGS_WEEK)) {
+                            dateTimeMap.put(token, 
+                                    DateTimeUtils.parseNaturalLanguageDateTimeString(ARGS_NEXT + " " + ARGS_WEEK));
+                            period = ARGS_WEEK;
+                        } else {
+                            taskTitle = taskTitle + s;
+                        }
+                    }
+                }
+            }
+
+            if (dateTimeMap.containsKey(ARGS_EVERY) && dateTimeMap.containsKey(ARGS_FROM)
+                    && dateTimeMap.containsKey(ARGS_TO)) {
+                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO),
+                        args.substring(args.toLowerCase().lastIndexOf(ARGS_EVERY) + 6));
+            } else if (dateTimeMap.containsKey(ARGS_EVERY) && dateTimeMap.containsKey(ARGS_BY)) {
+                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_BY),
+                        args.substring(args.toLowerCase().lastIndexOf(ARGS_EVERY) + 6));
+            } else if (period != null) {
+                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_EVERY), period);
+            } else if (dateTimeMap.containsKey(ARGS_EVERY) && period == null) {
+                return new AddCommand(taskTitle, dateTimeMap.get(ARGS_EVERY), 
+                        args.substring(args.toLowerCase().lastIndexOf(ARGS_EVERY) + 6));
+            } else {
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            }
+            
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        }
     }
 
 }

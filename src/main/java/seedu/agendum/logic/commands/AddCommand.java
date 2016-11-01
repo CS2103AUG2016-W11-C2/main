@@ -73,6 +73,35 @@ public class AddCommand extends Command {
                 endDateTime
         );
     }
+    
+    /**
+     * Convenience constructor using name, start datetime, end datetime, period
+     *
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, Optional<LocalDateTime> startDateTime, 
+            Optional<LocalDateTime> endDateTime, String period)
+            throws IllegalValueException {
+        this.toAdd = new RecurringTask(
+                new Name(name),
+                startDateTime,
+                endDateTime,
+                period
+        );
+    }
+    
+    /**
+     * Convenience constructor using name, end datetime, period
+     *
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
+    public AddCommand(String name, Optional<LocalDateTime> endDateTime, String period) throws IllegalValueException {
+        this.toAdd = new RecurringTask(
+                new Name(name),
+                endDateTime,
+                period
+        );
+    }
 
     @Override
     public CommandResult execute() {

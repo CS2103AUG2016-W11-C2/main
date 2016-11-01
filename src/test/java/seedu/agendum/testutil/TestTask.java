@@ -128,6 +128,36 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
         return "add " + this.getName().fullName + " ";
     }
 
+    @Override
+    public boolean isRecurring() {
+        return false;
+    }
+
+    @Override
+    public ChildRecurringTask getChild() {
+        return null;
+    }
+
+    @Override
+    public RecurringTask getParent() {
+        return null;
+    }
+
+    @Override
+    public boolean isLatestChild() {
+        return false;
+    }
+
+    @Override
+    public boolean isChild() {
+        return false;
+    }
+
+    @Override
+    public String getPeriod() {
+        return null;
+    }
+
     public int compareTo(TestTask other) {
         int comparedCompletionStatus = compareCompletionStatus(other);
         if (comparedCompletionStatus != 0) {
@@ -175,6 +205,5 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
     public int compareName(TestTask other) {
         return this.getName().toString().compareTo(other.getName().toString());
     }
-
 
 }
