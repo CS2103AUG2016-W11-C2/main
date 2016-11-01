@@ -54,8 +54,8 @@ public class CommandBoxHistory {
     }
 
     /**
-     * Retrieves the previous valid/invalid command.
-     * If there is no new command, return an empty string to clear the command box
+     * Retrieves the next valid/invalid command.
+     * If there is no next command, return an empty string to clear the command box
      */
     public String getNextCommand() {
         if (!iterator.hasPrevious()) {
