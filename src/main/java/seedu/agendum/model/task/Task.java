@@ -155,7 +155,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
 
     public void setLastUpdatedTimeToNow() {
-        this.lastUpdatedTime = LocalDateTime.now();
+        this.lastUpdatedTime = LocalDateTime.now().withNano(0);
     }
 
     // ================ Other methods ==============================
