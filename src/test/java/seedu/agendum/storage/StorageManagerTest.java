@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.IOException;
 import java.util.NoSuchElementException;
+import java.util.Hashtable;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -15,7 +16,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.agendum.commons.core.Config;
-import seedu.agendum.commons.events.model.ChangeSaveLocationRequestEvent;
+import seedu.agendum.commons.events.model.ChangeSaveLocationEvent;
 import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
 import seedu.agendum.commons.events.storage.DataLoadingExceptionEvent;
@@ -38,7 +39,8 @@ public class StorageManagerTest {
 
     @Before
     public void setup() {
-        storageManager = new StorageManager(getTempFilePath("ab"), getTempFilePath("prefs"), new Config());
+        storageManager = new StorageManager(getTempFilePath("ab"), getTempFilePath("command"),
+                getTempFilePath("prefs"), new Config());
     }
 
 
@@ -61,6 +63,19 @@ public class StorageManagerTest {
         UserPrefs retrieved = storageManager.readUserPrefs().get();
         assertEquals(original, retrieved);
     }
+    
+    /**
+     * Verifies that StorageManager is properly wired to {@link JsonAliasTableStorage} class
+     */
+    @Test
+    public void commandLibraryReadSave() throws Exception {
+        Hashtable<String, String> testingTable = new Hashtable<String, String>();
+        testingTable.put("a", "add");
+        testingTable.put("d", "delete");
+        storageManager.saveAliasTable(testingTable);
+        Hashtable<String, String> retrieved = storageManager.readAliasTable().get();
+        assertEquals(testingTable, retrieved); 
+    }
 
     @Test
     public void toDoListReadSave() throws Exception {
@@ -79,7 +94,8 @@ public class StorageManagerTest {
     @Test
     public void handleToDoListChangedEventExceptionThrownEventRaised() throws IOException {
         //Create a StorageManager while injecting a stub that throws an exception when the save method is called
-        Storage storage = new StorageManager(new XmlToDoListStorageExceptionThrowingStub("dummy"), new JsonUserPrefsStorage("dummy"), new Config());
+        Storage storage = new StorageManager(new XmlToDoListStorageExceptionThrowingStub("dummy"), 
+                new JsonAliasTableStorage("dummy"), new JsonUserPrefsStorage("dummy"), new Config());
         EventsCollector eventCollector = new EventsCollector();
         storage.handleToDoListChangedEvent(new ToDoListChangedEvent(new ToDoList()));
         assertTrue(eventCollector.get(0) instanceof DataSavingExceptionEvent);
@@ -87,14 +103,14 @@ public class StorageManagerTest {
 
     //@@author A0148095X
     @Test
-    public void handleSaveLocationChangedEventValidFilePath() {
+    public void handleSaveLocationChangedEvent_validFilePath_success() {
         String validPath = "data/test.xml";
-        storageManager.handleChangeSaveLocationRequestEvent(new ChangeSaveLocationRequestEvent(validPath));
+        storageManager.handleChangeSaveLocationEvent(new ChangeSaveLocationEvent(validPath));
         assertEquals(storageManager.getToDoListFilePath(), validPath);
     }
     
     @Test
-    public void handleLoadDataRequestEventValidPathToFileInvalidFile() throws IOException, FileDeletionException {
+    public void handleLoadDataRequestEvent_validPathToFileInvalidFile_throwsException() throws IOException, FileDeletionException {
         EventsCollector eventCollector = new EventsCollector();
         String validPath = "data/testLoad.xml";
         assert !FileUtil.isFileExists(validPath);
@@ -113,24 +129,24 @@ public class StorageManagerTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void setToDoListFilePathNull() {
+    public void setToDoListFilePath_nullPath_fail() {
         // null
         storageManager.setToDoListFilePath(null);
     }
 
     @Test(expected = AssertionError.class)
-    public void setToDoListFilePathEmpty() {
+    public void setToDoListFilePath_pathEmpty_fail() {
         // empty string
         storageManager.setToDoListFilePath("");
     }
 
     @Test(expected = AssertionError.class)
-    public void setToDoListFilePathInvalid() {
+    public void setToDoListFilePath_pathInvalid_fail() {
         // invalid file path
         storageManager.setToDoListFilePath("1:/.xml");
     }
 
-    public void setToDoListFilePathValid() {
+    public void setToDoListFilePath_pathValid_success() {
         // valid file path
         String validPath = "test/test.xml";
         storageManager.setToDoListFilePath(validPath);
