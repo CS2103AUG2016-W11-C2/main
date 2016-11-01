@@ -26,8 +26,8 @@ import seedu.agendum.logic.Logic;
 import seedu.agendum.model.UserPrefs;
 
 /**
- * The Main Window. Provides the basic application layout containing
- * a menu bar and space where other JavaFX elements can be placed.
+ * The Main Window. Provides the basic application layout containing a menu bar
+ * and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart {
     private static final Logger logger = LogsCenter.getLogger(MainWindow.class);
@@ -37,7 +37,7 @@ public class MainWindow extends UiPart {
     public static final String LIST_COMMAND = "list";
 
     private Logic logic;
-    
+
     // Independent Ui parts residing in this Ui container
     private TasksPanel upcomingTasksPanel;
     private TasksPanel completedTasksPanel;
@@ -67,16 +67,16 @@ public class MainWindow extends UiPart {
     
     @FXML
     private AnchorPane upcomingTasksPlaceHolder;
-    
+
     @FXML
     private AnchorPane completedTasksPlaceHolder;
-    
+
     @FXML
     private AnchorPane floatingTasksPlaceHolder;
-    
+
     @FXML
     private AnchorPane statusbarPlaceholder;
-    
+
     @FXML
     private StackPane messagePlaceHolder;
 
@@ -100,9 +100,8 @@ public class MainWindow extends UiPart {
         return mainWindow;
     }
 
-    //@@author A0148031R
-    private void configure(String appTitle, String toDoListName, Config config, UserPrefs prefs,
-                           Logic logic) {
+    // @@author A0148031R
+    private void configure(String appTitle, String toDoListName, Config config, UserPrefs prefs, Logic logic) {
 
         this.logic = logic;
         this.config = config;
@@ -115,35 +114,65 @@ public class MainWindow extends UiPart {
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(e -> Platform.exit());
         setAccelerators();
-        handleEscape();
+        configureEscape();
         configureHelpWindowToggle();
-        
+
     }
 
+    /**
+     * Set shortcut key for help menu item
+     */
     private void setAccelerators() {
         helpMenuItem.setAccelerator(KeyCombination.valueOf("F5"));
     }
     
+    /**
+     * Set shortcut key to switch between help window and main window
+     */
     private void configureHelpWindowToggle() {
         scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             KeyCombination toggleHelpWindow = new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN);
+
             @Override
             public void handle(KeyEvent evt) {
-                if(toggleHelpWindow.match(evt) && messagePlaceHolder.getChildren().size() == 0) {
+                if (toggleHelpWindow.match(evt) && messagePlaceHolder.getChildren().size() == 0) {
                     openHelpWindow();
-                } else if(toggleHelpWindow.match(evt) && messagePlaceHolder.getChildren().size() != 0) {
+                } else if (toggleHelpWindow.match(evt) && messagePlaceHolder.getChildren().size() != 0) {
                     closeHelpWindow();
+
+                }
+            }
+        });
+    }
+    
+    /**
+     * Set shortcut key to quickly switch back to main list after using find
+     * command or showing help page
+     */
+    private void configureEscape() {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent evt) {
+                if (evt.getCode().equals(KeyCode.ESCAPE) && messagePlaceHolder.getChildren().contains(helpWindow)) {
+                    closeHelpWindow();
+                } else if(evt.getCode().equals(KeyCode.ESCAPE) && messagePlaceHolder.getChildren().size() > 0) {
+                    messagePlaceHolder.getChildren().clear();
+                    messagePlaceHolder.setMaxHeight(0);
+                    logic.execute(LIST_COMMAND);
                 }
             }
         });
     }
 
+    /**
+     * Loads the ui elements
+     */
     void fillInnerParts() {
-        upcomingTasksPanel = UpcomingTasksPanel.load(primaryStage, getUpcomingTasksPlaceHolder(), 
+        upcomingTasksPanel = UpcomingTasksPanel.load(primaryStage, getUpcomingTasksPlaceHolder(),
                 logic.getFilteredTaskList(), new UpcomingTasksPanel());
-        completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(), 
+        completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(),
                 logic.getFilteredTaskList(), new CompletedTasksPanel());
-        floatingTasksPanel = FloatingTasksPanel.load(primaryStage, getFloatingTasksPlaceHolder(), 
+        floatingTasksPanel = FloatingTasksPanel.load(primaryStage, getFloatingTasksPlaceHolder(),
                 logic.getFilteredTaskList(), new FloatingTasksPanel());
         resultPopUp = ResultPopUp.load(primaryStage);
         statusBarFooter = StatusBarFooter.load(primaryStage, getStatusbarPlaceholder(), config.getToDoListFilePath());
@@ -153,7 +182,7 @@ public class MainWindow extends UiPart {
     private AnchorPane getCommandBoxPlaceholder() {
         return commandBoxPlaceholder;
     }
-    
+
     public StackPane getMessagePlaceHolder() {
         return messagePlaceHolder;
     }
@@ -161,15 +190,15 @@ public class MainWindow extends UiPart {
     private AnchorPane getStatusbarPlaceholder() {
         return statusbarPlaceholder;
     }
-    
+
     public AnchorPane getUpcomingTasksPlaceHolder() {
         return upcomingTasksPlaceHolder;
     }
-    
+
     public AnchorPane getCompletedTasksPlaceHolder() {
         return completedTasksPlaceHolder;
     }
-    
+
     public AnchorPane getFloatingTasksPlaceHolder() {
         return floatingTasksPlaceHolder;
     }
@@ -186,11 +215,6 @@ public class MainWindow extends UiPart {
         return (FloatingTasksPanel)this.floatingTasksPanel;
     }
 
-    //@@author 
-    private void setTitle(String appTitle) {
-        primaryStage.setTitle(appTitle);
-    }
-    
     /**
      * Sets the default size based on user preferences.
      */
@@ -236,31 +260,17 @@ public class MainWindow extends UiPart {
             rootLayout.getChildren().add(rootLayout.getChildren().indexOf(statusbarPlaceholder), splitPane);
         }
     }
-    
-    /**
-     * goes back to view all the tasks
-     */
-    private void handleEscape() {
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent evt) {
-                if (evt.getCode().equals(KeyCode.ESCAPE) && messagePlaceHolder.getChildren().contains(helpWindow)) {
-                    closeHelpWindow();
-                } else if(evt.getCode().equals(KeyCode.ESCAPE) && messagePlaceHolder.getChildren().size() > 0) {
-                    messagePlaceHolder.getChildren().clear();
-                    messagePlaceHolder.setMaxHeight(0);
-                    logic.execute(LIST_COMMAND);
-                }
-            }
-        });
-    }
 
-    public void show() {
-        primaryStage.show();
+    private void setTitle(String appTitle) {
+        primaryStage.setTitle(appTitle);
     }
 
     public void hide() {
         primaryStage.hide();
+    }
+
+    public void show() {
+        primaryStage.show();
     }
 
     /**
