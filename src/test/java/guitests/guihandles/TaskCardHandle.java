@@ -17,14 +17,14 @@ public class TaskCardHandle extends GuiHandle {
     private static final String NAME_FIELD_ID = "#name";
     private static final String INDEX_FIELD_ID = "#id";
     private static final String TIME_FIELD_ID = "#time";
-    private static final String NON_COMPLETED_TIME_PATTERN = "HH:mm EEE, dd MMM";
+    private static final String TASK_TIME_PATTERN = "HH:mm EEE, dd MMM";
     private static final String COMPLETED_TIME_PATTERN = "EEE, dd MMM";
+    private static final String OVERDUE_PREFIX = "Overdue\n";
+    private static final String COMPLETED_PREFIX = "Completed on ";
     private static final String START_TIME_PREFIX = " from ";
     private static final String END_TIME_PREFIX = " to ";
     private static final String DEADLINE_PREFIX = "by ";
     private static final String EMPTY_PREFIX = "";
-    private static final String OVERDUE_PREFIX = "Overdue\n";
-    private static final String COMPLETED_PREFIX = "Completed ";
 
     private Node node;
 
@@ -50,21 +50,58 @@ public class TaskCardHandle extends GuiHandle {
     }
 
     public boolean isSameTask(ReadOnlyTask task){
-        // the completion status will be checked by which panel it belongs in
-        if (task.isOverdue()) {
-            return getName().equals(task.getName().fullName) && getTime().equals(OVERDUE_PREFIX
-                    + formatTime(task, NON_COMPLETED_TIME_PATTERN, START_TIME_PREFIX, task.getStartDateTime())
-                    + formatTime(task, NON_COMPLETED_TIME_PATTERN, END_TIME_PREFIX, task.getEndDateTime()));
-        } else if (task.hasTime()) {
-            return getName().equals(task.getName().fullName) && getTime()
-                    .equals(formatTime(task, NON_COMPLETED_TIME_PATTERN, START_TIME_PREFIX, task.getStartDateTime())
-                            + formatTime(task, NON_COMPLETED_TIME_PATTERN, END_TIME_PREFIX, task.getEndDateTime()));
-        } else if (task.isCompleted()) {
-            return getName().equals(task.getName().fullName) && getTime().equals(COMPLETED_PREFIX + formatTime(task,
-                    COMPLETED_TIME_PATTERN, EMPTY_PREFIX, Optional.ofNullable(task.getLastUpdatedTime())));
+        
+        StringBuilder timeDescription = new StringBuilder();
+        String name = task.getName().fullName;
+        timeDescription.append(formatTaskTime(task));
+        
+        if(task.isCompleted()) {
+            timeDescription.append(formatUpdatedTime(task));
+            return getName().equals(name) && getTime().equals(timeDescription);
         } else {
-            return getName().equals(task.getName().fullName);
+            return getName().equals(name) && getTime().equals(timeDescription);
         }
+    }
+    
+    public String formatTime(String dateTimePattern, String prefix, Optional<LocalDateTime> dateTime) {
+
+        StringBuilder sb = new StringBuilder();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(dateTimePattern);
+        sb.append(prefix).append(dateTime.get().format(format));
+        
+        return sb.toString();
+    }
+
+    public String formatTaskTime(ReadOnlyTask task) {
+        
+        StringBuilder timeStringBuilder = new StringBuilder();
+
+        if (task.isOverdue()) {
+            timeStringBuilder.append(OVERDUE_PREFIX);
+        }
+
+        if (task.isEvent()) {
+            String startTime = formatTime(TASK_TIME_PATTERN, START_TIME_PREFIX, task.getStartDateTime());
+            String endTime = formatTime(TASK_TIME_PATTERN, END_TIME_PREFIX, task.getEndDateTime());
+            timeStringBuilder.append(startTime);
+            timeStringBuilder.append(endTime);
+        } else if (task.hasDeadline()) {
+            String deadline = formatTime(TASK_TIME_PATTERN, DEADLINE_PREFIX, task.getEndDateTime());
+            timeStringBuilder.append(deadline);
+        }
+
+        return timeStringBuilder.toString();
+    }
+
+    public String formatUpdatedTime(ReadOnlyTask task) {
+        StringBuilder timeStringBuilder = new StringBuilder();
+        if (task.hasTime()) {
+            timeStringBuilder.append("\n");
+        }
+        timeStringBuilder.append(COMPLETED_PREFIX);
+        timeStringBuilder.append(formatTime(COMPLETED_TIME_PATTERN, EMPTY_PREFIX,
+                Optional.ofNullable(task.getLastUpdatedTime())));
+        return timeStringBuilder.toString();
     }
     
 
