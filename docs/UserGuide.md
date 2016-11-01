@@ -397,10 +397,10 @@ To create an alias, here is the *format*:
 
 Examples:
 ```
-> alias mark m <br>
+> alias mark m
 Result: you can now use `m` or `mark` to mark a task as completed.
-> alias mark mk <br>
-Result: Now you can use `m`, `mk` or `mark` to mark a task.
+> alias mark mk
+Result: Now you can use "m", "mk" or "mark" to mark a task as completed.
 ```
 
 ### Removing an alias command : `unalias`
@@ -416,10 +416,10 @@ To remove a previously defined alias, here is the *format*:
 
 Examples:
 ```
-If mark is aliased with `m` and `mk`.
+If mark is aliased with "m" and "mk".
 > unalias mk
-Result m can no longer be used to mark tasks; now you can only use the
-original command `mark` or `m` to mark a task as completed.
+Result: "mk" can no longer be used to mark tasks; now you can only use the
+original command "mark" or "m" to mark a task as completed.
 ```
 
 
@@ -436,10 +436,10 @@ Agendum offers you the flexibility in choosing where the task list data will be 
 The task list data will be saved to the specific directory, and future data will be saved in that location.
 
 Here is the *format*:
-* `store <path-to-file>`
+* `store <location>`
 
-> * `<path-to-file>` must be a valid path to a file on the local computer.
-> * If there is an existing file at `<path-to-file>`, it will be overriden.
+> * `<location>` must be a valid path to a file on the local computer.
+> * If there is an existing file at `<location>`, it will be overriden.
 > * The data storage file at the original location will not be deleted. This is similar to a "Save as..." in other applications.
 
 Examples:
@@ -453,16 +453,16 @@ Examples:
 After relocating Agendum’s data files, you might want to load that exact copy of Agendum’s task list from a certain location, or from a Cloud Storage service. Agendum also offers you the flexibility to choose which data files to import.
 
 Here is the *format*:
-* `load <path-to-file>`
+* `load <location>`
 
-> * <path-to-file> must be a valid path to a file on the local computer.
+> * <location> must be a valid path to a file on the local computer.
 > * Your current data would have already been saved automatically in its original data storage location.
-> * Agendum will then show data loaded from <path-to-file> and save data there in the future.
+> * Agendum will then show data loaded from <location> and save data there in the future.
 > * You will not be able to `undo` immediately after loading as there have been no changes to the loaded list.
 
 Examples:
 ```
-> `load C:/Dropbox/mytasklist.xml`
+> load C:/Dropbox/mytasklist.xml
 ```
 
 
