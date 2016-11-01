@@ -288,20 +288,21 @@ public class LogicManagerTest {
     }
     //@@author
 
+    //@@author
     @Test
-    public void executeDeleteInvalidArgsFormatErrorMessageShown() throws Exception {
+    public void execute_deleteInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("delete", expectedMessage);
     }
 
     @Test
-    public void executeDeleteIndexNotFoundErrorMessageShown() throws Exception {
+    public void execute_deleteIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("delete");
     }
 
     //@@author A0133367E
     @Test
-    public void executeDeleteRemovesCorrectSingleTask() throws Exception {
+    public void execute_delete_removesCorrectSingleTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
 
@@ -324,7 +325,7 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }    
 
-    public void executeDeleteRemovesCorrectRangeOfTasks() throws Exception {
+    public void execute_delete_removesCorrectRangeOfTasks() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> fourTasks = helper.generateTaskList(4);
 
@@ -351,7 +352,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void executeDeleteRemovesCorrectMultipleTasks() throws Exception {
+    public void execute_delete_removesCorrectMultipleTasks() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> fourTasks = helper.generateTaskList(4);
 
@@ -377,9 +378,10 @@ public class LogicManagerTest {
     }
     //@author
 
+
     //@@author A0148095X
     @Test
-    public void executeStore_validLocation_successful() throws Exception {
+    public void execute_store_successful() throws Exception {
         // setup expectations
         ToDoList expectedTDL = new ToDoList();
         Task testTask = new Task(new Name("test_store"));
@@ -429,19 +431,20 @@ public class LogicManagerTest {
     //@@author
 
     //@@author A0133367E
+    //@@author A0133367E
     @Test
-    public void executeMarkInvalidArgsFormatErrorMessageShown() throws Exception {
+    public void execute_markInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, MarkCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("mark", expectedMessage);
     }
 
     @Test
-    public void executeMarkIndexNotFoundErrorMessageShown() throws Exception {
+    public void execute_markIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("mark");
     }
 
     @Test
-    public void executeMarkMarksCorrectSingleTaskAsCompleted() throws Exception {
+    public void execute_mark_marksCorrectSingleTaskAsCompleted() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(3);
 
@@ -450,7 +453,6 @@ public class LogicManagerTest {
         expectedTDL.markTask(threeTasks.get(0));
 
         // prepare model
-        model.resetData(new ToDoList());
         helper.addToModel(model, threeTasks);
 
         // test boundary value (first task in the list)
@@ -461,7 +463,7 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void executeMarkMarksCorrectRangeOfTasks() throws Exception {
+    public void execute_mark_marksCorrectRangeOfTasks() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> fourTasks = helper.generateTaskList(4);
 
@@ -471,7 +473,6 @@ public class LogicManagerTest {
         expectedTDL.markTask(fourTasks.get(3));
 
         // prepare model
-        model.resetData(new ToDoList());
         helper.addToModel(model, fourTasks);
 
         // test boundary value (up to last task in the list)
@@ -482,7 +483,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void executeMarkMarksCorrectMultipleTasks() throws Exception {
+    public void execute_mark_marksCorrectMultipleTasks() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> fourTasks = helper.generateTaskList(4);
 
@@ -503,18 +504,18 @@ public class LogicManagerTest {
 
 
     @Test
-    public void executeUnmarkInvalidArgsFormatErrorMessageShown() throws Exception {
+    public void execute_unmarkInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnmarkCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("unmark", expectedMessage);
     }
 
     @Test
-    public void executeUnmarkIndexNotFoundErrorMessageShown() throws Exception {
+    public void execute_unmarkIndexNotFound_errorMessageShown() throws Exception {
         assertIndexNotFoundBehaviorForCommand("unmark");
     }
 
     @Test
-    public void executeUnmarkUnmarksCorrectSingleTaskFromCompleted() throws Exception {
+    public void execute_unmark_UnmarksCorrectSingleTaskFromCompleted() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(2);
         threeTasks.add(helper.generateCompletedTask(3));
@@ -524,7 +525,6 @@ public class LogicManagerTest {
         expectedTDL.unmarkTask(threeTasks.get(2));
 
         // prepare model
-        model.resetData(new ToDoList());
         helper.addToModel(model, threeTasks);
 
         // test boundary value - last task in the list
@@ -535,7 +535,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void executeUnmarkUnmarksCorrectRangeOfTasks() throws Exception {
+    public void execute_unmark_unmarksCorrectRangeOfTasks() throws Exception {
         // indexes provided are startIndex-endIndex.
         // Tasks with visible index in range [startIndex, endIndex] are marked
         TestDataHelper helper = new TestDataHelper();
@@ -549,7 +549,6 @@ public class LogicManagerTest {
         expectedTDL.unmarkTask(fourTasks.get(3));
 
         // prepare model
-        model.resetData(new ToDoList());
         helper.addToModel(model, fourTasks);
 
         assertCommandBehavior("unmark 3-4",
@@ -559,7 +558,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void executeUnmarkUnmarksCorrectMultipleTasks() throws Exception {
+    public void execute_unmark_unmarksCorrectMultipleTasks() throws Exception {
         // unmark multiple indices specified (separated by space/comma)
         TestDataHelper helper = new TestDataHelper();
         List<Task> fourTasks = helper.generateTaskList(helper.generateTask(1), helper.generateCompletedTask(2),
@@ -582,7 +581,7 @@ public class LogicManagerTest {
 
 
     @Test
-    public void executeRenameInvalidArgsFormatErrorMessageShown() throws Exception {
+    public void execute_renameInvalidArgsFormat_errorMessageShown() throws Exception {
         // invalid index format
         // a valid name is provided since invalid input values must be tested one at a time
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE);
@@ -604,13 +603,13 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void executeRenameIndexNotFoundErrorMessageShown() throws Exception {
+    public void execute_renameIndexNotFound_errorMessageShown() throws Exception {
         // a valid name is provided to only test for invalid index
         assertIndexNotFoundBehaviorForCommand("rename", "new task name");
     }
 
     @Test
-    public void  executeRenameToGetDuplicateNotAllowed() throws Exception {
+    public void  execute_renameToGetDuplicate_notAllowed() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Task toBeDuplicated = helper.adam();
         Task toBeRenamed = helper.generateTask(1);
@@ -629,7 +628,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void executeRenameRenamesCorrectTask() throws Exception {
+    public void execute_rename_RenamesCorrectTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         List<Task> threeTasks = helper.generateTaskList(2);
         Task taskToRename = helper.generateCompletedTask(3);
@@ -655,7 +654,7 @@ public class LogicManagerTest {
 
  
     @Test
-    public void executeScheduleInvalidArgsFormatErrorMessageShown() throws Exception {
+    public void execute_scheduleInvalidArgsFormat_errorMessageShown() throws Exception {
         // invalid index format
         // a valid time is provided since invalid input values must be tested one at a time
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE);
@@ -676,13 +675,13 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void executeScheduleIndexNotFoundErrorMessageShown() throws Exception {
+    public void execute_scheduleIndexNotFound_errorMessageShown() throws Exception {
         // a valid time is provided to only test for invalid index
         assertIndexNotFoundBehaviorForCommand("schedule", "by 9pm");
     }
 
     @Test
-    public void  executeScheduleToGetDuplicateNotAllowed() throws Exception {
+    public void  execute_scheduleToGetDuplicate_notAllowed() throws Exception {
         TestDataHelper helper = new TestDataHelper();
         Task toBeDuplicated = helper.generateTask(1);
         LocalDateTime time = LocalDateTime.of(2016, 10, 10, 10, 10);
@@ -706,7 +705,7 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void executeScheduleScheduleCorrectTask() throws Exception {
+    public void execute_schedule_scheduleCorrectTask() throws Exception {
         TestDataHelper helper = new TestDataHelper();       
         List<Task> threeTasks = helper.generateTaskList(2);
 
@@ -734,83 +733,9 @@ public class LogicManagerTest {
     }
 
 
-    @Test
-    public void execute_aliasInvalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE);
-        assertCommandBehavior("alias", expectedMessage, new ToDoList(), Collections.emptyList());
-        //alias should not contain symbols
-        assertCommandBehavior("alias add +", expectedMessage, new ToDoList(), Collections.emptyList());
-        // new alias key has space
-        assertCommandBehavior("alias add a 1", expectedMessage, new ToDoList(), Collections.emptyList());
-    }
-
-    @Test
-    public void execute_aliasNonOriginalCommand_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(AliasCommand.MESSAGE_FAILURE_NON_ORIGINAL_COMMAND, "a");
-        assertCommandBehavior("alias a short", expectedMessage, new ToDoList(), Collections.emptyList());
-    }
-
-    @Test
-    public void execute_aliasKeyIsReservedCommandWord_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(AliasCommand.MESSAGE_FAILURE_UNAVAILABLE_ALIAS,
-                                    RenameCommand.COMMAND_WORD);
-        assertCommandBehavior("alias " + AddCommand.COMMAND_WORD + " " + RenameCommand.COMMAND_WORD,
-                expectedMessage, new ToDoList(), Collections.emptyList());
-    }
-
-    @Test
-    public void execute_aliasKeyIsInUse_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(AliasCommand.MESSAGE_FAILURE_ALIAS_IN_USE,
-                                    "r", RenameCommand.COMMAND_WORD);
-        CommandLibrary.getInstance().addNewAlias("r", RenameCommand.COMMAND_WORD);
-        assertCommandBehavior("alias " + AddCommand.COMMAND_WORD + " r",
-                expectedMessage, new ToDoList(), Collections.emptyList());
-    }
-
-    @Test
-    public void execute_aliasValidKey_successfullyAdded() throws Exception {
-        String expectedMessage = String.format(AliasCommand.MESSAGE_SUCCESS, "a", AddCommand.COMMAND_WORD);
-        //should be case insensitive
-        assertCommandBehavior("alias " + AddCommand.COMMAND_WORD + " A",
-                expectedMessage, new ToDoList(), Collections.emptyList());
-        TestDataHelper helper = new TestDataHelper();
- 
-        Task addedTask = helper.generateTaskWithName("new task");
-        List<Task> taskList = helper.generateTaskList(addedTask);
-
-        ToDoList expectedTDL = helper.generateToDoList(taskList);
-        expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, addedTask);
-
-        assertCommandBehavior("a new task", expectedMessage, expectedTDL,
-                expectedTDL.getTaskList());
-    }
-
-
-    @Test
-    public void execute_unaliasInvalidArgsFormat_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE);
-        assertCommandBehavior("unalias", expectedMessage, new ToDoList(), Collections.emptyList());
-    }
-
-    @Test
-    public void execute_unaliasNoSuchKey_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(UnaliasCommand.MESSAGE_FAILURE_NO_ALIAS_KEY, "smth");
-        assertCommandBehavior("unalias smth", expectedMessage, new ToDoList(), Collections.emptyList());
-    }
-
-    @Test
-    public void execute_unaliasExistingAliasKey_successfullyRemoved() throws Exception {
-        String expectedMessage = String.format(UnaliasCommand.MESSAGE_SUCCESS, "wow");
-        CommandLibrary.getInstance().addNewAlias("wow", AddCommand.COMMAND_WORD);
-        assertCommandBehavior("unalias wow", expectedMessage, new ToDoList(), Collections.emptyList());
-        expectedMessage = MESSAGE_UNKNOWN_COMMAND;
-        assertCommandBehavior("wow new task", expectedMessage, new ToDoList(), Collections.emptyList());
-    }
-
-
     //@@author
     @Test
-    public void executeFindInvalidArgsFormat() throws Exception {
+    public void execute_find_invalidArgsFormat() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
         assertCommandBehavior("find ", expectedMessage);
     }
