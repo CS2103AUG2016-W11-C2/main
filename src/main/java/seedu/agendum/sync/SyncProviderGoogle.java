@@ -11,10 +11,10 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Lists;
 import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.CalendarList;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.model.task.Task;
+import com.google.api.services.calendar.model.Calendar;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class SyncProviderGoogle extends SyncProvider {
     private static FileDataStoreFactory dataStoreFactory;
     private static HttpTransport httpTransport;
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static Calendar client;
+    private static com.google.api.services.calendar.Calendar client;
     static final List<com.google.api.services.calendar.model.Calendar> addedCalendarsUsingBatch = Lists.newArrayList();
 
     public SyncProviderGoogle() {
@@ -70,7 +70,7 @@ public class SyncProviderGoogle extends SyncProvider {
 
     }
 
-    private static Credential authorize() throws Exception {
+    private Credential authorize() throws Exception {
         GoogleClientSecrets.Details details = new GoogleClientSecrets.Details();
         details.setClientId("1011464737889-n9avi9id8fur78jh3kqqctp9lijphq2n.apps.googleusercontent.com");
         details.setClientSecret("ea78y_rPz3G4kwIV3yAF99aG");
@@ -81,10 +81,23 @@ public class SyncProviderGoogle extends SyncProvider {
         return (new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())).authorize("user");
     }
 
-    private static void showCalendars() throws IOException {
-//        View.header("Show Calendars");
+
+    private Calendar addCalendarIfNotExist() throws IOException {
+        logger.info("Add Calendar");
+        Calendar entry = new Calendar();
+        entry.setSummary("Agendum Calendar");
+        Calendar result = client.calendars().insert(entry).execute();
+        logger.info(result.toPrettyString());
+        return result;
+    }
+
+    private void showCalendars() throws IOException {
+        logger.info("Show calendars");
         CalendarList feed = (CalendarList)client.calendarList().list().execute();
-//        View.display(feed);
-        System.out.println(feed);
+        System.out.println(feed.toPrettyString());
+
+        for (c : feed) {
+
+        }
     }
 }
