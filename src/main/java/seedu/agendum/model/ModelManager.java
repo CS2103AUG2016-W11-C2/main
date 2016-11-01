@@ -56,7 +56,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
         previousLists = new Stack<>();
-        backupNewToDoList();
+        backupCurrentToDoList();
 
         syncManager = new SyncManager(new SyncProviderGoogle());
     }
@@ -70,7 +70,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
         previousLists = new Stack<>();
-        backupNewToDoList();
+        backupCurrentToDoList();
 
         syncManager = new SyncManager(new SyncProviderGoogle());
     }
