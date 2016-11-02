@@ -2,6 +2,7 @@ package seedu.agendum.logic.commands;
 
 import seedu.agendum.commons.exceptions.IllegalValueException;
 
+//@@author A0003878Y
 public class SyncCommand extends Command {
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "sync";
@@ -39,6 +40,7 @@ public class SyncCommand extends Command {
         }
     }
 
+    //@@author
     public static String getName() {
         return COMMAND_WORD;
     }

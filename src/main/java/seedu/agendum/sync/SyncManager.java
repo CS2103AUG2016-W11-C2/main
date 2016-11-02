@@ -6,6 +6,7 @@ import seedu.agendum.model.task.Task;
 
 import java.util.logging.Logger;
 
+//@@author A0003878Y
 public class SyncManager extends ComponentManager implements Sync {
     private final Logger logger = LogsCenter.getLogger(SyncManager.class);
     private SyncStatus syncStatus = SyncStatus.NOTRUNNING;

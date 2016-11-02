@@ -25,6 +25,7 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.logging.Logger;
 
+//@@author A0003878Y
 public class SyncProviderGoogle extends SyncProvider {
     private final Logger logger = LogsCenter.getLogger(SyncProviderGoogle.class);
 

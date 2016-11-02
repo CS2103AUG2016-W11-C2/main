@@ -417,7 +417,7 @@ public class Parser {
 
         return taskIds;
     }
-    
+
     //@@author
     /**
      * Parses arguments in the context of the find task command.
@@ -438,6 +438,13 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
+    //@@author A0003878Y
+    /**
+     * Parses arugments in the context of the sync command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
     private Command prepareSync(String args) {
         try {
             return new SyncCommand(args);
@@ -446,4 +453,5 @@ public class Parser {
         }
     }
 
+    //@@author
 }

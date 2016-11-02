@@ -2,6 +2,7 @@ package seedu.agendum.sync;
 
 import seedu.agendum.model.task.Task;
 
+//@@author A0003878Y
 public interface Sync {
 
     enum SyncStatus {
