@@ -34,11 +34,15 @@ public class SyncManager extends ComponentManager implements Sync {
 
     @Override
     public void stopSyncing() {
-
+        syncProvider.stop();
     }
 
     @Override
     public void addNewEvent(Task task) {
-
+        if (syncStatus == SyncStatus.RUNNING) {
+            if (task.getStartDateTime().isPresent() && task.getEndDateTime().isPresent()) {
+                syncProvider.addNewEvent(task);
+            }
+        }
     }
 }

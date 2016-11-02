@@ -9,29 +9,35 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.DateTime;
 import com.google.api.client.util.Lists;
 import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.calendar.model.CalendarList;
+import com.google.api.services.calendar.model.*;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.model.task.Task;
-import com.google.api.services.calendar.model.Calendar;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.logging.Logger;
 
 public class SyncProviderGoogle extends SyncProvider {
     private final Logger logger = LogsCenter.getLogger(SyncProviderGoogle.class);
 
     private static final String APPLICATION_NAME = "Agendum";
+    private static final String CALENDAR_NAME = "Agendum Calendar";
     private static final File DATA_STORE_DIR = new File(System.getProperty("user.home"), ".store/calendar_sample");
     private static FileDataStoreFactory dataStoreFactory;
     private static HttpTransport httpTransport;
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static com.google.api.services.calendar.Calendar client;
     static final List<com.google.api.services.calendar.model.Calendar> addedCalendarsUsingBatch = Lists.newArrayList();
+
+    private Calendar agendumCalendar;
 
     public SyncProviderGoogle() {
         try {
@@ -51,6 +57,8 @@ public class SyncProviderGoogle extends SyncProvider {
             Credential t = authorize();
             client = (new com.google.api.services.calendar.Calendar.Builder(httpTransport, JSON_FACTORY, t)).setApplicationName("Agendum").build();
             showCalendars();
+            agendumCalendar = getAgendumCalendar();
+            
             syncManager.setSyncStatus(Sync.SyncStatus.RUNNING);
         } catch (IOException var3) {
             System.err.println(var3.getMessage());
@@ -67,7 +75,23 @@ public class SyncProviderGoogle extends SyncProvider {
 
     @Override
     public void addNewEvent(Task task) {
+        Date startDate = Date.from(task.getStartDateTime().get().atZone(ZoneId.systemDefault()).toInstant());
+        Date endDate = Date.from(task.getEndDateTime().get().atZone(ZoneId.systemDefault()).toInstant());
 
+        EventDateTime startEventDateTime = new EventDateTime().setDateTime(new DateTime(startDate));
+        EventDateTime endEventDateTime = new EventDateTime().setDateTime(new DateTime(endDate));
+
+        Event newEvent = new Event();
+        newEvent.setSummary(String.valueOf(task.getName()));
+        newEvent.setStart(startEventDateTime);
+        newEvent.setEnd(endEventDateTime);
+
+        try {
+            Event result = client.events().insert(agendumCalendar.getId(), newEvent).execute();
+            logger.info(result.toPrettyString());
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     private Credential authorize() throws Exception {
@@ -82,22 +106,31 @@ public class SyncProviderGoogle extends SyncProvider {
     }
 
 
-    private Calendar addCalendarIfNotExist() throws IOException {
-        logger.info("Add Calendar");
+    private Calendar getAgendumCalendar() throws IOException {
+        CalendarList feed = (CalendarList)client.calendarList().list().execute();
+        logger.info("Searching for Agnendum Calendar");
+
+        for (CalendarListEntry entry : feed.getItems()) {
+            if (entry.getSummary().equals(CALENDAR_NAME)) {
+                logger.info(CALENDAR_NAME + " found");
+                Calendar calendar = client.calendars().get(entry.getId()).execute();
+                logger.info(calendar.toPrettyString());
+                return calendar;
+            }
+
+        }
+
+        logger.info(CALENDAR_NAME + "not found, creating new.");
         Calendar entry = new Calendar();
-        entry.setSummary("Agendum Calendar");
-        Calendar result = client.calendars().insert(entry).execute();
-        logger.info(result.toPrettyString());
-        return result;
+        entry.setSummary(CALENDAR_NAME);
+        Calendar calendar = client.calendars().insert(entry).execute();
+        logger.info(calendar.toPrettyString());
+        return calendar;
     }
 
     private void showCalendars() throws IOException {
         logger.info("Show calendars");
         CalendarList feed = (CalendarList)client.calendarList().list().execute();
         System.out.println(feed.toPrettyString());
-
-        for (c : feed) {
-
-        }
     }
 }

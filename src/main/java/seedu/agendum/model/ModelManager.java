@@ -126,6 +126,8 @@ public class ModelManager extends ComponentManager implements Model {
         backupCurrentToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
+
+        syncManager.addNewEvent(task);
     }
     
     @Override
