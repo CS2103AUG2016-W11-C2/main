@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 //@@author A0148031R
 /**
- * Controller for a pop up window to show command execution result
+ * Controller for a pop up window that shows command execution result
  */
 public class ResultPopUp extends UiPart {
     private static final Logger logger = LogsCenter.getLogger(ResultPopUp.class);
@@ -71,6 +71,10 @@ public class ResultPopUp extends UiPart {
         return dialogStage.isShowing() && dialogStage.getOpacity() != 0;
     }
 
+    /**
+     * Shows message in a pop up window for several seconds
+     * @param message The command execution result to be shown
+     */
     public void postMessage(String message) {
         
         if(this.isShowingMessage()) {
