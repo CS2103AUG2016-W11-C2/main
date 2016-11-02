@@ -1,6 +1,7 @@
 package seedu.agendum.testutil;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 
@@ -12,7 +13,12 @@ import seedu.agendum.model.task.*;
 public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
 
     private static final int UPCOMING_DAYS_THRESHOLD = 7;
-
+    
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm");
+    private static final String DEADLINE_WORD = "by ";
+    private static final String EVENT_START_WORD = "from ";
+    private static final String EVENT_END_WORD = "end ";
+    
     private Name name;
     private boolean isCompleted;
     private LocalDateTime startDateTime;
@@ -135,7 +141,18 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
     }
 
     public String getAddCommand() {
-        return "add " + this.getName().fullName + " ";
+        StringBuilder command = new StringBuilder();
+        command.append("add " + this.getName().fullName + " ");
+        if (isEvent()) {
+            command.append(EVENT_START_WORD);
+            command.append(startDateTime.format(formatter));
+            command.append(EVENT_END_WORD);
+            command.append(endDateTime.format(formatter));
+        } else if (hasDeadline()) {
+            command.append(DEADLINE_WORD);
+            command.append(endDateTime.format(formatter));
+        }
+        return command.toString();
     }
 
     public int compareTo(TestTask other) {
