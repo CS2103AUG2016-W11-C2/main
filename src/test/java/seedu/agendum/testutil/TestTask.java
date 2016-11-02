@@ -20,9 +20,9 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
     private LocalDateTime lastUpdatedTime;
 
     public TestTask() {
-        isCompleted = false;
-        startDateTime = null;
-        endDateTime = null;
+        this.isCompleted = false;
+        this.startDateTime = null;
+        this.endDateTime = null;
         setLastUpdatedTimeToNow();
     }
 
@@ -63,7 +63,7 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
     }
 
     public void setLastUpdatedTimeToNow() {
-        this.lastUpdatedTime = LocalDateTime.now();
+        this.lastUpdatedTime = LocalDateTime.now().withNano(0);
     }
 
     public void setLastUpdatedTime(LocalDateTime updatedTime) {
@@ -81,8 +81,8 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
     }
 
     public boolean isUpcoming() {
-        return  !isCompleted() && hasTime() && getTaskTime().isBefore(
-                LocalDateTime.now().plusDays(UPCOMING_DAYS_THRESHOLD));
+        return  !isCompleted() && hasTime() && !isOverdue() &&
+                getTaskTime().isBefore(LocalDateTime.now().plusDays(UPCOMING_DAYS_THRESHOLD));
     }
 
     @Override
@@ -144,9 +144,9 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
             return comparedCompletionStatus;
         }
 
-        int comparedTime = compareTime(other);
-        if (comparedTime != 0) {
-            return comparedTime;
+        int comparedTaskTime = compareTaskTime(other);
+        if (!isCompleted() && comparedTaskTime != 0) {
+            return comparedTaskTime;
         }
 
         int comparedLastUpdatedTime = compareLastUpdatedTime(other);
@@ -161,7 +161,7 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
         return Boolean.compare(this.isCompleted(), other.isCompleted());
     }
 
-    public int compareTime(TestTask other) {
+    public int compareTaskTime(TestTask other) {
         if (this.hasTime() && other.hasTime()) {
             return this.getTaskTime().compareTo(other.getTaskTime());
         } else if (this.hasTime()) {
@@ -174,11 +174,6 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
     }
 
     public int compareLastUpdatedTime(TestTask other) {
-        // to fix erratic behavior for logic manager tests
-        long seconds = ChronoUnit.SECONDS.between(this.getLastUpdatedTime(), other.getLastUpdatedTime());
-        if (Math.abs(seconds) < 2) {
-            return 0;
-        }
         return other.getLastUpdatedTime().compareTo(this.getLastUpdatedTime());
     }
 
