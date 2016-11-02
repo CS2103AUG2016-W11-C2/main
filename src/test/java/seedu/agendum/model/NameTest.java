@@ -2,20 +2,33 @@ package seedu.agendum.model;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.model.task.Name;
 
+//@@author A0148095X
 public class NameTest {
     private String invalidNameString = "Vishnu \n Rachael \n Weigang";
     private String validNameString = "Justin";
     
+    private Name one;
+    private Name another;
+    
+    @Before
+    public void setup() throws IllegalValueException {
+        one = new Name(validNameString);  // equals and hashCode check name field value
+        another = new Name(validNameString);
+    }
+    
     @Test
     public void equals_Symmetric_returnsTrue() throws IllegalValueException {
-        Name one = new Name(validNameString);  // equals and hashCode check name field value
-        Name another = new Name(validNameString);
         assertTrue(one.equals(another) && another.equals(one));
+    }
+    
+    @Test
+    public void hashCode_Symmetric_returnsTrue() throws IllegalValueException {
         assertTrue(one.hashCode() == another.hashCode());
     }
     
