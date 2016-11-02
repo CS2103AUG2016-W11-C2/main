@@ -723,13 +723,86 @@ public class LogicManagerTest {
         expectedTDL.updateTask(floatingTask, eventTask);
 
         //prepare model
-        model.resetData(new ToDoList());
         helper.addToModel(model, threeTasks);
 
         assertCommandBehavior("schedule 3 from Sep 9 9:10 to Oct 10 10:10",
                 String.format(ScheduleCommand.MESSAGE_SUCCESS, eventTask),
                 expectedTDL,
                 expectedTDL.getTaskList());
+    }
+
+
+    @Test
+    public void execute_aliasInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AliasCommand.MESSAGE_USAGE);
+        assertCommandBehavior("alias", expectedMessage, new ToDoList(), Collections.emptyList());
+        //alias should not contain symbols
+        assertCommandBehavior("alias add +", expectedMessage, new ToDoList(), Collections.emptyList());
+        // new alias key has space
+        assertCommandBehavior("alias add a 1", expectedMessage, new ToDoList(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_aliasNonOriginalCommand_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(AliasCommand.MESSAGE_FAILURE_NON_ORIGINAL_COMMAND, "a");
+        assertCommandBehavior("alias a short", expectedMessage, new ToDoList(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_aliasKeyIsReservedCommandWord_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(AliasCommand.MESSAGE_FAILURE_UNAVAILABLE_ALIAS,
+                                    RenameCommand.COMMAND_WORD);
+        assertCommandBehavior("alias " + AddCommand.COMMAND_WORD + " " + RenameCommand.COMMAND_WORD,
+                expectedMessage, new ToDoList(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_aliasKeyIsInUse_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(AliasCommand.MESSAGE_FAILURE_ALIAS_IN_USE,
+                                    "r", RenameCommand.COMMAND_WORD);
+        CommandLibrary.getInstance().addNewAlias("r", RenameCommand.COMMAND_WORD);
+        assertCommandBehavior("alias " + AddCommand.COMMAND_WORD + " r",
+                expectedMessage, new ToDoList(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_aliasValidKey_successfullyAdded() throws Exception {
+        String expectedMessage = String.format(AliasCommand.MESSAGE_SUCCESS, "a", AddCommand.COMMAND_WORD);
+        //should be case insensitive
+        assertCommandBehavior("alias " + AddCommand.COMMAND_WORD + " A",
+                expectedMessage, new ToDoList(), Collections.emptyList());
+        TestDataHelper helper = new TestDataHelper();
+ 
+        Task addedTask = helper.generateTaskWithName("new task");
+        List<Task> taskList = helper.generateTaskList(addedTask);
+
+        ToDoList expectedTDL = helper.generateToDoList(taskList);
+        expectedMessage = String.format(AddCommand.MESSAGE_SUCCESS, addedTask);
+
+        assertCommandBehavior("a new task", expectedMessage, expectedTDL,
+                expectedTDL.getTaskList());
+    }
+
+
+    @Test
+    public void execute_unaliasInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE);
+        assertCommandBehavior("unalias", expectedMessage, new ToDoList(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_unaliasNoSuchKey_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(UnaliasCommand.MESSAGE_FAILURE_NO_ALIAS_KEY, "smth");
+        assertCommandBehavior("unalias smth", expectedMessage, new ToDoList(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_unaliasExistingAliasKey_successfullyRemoved() throws Exception {
+        String expectedMessage = String.format(UnaliasCommand.MESSAGE_SUCCESS, "wow");
+        CommandLibrary.getInstance().addNewAlias("wow", AddCommand.COMMAND_WORD);
+        assertCommandBehavior("unalias wow", expectedMessage, new ToDoList(), Collections.emptyList());
+        expectedMessage = MESSAGE_UNKNOWN_COMMAND;
+        assertCommandBehavior("wow new task", expectedMessage, new ToDoList(), Collections.emptyList());
     }
 
 
