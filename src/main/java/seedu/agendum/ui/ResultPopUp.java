@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 //@@author A0148031R
 /**
- * Pop up window to show command execution result
+ * Controller for a pop up window to show command execution result
  */
 public class ResultPopUp extends UiPart {
     private static final Logger logger = LogsCenter.getLogger(ResultPopUp.class);

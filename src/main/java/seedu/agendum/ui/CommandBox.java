@@ -3,6 +3,7 @@ package seedu.agendum.ui;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ContentDisplay;
@@ -69,9 +70,9 @@ public class CommandBox extends UiPart {
 
     private void addToPlaceholder() {
         SplitPane.setResizableWithParent(placeHolderPane, false);
-        placeHolderPane.getChildren().add(commandTextField);
         FxViewUtil.applyAnchorBoundaryParameters(commandPane, 0.0, 0.0, 0.0, 0.0);
         FxViewUtil.applyAnchorBoundaryParameters(commandTextField, 0.0, 0.0, 0.0, 0.0);
+        placeHolderPane.getChildren().add(commandTextField);
     }
 
     @Override
@@ -89,6 +90,10 @@ public class CommandBox extends UiPart {
         this.placeHolderPane = pane;
     }
 
+    /**
+     * Executes the command and saves this command to history if comamnd input
+     * is changed
+     */
     @FXML
     private void handleCommandInputChanged() {
         //Take a copy of the command text
@@ -120,10 +125,14 @@ public class CommandBox extends UiPart {
         Label label = new Label(message);
         label.setTextFill(Color.web("#ffffff"));
         label.setContentDisplay(ContentDisplay.CENTER);
+        label.setPadding(new Insets(0, 10, 0, 10));
         this.messagePlaceHolder.setAlignment(Pos.CENTER_LEFT);
         this.messagePlaceHolder.getChildren().add(label);
     }
 
+    /**
+     * Sets arrow key for scrolling through command history
+     */
     private void registerArrowKeyEventFilter() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             KeyCode keyCode = event.getCode();
@@ -141,6 +150,9 @@ public class CommandBox extends UiPart {
         });
     }
     
+    /**
+     * Sets tab key for autocomplete
+     */
     private void registerTabKeyEventFilter() {
         commandTextField.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             KeyCode keyCode = event.getCode();

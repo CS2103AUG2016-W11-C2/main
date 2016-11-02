@@ -25,6 +25,7 @@ import seedu.agendum.commons.events.ui.ExitAppRequestEvent;
 import seedu.agendum.logic.Logic;
 import seedu.agendum.model.UserPrefs;
 
+// @@author A0148031R
 /**
  * The Main Window. Provides the basic application layout containing a menu bar
  * and space where other JavaFX elements can be placed.
@@ -101,7 +102,6 @@ public class MainWindow extends UiPart {
         return mainWindow;
     }
 
-    // @@author A0148031R
     private void configure(String appTitle, String toDoListName, Config config, UserPrefs prefs, Logic logic) {
 
         this.logic = logic;
@@ -209,6 +209,7 @@ public class MainWindow extends UiPart {
 
     }
 
+    //@@author
     /**
      * Sets the default size based on user preferences.
      */
