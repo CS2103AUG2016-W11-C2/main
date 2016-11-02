@@ -51,18 +51,19 @@ public class TaskCardHandle extends GuiHandle {
     public boolean isSameTask(ReadOnlyTask task) {
 
         String name = task.getName().fullName;
-        if(!task.hasTime()) {
+
+        if (!task.isCompleted() && !task.hasTime()) {
             return getName().equals(name);
         }
-        
+
         StringBuilder timeDescription = new StringBuilder();
         timeDescription.append(formatTaskTime(task));
+
         if (task.isCompleted()) {
             timeDescription.append(formatUpdatedTime(task));
-            return getName().equals(name) && getTime().equals(timeDescription);
-        } else {
-            return getName().equals(name) && getTime().equals(timeDescription);
         }
+        
+        return getName().equals(name) && getTime().equals(timeDescription);
     }
 
     public String formatTime(String dateTimePattern, String prefix, Optional<LocalDateTime> dateTime) {
@@ -70,12 +71,12 @@ public class TaskCardHandle extends GuiHandle {
         StringBuilder sb = new StringBuilder();
         DateTimeFormatter format = DateTimeFormatter.ofPattern(dateTimePattern);
         sb.append(prefix).append(dateTime.get().format(format));
-
+        
         return sb.toString();
     }
 
     public String formatTaskTime(ReadOnlyTask task) {
-
+        
         StringBuilder timeStringBuilder = new StringBuilder();
 
         if (task.isOverdue()) {
@@ -101,7 +102,7 @@ public class TaskCardHandle extends GuiHandle {
             timeStringBuilder.append("\n");
         }
         timeStringBuilder.append(COMPLETED_PREFIX);
-        timeStringBuilder.append(formatTime(COMPLETED_TIME_PATTERN, EMPTY_PREFIX, 
+        timeStringBuilder.append(formatTime(COMPLETED_TIME_PATTERN, EMPTY_PREFIX,
                 Optional.ofNullable(task.getLastUpdatedTime())));
         return timeStringBuilder.toString();
     }
