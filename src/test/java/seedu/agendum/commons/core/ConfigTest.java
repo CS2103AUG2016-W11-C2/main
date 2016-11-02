@@ -1,28 +1,27 @@
 package seedu.agendum.commons.core;
 
-import org.junit.Test;
-
-import seedu.agendum.commons.exceptions.IllegalValueException;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Test;
+
+import seedu.agendum.commons.exceptions.IllegalValueException;
 
 public class ConfigTest {
-    
+
     private Config one;
     private Config another;
-    
+
     @Before
     public void setup() {
         one = new Config();
         another = new Config();
     }
-    
+
     @Test
-    public void toString_defaultObject_stringReturned() {        
+    public void toString_defaultObject_stringReturned() {
         StringBuilder sb = new StringBuilder();
         sb.append("App title : Agendum");
         sb.append("\nCurrent log level : INFO");
@@ -33,21 +32,28 @@ public class ConfigTest {
 
         assertEquals(sb.toString(), new Config().toString());
     }
+    
+    //@@author A0148095X
+    public void setAliasFilePath_validPath_returnsTrue() {
+        Config config = new Config();
+        String validPath = "dropbox/table.xml";
+        config.setAliasTableFilePath(validPath);
+        
+        assertEquals(validPath, config.getAliasTableFilePath());
+    }
 
     @Test
     public void equals_nullComparison_returnsFalse() {
         assertFalse(one.equals(null));
     }
-    
+
     @Test
     public void equals_symmetric_returnsTrue() throws IllegalValueException {
         assertTrue(one.equals(another) && another.equals(one));
     }
-    
+
     @Test
     public void hashCode_symmetric_returnsTrue() throws IllegalValueException {
         assertTrue(one.hashCode() == another.hashCode());
     }
-
-
 }
