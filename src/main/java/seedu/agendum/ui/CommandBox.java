@@ -23,6 +23,7 @@ import seedu.agendum.logic.commands.*;
 import seedu.agendum.logic.parser.EditDistanceCalculator;
 import seedu.agendum.commons.util.FxViewUtil;
 import seedu.agendum.commons.core.LogsCenter;
+import seedu.agendum.commons.core.Messages;
 
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -35,8 +36,6 @@ public class CommandBox extends UiPart {
     private static final String HELP_COMMAND = "help";
     private static final String RESULT_FEEDBACK = "Result: ";
     private static final String ERROR = "error";
-    private static final String FIND_COMMAND_REMINDER_MESSAGE = "Showing search results now, press ESC to go back and"
-            + " view all tasks";
 
     private AnchorPane placeHolderPane;
     private AnchorPane commandPane;
@@ -101,7 +100,7 @@ public class CommandBox extends UiPart {
         String previousCommandTest = commandBoxHistory.getLastCommand();
         if(previousCommandTest.toLowerCase().trim().startsWith(FIND_COMMAND) && 
                 previousCommandTest.toLowerCase().trim().length() > FIND_COMMAND.length()) {
-            postMessage(FIND_COMMAND_REMINDER_MESSAGE);
+            postMessage(Messages.MESSAGE_ESCAPE_HELP_WINDOW);
         } else {
             raise(new CloseHelpWindowRequestEvent());
         }

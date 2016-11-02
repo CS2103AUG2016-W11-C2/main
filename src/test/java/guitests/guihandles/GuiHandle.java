@@ -26,7 +26,7 @@ public class GuiHandle {
         this.guiRobot = guiRobot;
         this.primaryStage = primaryStage;
         this.stageTitle = stageTitle;
-        if(!stageTitle.equals(HELP_WINDOW_TITLE)) {
+        if(stageTitle == null || !stageTitle.equals(HELP_WINDOW_TITLE)) {
             focusOnSelf();
         }
     }
