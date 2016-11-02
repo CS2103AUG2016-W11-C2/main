@@ -18,8 +18,7 @@ public class ScheduleCommand extends Command {
     public static final String COMMAND_WORD = "schedule";
     public static final String COMMAND_FORMAT = "schedule <id>\n"
                                               + "schedule <id> by <deadline>\n"
-                                              + "schedule <id> from <start-time>\n"
-                                              + "to <end-time>";
+                                              + "schedule <id> from <start-time> to <end-time>";
     public static final String COMMAND_DESCRIPTION = "update the time of a task";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " - "
@@ -28,7 +27,7 @@ public class ScheduleCommand extends Command {
             + "(The id must be a positive number)\n"
             + "Example: " + COMMAND_WORD + " 2 from 7am to 9am";
 
-    public static final String MESSAGE_SUCCESS = "Rescheduled Task #%1$s: %2$s";
+    public static final String MESSAGE_SUCCESS = "Task rescheduled: %1$s";
     public static final String MESSAGE_DUPLICATE_TASK = "This task already exists!";
 
     public int targetIndex = -1;
@@ -71,7 +70,7 @@ public class ScheduleCommand extends Command {
             assert false : "The target task cannot be missing";
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex, updatedTask));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, updatedTask));
     }
 
     //@author

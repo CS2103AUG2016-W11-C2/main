@@ -12,6 +12,8 @@ import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.commons.events.storage.DataLoadingExceptionEvent;
 import seedu.agendum.commons.events.storage.DataSavingExceptionEvent;
+import seedu.agendum.commons.events.ui.JumpToListRequestEvent;
+import seedu.agendum.commons.events.ui.CloseHelpWindowRequestEvent;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
 import seedu.agendum.commons.util.StringUtil;
 import seedu.agendum.logic.Logic;
@@ -102,7 +104,7 @@ public class UiManager extends ComponentManager implements Ui {
     private void handleDataLoadingExceptionEvent(DataLoadingExceptionEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         showFileOperationAlertAndWait("Could not load data", "Could not load data from file", event.exception);
-    }    
+    }
 
     //@@author
     @Subscribe
@@ -111,9 +113,28 @@ public class UiManager extends ComponentManager implements Ui {
         showFileOperationAlertAndWait("Could not save data", "Could not save data to file", event.exception);
     }
 
+    //author A0148031R
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         mainWindow.handleHelp();
+    }
+    
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if(event.targetTask.isCompleted()) {
+            mainWindow.getCompletedTasksPanel().scrollTo(event.targetTask, event.hasMultipleTasks);
+        } else if(event.targetTask.hasTime()) {
+            mainWindow.getUpcomingTasksPanel().scrollTo(event.targetTask, event.hasMultipleTasks);
+        } else {
+            mainWindow.getFloatingasksPanel().scrollTo(event.targetTask, event.hasMultipleTasks);
+        }
+    }
+    
+    @Subscribe
+    public void handleCloseHelpWindowRequest(CloseHelpWindowRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.closeHelpWindow();
     }
 }
