@@ -2,12 +2,25 @@ package seedu.agendum.commons.core;
 
 import org.junit.Test;
 
+import seedu.agendum.commons.exceptions.IllegalValueException;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class ConfigTest {
+import org.junit.Before;
 
+public class ConfigTest {
+    
+    private Config one;
+    private Config another;
+    
+    @Before
+    public void setup() {
+        one = new Config();
+        another = new Config();
+    }
+    
     @Test
     public void toString_defaultObject_stringReturned() {        
         StringBuilder sb = new StringBuilder();
@@ -22,10 +35,18 @@ public class ConfigTest {
     }
 
     @Test
-    public void equalsMethod(){
-        Config defaultConfig = new Config();
-        assertFalse(defaultConfig.equals(null));
-        assertTrue(defaultConfig.equals(defaultConfig));
+    public void equals_nullComparison_returnsFalse() {
+        assertFalse(one.equals(null));
+    }
+    
+    @Test
+    public void equals_symmetric_returnsTrue() throws IllegalValueException {
+        assertTrue(one.equals(another) && another.equals(one));
+    }
+    
+    @Test
+    public void hashCode_symmetric_returnsTrue() throws IllegalValueException {
+        assertTrue(one.hashCode() == another.hashCode());
     }
 
 
