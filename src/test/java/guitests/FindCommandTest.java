@@ -29,6 +29,7 @@ public class FindCommandTest extends ToDoListGuiTest {
         assertResultMessage(Messages.MESSAGE_UNKNOWN_COMMAND);
     }
     
+    //@@author A0148031R
     @Test
     public void find_showMesssage() {
         commandBox.runCommand("find Meier");
@@ -50,6 +51,7 @@ public class FindCommandTest extends ToDoListGuiTest {
         assertAllPanelsMatch(td.getTypicalTasks());
     }
 
+    //@@author
     private void assertFindResult(String command, TestTask... expectedHits ) {
         commandBox.runCommand(command);
         assertListSize(expectedHits.length);
