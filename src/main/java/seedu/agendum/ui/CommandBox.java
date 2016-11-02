@@ -15,6 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import seedu.agendum.commons.events.ui.CloseHelpWindowRequestEvent;
 import seedu.agendum.commons.events.ui.IncorrectCommandAttemptedEvent;
 import seedu.agendum.logic.Logic;
 import seedu.agendum.logic.commands.*;
@@ -32,6 +33,7 @@ public class CommandBox extends UiPart {
     private static final String FIND_COMMAND = "find ";
     private static final String HELP_COMMAND = "help";
     private static final String RESULT_FEEDBACK = "Result: ";
+    private static final String ERROR = "error";
     private static final String FIND_COMMAND_REMINDER_MESSAGE = "Showing search results now, press ESC to go back and"
             + " view all tasks";
 
@@ -63,7 +65,6 @@ public class CommandBox extends UiPart {
         registerAsAnEventHandler(this);
         registerArrowKeyEventFilter();
         registerTabKeyEventFilter();
-        postMessage(null);
     }
 
     private void addToPlaceholder() {
@@ -96,6 +97,8 @@ public class CommandBox extends UiPart {
         if(previousCommandTest.toLowerCase().trim().startsWith(FIND_COMMAND) && 
                 previousCommandTest.toLowerCase().trim().length() > FIND_COMMAND.length()) {
             postMessage(FIND_COMMAND_REMINDER_MESSAGE);
+        } else {
+            raise(new CloseHelpWindowRequestEvent());
         }
 
         /* We assume the command is correct. If it is incorrect, the command box will be changed accordingly
@@ -111,15 +114,14 @@ public class CommandBox extends UiPart {
     }
     
     private void postMessage(String message) {
-        if(message == null) {
-            this.messagePlaceHolder.setMaxHeight(0);
-        } else {
-            Label label = new Label(message);
-            label.setTextFill(Color.web("#ffffff"));
-            label.setContentDisplay(ContentDisplay.CENTER);
-            this.messagePlaceHolder.setAlignment(Pos.CENTER_LEFT);
-            this.messagePlaceHolder.getChildren().add(label);
-        }
+        this.messagePlaceHolder.getChildren().clear();
+        raise(new CloseHelpWindowRequestEvent());
+
+        Label label = new Label(message);
+        label.setTextFill(Color.web("#ffffff"));
+        label.setContentDisplay(ContentDisplay.CENTER);
+        this.messagePlaceHolder.setAlignment(Pos.CENTER_LEFT);
+        this.messagePlaceHolder.getChildren().add(label);
     }
 
     private void registerArrowKeyEventFilter() {
@@ -183,7 +185,7 @@ public class CommandBox extends UiPart {
      * Sets the command box style to indicate an error
      */
     private void setStyleToIndicateIncorrectCommand() {
-        commandTextField.getStyleClass().add("error");
+        commandTextField.getStyleClass().add(ERROR);
     }
 
 }
