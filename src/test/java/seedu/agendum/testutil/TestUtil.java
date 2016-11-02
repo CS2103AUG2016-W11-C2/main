@@ -95,7 +95,7 @@ public class TestUtil {
         try {
             FileUtil.createDirs(new File(SANDBOX_FOLDER));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return SANDBOX_FOLDER + fileName;
     }
@@ -110,7 +110,7 @@ public class TestUtil {
             FileUtil.createIfMissing(saveFileForTesting);
             XmlUtil.saveDataToFile(saveFileForTesting, data);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
