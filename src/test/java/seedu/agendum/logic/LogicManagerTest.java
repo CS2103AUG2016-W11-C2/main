@@ -677,20 +677,23 @@ public class LogicManagerTest {
  
     @Test
     public void execute_scheduleInvalidArgsFormat_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE);
+
+        // no index and time are provided
+        assertCommandBehavior("schedule", expectedMessage, new ToDoList(), Collections.emptyList());
+        
         // invalid index format
         // a valid time is provided since invalid input values must be tested one at a time
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE);
         assertIncorrectIndexFormatBehaviorForCommand("schedule", expectedMessage, "by 9pm");
         
         // invalid time format provided
         TestDataHelper helper = new TestDataHelper();
         List<Task> taskList = helper.generateTaskList(2);
-
         helper.addToModel(model, taskList);
 
         // a valid index is provided since we are testing for invalid time format here
         assertCommandBehavior("schedule 1 blue", expectedMessage, model.getToDoList(), taskList);
-        
+        assertCommandBehavior("schedule 1 from 7pm", expectedMessage, model.getToDoList(), taskList);
     }
 
     @Test
