@@ -18,7 +18,7 @@ public class NameTest {
     
     @Before
     public void setup() throws IllegalValueException {
-        one = new Name(validNameString);  // equals and hashCode check name field value
+        one = new Name(validNameString);
         another = new Name(validNameString);
     }
     
