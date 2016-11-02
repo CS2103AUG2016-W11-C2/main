@@ -9,8 +9,6 @@ import seedu.agendum.TestApp;
  */
 public class MainGuiHandle extends GuiHandle {
 
-    private static final String HELP_WINDOW_ROOT_FIELD_ID = "#helpWindowRoot";
-    
     public MainGuiHandle(GuiRobot guiRobot, Stage primaryStage) {
         super(guiRobot, primaryStage, TestApp.APP_TITLE);
     }
@@ -38,9 +36,4 @@ public class MainGuiHandle extends GuiHandle {
     public MainMenuHandle getMainMenu() {
         return new MainMenuHandle(guiRobot, primaryStage);
     }
-    
-    public boolean isWindowClose() {
-        return getNode(HELP_WINDOW_ROOT_FIELD_ID) != null;
-    }
-
 }

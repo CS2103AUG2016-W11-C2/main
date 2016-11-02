@@ -160,7 +160,8 @@ public class MainWindow extends UiPart {
     /**
      * Loads the ui elements
      */
-    void fillInnerParts() {
+    public void fillInnerParts() {
+        logger.info("loading ui elements");
         upcomingTasksPanel = UpcomingTasksPanel.load(primaryStage, getUpcomingTasksPlaceHolder(),
                 logic.getFilteredTaskList(), new UpcomingTasksPanel());
         completedTasksPanel = CompletedTasksPanel.load(primaryStage, getCompletedTasksPlaceHolder(),
@@ -172,7 +173,7 @@ public class MainWindow extends UiPart {
         commandBox = CommandBox.load(primaryStage, getCommandBoxPlaceholder(), messagePlaceHolder, resultPopUp, logic);
     }
 
-    private AnchorPane getCommandBoxPlaceholder() {
+    public AnchorPane getCommandBoxPlaceholder() {
         return commandBoxPlaceholder;
     }
 
@@ -180,7 +181,7 @@ public class MainWindow extends UiPart {
         return messagePlaceHolder;
     }
 
-    private AnchorPane getStatusbarPlaceholder() {
+    public AnchorPane getStatusbarPlaceholder() {
         return statusbarPlaceholder;
     }
 
@@ -213,7 +214,7 @@ public class MainWindow extends UiPart {
     /**
      * Sets the default size based on user preferences.
      */
-    protected void setWindowDefaultSize(UserPrefs prefs) {
+    private void setWindowDefaultSize(UserPrefs prefs) {
         primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
         primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
 
@@ -221,6 +222,10 @@ public class MainWindow extends UiPart {
             primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
             primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
         }
+    }
+
+    private void setTitle(String appTitle) {
+        primaryStage.setTitle(appTitle);
     }
 
     /**
@@ -254,10 +259,6 @@ public class MainWindow extends UiPart {
         if(!rootLayout.getChildren().contains(splitPane)) {
             rootLayout.getChildren().add(rootLayout.getChildren().indexOf(statusbarPlaceholder), splitPane);
         }
-    }
-
-    private void setTitle(String appTitle) {
-        primaryStage.setTitle(appTitle);
     }
 
     public void hide() {
