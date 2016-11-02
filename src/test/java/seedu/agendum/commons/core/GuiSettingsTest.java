@@ -1,5 +1,6 @@
 package seedu.agendum.commons.core;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -9,36 +10,41 @@ import org.junit.Test;
 //@@author A0148095X
 public class GuiSettingsTest {
 
-    public Double windowWidth = 800.0;
-    public Double windowHeight = 600.0;
-    public int xPosition = 100;
-    public int yPosition = 300;
-    
+    private Double windowWidth = 800.0;
+    private Double windowHeight = 600.0;
+    private int xPosition = 100;
+    private int yPosition = 300;
+
     GuiSettings guiSettings;
+    GuiSettings copy;
     
     @Before
     public void setup() {
         guiSettings = new GuiSettings(windowWidth, windowHeight, xPosition, yPosition);
+        copy = new GuiSettings(windowWidth, windowHeight, xPosition, yPosition);
     }
     
     @Test
-    public void equals() {
-        GuiSettings guiSettingsCopy = guiSettings;
+    public void equals_invalidInput_returnsFalse() {        
         
-        // same object
-        assertTrue(guiSettings.equals(guiSettingsCopy));
-        
-        // not an instance
+        // not an instance of GuiSettings
         assertFalse(guiSettings.equals(new Object()));
         
         // null
         assertFalse(guiSettings.equals(null));
+    }
+    
+    @Test
+    public void equals_validInput_returnsTrue() {
+        // same object
+        assertTrue(guiSettings.equals(guiSettings));
         
         // different object, same settings
-        GuiSettings sameSettings = new GuiSettings(windowWidth, windowHeight, xPosition, yPosition);
-        assertTrue(guiSettings.equals(sameSettings));
-        
-
+        assertTrue(guiSettings.equals(copy));        
+    }
+    
+    @Test
+    public void equals_validInputDifferentSettings_returnsFalse() {
         // ----------- different settings ----------------
         GuiSettings differentSettings;
 
@@ -64,4 +70,8 @@ public class GuiSettingsTest {
         assertFalse(guiSettings.equals(differentSettings));
     }
     
+    @Test
+    public void hashcode_symmetric_returnsTrue() {
+        assertEquals(guiSettings.hashCode(), copy.hashCode());
+    }    
 }
