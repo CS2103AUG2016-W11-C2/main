@@ -16,8 +16,6 @@ import java.util.ListIterator;
 import org.junit.Before;
 import org.junit.Test;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 
@@ -193,9 +191,12 @@ public class UnmodifiableObservableListTest {
     }
     
     @Test
-    public void equals_sameList_returnsTrue() {
-        assertTrue(list.equals(list));
-        assertTrue(list.equals(backing));
+    public void equals_symmetricList_returnsTrue() {
+        final UnmodifiableObservableList<Object> one = new UnmodifiableObservableList<>(FXCollections.observableList(backing));
+        final UnmodifiableObservableList<Object> another = new UnmodifiableObservableList<>(FXCollections.observableList(backing));
+
+        assertTrue(one.equals(another) && another.equals(one));
+        assertTrue(one.hashCode() == another.hashCode());
     }
     
     @Test
