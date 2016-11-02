@@ -68,7 +68,7 @@ public class StorageManagerTest {
      * Verifies that StorageManager is properly wired to {@link JsonAliasTableStorage} class
      */
     @Test
-    public void commandLibraryReadSave() throws Exception {
+    public void aliasTableReadSave() throws Exception {
         Hashtable<String, String> testingTable = new Hashtable<String, String>();
         testingTable.put("a", "add");
         testingTable.put("d", "delete");
