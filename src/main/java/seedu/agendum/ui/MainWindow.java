@@ -114,17 +114,8 @@ public class MainWindow extends UiPart {
         scene = new Scene(rootLayout);
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(e -> Platform.exit());
-        setAccelerators();
         configureEscape();
         configureHelpWindowToggle();
-
-    }
-
-    /**
-     * Set shortcut key for help menu item
-     */
-    private void setAccelerators() {
-        helpMenuItem.setAccelerator(new KeyCodeCombination(KeyCode.H, KeyCombination.CONTROL_DOWN));
     }
     
     /**
@@ -138,7 +129,7 @@ public class MainWindow extends UiPart {
             public void handle(KeyEvent evt) {
                 if (toggleHelpWindow.match(evt) && messagePlaceHolder.getChildren().size() == 0) {
                     openHelpWindow();
-                } else if (toggleHelpWindow.match(evt) && messagePlaceHolder.getChildren().size() != 0) {
+                } else if (toggleHelpWindow.match(evt) && messagePlaceHolder.getChildren().contains(helpWindow)) {
                     closeHelpWindow();
                 } else if(undo.match(evt)) {
                     logic.execute(UNDO_COMMAND);
