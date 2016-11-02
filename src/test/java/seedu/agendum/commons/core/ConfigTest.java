@@ -43,8 +43,8 @@ public class ConfigTest {
     }
 
     @Test
-    public void equals_nullComparison_returnsFalse() {
-        assertFalse(one.equals(null));
+    public void equals_differentObjectType_returnsFalse() {
+        assertFalse(one.equals(new Object()));
     }
 
     @Test
