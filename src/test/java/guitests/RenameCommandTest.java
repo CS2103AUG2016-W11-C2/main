@@ -18,8 +18,6 @@ public class RenameCommandTest extends ToDoListGuiTest {
         TestTask[] currentList = td.getTypicalTasks();
         int targetIndex = 1;
         assertRenameSuccess(targetIndex, currentList);
-        
-        //Task in the original currentList are not renamed (only the copy is tested)
 
         //rename the last in the list
         targetIndex = currentList.length;
@@ -42,9 +40,9 @@ public class RenameCommandTest extends ToDoListGuiTest {
     /**
      * Runs the rename command to rename the task at specified index and confirms the result is correct.
      * @param targetIndexOneIndexed e.g. to rename the first task in the list, 1 should be given as the target index.
-     * @param currentList A copy of the current list of tasks (before renaming).
+     * @param currentList - list of tasks (before renaming).
      */
-    private void assertRenameSuccess(int targetIndexOneIndexed, final TestTask[] currentList) {
+    private void assertRenameSuccess(int targetIndexOneIndexed, TestTask[] currentList) {
         TestTask taskToRename = currentList[targetIndexOneIndexed - 1]; //-1 because array uses zero indexing
         String newTaskName = taskToRename.getName().toString() + " renamed";
 
