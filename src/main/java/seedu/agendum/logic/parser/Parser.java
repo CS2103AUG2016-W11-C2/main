@@ -36,9 +36,7 @@ public class Parser {
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>.+)");
 
     //@@author A0003878Y
-    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
-
-    private static final Pattern SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
+    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:(?i)by|from|to)\\s|$)))+?");
 
     private static final Pattern ALIAS_ARGS_FORMAT = Pattern.compile(
             "(?<commandword>[\\p{Alnum}]+)\\s+(?<shorthand>[\\p{Alnum}]+)");

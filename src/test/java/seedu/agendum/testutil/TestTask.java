@@ -13,7 +13,7 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
 
     private static final int UPCOMING_DAYS_THRESHOLD = 7;
     
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm");
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("MM/dd HH:mm");
     private static final String DEADLINE_WORD = " by ";
     private static final String EVENT_START_WORD = " from ";
     private static final String EVENT_END_WORD = " to ";
@@ -144,12 +144,12 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
         command.append("add " + this.getName().fullName + " ");
         if (isEvent()) {
             command.append(EVENT_START_WORD);
-            command.append(startDateTime.format(formatter));
+            command.append(startDateTime.format(FORMATTER));
             command.append(EVENT_END_WORD);
-            command.append(endDateTime.format(formatter));
+            command.append(endDateTime.format(FORMATTER));
         } else if (hasDeadline()) {
             command.append(DEADLINE_WORD);
-            command.append(endDateTime.format(formatter));
+            command.append(endDateTime.format(FORMATTER));
         }
         return command.toString();
     }

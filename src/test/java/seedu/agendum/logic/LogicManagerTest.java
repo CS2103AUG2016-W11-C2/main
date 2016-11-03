@@ -26,6 +26,7 @@ import seedu.agendum.testutil.EventsCollector;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -163,6 +164,42 @@ public class LogicManagerTest {
                 expectedTDL,
                 expectedTDL.getTaskList());
 
+    }
+
+    @Test
+    public void execute_addDeadlineTask_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.adam();
+        LocalDateTime endTime = LocalDateTime.of(2016, 10, 10, 10, 10);
+        toBeAdded.setEndDateTime(Optional.ofNullable(endTime));
+        ToDoList expectedTDL = new ToDoList();
+        expectedTDL.addTask(toBeAdded);
+
+        // execute command and verify result
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedTDL,
+                expectedTDL.getTaskList());
+    }
+
+    @Test
+    public void execute_addEventTask_successful() throws Exception {
+        // setup expectations
+        TestDataHelper helper = new TestDataHelper();
+        Task toBeAdded = helper.adam();
+        LocalDateTime startTime = LocalDateTime.of(2016, 10, 10, 10, 10).minusHours(1);
+        LocalDateTime endTime = LocalDateTime.of(2016, 10, 10, 10, 10);
+        toBeAdded.setEndDateTime(Optional.ofNullable(startTime));
+        toBeAdded.setEndDateTime(Optional.ofNullable(endTime));
+        ToDoList expectedTDL = new ToDoList();
+        expectedTDL.addTask(toBeAdded);
+
+        // execute command and verify result
+        assertCommandBehavior(helper.generateAddCommand(toBeAdded),
+                String.format(AddCommand.MESSAGE_SUCCESS, toBeAdded),
+                expectedTDL,
+                expectedTDL.getTaskList());
     }
 
     @Test
@@ -992,7 +1029,8 @@ public class LogicManagerTest {
     class TestDataHelper{
 
         private LocalDateTime fixedTime = LocalDateTime.of(2016, 10, 10, 10, 10);
-
+        private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm");
+        
         private Task adam() throws Exception {
             Name name = new Name("Adam Brown");
             Task adam = new Task(name);
@@ -1037,10 +1075,19 @@ public class LogicManagerTest {
         }
 
         /** Generates the correct add command based on the task given */
-        private String generateAddCommand(Task p) {
-
-            return "add " +
-                    p.getName().toString();
+        private String generateAddCommand(Task task) {
+            StringBuilder command = new StringBuilder();
+            command.append("add " + task.getName().toString() + " ");
+            if (task.isEvent()) {
+                command.append(" from ");
+                command.append(task.getStartDateTime().get().format(formatter));
+                command.append(" to ");
+                command.append(task.getEndDateTime().get().format(formatter));
+            } else if (task.hasDeadline()) {
+                command.append(" by ");
+                command.append(task.getEndDateTime().get().format(formatter));
+            }
+            return command.toString();
         }
 
         /**
