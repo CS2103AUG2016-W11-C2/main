@@ -411,7 +411,7 @@ public class LogicManagerTest {
         assertTrue(eventCollector.get(3) instanceof ToDoListChangedEvent);
     }
     
-    public void executeStore_fileExists_fail() throws Exception {
+    public void execute_store_fileExists_fail() throws Exception {
         // setup expectations
         ToDoList expectedTDL = new ToDoList();
         String location = "data/test_store_fail.xml";
