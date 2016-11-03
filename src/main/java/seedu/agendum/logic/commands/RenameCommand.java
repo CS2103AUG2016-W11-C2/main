@@ -14,7 +14,7 @@ public class RenameCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "rename";
-    public static final String COMMAND_FORMAT = "rename <id> <new-name>";
+    public static final String COMMAND_FORMAT = "rename <id> <new name>";
     public static final String COMMAND_DESCRIPTION = "update the name of a task";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " - "
             + COMMAND_DESCRIPTION + "\n"

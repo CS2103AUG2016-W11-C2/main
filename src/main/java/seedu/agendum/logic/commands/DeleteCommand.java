@@ -16,7 +16,7 @@ public class DeleteCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "delete";
-    public static final String COMMAND_FORMAT = "delete <id> <more-ids>";
+    public static final String COMMAND_FORMAT = "delete <id> <more ids>";
     public static final String COMMAND_DESCRIPTION = "delete task(s) from Agendum";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " - "
             + COMMAND_DESCRIPTION + "\n"

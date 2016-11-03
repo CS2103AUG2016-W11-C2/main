@@ -10,7 +10,7 @@ public class AliasCommand extends Command {
 
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "alias";
-    public static final String COMMAND_FORMAT = "alias <original-command> <your-command>";
+    public static final String COMMAND_FORMAT = "alias <original command> <your command>";
     public static final String COMMAND_DESCRIPTION = "create your shorthand command";
     public static final String MESSAGE_SUCCESS = "New alias <%1$s> created for <%2$s>";
     public static final String MESSAGE_FAILURE_ALIAS_IN_USE = "<%1$s> is already an alias for <%2$s>";

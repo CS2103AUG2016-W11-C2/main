@@ -6,8 +6,26 @@
     * [Visual Introduction](#visual-introduction)
     * [Start using Agendum](#start-using-agendum)
 * [Features](#features)
+	* [Adding a task](#adding-a-task-add)
+	* [Renaming a task](#renaming-a-task--rename)
+	* [Rescheduling a task](#rescheduling-a-task--schedule)
+	* [Marking a task as completed](#marking-a-task-as-completed--mark)
+	* [Unmarking a task](#unmarking-a-task--unmark)
+	* [Deleting a task](#deleting-a-task--delete)
+	* [Undoing your last changes](#undoing-your-last-changes--undo)
+	* [Searching for tasks](#searching-for-tasks--find)
+	* [Listing all tasks](#listing-all-tasks--list)
+	* [Creating an alias for a command](#creating-an-alias-for-a-command--alias)
+	* [Removing an alias command](#removing-an-alias-command--unalias)
+	* [Viewing help](#viewing-help--help)
+	* [Specifying the data storage location](#specifying-the-data-storage-location--store)
+	* [Loading from another data storage location](#loading-from-another-data-storage-location--load)
+	* [Exiting Agendum](#exiting-agendum--exit)
+	* [Bonus: Keyboard shortcuts](#keyboard-shortcuts)
 * [FAQ](#faq)
+* [Conclusion](#conclusion)
 * [Command Summary](#command-summary)
+	* [Date Time Formats](#date-time-format)
 
 &nbsp;
 
@@ -134,7 +152,7 @@ Here are the *acceptable format(s)*:
 
 * `add <name>` - adds a task which can be done anytime.
 * `add <name> by <deadline>` - adds a task which have to be done by the specified deadline. Note the keyword `by`.
-* `add <name> from <start-time> to <end-time>` - adds a event which will take place between start time and end time. Note the keyword `from` and `to`.
+* `add <name> from <start time> to <end time>` - adds a event which will take place between start time and end time. Note the keyword `from` and `to`.
 
 Here are some *examples*:
 
@@ -158,7 +176,7 @@ It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 
 
 #### Date Time Format
-How do you specify the `<deadline>`, `<start-time>` and `<end-time>` of a task?
+How do you specify the `<deadline>`, `<start time>` and `<end time>` of a task?
 
 Agendum supports a wide variety of date time formats. Combine any of the date format and time format below. The date/time formats are case insensitive too.
 
@@ -211,7 +229,7 @@ Agendum understands that plans and tasks change all the time. <br>
 
 If you wish to update the description of a task, you can use the following *format*:
 
-* `rename <id> <new-name>` - give a new name to the task identified by `<id>`. The `<id>` must be a positive number and be in the most recent to-do list displayed.
+* `rename <id> <new name>` - give a new name to the task identified by `<id>`. The `<id>` must be a positive number and be in the most recent to-do list displayed.
 
 Here is an *example*:<br>
 <img src="images/userguide/beforeRenaming.png" width="500"><br>
@@ -234,11 +252,11 @@ Here are the *acceptable format(s)*:
 
 * `schedule <id>` - re-schedule the task identified by `<id>`. It can now be done anytime.  It is no longer bounded by a deadline or event time!
 * `schedule <id> by <deadline>` - set or update the deadline for the task identified. Note the keyword `by`.
-* `schedule <id> from <start-time> to <end-time>` - update the start/end time of the task identified by `<id>`. Note the keyword `from` and `to`.
+* `schedule <id> from <start time> to <end time>` - update the start/end time of the task identified by `<id>`. Note the keyword `from` and `to`.
 
 Note:
   > * Again, `<id>` must be a positive number and be in the most recent to-do list displayed.
-  > * `<deadline>`, `<start-time>` and `<end-time>` must follow the format previously defined in [Date Time Format](#date-time-format)
+  > * `<deadline>`, `<start time>` and `<end time>` must follow the format previously defined in [Date Time Format](#date-time-format)
   > * A task cannot have a deadline and a event time at the same time.
 
 Here are some *examples*:<br>
@@ -295,7 +313,7 @@ The changes are as shown below. <br>
 <img src="images/userguide/markMultiple.png" width="600"><br>
 
 
-### Unmarking a task as completed : `unmark`
+### Unmarking a task : `unmark`
 
 You might change your mind and want to continue working on a recently completed task.
 They will conveniently be located at the top of the done panel.
@@ -334,7 +352,7 @@ The tasks with display ids 1, 2 and 3 will be deleted.
 ```
 
 
-### Undo the last command : `undo`  
+### Undoing your last changes : `undo`  
 
 Agendum understands that you might make mistakes and change your mind. Hence, Agendum does offer some flexibility and allow you to reverse the effects of a few commands by simply typing `undo`. Multiple and successive `undo` are supported.
 
@@ -364,7 +382,7 @@ Result: Agendum removes the task "homework"
 
 
 [comment]: # (@@author A0148031R)
-### Finding tasks containing keywords: `find`
+### Searching for tasks : `find`
 
 As your task list grows over time, it may become harder to locate a task.<br>
 Fortunately, Agendum can search and bring up these tasks to you (if only you remember some of the keywords): <br>
@@ -384,7 +402,7 @@ Here is an *example*: <br>
 Although you are looking at a narrowed down list of tasks, your data is not lost! Simply hit <kbd>ESC</kbd> to exit your find results and see a list of tasks.
 
 
-### Retrieving task list : `list`
+### Listing all tasks : `list`
 
 Alternatively, after you are done searching for tasks, you can use the following command to return to the default view of all your tasks: <br>
 The format is simply `list`.
@@ -398,10 +416,10 @@ fret not, Agendum allows you to define your own aliases for commands. <br>
 You can use both the original command and your own shorthand alias to carry out the same action.
 
 To create an alias, here is the *format*:
-* `alias <original-command> <shorthand>`
+* `alias <original command> <your command>`
 
-> * `<shorthand>` must be a single alphanumeric word. It cannot be a original-command and already aliased to another command.
-> * `<original-command>` must be a command word that is specified in the Command Summary section
+> * `<your command>` must be a single alphanumeric word. It cannot be a original-command and already aliased to another command.
+> * `<original command>` must be a command word that is specified in the Command Summary section
 
 Examples:
 ```
@@ -418,9 +436,9 @@ Is a current alias inconvenient? Have you thought of a better one? <br>
 Or perhaps you are thinking of using an alias for another command instead. <br>
 
 To remove a previously defined alias, here is the *format*:
-* `unalias <shorthand>`
+* `unalias <your command>`
 
-> * `<shorthand>` should be an alias you previously defined.
+> * `<your command>` should be an alias you previously defined.
 > * After removing this particular alias, you can still use the original command word or other unremoved aliases.
 
 Examples:
@@ -480,7 +498,7 @@ Examples
 ```
 
 
-#### Exiting the program : `exit`
+### Exiting Agendum : `exit`
 
 Are you done with organizing your tasks? Well done! <br>
 To leave Agendum, type `exit`. See you soon!
@@ -496,11 +514,6 @@ To work even faster you can also use keyboard shortcuts: <br>
 5. Use  <kbd>Ctrl</kbd> + <kbd>Z</kbd> in place of `undo`
 
 
-### Saving the data
-
-Agendum saves its data into the specified data storage location. By default, it will save into `todolist.xml`. This saving process happens automatically whenever the task list is changed. There is no need to save manually.
-
-
 &nbsp;
 
 
@@ -508,6 +521,9 @@ Agendum saves its data into the specified data storage location. By default, it 
 
 <html>
 <dl>
+   <dt> Q: How do I save my task data in Agendum? </dt>
+   <dd> Agendum saves your data automatically whenever your task list is updated. There is no need to save manually. Agendum will save the data at the speicified storage location. By default, it will save to `data/todolist.xml` </dd>
+
    <dt> Q: How do I transfer my data to another computer? </dt>
    <dd> Firstly, take note of the data storage location that your current todo list is saved at. You can check this by looking at the            bottom-right of Agendum. Navigate to this location and copy the data file to a portable USB device or hard disk. Then, ensure            that you have installed Agendum in the other computer. Copy the data file from your device onto the other computer, preferrably          in the same folder as Agendum. Use the <code>load</code> command to load it into Agendum. </dd>
 
@@ -528,27 +544,32 @@ Agendum saves its data into the specified data storage location. By default, it 
 
 &nbsp;
 
+
 [comment]: # (@@author A0133367E)
+## Conclusion
+We hope that you will find Agendum and our user guide helpful. If you have any suggestions on how we can make Agendum better or improve this guide, please feel free to post on our [issue tracker](https://github.com/CS2103AUG2016-W11-C2/main/issues).
+
+
 ## Command Summary
 
 Command  | Format  
 :-------:| :--------
-Add      | `add <name>` or `add <name> by <deadline>` or `add <name> from <start-time> to <end-time>`
-Alias    | `alias <original-command> <shorthand>`
+Add      | `add <name>` or `add <name> by <deadline>` or `add <name> from <start time> to <end time>`
+Alias    | `alias <original command> <your command>`
 Delete   | `delete <id>...`
 Exit     | `exit`
 Find     | `find <keyword>...`
 Help     | `help`
 List     | `list`
-Load     | `load <path-to-file>`
+Load     | `load <path to file>`
 Mark     | `mark <id>...`
 Rename   | `rename <id> <name>`
-Schedule | `schedule <id>` or `schedule <id> by <deadline>` or `schedule <id> from <start-time> to <end-time>`
-Store    | `store <path-to-file>`
-Unalias  | `unalias <shorthand>`
+Schedule | `schedule <id>` or `schedule <id> by <deadline>` or `schedule <id> from <start time> to <end time>`
+Store    | `store <path to file>`
+Unalias  | `unalias <your command>`
 Undo     | `undo`
 Unmark   | `unmark <id>...`
 
 For a quick reference,
 > * Parameters with `...` after them can have multiple instances (separated by whitespace).
-> * `<deadline>`, `<start-time>` and `<end-time>` must follow the format previously defined in [Date Time Format](#date-time-format)
+> * `<deadline>`, `<start time>` and `<end time>` must follow the format previously defined in [Date Time Format](#date-time-format)
