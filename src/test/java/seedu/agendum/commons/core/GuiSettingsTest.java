@@ -15,8 +15,8 @@ public class GuiSettingsTest {
     private int xPosition = 100;
     private int yPosition = 300;
 
-    GuiSettings guiSettings;
-    GuiSettings copy;
+    private GuiSettings guiSettings;
+    private GuiSettings copy;
     
     @Before
     public void setUp() {
