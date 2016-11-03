@@ -12,7 +12,7 @@ import seedu.agendum.testutil.TestUtil;
 public class RenameCommandTest extends ToDoListGuiTest {
 
     @Test
-    public void rename() {
+    public void rename() throws IllegalValueException {
 
         //rename the first in the list
         TestTask[] currentList = td.getTypicalTasks();

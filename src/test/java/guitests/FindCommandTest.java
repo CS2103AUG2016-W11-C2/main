@@ -3,19 +3,20 @@ package guitests;
 import org.junit.Test;
 
 import seedu.agendum.commons.core.Messages;
+import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.testutil.TestTask;
 import seedu.agendum.testutil.TypicalTestTasks;
 
 public class FindCommandTest extends ToDoListGuiTest {
 
     @Test
-    public void find_nonEmptyList() {
+    public void find_nonEmptyList() throws IllegalValueException {
         assertFindResult("find Mark"); //no results
-        assertFindResult("find Meier", TypicalTestTasks.benson, TypicalTestTasks.daniel); //multiple results
+        assertFindResult("find Meier", TypicalTestTasks.getTaskWithName(TypicalTestTasks.benson), TypicalTestTasks.getTaskWithName(TypicalTestTasks.daniel)); //multiple results
 
         //find after deleting one result
         commandBox.runCommand("delete 1");
-        assertFindResult("find Meier", TypicalTestTasks.daniel);
+        assertFindResult("find Meier", TypicalTestTasks.getTaskWithName(TypicalTestTasks.daniel));
     }
 
     @Test

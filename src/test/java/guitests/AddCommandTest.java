@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import guitests.guihandles.TaskCardHandle;
 import seedu.agendum.commons.core.Messages;
+import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.logic.commands.AddCommand;
 import seedu.agendum.testutil.TestTask;
 import seedu.agendum.testutil.TestUtil;
@@ -12,31 +13,31 @@ import seedu.agendum.testutil.TypicalTestTasks;
 public class AddCommandTest extends ToDoListGuiTest {
 
     @Test
-    public void add() {
+    public void add() throws IllegalValueException {
         //add one task
         TestTask[] currentList = td.getTypicalTasks();
-        TestTask taskToAdd = TypicalTestTasks.floatingTask;
+        TestTask taskToAdd = TypicalTestTasks.getFloatingTestTask();
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
         //add another deadline task
-        taskToAdd = TypicalTestTasks.deadlineTask;
+        taskToAdd = TypicalTestTasks.getDeadlineTestTask();
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
         //add another event task
-        taskToAdd = TypicalTestTasks.eventTask;
+        taskToAdd = TypicalTestTasks.getEventTestTask();
         assertAddSuccess(taskToAdd, currentList);
         currentList = TestUtil.addTasksToList(currentList, taskToAdd);
 
         //add duplicate task
-        commandBox.runCommand(TypicalTestTasks.floatingTask.getAddCommand());
+        commandBox.runCommand(TypicalTestTasks.getFloatingTestTask().getAddCommand());
         assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
         assertAllPanelsMatch(currentList);
 
         //add to empty list
         commandBox.runCommand("delete 1-10");
-        assertAddSuccess(TypicalTestTasks.floatingTask);
+        assertAddSuccess(TypicalTestTasks.getFloatingTestTask());
 
         //invalid command
         commandBox.runCommand("adds Johnny");

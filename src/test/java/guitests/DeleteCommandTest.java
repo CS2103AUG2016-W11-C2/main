@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 
 import seedu.agendum.commons.core.Messages;
+import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.logic.commands.CommandResult;
 import seedu.agendum.logic.commands.DeleteCommand;
 import seedu.agendum.model.task.ReadOnlyTask;
@@ -14,7 +15,7 @@ import seedu.agendum.testutil.TestUtil;
 public class DeleteCommandTest extends ToDoListGuiTest {
 
     @Test
-    public void delete() {
+    public void delete() throws IllegalValueException {
 
         //delete the first in the list
         TestTask[] currentList = td.getTypicalTasks();

@@ -4,65 +4,67 @@ import java.time.LocalDateTime;
 
 import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.model.ToDoList;
-import seedu.agendum.model.task.*;
+import seedu.agendum.model.task.Task;
 
-/**
- *
- */
 public class TypicalTestTasks {
 
-    public static TestTask alice, benson, carl, daniel, elle, fiona, george, hoon, ida,
-                           floatingTask, deadlineTask, eventTask;
+    public static final String alice =  "meet Alice Pauline";
+    public static final String benson = "meet Benson Meier";
+    public static final String carl = "meet Carl Kurz";
+    public static final String daniel = "meet Daniel Meier";
+    public static final String elle = "meet Elle Meyer";
+    public static final String fiona = "meet Fiona Kunz";
+    public static final String george = "meet George Best";
+    public static final String hoon = "meet Hoon Meier";
+    public static final String ida = "meet Ida Mueller";;
     
-    private LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
-    private LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
+    private static final LocalDateTime yesterday = LocalDateTime.now().minusDays(1);
+    private static final LocalDateTime tomorrow = LocalDateTime.now().plusDays(1);
 
-    public TypicalTestTasks() {
-        try {
-            alice =  new TaskBuilder().withName("meet Alice Pauline").withUncompletedStatus().build();
-            benson = new TaskBuilder().withName("meet Benson Meier").withUncompletedStatus().build();
-            carl = new TaskBuilder().withName("meet Carl Kurz").withUncompletedStatus().build();
-            daniel = new TaskBuilder().withName("meet Daniel Meier").withUncompletedStatus().build();
-            elle = new TaskBuilder().withName("meet Elle Meyer").withUncompletedStatus().build();
-            fiona = new TaskBuilder().withName("meet Fiona Kunz").withUncompletedStatus().build();
-            george = new TaskBuilder().withName("meet George Best").withUncompletedStatus().build();
-
-            //Manually added
-            hoon = new TaskBuilder().withName("meet Hoon Meier").withUncompletedStatus().build();
-            ida = new TaskBuilder().withName("meet Ida Mueller").withUncompletedStatus().build();
-            
-            floatingTask = new TaskBuilder().withName("anytime").withUncompletedStatus().build();
-            deadlineTask = new TaskBuilder().withName("due soon")
-                                            .withUncompletedStatus()
-                                            .withEndTime(tomorrow).build();
-            eventTask = new TaskBuilder().withName("meeting")
-                                         .withUncompletedStatus()
-                                         .withStartTime(yesterday)
-                                         .withEndTime(tomorrow).build();
-        
-        } catch (IllegalValueException e) {
-            e.printStackTrace();
-            assert false : "not possible";
-        }
-    }
 
     public static void loadToDoListWithSampleData(ToDoList tdl) {
-
         try {
-            tdl.addTask(new Task(alice));
-            tdl.addTask(new Task(benson));
-            tdl.addTask(new Task(carl));
-            tdl.addTask(new Task(daniel));
-            tdl.addTask(new Task(elle));
-            tdl.addTask(new Task(fiona));
-            tdl.addTask(new Task(george));
-        } catch (UniqueTaskList.DuplicateTaskException e) {
+            tdl.addTask(new Task(getTaskWithName(alice)));
+            tdl.addTask(new Task(getTaskWithName(benson)));
+            tdl.addTask(new Task(getTaskWithName(carl)));
+            tdl.addTask(new Task(getTaskWithName(daniel)));
+            tdl.addTask(new Task(getTaskWithName(elle)));
+            tdl.addTask(new Task(getTaskWithName(fiona)));
+            tdl.addTask(new Task(getTaskWithName(george)));
+        } catch (IllegalValueException e) {
             assert false : "not possible";
         }
     }
+    
+    public static TestTask getTaskWithName(String name) throws IllegalValueException {
+        return new TaskBuilder().withName(name).withUncompletedStatus().build();
+    }
 
-    public TestTask[] getTypicalTasks() {
-        return new TestTask[]{alice, benson, carl, daniel, elle, fiona, george};
+    public static TestTask getEventTestTask() throws IllegalValueException {
+        return new TaskBuilder().withName("meeting")
+                                     .withUncompletedStatus()
+                                     .withStartTime(yesterday)
+                                     .withEndTime(tomorrow).build();
+    }
+
+    public static TestTask getDeadlineTestTask() throws IllegalValueException {
+        return new TaskBuilder().withName("due soon")
+                                        .withUncompletedStatus()
+                                        .withEndTime(tomorrow).build();
+    }
+
+    public static TestTask getFloatingTestTask() throws IllegalValueException {
+        return new TaskBuilder().withName("anytime").withUncompletedStatus().build();
+    }
+    
+    public TestTask[] getTypicalTasks() throws IllegalValueException {
+        return new TestTask[]{getTaskWithName(alice), 
+                                getTaskWithName(benson), 
+                                getTaskWithName(carl), 
+                                getTaskWithName(daniel), 
+                                getTaskWithName(elle), 
+                                getTaskWithName(fiona), 
+                                getTaskWithName(george)};
     }
 
     public ToDoList getTypicalToDoList(){
