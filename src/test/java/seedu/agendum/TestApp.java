@@ -19,6 +19,7 @@ public class TestApp extends MainApp {
 
     public static final String SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.xml");
     protected static final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("pref_testing.json");
+    protected static final String DEFAULT_CONFIG_FILE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("config_testing.json");
     public static final String APP_TITLE = "Test App";
     protected static final String TO_DO_LIST_NAME = "Test";
     protected Supplier<ReadOnlyToDoList> initialDataSupplier = () -> null;
@@ -42,7 +43,7 @@ public class TestApp extends MainApp {
 
     @Override
     protected Config initConfig(String configFilePath) {
-        Config config = super.initConfig(configFilePath);
+        Config config = super.initConfig(DEFAULT_CONFIG_FILE_LOCATION_FOR_TESTING);
         config.setAppTitle(APP_TITLE);
         config.setToDoListFilePath(saveFileLocation);
         config.setUserPrefsFilePath(DEFAULT_PREF_FILE_LOCATION_FOR_TESTING);
