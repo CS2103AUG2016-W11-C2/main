@@ -431,16 +431,9 @@ public class LogicManagerTest {
     }
     
     @Test
-    public void execute_exit_success() throws Exception {
-        // setup expectations
-        ToDoList expectedTDL = new ToDoList();
-        
-        // error that file already exists
-        assertCommandBehavior(ExitCommand.COMMAND_WORD,
-                String.format(ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT),
-                expectedTDL,
-                expectedTDL.getTaskList());
-        
+    public void execute_exit_success() {
+        CommandResult result = logic.execute(ExitCommand.COMMAND_WORD);
+        assertEquals(ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT, result.feedbackToUser);
     }
     //@@author
 
