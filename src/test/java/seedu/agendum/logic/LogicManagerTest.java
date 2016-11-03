@@ -411,7 +411,8 @@ public class LogicManagerTest {
         assertTrue(eventCollector.get(3) instanceof ToDoListChangedEvent);
     }
     
-    public void executeStore_fileExists_fail() throws Exception {
+    @Test
+    public void execute_store_fileExists_fail() throws Exception {
         // setup expectations
         ToDoList expectedTDL = new ToDoList();
         String location = "data/test_store_fail.xml";
@@ -427,6 +428,12 @@ public class LogicManagerTest {
 
         // delete file
         FileUtil.deleteFile(location);
+    }
+    
+    @Test
+    public void execute_exit_success() {
+        CommandResult result = logic.execute(ExitCommand.COMMAND_WORD);
+        assertEquals(ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT, result.feedbackToUser);
     }
     //@@author
 

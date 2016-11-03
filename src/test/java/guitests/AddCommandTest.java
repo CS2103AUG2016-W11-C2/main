@@ -1,14 +1,13 @@
 package guitests;
 
-import guitests.guihandles.TaskCardHandle;
 import org.junit.Test;
-import seedu.agendum.logic.commands.AddCommand;
+
+import guitests.guihandles.TaskCardHandle;
 import seedu.agendum.commons.core.Messages;
+import seedu.agendum.logic.commands.AddCommand;
 import seedu.agendum.testutil.TestTask;
 import seedu.agendum.testutil.TestUtil;
 import seedu.agendum.testutil.TypicalTestTasks;
-
-import static org.junit.Assert.assertTrue;
 
 public class AddCommandTest extends ToDoListGuiTest {
 

@@ -1,11 +1,10 @@
 package guitests;
 
 import org.junit.Test;
+
 import seedu.agendum.commons.core.Messages;
 import seedu.agendum.testutil.TestTask;
 import seedu.agendum.testutil.TypicalTestTasks;
-
-import static org.junit.Assert.assertTrue;
 
 public class FindCommandTest extends ToDoListGuiTest {
 
