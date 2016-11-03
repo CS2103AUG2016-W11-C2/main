@@ -172,7 +172,7 @@ Result: Agendum will add a task "attend wedding dinner" to the "Do It Soon" pane
 It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 ```
 
-> A task cannot have a deadline and a event time at the same time.
+> A task cannot have both a deadline and a event time.
 
 
 #### Date Time Format
@@ -257,7 +257,7 @@ Here are the *acceptable format(s)*:
 Note:
   > * Again, `<id>` must be a positive number and be in the most recent to-do list displayed.
   > * `<deadline>`, `<start time>` and `<end time>` must follow the format previously defined in [Date Time Format](#date-time-format)
-  > * A task cannot have a deadline and a event time at the same time.
+  > * > A task cannot have both a deadline and a event time.
 
 Here are some *examples*:<br>
 
