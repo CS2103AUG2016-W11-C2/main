@@ -132,10 +132,12 @@ public class VersionTest {
         Version original = new Version(0, 0, 0, false);
 
         // null
-        assertFalse(original.equals(null));
+        Object nullObj = null;
+        assertFalse(original.equals(nullObj));
         
         // Different object
-        assertFalse(original.equals(new Object()));
+        Object obj = new Object();
+        assertFalse(original.equals(obj));
     }
     //@@author
     
