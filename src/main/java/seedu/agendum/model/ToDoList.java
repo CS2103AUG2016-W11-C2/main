@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
+import seedu.agendum.model.task.UniqueTaskList.DuplicateTaskException;
+import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -69,12 +71,8 @@ public class ToDoList implements ReadOnlyToDoList {
         tasks.add(p);
     }
 
-    public boolean removeTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
-        if (tasks.remove(key)) {
-            return true;
-        } else {
-            throw new UniqueTaskList.TaskNotFoundException();
-        }
+    public boolean removeTask(ReadOnlyTask key) throws TaskNotFoundException {
+        return tasks.remove(key);
     }
 
     //@@author A0133367E
