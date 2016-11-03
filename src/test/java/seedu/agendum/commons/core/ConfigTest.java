@@ -7,8 +7,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.agendum.commons.exceptions.IllegalValueException;
-
 public class ConfigTest {
 
     private Config one;
@@ -34,7 +32,8 @@ public class ConfigTest {
     }
     
     //@@author A0148095X
-    public void setAliasFilePath_validPath_returnsTrue() {
+    @Test
+    public void setAliasTableFilePath_validPath_returnsTrue() {
         Config config = new Config();
         String validPath = "dropbox/table.xml";
         config.setAliasTableFilePath(validPath);
@@ -48,12 +47,17 @@ public class ConfigTest {
     }
 
     @Test
-    public void equals_symmetric_returnsTrue() throws IllegalValueException {
+    public void equals_same_returnsTrue() {
+        assertTrue(one.equals(one));
+    }
+
+    @Test
+    public void equals_symmetric_returnsTrue() {
         assertTrue(one.equals(another) && another.equals(one));
     }
 
     @Test
-    public void hashCode_symmetric_returnsTrue() throws IllegalValueException {
+    public void hashCode_symmetric_returnsTrue() {
         assertTrue(one.hashCode() == another.hashCode());
     }
 }
