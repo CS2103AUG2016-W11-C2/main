@@ -368,6 +368,7 @@ public class TestUtil {
         config.setUserPrefsFilePath(DEFAULT_PREF_FILE_LOCATION_FOR_TESTING);
         config.setToDoListFilePath(DEFAULT_TODOLIST_FILE_LOCATION_FOR_TESTING);
         config.setAliasTableFilePath(DEFAULT_ALIAS_TABLE_FILE_LOCATION_FOR_TESTING);
+        config.setConfigFilePath(DEFAULT_CONFIG_FILE_LOCATION_FOR_TESTING);
         
         try {
             ConfigUtil.saveConfig(config, DEFAULT_CONFIG_FILE_LOCATION_FOR_TESTING);
