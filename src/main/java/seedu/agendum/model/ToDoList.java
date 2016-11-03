@@ -65,9 +65,9 @@ public class ToDoList implements ReadOnlyToDoList {
     /**
      * Adds a task to the to-do list.
      *
-     * @throws UniqueTaskList.DuplicateTaskException if an equivalent task already exists.
+     * @throws DuplicateTaskException if an equivalent task already exists.
      */
-    public void addTask(Task p) throws UniqueTaskList.DuplicateTaskException {
+    public void addTask(Task p) throws DuplicateTaskException {
         tasks.add(p);
     }
 
@@ -78,34 +78,34 @@ public class ToDoList implements ReadOnlyToDoList {
     //@@author A0133367E
     /**
      * Updates an existing task in the to-do list.
-     * @throws UniqueTaskList.DuplicateTaskException if an equivalent task (to updatedTask) already exists.
-     * @throws UniqueTaskList.TaskNotFoundException if no such task (key) could be found in the list.
+     * @throws DuplicateTaskException if an equivalent task (to updatedTask) already exists.
+     * @throws TaskNotFoundException if no such task (key) could be found in the list.
      */
     public boolean updateTask(ReadOnlyTask key, Task updatedTask)
-            throws UniqueTaskList.TaskNotFoundException,
-            UniqueTaskList.DuplicateTaskException {
+            throws TaskNotFoundException,
+            DuplicateTaskException {
         return tasks.update(key, updatedTask);
     }
 
     /**
      * Marks an existing task in the to-do list.
-     * @throws UniqueTaskList.DuplicateTaskException if a duplicate task would result after marking key.
-     * @throws UniqueTaskList.TaskNotFoundException if no such task (key) could be found in the list.
+     * @throws DuplicateTaskException if a duplicate task would result after marking key.
+     * @throws TaskNotFoundException if no such task (key) could be found in the list.
      */
     public boolean markTask(ReadOnlyTask key) 
-            throws UniqueTaskList.TaskNotFoundException, 
-            UniqueTaskList.DuplicateTaskException {
+            throws TaskNotFoundException, 
+            DuplicateTaskException {
         return tasks.mark(key);
     }
 
     /**
      * Unmarks an existing task in the to-do list.
-     * @throws UniqueTaskList.DuplicateTaskException if a duplicate task would result after unmarking key.
-     * @throws UniqueTaskList.TaskNotFoundException if no such task (key) could be found in the list.
+     * @throws DuplicateTaskException if a duplicate task would result after unmarking key.
+     * @throws TaskNotFoundException if no such task (key) could be found in the list.
      */
     public boolean unmarkTask(ReadOnlyTask key) 
-            throws UniqueTaskList.TaskNotFoundException,
-            UniqueTaskList.DuplicateTaskException {
+            throws TaskNotFoundException,
+            DuplicateTaskException {
         return tasks.unmark(key);
     }
     //@@author
