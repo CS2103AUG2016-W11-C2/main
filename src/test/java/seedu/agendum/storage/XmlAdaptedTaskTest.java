@@ -26,7 +26,7 @@ public class XmlAdaptedTaskTest {
     XmlAdaptedTask xmlAdaptedTaskNoEndDateTime;
     
     @Before
-    public void setup() throws IllegalValueException {
+    public void setUp() throws IllegalValueException {
         LocalDate date = LocalDate.now();
         
         LocalTime startTime = LocalTime.of(12, 0); // 12pm

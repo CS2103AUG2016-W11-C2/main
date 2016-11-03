@@ -27,7 +27,7 @@ public class UniqueTaskListTest {
     private Task newTask;
 
     @Before
-    public void setup() throws IllegalValueException {
+    public void setUp() throws IllegalValueException {
         uniqueTaskList = new UniqueTaskList();
         originalTask = new Task(new Name("task"));
         duplicateOfOriginalTask = new Task(originalTask);

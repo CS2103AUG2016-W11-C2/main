@@ -17,7 +17,7 @@ public class NameTest {
     private Name another;
     
     @Before
-    public void setup() throws IllegalValueException {
+    public void setUp() throws IllegalValueException {
         one = new Name(validNameString);
         another = new Name(validNameString);
     }

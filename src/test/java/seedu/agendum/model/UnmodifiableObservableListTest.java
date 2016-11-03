@@ -32,7 +32,7 @@ public class UnmodifiableObservableListTest {
     private UnmodifiableObservableList<Integer> list;
 
     @Before
-    public void setup() {
+    public void setUp() {
         backing = new ArrayList<>();
         backing.add(ITEM_ZERO);
         backing.add(ITEM_ONE);

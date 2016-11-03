@@ -20,7 +20,7 @@ public class CollectionUtilTest {
     public ArrayList<Object> noNullUniqueArrayList;
     
     @Before
-    public void setup() {
+    public void setUp() {
         noNullUniqueArrayList = new ArrayList<Object>();
         noNullUniqueArrayList.add(string);
         noNullUniqueArrayList.add(number);

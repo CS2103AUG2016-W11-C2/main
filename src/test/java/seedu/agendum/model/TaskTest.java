@@ -45,7 +45,7 @@ public class TaskTest {
     }
     
     @Before
-    public void setup() throws Exception {
+    public void setUp() throws Exception {
         floatingTask = generateTask("task", false, noTimeSpecified, noTimeSpecified);
         eventTask = generateTask("task", false, yesterday, tomorrow);
         deadlineTaskDueYesterday = generateTask("task", false, noTimeSpecified, yesterday);

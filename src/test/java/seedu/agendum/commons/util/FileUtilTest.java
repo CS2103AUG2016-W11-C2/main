@@ -39,7 +39,7 @@ public class FileUtilTest {
 
     //@@author A0148095X
     @Before
-    public void setup() throws IOException {
+    public void setUp() throws IOException {
         filePathThatExists = "file_that_exists.test";
         fileThatExists = new File(filePathThatExists);
         FileUtil.createFile(fileThatExists);

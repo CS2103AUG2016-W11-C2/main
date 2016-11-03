@@ -65,7 +65,7 @@ public class LogicManagerTest {
     }
 
     @Before
-    public void setup() {
+    public void setUp() {
         model = new ModelManager();
         logic = new LogicManager(model);
         EventsCenter.getInstance().registerHandler(this);
