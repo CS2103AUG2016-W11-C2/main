@@ -15,9 +15,9 @@ public class TestTask implements ReadOnlyTask, Comparable<TestTask> {
     private static final int UPCOMING_DAYS_THRESHOLD = 7;
     
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm");
-    private static final String DEADLINE_WORD = "by ";
-    private static final String EVENT_START_WORD = "from ";
-    private static final String EVENT_END_WORD = "end ";
+    private static final String DEADLINE_WORD = " by ";
+    private static final String EVENT_START_WORD = " from ";
+    private static final String EVENT_END_WORD = " to ";
     
     private Name name;
     private boolean isCompleted;

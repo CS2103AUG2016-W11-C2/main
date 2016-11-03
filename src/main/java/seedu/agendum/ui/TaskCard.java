@@ -69,6 +69,7 @@ public class TaskCard extends UiPart {
         id.setText(displayedIndex);
 
         Label time = new Label();
+        time.setId("time");
         time.setMaxHeight(Control.USE_COMPUTED_SIZE);
         time.setTextFill(Color.web(TIME_COLOR));
         time.setWrapText(true);

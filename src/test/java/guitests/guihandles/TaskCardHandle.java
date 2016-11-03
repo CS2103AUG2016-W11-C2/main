@@ -20,7 +20,7 @@ public class TaskCardHandle extends GuiHandle {
     private static final String COMPLETED_TIME_PATTERN = "EEE, dd MMM";
     private static final String OVERDUE_PREFIX = "Overdue\n";
     private static final String COMPLETED_PREFIX = "Completed on ";
-    private static final String START_TIME_PREFIX = " from ";
+    private static final String START_TIME_PREFIX = "from ";
     private static final String END_TIME_PREFIX = " to ";
     private static final String DEADLINE_PREFIX = "by ";
     private static final String EMPTY_PREFIX = "";
@@ -63,7 +63,7 @@ public class TaskCardHandle extends GuiHandle {
             timeDescription.append(formatUpdatedTime(task));
         }
         
-        return getName().equals(name) && getTime().equals(timeDescription);
+        return getName().equals(name) && getTime().equals(timeDescription.toString());
     }
 
     public String formatTime(String dateTimePattern, String prefix, Optional<LocalDateTime> dateTime) {
