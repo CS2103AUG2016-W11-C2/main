@@ -19,7 +19,7 @@ public class GuiSettingsTest {
     GuiSettings copy;
     
     @Before
-    public void setup() {
+    public void setUp() {
         guiSettings = new GuiSettings(windowWidth, windowHeight, xPosition, yPosition);
         copy = new GuiSettings(windowWidth, windowHeight, xPosition, yPosition);
     }

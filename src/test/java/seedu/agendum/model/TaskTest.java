@@ -5,15 +5,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.model.task.Name;
 import seedu.agendum.model.task.Task;
 
@@ -45,7 +41,7 @@ public class TaskTest {
     }
     
     @Before
-    public void setup() throws Exception {
+    public void setUp() throws Exception {
         floatingTask = generateTask("task", false, noTimeSpecified, noTimeSpecified);
         eventTask = generateTask("task", false, yesterday, tomorrow);
         deadlineTaskDueYesterday = generateTask("task", false, noTimeSpecified, yesterday);

@@ -38,7 +38,7 @@ public class StorageManagerTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Before
-    public void setup() {
+    public void setUp() {
         storageManager = new StorageManager(getTempFilePath("ab"), getTempFilePath("command"),
                 getTempFilePath("prefs"), new Config());
     }

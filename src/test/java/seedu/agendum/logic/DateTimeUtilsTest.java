@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 //@@author A0003878Y
 public class DateTimeUtilsTest {

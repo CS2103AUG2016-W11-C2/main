@@ -13,7 +13,7 @@ public class ConfigTest {
     private Config another;
 
     @Before
-    public void setup() {
+    public void setUp() {
         one = new Config();
         another = new Config();
     }
