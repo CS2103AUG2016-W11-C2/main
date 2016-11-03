@@ -25,13 +25,9 @@ public class GuiSettingsTest {
     }
     
     @Test
-    public void equals_invalidInput_returnsFalse() {        
-        
+    public void equals_invalidInput_returnsFalse() {
         // not an instance of GuiSettings
         assertFalse(guiSettings.equals(new Object()));
-        
-        // null
-        assertFalse(guiSettings.equals(null));
     }
     
     @Test
