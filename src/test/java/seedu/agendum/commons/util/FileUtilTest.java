@@ -7,9 +7,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.junit.After;
 import org.junit.Before;
@@ -57,7 +54,7 @@ public class FileUtilTest {
         filePathWithParentDirectories = "data/test/file_with_parent_directories.test";
         fileWithParentDirectories = new File(filePathWithParentDirectories);
         
-        filePathWithInvalidDirectoryName = "invalid ~!@#$%^&*()_+ directory";
+        filePathWithInvalidDirectoryName = "invalid <!.?> \0 /0 directory";
         fileWithInvalidDirectoryName = new File(filePathWithInvalidDirectoryName);
         
         filePathWithValidDirectoryName = "validdirectory";
