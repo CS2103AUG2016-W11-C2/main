@@ -411,6 +411,7 @@ public class LogicManagerTest {
         assertTrue(eventCollector.get(3) instanceof ToDoListChangedEvent);
     }
     
+    @Test
     public void execute_store_fileExists_fail() throws Exception {
         // setup expectations
         ToDoList expectedTDL = new ToDoList();
@@ -427,6 +428,19 @@ public class LogicManagerTest {
 
         // delete file
         FileUtil.deleteFile(location);
+    }
+    
+    @Test
+    public void execute_exit_success() throws Exception {
+        // setup expectations
+        ToDoList expectedTDL = new ToDoList();
+        
+        // error that file already exists
+        assertCommandBehavior(ExitCommand.COMMAND_WORD,
+                String.format(ExitCommand.MESSAGE_EXIT_ACKNOWLEDGEMENT),
+                expectedTDL,
+                expectedTDL.getTaskList());
+        
     }
     //@@author
 
