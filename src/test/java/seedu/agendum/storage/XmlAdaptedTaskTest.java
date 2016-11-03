@@ -17,13 +17,13 @@ import seedu.agendum.model.task.Task;
 //@@author A0148095X
 public class XmlAdaptedTaskTest {
     
-    Optional<LocalDateTime> optionalStartDateTime;
-    Optional<LocalDateTime> optionalEndDateTime;
+    private Optional<LocalDateTime> optionalStartDateTime;
+    private Optional<LocalDateTime> optionalEndDateTime;
     
-    XmlAdaptedTask xmlAdaptedTaskAllFields;
-    XmlAdaptedTask xmlAdaptedTaskUncompleted;
-    XmlAdaptedTask xmlAdaptedTaskNoStartDateTime;
-    XmlAdaptedTask xmlAdaptedTaskNoEndDateTime;
+    private XmlAdaptedTask xmlAdaptedTaskAllFields;
+    private XmlAdaptedTask xmlAdaptedTaskUncompleted;
+    private XmlAdaptedTask xmlAdaptedTaskNoStartDateTime;
+    private XmlAdaptedTask xmlAdaptedTaskNoEndDateTime;
     
     @Before
     public void setUp() throws IllegalValueException {
