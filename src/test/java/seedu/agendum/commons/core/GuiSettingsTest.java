@@ -15,28 +15,24 @@ public class GuiSettingsTest {
     private int xPosition = 100;
     private int yPosition = 300;
 
-    private GuiSettings guiSettings;
-    private GuiSettings copy;
+    private GuiSettings one, another;
     
     @Before
     public void setUp() {
-        guiSettings = new GuiSettings(windowWidth, windowHeight, xPosition, yPosition);
-        copy = new GuiSettings(windowWidth, windowHeight, xPosition, yPosition);
+        one = new GuiSettings(windowWidth, windowHeight, xPosition, yPosition);
+        another = new GuiSettings(windowWidth, windowHeight, xPosition, yPosition);
     }
     
     @Test
-    public void equals_invalidInput_returnsFalse() {
-        // not an instance of GuiSettings
-        assertFalse(guiSettings.equals(new Object()));
-    }
-    
+    public void equals_differentObject_returnsFalse() {
+        assertFalse(one.equals(new Object()));
+    }    
+
     @Test
-    public void equals_validInput_returnsTrue() {
-        // same object
-        assertTrue(guiSettings.equals(guiSettings));
-        
-        // different object, same settings
-        assertTrue(guiSettings.equals(copy));        
+    public void equals_symmetric_returnsTrue() {
+        // equals to itself and similar object
+        assertTrue(one.equals(one));
+        assertTrue(one.equals(another));        
     }
     
     @Test
@@ -51,23 +47,23 @@ public class GuiSettingsTest {
 
         // different width
         differentSettings  = new GuiSettings(differentWindowWidth, windowHeight, xPosition, yPosition);
-        assertFalse(guiSettings.equals(differentSettings));
+        assertFalse(one.equals(differentSettings));
         
         // different height
         differentSettings  = new GuiSettings(windowWidth, differentWindowHeight, xPosition, yPosition);
-        assertFalse(guiSettings.equals(differentSettings));
+        assertFalse(one.equals(differentSettings));
         
         // different x position
         differentSettings  = new GuiSettings(windowWidth, windowHeight, differentXPosition, yPosition);
-        assertFalse(guiSettings.equals(differentSettings));
+        assertFalse(one.equals(differentSettings));
         
         // different y position
         differentSettings  = new GuiSettings(windowWidth, windowHeight, xPosition, differentYPosition);
-        assertFalse(guiSettings.equals(differentSettings));
+        assertFalse(one.equals(differentSettings));
     }
     
     @Test
     public void hashcode_symmetric_returnsTrue() {
-        assertEquals(guiSettings.hashCode(), copy.hashCode());
+        assertEquals(one.hashCode(), another.hashCode());
     }    
 }
