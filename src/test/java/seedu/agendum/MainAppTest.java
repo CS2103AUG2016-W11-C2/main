@@ -74,6 +74,8 @@ public class MainAppTest {
 
         UserPrefs userPrefs = mainApp.initPrefs(config);
         assertEquals(userPrefs, defaultUserPrefs);
+        
+        mainApp.storage = null;
     }
 
     @Test
@@ -85,6 +87,18 @@ public class MainAppTest {
 
         UserPrefs userPrefs = mainApp.initPrefs(config);
         assertEquals(userPrefs, defaultUserPrefs);
+        
+        mainApp.storage = null;
+    }
+
+    @Test
+    public void initPrefs_exceptionThrowingStorage_returnsDefaultUserPrefsLogsWarning() {
+        mainApp.storage = new ExceptionThrowingStorageManagerStub();
+        
+        UserPrefs userPrefs = mainApp.initPrefs(defaultConfig);
+        assertEquals(userPrefs, defaultUserPrefs);
+        
+        mainApp.storage = null;
     }
 
     private void createEmptyFile(String filePath) {
@@ -150,6 +164,18 @@ public class MainAppTest {
         
         public CustomUserPrefsStorageManagerStub(String userPrefsPath) {
             super("", "", userPrefsPath, null);
+        }
+    }
+    
+    class ExceptionThrowingStorageManagerStub extends StorageManager {
+
+        public ExceptionThrowingStorageManagerStub() {
+            super("","","",null);
+        }
+        
+        @Override
+        public Optional<UserPrefs> readUserPrefs() throws IOException {
+            throw new IOException("ExceptionThrowingStorageManagerStub: IOException");
         }
     }
 }
