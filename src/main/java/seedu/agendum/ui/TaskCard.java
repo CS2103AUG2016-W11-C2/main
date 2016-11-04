@@ -59,6 +59,7 @@ public class TaskCard extends UiPart {
     public void initialize() {
 
         Label time = new Label();
+        time.setId("time");
 
         if (task.isOverdue()) {
             cardPane.setStyle("-fx-background-color: rgba(244, 67, 54, 0.8)");
