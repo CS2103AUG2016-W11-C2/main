@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import seedu.agendum.commons.core.Config;
-import seedu.agendum.commons.exceptions.DataConversionException;
 import seedu.agendum.commons.util.ConfigUtil;
 import seedu.agendum.model.UserPrefs;
 import seedu.agendum.storage.JsonUserPrefsStorage;
