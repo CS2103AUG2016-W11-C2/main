@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,7 +74,7 @@ public class MainAppTest {
 
         UserPrefs userPrefs = mainApp.initPrefs(config);
         assertEquals(userPrefs, defaultUserPrefs);
-        
+
         mainApp.storage = null;
     }
 
@@ -86,17 +87,17 @@ public class MainAppTest {
 
         UserPrefs userPrefs = mainApp.initPrefs(config);
         assertEquals(userPrefs, defaultUserPrefs);
-        
+
         mainApp.storage = null;
     }
 
     @Test
     public void initPrefs_exceptionThrowingStorage_returnsDefaultUserPrefsLogsWarning() {
         mainApp.storage = new ExceptionThrowingStorageManagerStub();
-        
+
         UserPrefs userPrefs = mainApp.initPrefs(defaultConfig);
         assertEquals(userPrefs, defaultUserPrefs);
-        
+
         mainApp.storage = null;
     }
 
@@ -111,8 +112,7 @@ public class MainAppTest {
         try {
             file.createNewFile();
         } catch (IOException e) {
-            System.out.println("Error creating empty file at: " + filePath);
-            System.exit(1);
+            Assert.fail("Error creating empty file at: " + filePath);
         }
     }
 
@@ -127,13 +127,11 @@ public class MainAppTest {
         try {
             ConfigUtil.saveConfig(defaultConfig, pathToReadOnlyConfig);
         } catch (IOException e) {
-            System.out.println("Error creating read only config file");
-            System.exit(1);
+            Assert.fail("Error creating read only config file");
         }
 
         if (!file.setReadOnly()) {
-            System.out.println("Unable to set read only config to read only");
-            System.exit(1);
+            Assert.fail("Unable to set read only config to read only");
         }
     }
 
@@ -149,29 +147,25 @@ public class MainAppTest {
             JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(pathToReadOnlyUserPrefs);
             userPrefsStorage.saveUserPrefs(defaultUserPrefs, pathToReadOnlyUserPrefs);
         } catch (IOException e) {
-            System.out.println("Error creating read only user prefs file");
-            System.exit(1);
+            Assert.fail("Error creating read only user prefs file");
         }
 
         if (!file.setReadOnly()) {
-            System.out.println("Unable to set read only user prefs to read only");
-            System.exit(1);
+            Assert.fail("Unable to set read only user prefs to read only");
         }
     }
 
     class CustomUserPrefsStorageManagerStub extends StorageManager {
-        
         public CustomUserPrefsStorageManagerStub(String userPrefsPath) {
             super("", "", userPrefsPath, null);
         }
     }
-    
-    class ExceptionThrowingStorageManagerStub extends StorageManager {
 
+    class ExceptionThrowingStorageManagerStub extends StorageManager {
         public ExceptionThrowingStorageManagerStub() {
-            super("","","",null);
+            super("", "", "", null);
         }
-        
+
         @Override
         public Optional<UserPrefs> readUserPrefs() throws IOException {
             throw new IOException("ExceptionThrowingStorageManagerStub: IOException");
