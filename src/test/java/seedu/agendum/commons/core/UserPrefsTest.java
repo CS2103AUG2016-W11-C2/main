@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import seedu.agendum.model.UserPrefs;
 
+//@@author A0148095X
 public class UserPrefsTest {
 
     private UserPrefs one, another;
@@ -34,6 +35,21 @@ public class UserPrefsTest {
     @Test
     public void hashcode_symmetric_returnsTrue() {
         assertEquals(one.hashCode(), another.hashCode());
-    }    
+    }
+    
+    @Test
+    public void setGuiSettings_validInputs_successful() {
+        final double expectedWidth = 222;
+        final double expectedHeight = 333;
+        final int expectedX = 444;
+        final int expectedY = 555;
+        final GuiSettings expectedGuiSettings = new GuiSettings(expectedWidth, expectedHeight, expectedX, expectedY);
+        
+        final UserPrefs userPrefs = new UserPrefs();
+        userPrefs.setGuiSettings(expectedWidth, expectedHeight, expectedX, expectedY);
+        GuiSettings actualGuiSettings = userPrefs.getGuiSettings();
+        
+        assertEquals(actualGuiSettings, expectedGuiSettings);
+    }
     
 }
