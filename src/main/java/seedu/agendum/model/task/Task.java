@@ -3,7 +3,6 @@ package seedu.agendum.model.task;
 import seedu.agendum.commons.util.CollectionUtil;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -83,27 +82,68 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return isCompleted;
     }
 
+    /**
+     * Returns true if a task is uncompleted and has a start/end time
+     * that is after the current time but within some threshold amount of days
+     */
     @Override
     public boolean isUpcoming() {
-        return !isCompleted() && hasTime() && getTaskTime().isBefore(
-                LocalDateTime.now().plusDays(UPCOMING_DAYS_THRESHOLD));
+        if (isCompleted()) {
+            return false;
+        }
+
+        if (!hasTime()) {
+            return false;
+        }
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        boolean isBeforeUpcomingDaysThreshold = getTaskTime()
+                .isBefore(currentTime.plusDays(UPCOMING_DAYS_THRESHOLD));
+        boolean isAfterCurrentTime = getTaskTime().isAfter(currentTime);
+
+        return isBeforeUpcomingDaysThreshold && isAfterCurrentTime;
     }
 
+    /**
+     * Returns true is a task is uncompleted and has a start/end time
+     * that is before the current time
+     */
     @Override
     public boolean isOverdue() {
-        return !isCompleted() && hasTime() && getTaskTime().isBefore(LocalDateTime.now());
+        if (isCompleted()) {
+            return false;
+        }
+
+        if (!hasTime()) {
+            return false;
+        }
+
+        LocalDateTime currentTime = LocalDateTime.now();
+        boolean isBeforeCurrentTime = getTaskTime().isBefore(currentTime);
+                
+        return isBeforeCurrentTime;
     }
 
+    /**
+     * Returns true if a task has a start time or an end time, false otherwise
+     * This must be called to check if comparison of task's time is possible
+     */
     @Override
     public boolean hasTime() {
         return (getStartDateTime().isPresent() || getEndDateTime().isPresent());
     }
 
+    /**
+     * Returns true if the task has a start time and end time, false otherwise;
+     */
     @Override
     public boolean isEvent() {
-        return getStartDateTime().isPresent();
+        return getStartDateTime().isPresent() && getEndDateTime().isPresent();
     }
 
+    /**
+     * Returns true if the task has a deadline (i.e. only a end time), false otherwise.
+     */
     @Override
     public boolean hasDeadline() {
         return !getStartDateTime().isPresent() && getEndDateTime().isPresent();
@@ -119,14 +159,18 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return Optional.ofNullable(endDateTime);
     }
 
+    /**
+     * Returns the time the task is last updated.
+     * e.g. created, renamed, rescheduled, marked or unmarked
+     */
     @Override
     public LocalDateTime getLastUpdatedTime() {
         return lastUpdatedTime;
     }
 
     /**
-     * Pre-condition: Task has a start or end time
-     * Return the (earlier) time associated with the task (assumed to be start time)
+     * Pre-condition: Task has a start or end time.
+     * Returns the start time if present, else returns the end time. 
      */
     private LocalDateTime getTaskTime() {
         assert hasTime();
@@ -165,6 +209,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
 
     public void setLastUpdatedTimeToNow() {
+        // nano-seconds is set to 0 for more consistent test results when (un)marking multiple tasks
         this.lastUpdatedTime = LocalDateTime.now().withNano(0);
     }
 
@@ -177,6 +222,15 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
                 && this.isSameStateAs((ReadOnlyTask) other));
     }
 
+    /**
+     * Compares the current task with another Task other.
+     * The current task is considered to be less than the other task if
+     * 1) it is uncompleted and other is completed
+     * 2) both tasks are completed but this task has a earlier start/end time associated
+     * 3) both tasks are uncompleted but this task has a later updated time
+     * 4) both tasks are uncompleted with the same updated time
+     *    but this task has a lexicographically smaller name (useful when sorting tasks in testing)
+     */
     @Override
     public int compareTo(Task other) {
         int comparedCompletionStatus = compareCompletionStatus(other);
@@ -197,10 +251,23 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         return compareName(other);
     }
 
+    /**
+     * Compares the completion status of current task with another Task other.
+     * The current task is considered to be less than the other task if
+     * it is uncompleted and other is completed
+     */
     public int compareCompletionStatus(Task other) {
         return Boolean.compare(this.isCompleted(), other.isCompleted());
     }
 
+    /**
+     * Compares the earliest time of the current task with another Task other.
+     * The current task is considered to be less than the other task if
+     * 1) both tasks have a time associated but this task has a earlier time associated
+     * 2) this task has a time associated but the other task does not.
+     * Both tasks are equal if they have no time or the same earliest time associated.
+     * Time refers to value returned by {@link #getTaskTime()}
+     */
     public int compareTaskTime(Task other) {
         if (this.hasTime() && other.hasTime()) {
             return this.getTaskTime().compareTo(other.getTaskTime());
@@ -213,10 +280,20 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         }
     }
 
+    /**
+     * Compares the current task with another Task other.
+     * The current task is considered to be less than the other task if
+     * it has a later updated time
+     */
     public int compareLastUpdatedTime(Task other) {
         return other.getLastUpdatedTime().compareTo(this.getLastUpdatedTime());
     }
 
+    /**
+    * Compares the current task with another Task other.
+    * The current task is considered to be less than the other task if
+    * it has a lexicographically smaller name
+    */
     public int compareName(Task other) {
         return this.getName().toString().compareTo(other.getName().toString());
     }
