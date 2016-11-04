@@ -1,6 +1,5 @@
 package guitests.guihandles;
 
-
 import guitests.GuiRobot;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -17,7 +16,6 @@ import java.util.Set;
 
 import static org.junit.Assert.assertTrue;
 
-//@@author A0148031R
 /**
  * Provides a handle for the panel containing the task list.
  */
@@ -49,9 +47,6 @@ public class FloatingTasksPanelHandle extends GuiHandle {
         return this.isListMatching(0, tasks);
     }
     
-    /**
-     * Clicks on the ListView.
-     */
     public void clickOnListView() {
         Point2D point= TestUtil.getScreenMidPoint(getListView());
         guiRobot.clickOn(point.getX(), point.getY());
@@ -92,7 +87,7 @@ public class FloatingTasksPanelHandle extends GuiHandle {
         for (int i = 0; i < tasks.length; i++) {
             final int scrollTo = i + startPosition;
             guiRobot.interact(() -> getListView().scrollTo(scrollTo));
-            guiRobot.sleep(200);
+            guiRobot.sleep(500);
             if (!TestUtil.compareCardAndTask(getTaskCardHandle(startPosition + i), tasks[i])) {
                 return false;
             }
