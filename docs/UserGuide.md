@@ -349,7 +349,7 @@ You can also try out any of the following examples:
 The tasks with display ids 1, 2 and 3 will be deleted.
 ```
 
-The changes are as shown below. <br>
+The deleted tasks will appear in a popup window. <br>
 <img src="images/userguide/afterDeleting.png" width="300"><br>
 
 
