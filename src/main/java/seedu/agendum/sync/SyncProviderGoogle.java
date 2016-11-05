@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.Math.abs;
+import static seedu.agendum.commons.core.Config.DEFAULT_DATA_DIR;
 
 //@@author A0003878Y
 public class SyncProviderGoogle extends SyncProvider {
@@ -33,12 +34,13 @@ public class SyncProviderGoogle extends SyncProvider {
 
     private static final String APPLICATION_NAME = "Agendum";
     private static final String CALENDAR_NAME = "Agendum Calendar";
-    private static final File DATA_STORE_DIR = new File(System.getProperty("user.home"), ".store/calendar_sample");
+    private static final File DATA_STORE_DIR = new File(DEFAULT_DATA_DIR);
+    private static final String CLIENT_ID = "1011464737889-n9avi9id8fur78jh3kqqctp9lijphq2n.apps.googleusercontent.com";
+    private static final String CLIENT_SECRET = "ea78y_rPz3G4kwIV3yAF99aG";
     private static FileDataStoreFactory dataStoreFactory;
     private static HttpTransport httpTransport;
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static com.google.api.services.calendar.Calendar client;
-    static final List<com.google.api.services.calendar.model.Calendar> addedCalendarsUsingBatch = Lists.newArrayList();
 
     private Calendar agendumCalendar;
 
@@ -110,8 +112,8 @@ public class SyncProviderGoogle extends SyncProvider {
 
     private Credential authorize() throws Exception {
         GoogleClientSecrets.Details details = new GoogleClientSecrets.Details();
-        details.setClientId("1011464737889-n9avi9id8fur78jh3kqqctp9lijphq2n.apps.googleusercontent.com");
-        details.setClientSecret("ea78y_rPz3G4kwIV3yAF99aG");
+        details.setClientId(CLIENT_ID);
+        details.setClientSecret(CLIENT_SECRET);
 
         GoogleClientSecrets clientSecrets = new GoogleClientSecrets().setInstalled(details);
 
@@ -134,7 +136,7 @@ public class SyncProviderGoogle extends SyncProvider {
 
         }
 
-        logger.info(CALENDAR_NAME + "not found, creating new.");
+        logger.info(CALENDAR_NAME + " not found, creating it");
         Calendar entry = new Calendar();
         entry.setSummary(CALENDAR_NAME);
         Calendar calendar = client.calendars().insert(entry).execute();
