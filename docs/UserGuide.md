@@ -70,19 +70,17 @@ Here is what Agendum may look like with some tasks added and completed.
 
 Notice how Agendum has 3 panels: **"Do It Soon"**, **"Do It Anytime"** and **"Done"**.
 * **"Do It Soon"** panel will show your **uncompleted** tasks with deadlines and events. Those tasks demand your attention at or by some specific time! Agendum has helpfully sorted these tasks by their deadline or event time.
-    * **Overdue** tasks _(e.g. buy Jim's present)_ will stand out in pink at the top of the list.
-    * **Upcoming** tasks (happening/due within a week) _(e.g. attend yoga class)_ will stand out in yellow next.
+    * **Overdue** tasks _(e.g. tutorial)_ will stand out in red at the top of the list.
+    * **Upcoming** tasks (happening/due within a week) _(e.g. essay draft)_ will stand out in light green next.
 * **"Do It Anytime"** panel will show your **uncompleted** tasks which you did not specify a deadline or happening time. Do these tasks anytime.
 * **"Done"** panel will show all your completed tasks. To make it easier for you to keep track of what you have done recently, Agendum will always show the latest completed tasks at the top of the list.
 
-Agendum will clearly display the name and time associated with each task. Notice that each task is displayed with a ID. For example, the task *drop by grocery store* has a ID *5* now. We will use this ID to refer to the task for some Agendum commands.
+Agendum will clearly display the name and time associated with each task. Notice that each task is displayed with a ID. For example, the task *learn piano* has a ID *7* now. We will use this ID to refer to the task for some Agendum commands.
 
 The **Command Box** is located at the top of Agendum. Enter your keyboard commands into the box!
 Just in case, there is a **Status Bar** located at the bottom of Agendum. You can check today's date and time, where your Agendum's to-do list data is located and when your data was last saved.
 
 Agendum also has a pretty **Help Window** which summarizes the commands you can use and pop-ups after each commands for you to review your changes.
-
-(insert help window screenshot)
 
 [comment]: # (@@author A0148031R)
 ### Start using Agendum
@@ -128,6 +126,8 @@ Continue exploring Agendum. Add more tasks to your Agendum to-do list and try ou
 
 Here is a **summary of all the visual changes** you should see at every step:
 <img src="images/userguide/startAgendum.png" width="800"><br>
+
+From Step 4 to 5, the id of the task _return "Animal Farm"_ changed from 1 to 2.
 
 
 &nbsp;
@@ -200,7 +200,6 @@ Agendum supports a wide variety of date time formats. Combine any of the date fo
 | Hour            | 10, 22                                  |
 | Hour:Minute     | 10:30                                   |
 | Hour.Minute     | 10.30                                   |
-| HourMinute      | 2200                                    |
 | Relative time   | this morning, this afternoon, tonight   |
 
 > By default, we use the 24 hour time format but we do support the meridian format as well e.g. 10am, 10pm
@@ -235,7 +234,7 @@ Here is an *example*:<br>
 <img src="images/userguide/beforeRenaming.png" width="500"><br>
 
 ```
-Description: I just realized that I want to be more specific about the movie I wnat to watch".
+Description: I want to be more specific about the movie I want to watch for task id #2.
 To update the name of the task,
 > rename 2 watch Harry Potter
 ```
@@ -257,7 +256,7 @@ Here are the *acceptable format(s)*:
 Note:
   > * Again, `<id>` must be a positive number and be in the most recent to-do list displayed.
   > * `<deadline>`, `<start time>` and `<end time>` must follow the format previously defined in [Date Time Format](#date-time-format)
-  > * > A task cannot have both a deadline and a event time.
+  > * A task cannot have both a deadline and a event time.
 
 Here are some *examples*:<br>
 
@@ -269,7 +268,7 @@ Description: I decide that I can go for a run at any time instead.
 Result: Agendum will start/end time of the task "go for a run" and it will
 move to the "Do It Anytime" panel
 
-Description: I want to submit by reflection earlier.
+Description: I want to submit my reflection earlier.
 > schedule 2 by tmr 2pm
 Result: Agendum will update the deadline of "submit personal reflection". It
 will then be sorted in the "Do It Soon" panel.
@@ -307,7 +306,7 @@ You can also try out any of the following examples:
 The tasks with display ids 1, 2 and 3 will be marked as completed.
 ```
 
-The changes are as shown below. <br>
+The changes are as shown below. The 3 tasks will move to the done panel at a go. <br>
 <img src="images/userguide/afterMarking.png" width="600"><br>
 
 
@@ -349,7 +348,7 @@ You can also try out any of the following examples:
 The tasks with display ids 1, 2 and 3 will be deleted.
 ```
 
-The changes are as shown below. <br>
+The deleted tasks will appear in a popup window. <br>
 <img src="images/userguide/afterDeleting.png" width="300"><br>
 
 
@@ -491,7 +490,7 @@ Here is the *format*:
 
 > * `<location>` must be a valid path to a file on the local computer.
 > * Your current data would have already been saved automatically in its original data storage location.
-> * Agendum will then show data loaded from <location> and save data there in the future.
+> * Agendum will then show data loaded from `<location>` and save data there in the future.
 > * You will not be able to `undo` immediately after loading as there have been no changes to the loaded list.
 
 Examples
