@@ -10,7 +10,6 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.DateTime;
-import com.google.api.client.util.Lists;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.model.*;
 import com.google.api.services.calendar.model.Calendar;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Logger;
 
 import static java.lang.Math.abs;
@@ -35,6 +33,7 @@ public class SyncProviderGoogle extends SyncProvider {
     private static final String APPLICATION_NAME = "Agendum";
     private static final String CALENDAR_NAME = "Agendum Calendar";
     private static final File DATA_STORE_DIR = new File(DEFAULT_DATA_DIR);
+    private static final File DATA_STORE_CREDENTIAL = new File(DEFAULT_DATA_DIR + "StoredCredential");
     private static final String CLIENT_ID = "1011464737889-n9avi9id8fur78jh3kqqctp9lijphq2n.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "ea78y_rPz3G4kwIV3yAF99aG";
     private static FileDataStoreFactory dataStoreFactory;
@@ -72,8 +71,16 @@ public class SyncProviderGoogle extends SyncProvider {
     }
 
     @Override
+    public void startIfNeeded() {
+        if (DATA_STORE_CREDENTIAL.exists()) {
+            start();
+        }
+    }
+
+    @Override
     public void stop() {
         logger.info("Stopping Google Calendar Sync");
+        DATA_STORE_CREDENTIAL.delete();
         syncManager.setSyncStatus(Sync.SyncStatus.NOTRUNNING);
     }
 
@@ -123,7 +130,7 @@ public class SyncProviderGoogle extends SyncProvider {
 
 
     private Calendar getAgendumCalendar() throws IOException {
-        CalendarList feed = (CalendarList)client.calendarList().list().execute();
+        CalendarList feed = client.calendarList().list().execute();
         logger.info("Searching for Agnendum Calendar");
 
         for (CalendarListEntry entry : feed.getItems()) {

@@ -16,6 +16,8 @@ public class SyncManager extends ComponentManager implements Sync {
     public SyncManager(SyncProvider syncProvider) {
         this.syncProvider = syncProvider;
         this.syncProvider.setManager(this);
+
+        syncProvider.startIfNeeded();
     }
 
     @Override

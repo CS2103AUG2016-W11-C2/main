@@ -7,6 +7,7 @@ public abstract class SyncProvider {
     protected Sync syncManager;
 
     public abstract void start();
+    public abstract void startIfNeeded();
     public abstract void stop();
     public abstract void addNewEvent(Task task);
     public abstract void deleteEvent(Task task);
