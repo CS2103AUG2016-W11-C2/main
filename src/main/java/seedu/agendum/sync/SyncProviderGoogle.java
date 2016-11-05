@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.Executors;
 import java.util.logging.Logger;
 
 import static java.lang.Math.abs;
@@ -40,6 +42,9 @@ public class SyncProviderGoogle extends SyncProvider {
     private static HttpTransport httpTransport;
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static com.google.api.services.calendar.Calendar client;
+
+    private static final ArrayBlockingQueue<Task> addEventConcurrentQueue = new ArrayBlockingQueue<Task>(200);
+    private static final ArrayBlockingQueue<Task> deleteEventConcurrentQueue = new ArrayBlockingQueue<Task>(200);
 
     private Calendar agendumCalendar;
 
@@ -63,6 +68,9 @@ public class SyncProviderGoogle extends SyncProvider {
             agendumCalendar = getAgendumCalendar();
             
             syncManager.setSyncStatus(Sync.SyncStatus.RUNNING);
+
+            Executors.newSingleThreadExecutor().execute(() -> processAddEventQueue());
+            Executors.newSingleThreadExecutor().execute(() -> processDeleteEventQueue());
         } catch (IOException var3) {
             System.err.println(var3.getMessage());
         } catch (Throwable var4) {
@@ -86,34 +94,21 @@ public class SyncProviderGoogle extends SyncProvider {
 
     @Override
     public void addNewEvent(Task task) {
-        Date startDate = Date.from(task.getStartDateTime().get().atZone(ZoneId.systemDefault()).toInstant());
-        Date endDate = Date.from(task.getEndDateTime().get().atZone(ZoneId.systemDefault()).toInstant());
-        String id = Integer.toString(abs(task.hashCode()));
-
-        EventDateTime startEventDateTime = new EventDateTime().setDateTime(new DateTime(startDate));
-        EventDateTime endEventDateTime = new EventDateTime().setDateTime(new DateTime(endDate));
-
-        Event newEvent = new Event();
-        newEvent.setSummary(String.valueOf(task.getName()));
-        newEvent.setStart(startEventDateTime);
-        newEvent.setEnd(endEventDateTime);
-        newEvent.setId(id);
-
         try {
-            Event result = client.events().insert(agendumCalendar.getId(), newEvent).execute();
-            logger.info(result.toPrettyString());
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+            addEventConcurrentQueue.put(task);
+            logger.info("Task added to GCal add queue");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public void deleteEvent(Task task) {
         try {
-            String id = Integer.toString(abs(task.hashCode()));
-            client.events().delete(agendumCalendar.getId(), id).execute();
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+            deleteEventConcurrentQueue.put(task);
+            logger.info("Task added to GCal delete queue");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
@@ -149,5 +144,50 @@ public class SyncProviderGoogle extends SyncProvider {
         Calendar calendar = client.calendars().insert(entry).execute();
         logger.info(calendar.toPrettyString());
         return calendar;
+    }
+
+    private void processAddEventQueue() {
+        while (true) {
+            try {
+                Task task = addEventConcurrentQueue.take();
+                Date startDate = Date.from(task.getStartDateTime().get().atZone(ZoneId.systemDefault()).toInstant());
+                Date endDate = Date.from(task.getEndDateTime().get().atZone(ZoneId.systemDefault()).toInstant());
+                String id = Integer.toString(abs(task.hashCode()));
+
+                EventDateTime startEventDateTime = new EventDateTime().setDateTime(new DateTime(startDate));
+                EventDateTime endEventDateTime = new EventDateTime().setDateTime(new DateTime(endDate));
+
+                Event newEvent = new Event();
+                newEvent.setSummary(String.valueOf(task.getName()));
+                newEvent.setStart(startEventDateTime);
+                newEvent.setEnd(endEventDateTime);
+                newEvent.setId(id);
+
+                Event result = client.events().insert(agendumCalendar.getId(), newEvent).execute();
+                logger.info(result.toPrettyString());
+
+                logger.info("Task processed from GCal add queue");
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void processDeleteEventQueue() {
+        while (true) {
+            try {
+                Task task = deleteEventConcurrentQueue.take();
+                String id = Integer.toString(abs(task.hashCode()));
+                client.events().delete(agendumCalendar.getId(), id).execute();
+
+                logger.info("Task added to GCal delete queue");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
