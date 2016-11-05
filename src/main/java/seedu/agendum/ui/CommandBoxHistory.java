@@ -22,7 +22,7 @@ public class CommandBoxHistory {
     
     private static CommandBoxHistory instance = null;
     
-    protected CommandBoxHistory() {
+    private CommandBoxHistory() {
         pastCommands = new LinkedList<>();
         iterator = pastCommands.listIterator();   
     }

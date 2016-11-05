@@ -258,7 +258,7 @@ Note:
   > * `<deadline>`, `<start time>` and `<end time>` must follow the format previously defined in [Date Time Format](#date-time-format)
   > * A task cannot have both a deadline and a event time.
 
-Here are some *examples*:
+Here are some *examples*: <br>
 <img src="images/userguide/beforeScheduling.png" width="600"><br>
 
 ```
@@ -510,7 +510,7 @@ To work even faster you can also use keyboard shortcuts: <br>
 1. Use <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through previously typed commands. You don't need to remember or enter them again! <br>
 2. If you are entering a new command, use <kbd>↓</kbd> to instantly clear the command line and start afresh. <br>
 3. Use <kbd>Tab</kbd> to quickly auto-complete a command word when you are typing. <br>
-4. While viewing the help screen, use <kbd>Ctrl</kbd> + <kbd>H</kbd> to conveniently switch between the help window and the command box. <br>
+4. Use <kbd>Ctrl</kbd> + <kbd>H</kbd> to conveniently switch between the help window and the command box. Also, you can use <kbd>ESC</kbd> to close help window. <br>
 5. Use  <kbd>Ctrl</kbd> + <kbd>Z</kbd> in place of `undo`
 
 
