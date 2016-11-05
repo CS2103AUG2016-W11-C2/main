@@ -12,7 +12,7 @@ public class CommandBoxTest extends ToDoListGuiTest {
 
     @Test
     public void commandBoxCommandSucceedsTextCleared() throws IllegalValueException {
-        commandBox.runCommand(TypicalTestTasks.getTaskWithName(TypicalTestTasks.benson).getAddCommand());
+        commandBox.runCommand(TypicalTestTasks.BENSON.getAddCommand());
         assertEquals(commandBox.getCommandInput(), "");
     }
 
