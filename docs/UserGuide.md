@@ -200,7 +200,6 @@ Agendum supports a wide variety of date time formats. Combine any of the date fo
 | Hour            | 10, 22                                  |
 | Hour:Minute     | 10:30                                   |
 | Hour.Minute     | 10.30                                   |
-| HourMinute      | 2200                                    |
 | Relative time   | this morning, this afternoon, tonight   |
 
 > By default, we use the 24 hour time format but we do support the meridian format as well e.g. 10am, 10pm
