@@ -321,7 +321,7 @@ public class TestUtil {
         Arrays.sort(tasks);
     }
 
-    public static TestTask[] getDoItSoonTasks(TestTask[] tasks) {
+    public static TestTask[] getUpcomingTasks(TestTask[] tasks) {
         ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
         for (TestTask task: tasks) {
             if (!task.isCompleted() && task.hasTime()) {
@@ -331,7 +331,7 @@ public class TestUtil {
         return filteredTasks.toArray(new TestTask[filteredTasks.size()]);
     }
 
-    public static TestTask[] getDoItAnytimeTasks(TestTask[] tasks) {
+    public static TestTask[] getFloatingTasks(TestTask[] tasks) {
         ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
         for (TestTask task: tasks) {
             if (!task.isCompleted() && !task.hasTime()) {
@@ -341,7 +341,7 @@ public class TestUtil {
         return filteredTasks.toArray(new TestTask[filteredTasks.size()]);
     }
 
-    public static TestTask[] getDoneTasks(TestTask[] tasks) {
+    public static TestTask[] getCompletedTasks(TestTask[] tasks) {
         ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
         for (TestTask task: tasks) {
             if (task.isCompleted()) {
