@@ -36,6 +36,12 @@ public class ModelManager extends ComponentManager implements Model {
     private final SortedList<Task> sortedTasks;
 
     /**
+     * Signals that an operation to remove a list from the stack of previous lists would fail
+     * as the stack must contain at least one list.
+     */
+    public static class NoPreviousListFoundException extends Exception {}
+
+    /**
      * Initializes a ModelManager with the given ToDoList
      * ToDoList and its variables should not be null
      */
@@ -157,36 +163,23 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * Restores the previous (second latest) list saved in the stack of previous lists.
-     * Used in the event of an "undo" operation.
      */
     @Override
-    public synchronized boolean restorePreviousToDoList() {
-        assert !previousLists.empty();
-
-        if (previousLists.size() == 1) {
-            return false;
-        } else {
-            previousLists.pop();
-            toDoList.resetData(previousLists.peek());
-            logger.fine("[MODEL] --- successfully restored the previous the to-do list from this session");
-            indicateToDoListChanged();
-            return true;
-        }
+    public synchronized void restorePreviousToDoList() throws NoPreviousListFoundException {            
+        removeLastSavedToDoList();
+        resetDataToLastSavedList();
+        logger.fine("[MODEL] --- successfully restored the previous the to-do list from this session");
+        indicateToDoListChanged();
     }
 
     /**
-     * Reverses any temporary changes to the to-do list
-     * that have not been saved to the stack of previous lists
-     * Used in the event of exceptions.
+     * Resets the to-do list data to match the top list in the stack of previous lists
      */
     @Override
-    public synchronized void restoreCurrentToDoList() {
+    public void resetDataToLastSavedList() {
         assert !previousLists.empty();
-
-        logger.fine("[MODEL] --- successfully restored the current to-do list"
-                + " before exceptions/temporary changes");
-
-        toDoList.resetData(previousLists.peek());
+        ToDoList lastSavedListFromHistory = previousLists.peek();
+        toDoList.resetData(lastSavedListFromHistory);
     }
  
     private void backupCurrentToDoList() {
@@ -196,6 +189,20 @@ public class ModelManager extends ComponentManager implements Model {
 
     private void clearAllPreviousToDoLists() {
         previousLists.clear();
+    }
+
+    /**
+     * Pops the top list from the stack of previous lists if there are more than 1 list in the stack
+     * @throws NoPreviousListFoundException if there is only 1 list in the stack
+     */
+    private void removeLastSavedToDoList() throws NoPreviousListFoundException {
+        assert !previousLists.empty();
+
+        if (previousLists.size() == 1) {
+            throw new NoPreviousListFoundException();
+        }
+
+        previousLists.pop();
     }
 
 

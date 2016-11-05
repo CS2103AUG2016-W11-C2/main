@@ -59,7 +59,7 @@ public class UnmarkCommand extends Command {
         } catch (TaskNotFoundException pnfe) {
             assert false : "The target task cannot be missing";
         } catch (DuplicateTaskException pnfe) {
-            model.restoreCurrentToDoList();
+            model.resetDataToLastSavedList();
             return new CommandResult(MESSAGE_DUPLICATE);
         }
 

@@ -1,5 +1,7 @@
 package seedu.agendum.logic.commands;
 
+import seedu.agendum.model.ModelManager.NoPreviousListFoundException;
+
 //@@author A0133367E
 /**
  * Undo the last successful command that mutate the to do list
@@ -10,19 +12,21 @@ public class UndoCommand extends Command {
 	public static final String COMMAND_FORMAT = "undo";
 	public static final String COMMAND_DESCRIPTION = "undo the last change to your to-do list";
 	
-    public static final String MESSAGE_SUCCESS = "Previous command undone!";
+    public static final String MESSAGE_SUCCESS = "Previous change undone!";
     public static final String MESSAGE_FAILURE = "Nothing to undo!";
 	
     @Override
     public CommandResult execute() {
         assert model != null;
-        if (model.restorePreviousToDoList()) {
+        
+        try {
+            model.restorePreviousToDoList();
             return new CommandResult(MESSAGE_SUCCESS);
-        } else {
+        } catch (NoPreviousListFoundException nplfe) {
             return new CommandResult(MESSAGE_FAILURE);
         }
     }
-	
+
     public static String getName() {
         return COMMAND_WORD;
     }
