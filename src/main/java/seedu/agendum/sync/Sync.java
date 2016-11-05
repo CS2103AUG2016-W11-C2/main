@@ -15,4 +15,5 @@ public interface Sync {
     void stopSyncing();
 
     void addNewEvent(Task task);
+    void deleteEvent(Task task);
 }

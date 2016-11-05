@@ -13,6 +13,7 @@ import com.google.api.client.util.DateTime;
 import com.google.api.client.util.Lists;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.model.*;
+import com.google.api.services.calendar.model.Calendar;
 import seedu.agendum.commons.core.LogsCenter;
 import seedu.agendum.model.task.Task;
 
@@ -22,8 +23,9 @@ import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 import java.util.logging.Logger;
+
+import static java.lang.Math.abs;
 
 //@@author A0003878Y
 public class SyncProviderGoogle extends SyncProvider {
@@ -52,12 +54,11 @@ public class SyncProviderGoogle extends SyncProvider {
     }
 
     @Override
-    public void initialize() {
+    public void start() {
         logger.info("Initializing Google Calendar Sync");
         try {
             Credential t = authorize();
             client = (new com.google.api.services.calendar.Calendar.Builder(httpTransport, JSON_FACTORY, t)).setApplicationName("Agendum").build();
-            showCalendars();
             agendumCalendar = getAgendumCalendar();
             
             syncManager.setSyncStatus(Sync.SyncStatus.RUNNING);
@@ -78,6 +79,7 @@ public class SyncProviderGoogle extends SyncProvider {
     public void addNewEvent(Task task) {
         Date startDate = Date.from(task.getStartDateTime().get().atZone(ZoneId.systemDefault()).toInstant());
         Date endDate = Date.from(task.getEndDateTime().get().atZone(ZoneId.systemDefault()).toInstant());
+        String id = Integer.toString(abs(task.hashCode()));
 
         EventDateTime startEventDateTime = new EventDateTime().setDateTime(new DateTime(startDate));
         EventDateTime endEventDateTime = new EventDateTime().setDateTime(new DateTime(endDate));
@@ -86,10 +88,21 @@ public class SyncProviderGoogle extends SyncProvider {
         newEvent.setSummary(String.valueOf(task.getName()));
         newEvent.setStart(startEventDateTime);
         newEvent.setEnd(endEventDateTime);
+        newEvent.setId(id);
 
         try {
             Event result = client.events().insert(agendumCalendar.getId(), newEvent).execute();
             logger.info(result.toPrettyString());
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteEvent(Task task) {
+        try {
+            String id = Integer.toString(abs(task.hashCode()));
+            client.events().delete(agendumCalendar.getId(), id).execute();
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -127,11 +140,5 @@ public class SyncProviderGoogle extends SyncProvider {
         Calendar calendar = client.calendars().insert(entry).execute();
         logger.info(calendar.toPrettyString());
         return calendar;
-    }
-
-    private void showCalendars() throws IOException {
-        logger.info("Show calendars");
-        CalendarList feed = (CalendarList)client.calendarList().list().execute();
-        System.out.println(feed.toPrettyString());
     }
 }

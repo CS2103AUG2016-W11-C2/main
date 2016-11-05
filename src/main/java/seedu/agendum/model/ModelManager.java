@@ -24,7 +24,6 @@ import java.util.logging.Logger;
 import com.google.common.eventbus.Subscribe;
 import seedu.agendum.sync.Sync;
 import seedu.agendum.sync.SyncManager;
-import seedu.agendum.sync.SyncProvider;
 import seedu.agendum.sync.SyncProviderGoogle;
 
 /**
@@ -113,6 +112,8 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             toDoList.removeTask(target);
+
+            syncManager.deleteEvent((Task) target);
         }
         backupCurrentToDoList();
         logger.fine("[MODEL] --- successfully deleted all specified targets from the to-do list");
@@ -138,6 +139,9 @@ public class ModelManager extends ComponentManager implements Model {
         backupCurrentToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
+
+        syncManager.deleteEvent((Task) target);
+        syncManager.addNewEvent(updatedTask);
     }
 
     @Override
