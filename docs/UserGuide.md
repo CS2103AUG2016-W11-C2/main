@@ -25,7 +25,7 @@
 * [FAQ](#faq)
 * [Conclusion](#conclusion)
 * [Command Summary](#command-summary)
-	* [Date Time Formats](#date-time-format)
+	* [Date Time Format](#date-time-format)
 
 &nbsp;
 
@@ -418,7 +418,7 @@ You can use both the original command and your own shorthand alias to carry out 
 To create an alias, here is the *format*:
 * `alias <original command> <your command>`
 
-> * `<your command>` must be a single alphanumeric word. It cannot be a original-command and already aliased to another command.
+> * `<your command>` must be a single alphanumeric word. It cannot be a original-command or already aliased to another command.
 > * `<original command>` must be a command word that is specified in the Command Summary section
 
 Examples:
@@ -464,7 +464,7 @@ Here is a tip: You can directly enter your next command too! Agendum will also e
 Are you considering moving Agendum’s data files to another file directory?
 You might want to save your Agendum task list to a Cloud Storage service so you can easily access from another device.
 Agendum offers you the flexibility in choosing where the task list data will be stored.
-The task list data will be saved to the specific directory, and future data will be saved in that location.
+The task list data will be saved to the specific directory and future data will be saved in that location.
 
 Here is the *format*:
 * `store <location>`
@@ -525,7 +525,7 @@ To work even faster you can also use keyboard shortcuts: <br>
    <dd> Agendum saves your data automatically whenever your task list is updated. There is no need to save manually. Agendum will save the data at the speicified storage location. By default, it will save to `data/todolist.xml` </dd>
 
    <dt> Q: How do I transfer my data to another computer? </dt>
-   <dd> Firstly, take note of the data storage location that your current todo list is saved at. You can check this by looking at the            bottom-right of Agendum. Navigate to this location and copy the data file to a portable USB device or hard disk. Then, ensure            that you have installed Agendum in the other computer. Copy the data file from your device onto the other computer, preferrably          in the same folder as Agendum. Use the <code>load</code> command to load it into Agendum. </dd>
+   <dd> Firstly, note down the current save location of Agendum's task data (which is displayed in the bottom status bar). In your file directory, navigate to this location and copy the data file to a portable USB device, hard disk or your cloud storage folder. Alternatively, you can make use of the <code>store</code> command to transfer the file within Agendum. Then, ensure that you have installed Agendum in the other computer. Copy the data file from your device onto the other computer, preferrably in the same folder as Agendum. Use the <code>load</code> command to load it into Agendum. </dd>
 
    <dt> Q: Why did Agendum complain about an invalid file directory? </dt>
    <dd> Check if the directory you wish to relocate to exists and if you have enough administrator privileges. </dd>
@@ -539,6 +539,9 @@ To work even faster you can also use keyboard shortcuts: <br>
    <dt> Q: Why did Agendum reject my alias for a command? </dt>
    <dd> The short-hand command cannot be one of Agendum’s command keywords (e.g. add, delete) and cannot be concurrently used to alias            another command (e.g. m cannot be used for both mark and unmark). </dd>
 
+   <dt> Q: I can't launch Agendum. What is wrong? </dt>
+   <dd> Check if the config file in data/json/config.json contains the correct file paths to other data such as your to-do list. It might be helpful to delete the user preferences file. </dd>
+
 </dl>
 </html>
 
@@ -551,6 +554,8 @@ We hope that you will find Agendum and our user guide helpful. If you have any s
 
 
 ## Command Summary
+
+<img src="images/userguide/commandsummary.png" width="1000"><br>
 
 Command  | Format  
 :-------:| :--------
@@ -572,4 +577,5 @@ Unmark   | `unmark <id>...`
 
 For a quick reference,
 > * Parameters with `...` after them can have multiple instances (separated by whitespace).
+> * Commands are case insensitive
 > * `<deadline>`, `<start time>` and `<end time>` must follow the format previously defined in [Date Time Format](#date-time-format)
