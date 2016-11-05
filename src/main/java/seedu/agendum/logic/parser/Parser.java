@@ -35,13 +35,13 @@ public class Parser {
 
     private static final Pattern RENAME_ARGS_FORMAT = Pattern.compile("(?<targetIndex>\\d+)\\s+(?<name>.+)");
 
-    //@@author A0003878Y
-    private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:(?i)by|from|to)\\s|$)))+?");
-
     private static final Pattern ALIAS_ARGS_FORMAT = Pattern.compile(
             "(?<commandword>[\\p{Alnum}]+)\\s+(?<shorthand>[\\p{Alnum}]+)");
 
     private static final Pattern UNALIAS_ARGS_FORMAT = Pattern.compile("(?<shorthand>[\\p{Alnum}]+)");
+
+    //@@author A0003878Y
+    private static final Pattern ADD_SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:(?i)by|from|to)\\s|$)))+?");
 
     private static final String ARGS_FROM = "from";
     private static final String ARGS_BY = "by";
@@ -141,7 +141,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args) {
-        Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
+        Matcher matcher = ADD_SCHEDULE_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -164,15 +164,12 @@ public class Parser {
 
             String title = titleBuilder.toString();
 
-            boolean hasDeadlineKeyword = dateTimeMap.containsKey(ARGS_BY);
-            boolean hasStartTimeKeyword = dateTimeMap.containsKey(ARGS_FROM);
-            boolean hasEndTimeKeyword = dateTimeMap.containsKey(ARGS_TO);
-
-            if (hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
+            if (dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(title, dateTimeMap.get(ARGS_BY));
-            } else if (!hasDeadlineKeyword && hasStartTimeKeyword && hasEndTimeKeyword) {
+            } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
                 return new AddCommand(title, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
-            } else if (!hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
+            } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO)
+                    && !dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(title);
             } else {
                 return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -191,7 +188,7 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareSchedule(String args) {
-        Matcher matcher = ADD_ARGS_FORMAT.matcher(args.trim());
+        Matcher matcher = ADD_SCHEDULE_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     ScheduleCommand.MESSAGE_USAGE));
@@ -217,15 +214,12 @@ public class Parser {
         };
         scheduleMatcherOnConsumer(matcher, consumer);
 
-        boolean hasDeadlineKeyword = dateTimeMap.containsKey(ARGS_BY);
-        boolean hasStartTimeKeyword = dateTimeMap.containsKey(ARGS_FROM);
-        boolean hasEndTimeKeyword = dateTimeMap.containsKey(ARGS_TO);
-
-        if (hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
+        if (dateTimeMap.containsKey(ARGS_BY)) {
             return new ScheduleCommand(index, Optional.empty(), dateTimeMap.get(ARGS_BY));
-        } else if (!hasDeadlineKeyword && hasStartTimeKeyword && hasEndTimeKeyword) {
+        } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
             return new ScheduleCommand(index, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
-        } else if (!hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
+        } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO)
+                && !dateTimeMap.containsKey(ARGS_BY)) {
             return  new ScheduleCommand(index, Optional.empty(), Optional.empty());
         } else {
             return new IncorrectCommand(
