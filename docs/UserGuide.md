@@ -258,7 +258,7 @@ Note:
   > * `<deadline>`, `<start time>` and `<end time>` must follow the format previously defined in [Date Time Format](#date-time-format)
   > * A task cannot have both a deadline and a event time.
 
-Here are some *examples*:<br>
+Here are some *examples*:
 
 <img src="images/userguide/beforeScheduling.png" width="600"><br>
 
