@@ -32,7 +32,6 @@ import static seedu.agendum.commons.core.Config.DEFAULT_DATA_DIR;
 public class SyncProviderGoogle extends SyncProvider {
     private final Logger logger = LogsCenter.getLogger(SyncProviderGoogle.class);
 
-    private static final String APPLICATION_NAME = "Agendum";
     private static final String CALENDAR_NAME = "Agendum Calendar";
     private static final File DATA_STORE_DIR = new File(DEFAULT_DATA_DIR);
     private static final File DATA_STORE_CREDENTIAL = new File(DEFAULT_DATA_DIR + "StoredCredential");
@@ -43,10 +42,10 @@ public class SyncProviderGoogle extends SyncProvider {
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static com.google.api.services.calendar.Calendar client;
 
+    private Calendar agendumCalendar;
+
     private static final ArrayBlockingQueue<Task> addEventConcurrentQueue = new ArrayBlockingQueue<Task>(200);
     private static final ArrayBlockingQueue<Task> deleteEventConcurrentQueue = new ArrayBlockingQueue<Task>(200);
-
-    private Calendar agendumCalendar;
 
     public SyncProviderGoogle() {
         try {
