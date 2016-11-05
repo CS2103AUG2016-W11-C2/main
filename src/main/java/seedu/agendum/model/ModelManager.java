@@ -156,8 +156,8 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * This is to restore the previous (second latest) list saved in the stack of previous lists.
-     * This is used in the event of an "undo" operation.
+     * Restores the previous (second latest) list saved in the stack of previous lists.
+     * Used in the event of an "undo" operation.
      */
     @Override
     public synchronized boolean restorePreviousToDoList() {
@@ -175,9 +175,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
-     * This is to reverse any temporary changes to the to-do list
+     * Reverses any temporary changes to the to-do list
      * that have not been saved to the stack of previous lists
-     * This is used in the event of exceptions.
+     * Used in the event of exceptions.
      */
     @Override
     public synchronized void restoreCurrentToDoList() {
