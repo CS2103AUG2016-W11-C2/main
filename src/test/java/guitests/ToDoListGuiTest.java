@@ -127,6 +127,7 @@ public abstract class ToDoListGuiTest {
      * Asserts the task shown in each panel will match
      */
     protected void assertAllPanelsMatch(TestTask[] expectedList) {
+        TestUtil.sortTasks(expectedList);
         TestTask[] expectedDoItSoonTasks = TestUtil.getDoItSoonTasks(expectedList);
         TestTask[] expectedDoItAnytimeTasks = TestUtil.getDoItAnytimeTasks(expectedList);
         TestTask[] expectedDoneTasks = TestUtil.getDoneTasks(expectedList);

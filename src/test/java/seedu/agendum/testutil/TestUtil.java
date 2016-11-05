@@ -295,7 +295,6 @@ public class TestUtil {
      */
     public static TestTask[] replaceTaskFromList(TestTask[] tasks, TestTask task, int index) {
         tasks[index] = task;
-        sortTasks(tasks);
         return tasks;
     }
 
@@ -309,7 +308,6 @@ public class TestUtil {
         List<TestTask> listOfTasks = asList(tasks);
         listOfTasks.addAll(asList(tasksToAdd));
         TestTask[] newTasks = listOfTasks.toArray(new TestTask[listOfTasks.size()]);
-        sortTasks(newTasks);
         return newTasks;
     }
 
@@ -319,7 +317,7 @@ public class TestUtil {
         return list;
     }
 
-    private static void sortTasks(TestTask[] tasks) {
+    public static void sortTasks(TestTask[] tasks) {
         Arrays.sort(tasks);
     }
 
