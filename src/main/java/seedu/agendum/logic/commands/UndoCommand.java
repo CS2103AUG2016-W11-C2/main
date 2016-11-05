@@ -16,7 +16,7 @@ public class UndoCommand extends Command {
     @Override
     public CommandResult execute() {
         assert model != null;
-        if (model.restorePreviousToDoListClone()) {
+        if (model.restorePreviousToDoList()) {
             return new CommandResult(MESSAGE_SUCCESS);
         } else {
             return new CommandResult(MESSAGE_FAILURE);

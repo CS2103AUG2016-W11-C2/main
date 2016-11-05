@@ -39,14 +39,14 @@ public interface Model {
 
     /** 
      * Restores the previous (second latest) to do list saved in the event of an undo operation
-     * Returns true if successful; false if there are no earlier lists
+     * Returns true if successful; false if there are no earlier lists saved
      */
-    boolean restorePreviousToDoListClone();
+    boolean restorePreviousToDoList();
 
     /** 
      * Restores the current (latest) to do list saved in the event of exceptions
      */
-    void restoreCurrentToDoListClone();
+    void restoreCurrentToDoList();
     
     /** Returns the filtered task list as an {@code UnmodifiableObservableList<ReadOnlyTask>} */
     UnmodifiableObservableList<ReadOnlyTask> getFilteredTaskList();

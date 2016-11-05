@@ -49,7 +49,7 @@ public class ModelManager extends ComponentManager implements Model {
         toDoList = new ToDoList(src);
         filteredTasks = new FilteredList<>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        previousLists = new Stack<>();
+        previousLists = new Stack<ToDoList>();
         backupCurrentToDoList();
     }
 
@@ -59,9 +59,9 @@ public class ModelManager extends ComponentManager implements Model {
 
     public ModelManager(ReadOnlyToDoList initialData) {
         toDoList = new ToDoList(initialData);
-        filteredTasks = new FilteredList<>(toDoList.getTasks());
+        filteredTasks = new FilteredList<Task>(toDoList.getTasks());
         sortedTasks = filteredTasks.sorted();
-        previousLists = new Stack<>();
+        previousLists = new Stack<ToDoList>();
         backupCurrentToDoList();
     }
 
@@ -73,8 +73,8 @@ public class ModelManager extends ComponentManager implements Model {
         backupCurrentToDoList();
         indicateToDoListChanged();
     }
-  
     //@@author
+
     @Override
     public ReadOnlyToDoList getToDoList() {
         return toDoList;
@@ -104,14 +104,16 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyTask target: targets) {
             toDoList.removeTask(target);
         }
-        backupCurrentToDoList();
+
         logger.fine("[MODEL] --- successfully deleted all specified targets from the to-do list");
+        backupCurrentToDoList();
         indicateToDoListChanged();
     }
 
     @Override
     public synchronized void addTask(Task task) throws UniqueTaskList.DuplicateTaskException {
-        toDoList.addTask(task);      
+        toDoList.addTask(task);    
+
         logger.fine("[MODEL] --- successfully added the new task to the to-do list");
         backupCurrentToDoList();
         updateFilteredListToShowAll();
@@ -122,6 +124,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void updateTask(ReadOnlyTask target, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         toDoList.updateTask(target, updatedTask);
+
         logger.fine("[MODEL] --- successfully updated the target task in the to-do list");
         backupCurrentToDoList();
         updateFilteredListToShowAll();
@@ -134,6 +137,7 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyTask target: targets) {
             toDoList.markTask(target);
         } 
+
         logger.fine("[MODEL] --- successfully marked all specified targets from the to-do list");
         backupCurrentToDoList();
         indicateToDoListChanged();
@@ -145,17 +149,18 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyTask target: targets) {
             toDoList.unmarkTask(target);
         }
+
         logger.fine("[MODEL] --- successfully unmarked all specified targets from the to-do list");
         backupCurrentToDoList();
         indicateToDoListChanged();
     }
 
     /**
-     * This is to restore the previous (second latest) list saved 
-     * in the event of an "undo" operation
+     * This is to restore the previous (second latest) list saved in the stack of previous lists.
+     * This is used in the event of an "undo" operation.
      */
     @Override
-    public synchronized boolean restorePreviousToDoListClone() {
+    public synchronized boolean restorePreviousToDoList() {
         assert !previousLists.empty();
 
         if (previousLists.size() == 1) {
@@ -171,10 +176,11 @@ public class ModelManager extends ComponentManager implements Model {
 
     /**
      * This is to reverse any temporary changes to the to-do list
-     * that have not been saved to storage or stack of previous lists (in the event of exceptions)
+     * that have not been saved to the stack of previous lists
+     * This is used in the event of exceptions.
      */
     @Override
-    public synchronized void restoreCurrentToDoListClone() {
+    public synchronized void restoreCurrentToDoList() {
         assert !previousLists.empty();
 
         logger.fine("[MODEL] --- successfully restored the current to-do list"
@@ -193,9 +199,9 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
 
-    //=========== Storage Methods ==========================================================================
-    
     //@@author A0148095X
+    //=========== Storage Methods ==========================================================================
+
     @Override
     public synchronized void changeSaveLocation(String location){
         assert StringUtil.isValidPathToFile(location);

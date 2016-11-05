@@ -43,7 +43,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = null;
         this.endDateTime = deadline.orElse(null);
-        setLastUpdatedTimeToNow();
+        this.setLastUpdatedTimeToNow();
     }
     
     /**
@@ -56,7 +56,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         this.isCompleted = false;
         this.startDateTime = startDateTime.orElse(null);
         this.endDateTime = endDateTime.orElse(null);
-        setLastUpdatedTimeToNow();
+        this.setLastUpdatedTimeToNow();
     }
 
     /**
@@ -67,7 +67,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         if (source.isCompleted()) {
             this.markAsCompleted();
         }
-        setLastUpdatedTime(source.getLastUpdatedTime());
+        this.setLastUpdatedTime(source.getLastUpdatedTime());
     }
     
     // ================ Getter methods ==============================
@@ -134,7 +134,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     }
 
     /**
-     * Returns true if the task has a start time and end time, false otherwise;
+     * Returns true if the task has a start time and end time, false otherwise.
      */
     @Override
     public boolean isEvent() {
