@@ -257,7 +257,7 @@ Here are the *acceptable format(s)*:
 Note:
   > * Again, `<id>` must be a positive number and be in the most recent to-do list displayed.
   > * `<deadline>`, `<start time>` and `<end time>` must follow the format previously defined in [Date Time Format](#date-time-format)
-  > * > A task cannot have both a deadline and a event time.
+  > * A task cannot have both a deadline and a event time.
 
 Here are some *examples*:<br>
 
@@ -491,7 +491,7 @@ Here is the *format*:
 
 > * `<location>` must be a valid path to a file on the local computer.
 > * Your current data would have already been saved automatically in its original data storage location.
-> * Agendum will then show data loaded from <location> and save data there in the future.
+> * Agendum will then show data loaded from `<location>` and save data there in the future.
 > * You will not be able to `undo` immediately after loading as there have been no changes to the loaded list.
 
 Examples
