@@ -243,15 +243,20 @@ public class Parser {
 
         if (dateTimeMap.containsKey(ARGS_BY)) {
             return new ScheduleCommand(index, Optional.empty(), dateTimeMap.get(ARGS_BY));
-        } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
+        }
+
+        if (dateTimeMap.containsKey(ARGS_FROM)
+                && dateTimeMap.containsKey(ARGS_TO)) {
             return new ScheduleCommand(index, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
-        } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO)
+        }
+
+        if (!dateTimeMap.containsKey(ARGS_FROM)
+                && !dateTimeMap.containsKey(ARGS_TO)
                 && !dateTimeMap.containsKey(ARGS_BY)) {
             return  new ScheduleCommand(index, Optional.empty(), Optional.empty());
-        } else {
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
         }
+
+        return new IncorrectCommand( String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
     }
 
     /**
