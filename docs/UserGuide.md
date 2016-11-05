@@ -231,7 +231,7 @@ If you wish to update the description of a task, you can use the following *form
 * `rename <id> <new name>` - give a new name to the task identified by `<id>`. The `<id>` must be a positive number and be in the most recent to-do list displayed.
 
 Here is an *example*:<br>
-<img src="images/userguide/beforeRenaming.png" width="500"><br>
+<img src="images/userguide/beforeRenaming.png" width="600"><br>
 
 ```
 Description: I want to be more specific about the movie I want to watch for task id #2.
@@ -240,7 +240,7 @@ To update the name of the task,
 ```
 
 Agendum will promptly update the displayed task list! <br>
-<img src="images/userguide/afterRenaming.png" width="500"><br>
+<img src="images/userguide/afterRenaming.png" width="600"><br>
 
 
 ### (Re)scheduling a task : `schedule`
@@ -259,7 +259,6 @@ Note:
   > * A task cannot have both a deadline and a event time.
 
 Here are some *examples*:
-
 <img src="images/userguide/beforeScheduling.png" width="600"><br>
 
 ```
