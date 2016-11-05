@@ -38,8 +38,6 @@ public class Parser {
     //@@author A0003878Y
     private static final Pattern ADD_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
 
-    private static final Pattern SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
-
     private static final Pattern ALIAS_ARGS_FORMAT = Pattern.compile(
             "(?<commandword>[\\p{Alnum}]+)\\s+(?<shorthand>[\\p{Alnum}]+)");
 
