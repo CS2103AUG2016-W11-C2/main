@@ -182,13 +182,26 @@ public class Parser {
 
             String title = titleBuilder.toString();
 
+            if (title.length() == 0) {
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
+            }
+
             if (dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(title, dateTimeMap.get(ARGS_BY));
-            } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
+            }
+
+            if (dateTimeMap.containsKey(ARGS_FROM)
+                    && dateTimeMap.containsKey(ARGS_TO)) {
                 return new AddCommand(title, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
-            } else  {
+            }
+
+            if (!dateTimeMap.containsKey(ARGS_FROM)
+                    && !dateTimeMap.containsKey(ARGS_TO)
+                    && !dateTimeMap.containsKey(ARGS_BY)) {
                 return new AddCommand(title);
             }
+
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
