@@ -455,7 +455,7 @@ original command "mark" or "m" to mark a task as completed.
 [comment]: # (@@author A0148031R)
 ### Viewing help : `help`
 
-At any point in time, if you need some reminder about the commands available, you can use the `help` command. Type `help` or use <kbd>Ctrl</kbd> + <kbd>F5</kbd> to summon the help screen. To exit the help screen, simply use <kbd>ESC</kbd>.
+At any point in time, if you need some reminder about the commands available, you can use the `help` command. Type `help` or use <kbd>Ctrl</kbd> + <kbd>H</kbd> to summon the help screen. To exit the help screen, use <kbd>Ctrl</kbd> + <kbd>H</kbd> again, or simply press <kbd>ESC</kbd>.
 
 Here is a tip: You can directly enter your next command too! Agendum will also exit the help screen and show your task list.
 
@@ -512,7 +512,7 @@ To work even faster you can also use keyboard shortcuts: <br>
 1. Use <kbd>↑</kbd> and <kbd>↓</kbd> to scroll through previously typed commands. You don't need to remember or enter them again! <br>
 2. If you are entering a new command, use <kbd>↓</kbd> to instantly clear the command line and start afresh. <br>
 3. Use <kbd>Tab</kbd> to quickly auto-complete a command word when you are typing. <br>
-4. While viewing the help screen, use <kbd>Ctrl</kbd> + <kbd>H</kbd> to conveniently switch between the help window and the command box.
+4. While viewing the help screen, use <kbd>Ctrl</kbd> + <kbd>H</kbd> to conveniently switch between the help window and the command box. <br>
 5. Use  <kbd>Ctrl</kbd> + <kbd>Z</kbd> in place of `undo`
 
 
