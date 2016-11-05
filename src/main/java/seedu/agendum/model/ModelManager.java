@@ -235,6 +235,10 @@ public class ModelManager extends ComponentManager implements Model {
     public void activateModelSyncing() {
         if (syncManager.getSyncStatus() != Sync.SyncStatus.RUNNING) {
             syncManager.startSyncing();
+
+            for (Task t : toDoList.getTasks()) {
+                syncManager.addNewEvent(t);
+            }
         }
     }
 
