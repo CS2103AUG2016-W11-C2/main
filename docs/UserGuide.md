@@ -235,9 +235,9 @@ Here is an *example*:<br>
 <img src="images/userguide/beforeRenaming.png" width="500"><br>
 
 ```
-Description: I just realized there is a typo for the task with id #2 "Watch Hary Potter".
+Description: I just realized that I want to be more specific about the movie I wnat to watch".
 To update the name of the task,
-> rename 2 Watch Harry Potter
+> rename 2 watch Harry Potter
 ```
 
 Agendum will promptly update the displayed task list! <br>
@@ -261,7 +261,7 @@ Note:
 
 Here are some *examples*:<br>
 
-<img src="images/userguide/beforeScheduling.png" width="300"><br>
+<img src="images/userguide/beforeScheduling.png" width="600"><br>
 
 ```
 Description: I decide that I can go for a run at any time instead.
@@ -273,12 +273,10 @@ Description: I want to submit by reflection earlier.
 > schedule 2 by tmr 2pm
 Result: Agendum will update the deadline of "submit personal reflection". It
 will then be sorted in the "Do It Soon" panel.
-
-Description: I decide to go for a run at a later time.
-> schedule 1 from 10pm to 11pm
-Result: Agendum will update the start time of "go for a run" to today 10pm and
-end time to today 11pm.
 ```
+
+Agendum will promptly update the displayed task list! <br>
+<img src="images/userguide/afterScheduling.png" width="600"><br>
 
 
 ### Marking a task as completed : `mark`
@@ -290,7 +288,7 @@ Here is the *format*:
 * `mark <id>...` - mark all the tasks identified by `<id>`(s) as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed.
 
 Are you confused? Here are some *examples*:<br>
-<img src="images/userguide/beforeMarking.png" width="300"><br>
+<img src="images/userguide/beforeMarking.png" width="600"><br>
 
 ```
 Description: I just walked my dog!
@@ -310,7 +308,7 @@ The tasks with display ids 1, 2 and 3 will be marked as completed.
 ```
 
 The changes are as shown below. <br>
-<img src="images/userguide/markMultiple.png" width="600"><br>
+<img src="images/userguide/afterMarking.png" width="600"><br>
 
 
 ### Unmarking a task : `unmark`
@@ -333,7 +331,7 @@ Here is the *format*:
 * `delete <id>...` - delete all the tasks identified by `<id>`s as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed.
 
 Here are some *examples*:<br>
-<img src="images/userguide/beforeMarking.png" width="300"><br>
+<img src="images/userguide/beforeDeleting.png" width="300"><br>
 
 ```
 Description: I just walked my dog and no longer want to view this task anymore.
@@ -350,6 +348,10 @@ You can also try out any of the following examples:
 > delete 1-3
 The tasks with display ids 1, 2 and 3 will be deleted.
 ```
+
+The changes are as shown below. <br>
+<img src="images/userguide/afterDeleting.png" width="300"><br>
+
 
 
 ### Undoing your last changes : `undo`  

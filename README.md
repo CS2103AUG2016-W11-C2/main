@@ -4,7 +4,7 @@
 
 # Agendum
 
-<img src="docs/images/Ui.png" width="600"><br>
+<img src="docs/images/Ui.png" width="800"><br>
 
 ### Table of Contents
 
