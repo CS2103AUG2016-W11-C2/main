@@ -136,9 +136,9 @@ interface and exposes its functionality using the `LogicManager.java` class.<br>
 
 
 #### Event Driven Approach
-Agendum applies an Event-Driven approach and the **Observer Pattern** to reduce direct coupling between the various components. In Agendum, the `UI` and `Storage` components are interested in observing and receiving notifications when there is a change in the to-do list in the `Model`. However, it will be an anti-pattern if `Model` has to inform both components directly (e.g. request the `Storage` component to save updates to the hard disk). This is because it will cause `Model` to be coupled to `Storage`. To avoid bidirectional coupling, the `Model` (Observable) will raises a `ToDoListChangedEvent` and the EventsCenter is responsible for notifying the register Observers, the `Storage` and `UI` sub-components.
+Agendum applies an Event-Driven approach and the **Observer Pattern** to reduce direct coupling between the various components. In Agendum, the `UI` and `Storage` components are interested in receiving notifications when there is a change in the to-do list in the `Model`. Note how `Model` is not coupled to `Storage` and `UI` as it does not inform both components directly (e.g. request the `Storage` component to save updates to the hard disk). Instead, to avoid bidirectional coupling, the `Model` (Observable) will raises a `ToDoListChangedEvent` and the EventsCenter is responsible for notifying the register Observers, the `Storage` and `UI` sub-components.
 
-For example, consider the scenario where the user inputs `delete 1` described in the  _Sequence Diagram_ below. The `UI` component will invoke the `Logic` component’s  _execute_ method to carry out the given command, `delete 1`. The `Logic` component will identify the corresponding task and will call the `Model` component _deleteTasks_ method to update Agendum’s data and raise a `ToDoListChangedEvent`.
+For example, consider the scenario where the user inputs `delete 1` described in the _Sequence Diagram_ below. The `UI` component will invoke the `Logic` component’s  _execute_ method to carry out the given command, `delete 1`. The `Logic` component will identify the corresponding task and will call the `Model` component _deleteTasks_ method to update Agendum’s data and raise a `ToDoListChangedEvent`.
 
 <img src="images\SDforDeleteTask.png" width="800">
 
@@ -147,9 +147,9 @@ The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `
 <img src="images\SDforDeleteTaskEventHandling.png" width="800">
 
 #### Model-View-Controller approach
-To further reduce coupling between components, the Model View Controller pattern is also applied.
+To further reduce coupling between components, the Model-View-Controller pattern is also applied.
 * Model: The `Model` component as previously described, maintains and holds Agendum's data.
-* View: Part of the `UI` components and resources such as the .fxml file is responsible for displaying Agendum's data and interacting with the user. Through events, the `UI` component is able to get data updates from the model
+* View: Part of the `UI` components and resources such as the .fxml file is responsible for displaying Agendum's data and interacting with the user. Through events, the `UI` component is able to get data updates from the model.
 * Controller: Parts of the `UI` component such as (`CommandBox`) act as 'Controllers' for part of the UI. The `CommandBox` accepts user command input and request `Logic` to execute the command entered. This execution may result in changes in the model.
 
 The following sections will then give more details of each individual component.
@@ -164,8 +164,9 @@ The `UI` is the entry point of Agendum which is responsible for showing updates 
 
 **API** : [`Ui.java`](../src/main/java/seedu/agendum/ui/Ui.java)
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `TaskListPanel`,
-`StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit the abstract `UiPart` class. They can be loaded using `UiPartLoader`.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox` and `ResultPopup`. All these, including the `MainWindow`, inherit the abstract `UiPart` class. They can be loaded using `UiPartLoader`.
+
+Agendum has 3 different task panel classes `UpcomingTasksPanel`, `CompletedTaskPanel` and `FloatingTasksPanel`. They all inherit from the the `TaskPanel` class and hold and load `TaskCard` objects.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files
  that are in the `src/main/resources/view` folder.<br>
