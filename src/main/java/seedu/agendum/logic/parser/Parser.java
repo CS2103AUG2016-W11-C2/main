@@ -164,12 +164,15 @@ public class Parser {
 
             String title = titleBuilder.toString();
 
-            if (dateTimeMap.containsKey(ARGS_BY)) {
+            boolean hasDeadlineKeyword = dateTimeMap.containsKey(ARGS_BY);
+            boolean hasStartTimeKeyword = dateTimeMap.containsKey(ARGS_FROM);
+            boolean hasEndTimeKeyword = dateTimeMap.containsKey(ARGS_TO);
+
+            if (hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
                 return new AddCommand(title, dateTimeMap.get(ARGS_BY));
-            } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
+            } else if (!hasDeadlineKeyword && hasStartTimeKeyword && hasEndTimeKeyword) {
                 return new AddCommand(title, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
-            } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO)
-                    && !dateTimeMap.containsKey(ARGS_BY)) {
+            } else if (!hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
                 return new AddCommand(title);
             } else {
                 return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
@@ -214,12 +217,15 @@ public class Parser {
         };
         scheduleMatcherOnConsumer(matcher, consumer);
 
-        if (dateTimeMap.containsKey(ARGS_BY)) {
+        boolean hasDeadlineKeyword = dateTimeMap.containsKey(ARGS_BY);
+        boolean hasStartTimeKeyword = dateTimeMap.containsKey(ARGS_FROM);
+        boolean hasEndTimeKeyword = dateTimeMap.containsKey(ARGS_TO);
+
+        if (hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
             return new ScheduleCommand(index, Optional.empty(), dateTimeMap.get(ARGS_BY));
-        } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
+        } else if (!hasDeadlineKeyword && hasStartTimeKeyword && hasEndTimeKeyword) {
             return new ScheduleCommand(index, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
-        } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO)
-                && !dateTimeMap.containsKey(ARGS_BY)) {
+        } else if (!hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
             return  new ScheduleCommand(index, Optional.empty(), Optional.empty());
         } else {
             return new IncorrectCommand(
