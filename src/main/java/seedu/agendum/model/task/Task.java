@@ -14,11 +14,11 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     private static final int UPCOMING_DAYS_THRESHOLD = 7;
 
-    private Name name;
-    private boolean isCompleted;
-    private LocalDateTime startDateTime;
-    private LocalDateTime endDateTime;
-    private LocalDateTime lastUpdatedTime;
+    private Name name_;
+    private boolean isCompleted_;
+    private LocalDateTime startDateTime_;
+    private LocalDateTime endDateTime_;
+    private LocalDateTime lastUpdatedTime_;
     
     // ================ Constructor methods ==============================
 
@@ -27,10 +27,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      */
     public Task(Name name) {
         assert CollectionUtil.isNotNull(name);
-        this.name = name;
-        this.isCompleted = false;
-        this.startDateTime = null;
-        this.endDateTime = null;
+        this.name_ = name;
+        this.isCompleted_ = false;
+        this.startDateTime_ = null;
+        this.endDateTime_ = null;
         setLastUpdatedTimeToNow();
     }
     
@@ -39,10 +39,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      */
     public Task(Name name, Optional<LocalDateTime> deadline) {
         assert CollectionUtil.isNotNull(name);
-        this.name = name;
-        this.isCompleted = false;
-        this.startDateTime = null;
-        this.endDateTime = deadline.orElse(null);
+        this.name_ = name;
+        this.isCompleted_ = false;
+        this.startDateTime_ = null;
+        this.endDateTime_ = deadline.orElse(null);
         this.setLastUpdatedTimeToNow();
     }
     
@@ -52,10 +52,10 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     public Task(Name name, Optional<LocalDateTime> startDateTime,
             Optional<LocalDateTime> endDateTime) {
         assert CollectionUtil.isNotNull(name);
-        this.name = name;
-        this.isCompleted = false;
-        this.startDateTime = startDateTime.orElse(null);
-        this.endDateTime = endDateTime.orElse(null);
+        this.name_ = name;
+        this.isCompleted_ = false;
+        this.startDateTime_ = startDateTime.orElse(null);
+        this.endDateTime_ = endDateTime.orElse(null);
         this.setLastUpdatedTimeToNow();
     }
 
@@ -74,12 +74,12 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     @Override
     public Name getName() {
-        return name;
+        return name_;
     }
 
     @Override
     public boolean isCompleted() {
-        return isCompleted;
+        return isCompleted_;
     }
 
     /**
@@ -97,8 +97,8 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
         }
 
         LocalDateTime currentTime = LocalDateTime.now();
-        boolean isBeforeUpcomingDaysThreshold = getTaskTime()
-                .isBefore(currentTime.plusDays(UPCOMING_DAYS_THRESHOLD));
+        LocalDateTime thresholdTime = currentTime.plusDays(UPCOMING_DAYS_THRESHOLD);
+        boolean isBeforeUpcomingDaysThreshold = getTaskTime().isBefore(thresholdTime);
         boolean isAfterCurrentTime = getTaskTime().isAfter(currentTime);
 
         return isBeforeUpcomingDaysThreshold && isAfterCurrentTime;
@@ -130,7 +130,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      */
     @Override
     public boolean hasTime() {
-        return (getStartDateTime().isPresent() || getEndDateTime().isPresent());
+        return getStartDateTime().isPresent() || getEndDateTime().isPresent();
     }
 
     /**
@@ -151,12 +151,12 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
 
     @Override
     public Optional<LocalDateTime> getStartDateTime() {
-        return Optional.ofNullable(startDateTime);
+        return Optional.ofNullable(startDateTime_);
     }
 
     @Override
     public Optional<LocalDateTime> getEndDateTime() {
-        return Optional.ofNullable(endDateTime);
+        return Optional.ofNullable(endDateTime_);
     }
 
     /**
@@ -165,7 +165,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
      */
     @Override
     public LocalDateTime getLastUpdatedTime() {
-        return lastUpdatedTime;
+        return lastUpdatedTime_;
     }
 
     /**
@@ -180,37 +180,37 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     // ================ Setter methods ==============================
     
     public void setName(Name name) {
-        this.name = name;
+        this.name_ = name;
         setLastUpdatedTimeToNow();
     }
     
     public void markAsCompleted() {
-        this.isCompleted = true;
+        this.isCompleted_ = true;
         setLastUpdatedTimeToNow();
     }
     
     public void markAsUncompleted() {
-        this.isCompleted = false;
+        this.isCompleted_ = false;
         setLastUpdatedTimeToNow();
     }
     
     public void setStartDateTime(Optional<LocalDateTime> startDateTime) {
-        this.startDateTime = startDateTime.orElse(null);
+        this.startDateTime_ = startDateTime.orElse(null);
         setLastUpdatedTimeToNow();
     }
     
     public void setEndDateTime(Optional<LocalDateTime> endDateTime) {
-        this.endDateTime = endDateTime.orElse(null);
+        this.endDateTime_ = endDateTime.orElse(null);
         setLastUpdatedTimeToNow();
     }
 
     public void setLastUpdatedTime(LocalDateTime updatedTime) {
-        this.lastUpdatedTime = updatedTime;
+        this.lastUpdatedTime_ = updatedTime;
     }
 
     public void setLastUpdatedTimeToNow() {
         // nano-seconds is set to 0 for more consistent test results when (un)marking multiple tasks
-        this.lastUpdatedTime = LocalDateTime.now().withNano(0);
+        this.lastUpdatedTime_ = LocalDateTime.now().withNano(0);
     }
 
     // ================ Other methods ==============================
@@ -301,7 +301,7 @@ public class Task implements ReadOnlyTask, Comparable<Task> {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, isCompleted, startDateTime, endDateTime);
+        return Objects.hash(name_, isCompleted_, startDateTime_, endDateTime_);
     }
 
     @Override
