@@ -175,6 +175,7 @@ public class Parser {
                 titleBuilder.append(matcher.group(0));
             }
 
+            // Run this function on all matched groups
             BiConsumer<String, String> consumer = (matchedGroup, token) -> {
                 String time = matchedGroup.substring(token.length(), matchedGroup.length());
                 if (DateTimeUtils.containsTime(time)) {
@@ -239,6 +240,7 @@ public class Parser {
                     ScheduleCommand.MESSAGE_USAGE));
         }
 
+        // Run this function on all matched groups
         BiConsumer<String, String> consumer = (matchedGroup, token) -> {
             String time = matchedGroup.substring(token.length(), matchedGroup.length());
             if (DateTimeUtils.containsTime(time)) {
@@ -280,7 +282,8 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the schedule task command.
+     * A higher order function that parses arguments in the context of the schedule task command.
+     * Extracted out of prepareAdd and prepareSchedule for code reuse.
      *
      * @param matcher matcher for current command context
      * @param consumer <String, String> closure to execute on
