@@ -136,13 +136,13 @@ interface and exposes its functionality using the `LogicManager.java` class.<br>
 
 
 #### Event Driven Approach
-Agendum applies an Event-Driven approach and the **Observer Pattern** to reduce direct coupling between the various components. For example, in Agendum, the `UI` and `Storage` components are interested in receiving notifications when there is a change in the to-do list in the `Model`. To avoid bidrectional coupling, `Model` (the Observable) does not inform these components of changes directly. Instead, it posts event and depend on the `EventsCenter` to notifying the register Observers in `Storage` and `UI`.
+Agendum applies an Event-Driven approach and the **Observer Pattern** to reduce direct coupling between the various components. For example, in Agendum, the `UI` and `Storage` components are interested in receiving notifications when there is a change in the to-do list in `Model`. To avoid bidrectional coupling, `Model` does not inform these components of changes directly. Instead, it posts event and depend on the `EventsCenter` to notifying the register Observers in `Storage` and `UI`.
 
 For example, consider the scenario where the user inputs `delete 1` described in the _Sequence Diagram_ below. The `UI` component will invoke the `Logic` component’s  _execute_ method to carry out the given command, `delete 1`. The `Logic` component will identify the corresponding task and will call the `Model` component _deleteTasks_ method to update Agendum’s data and raise a `ToDoListChangedEvent`.
 
 <img src="images\SDforDeleteTask.png" width="800">
 
-The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `EventsCenter` will inform the subscribers (the `UI` and `Storage` components). `UI` will respond and update the status bar to reflect the 'Last Updated' time while `Storage` will respond and save the changes to hard disk. <br>
+The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `EventsCenter` will inform the subscribers (the `UI` and `Storage` components). `Storage` will respond and save the changes to hard disk while `UI` will respond and update the status bar to reflect the 'Last Updated' time. <br>
 
 <img src="images\SDforDeleteTaskEventHandling.png" width="800">
 
@@ -155,14 +155,14 @@ To further reduce coupling between components, the Model-View-Controller pattern
 
 #### Activity Diagram
 
-<img src="images\activityDiagram.png" width="800">
-The Activity Diagram above illustrates Agendum's workflow. Brown boxes represent actions taken by Agendum while orange boxes represent actions that involve some interaction with the user.  
+<img src="images\activityDiagram.jpg" width="800">
+The Activity Diagram above illustrates Agendum's workflow. Brown boxes represent actions taken by Agendum while orange boxes represent actions that involve interaction with the user.  
 
 When Agendum is launched, `MainApp` will attempt to read the configuration files and the to-do list data from the hard disk. If such files do not exist or are in the incorrect format, Agendum will re-create these files. 
 
-Agendum will then wait for the user to enter a command. Every command is parsed. If the command is valid and adheres to the given format, Agendum will executes the command. Agendum `Logic` component checks the input such as indices before updating the model and storage if needed.  
+Agendum will wait for the user to enter a command. Every command is parsed. If the command is valid and adheres to the given format, Agendum will executes the command. Agendum `Logic` component checks the input such as indices before updating the model and storage if needed.  
 
-Agendum will then display changes in the to-do list and feedback of each command in the UI. The user can then enter a command again. Agendum also give pop-up feedbacks when the command format or inputs are invalid.
+Agendum will then display changes in the to-do list and feedback of each command in the UI. The user can then enter a command again. Agendum will also give pop-up feedbacks when the command format or inputs are invalid.
 
 The following sections will then give more details of each individual component.
 
@@ -196,6 +196,8 @@ The class diagram of the Logic Component is given below. `LogicManager` implemen
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
+The `CommandLibrary` class is responsible for managing the various Agendum's reserved command keywords and their aliases. The `Parser` checks and queries the `CommandLibrary` to ascertain if a command word given has been aliased and can be used to substitute a reserved command word. `AliasCommand` and `UnaliasCommand` will also check and update the `CommandLibrary` to add and remove aliases. The singleton pattern is applied to restrict the instantiation of the class to one object. This is to ensure that all other objects, such as Parser, AliasCommand and UnaliasCommand objects will refer to the same instance that records all the alias relationships.
+
 You can view the Sequence Diagram below for interactions within the `Logic` component for the `execute("delete 1")` API call.<br>
 
 <img src="images/DeleteTaskSdForLogic.png" width="800"><br>
@@ -209,7 +211,7 @@ The Parser creates concrete Command objects such as `AddCommand` objects. `Logic
 
 As mentioned above, the `Model` component stores and manages Agendum's task list data and user's preferences. It also exposes a `UnmodifiableObservableList<ReadOnlyTask>` that can be 'observed' by other components e.g. the `UI` can be bound to this list and will automatically update when the data in the list change.
 
-Due to the application of the **Observer Pattern**, it does not depend on other components such as `Storage`. The model interact with the `Storage` components by raising events such as `ToDoListChangedEvent`, `ChangeSaveLocationRequestEvent` and `LoadDataRequestEvent` to save and load data from the hard disk.
+Due to the application of the **Observer Pattern**, it does not depend on other components such as `Storage` but interact by raising events instead.
 
 The `Model` class is the interface of the `Model` component. It provides several APIs for the `Logic` and `UI` components to update and retrieve Agendum’s task list data. The **API** of the model component can be found at [`Model.java`](../src/main/java/seedu/agendum/model/Model.java).  
 
@@ -217,25 +219,39 @@ The structure and relationship of the various classes in the `Model` component i
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
 
-`ModelManager` implements the `Model` Interface. It stores a `UserPref` Object which represents the user’s preference. It also stores the current `ToDoList` which the `UI` indirectly refer to. `ModelManager` has a **Stack** of `ToDoList` objects. These are copies of previous to-do lists to support [`undo`](#### undo).
+`ModelManager` implements the `Model` Interface. It contains a `UserPref` Object which represents the user’s preference and a `SyncManager` object which is integral for the integration with Google calendar.
+
+`ModelManager` contains a **main** `ToDoList` object and a stack of `ToDoList` objects referred to as `previousLists`. The **main** `ToDoList` object is the version that is indirectly referred to by the `UI` and `Storage`. The stack, `previousLists` is used to support the [`undo` operation](#### undo).
 
 Each `ToDoList` object has one `UniqueTaskList` object. A `UniqueTaskList` can contain multiple `Task` objects but does not allow duplicates.  
 
 The `ReadOnlyToDoList` and `ReadOnlyTask` interfaces allow other classes and components, such as the `UI`, to access but not modify the list of tasks and their details.  
 
+Currently, each `Task` has a compulsory `Name` and last updated time. It is optional for a `Task` to have a start and end time. Each `Task` also has a completion status which is stored as a Boolean.  
+
+Design considerations:
 > * `ToDoList` can potentially be extended to have another `UniqueTagList` object to keep track of tags associated with each task and `ToDoList` will be responsible for syncing the tasks and tags.
-> * `Name` is a class on its own as it might be modified to have its own validation regex e.g. can only contain alphanumeric characters.
+> * `Name` is a separate class as it might be modified to have its own validation regex e.g. no / or "
 
 Using the same example, if the `Logic` component requests `Model` to _deleteTasks(task)_, the subsequent interactions between objects can be described by the following sequence diagram.  
 
 <img src="images\SDforDeleteTaskModelComponent.png" width="800">
 
-The identified task is removed from the `UniqueTaskList`. The `ModelManager` raises a `ToDoListChangedEvent` and back up the new to-do list to its stack of lists.  
+The identified task is removed from the `UniqueTaskList`. The `ModelManager` raises a `ToDoListChangedEvent` and back up the current to do list to `previousLists`
 
 > `Model`’s _deleteTasks_ methods actually take in `ArrayList<ReadOnlyTask>` instead of a single task. We use _deleteTasks(task)_ for simplicity in the sequence diagram.
 
 #### undo
 
+`previousLists` is a Stack of `ToDoList` objects with a minimum size of 1. The `ToDoList` object at the top of the stack is identical to the **main** `ToDoList` object before any operation that mutate the task list is performed and after a valid operation that mutates the task list successfully.
+
+This is achieved by _backupCurrentToDoList_ which pushes a copy of the **main** `ToDoList` to the stack after any valid changes, such as the marking of multiple tasks.
+
+To undo the most recent changes, we simply pop the irrelevant `ToDoList` at the top of the `previousLists` stack and copy the `ToDoList` at the top of the stack back to the **main** list 
+
+This approach eliminates the need to implement an "undo" method and store the changes separately for each command that will mutate the task list.
+
+Also, it helps to resolve the complications involved with manipulating multiple task objects at a go. For example, the user might try to mark multiple tasks and one of which will result in a `DuplicateTaskException`. To revert the undesired changes to the **main** `ToDoList`, we can copy the the `ToDoList` at the top of the stack back to the **main** list. In such unsuccessful operations, the changes will not persist to Storage.
 
 
 [comment]: # (@@author A0148095X)
