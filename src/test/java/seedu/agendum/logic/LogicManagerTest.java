@@ -11,6 +11,7 @@ import org.junit.rules.TemporaryFolder;
 import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.EventsCenter;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
+import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.logic.commands.*;
 import seedu.agendum.commons.events.ui.ShowHelpRequestEvent;
 import seedu.agendum.commons.util.FileUtil;
@@ -419,6 +420,11 @@ public class LogicManagerTest {
     public void execute_syncOff_successfull() throws Exception {
         assertCommandBehavior("sync off",
                 SyncCommand.SYNC_OFF_MESSAGE);
+    }
+
+    @Test
+    public void execute_syncUnknown_exception() throws Exception {
+        assertCommandBehavior("sync something", SyncCommand.MESSAGE_WRONG_OPTION, new ToDoList(), Collections.emptyList());
     }
 
 

@@ -14,7 +14,7 @@ public class SyncCommand extends Command {
     public static final String SYNC_ON_MESSAGE = "Google Calendar Sync is on";
     public static final String SYNC_OFF_MESSAGE = "Google Calendar Sync is off";
 
-    private static final String MESSAGE_WRONG_OPTION = "Invalid option for sync.";
+    public static final String MESSAGE_WRONG_OPTION = "Invalid option for sync.";
 
     private boolean syncOption;
 
