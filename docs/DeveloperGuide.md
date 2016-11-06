@@ -102,7 +102,7 @@ The **`Main`** component has only one class called [`MainApp`](../src/main/java/
 
 #### `Commons`
 [**`Commons`**](#6-common-classes) represents a collection of classes used by multiple other components.
-Two of those classes play important roles at the architecture level.
+Two such classes play important roles at the architecture level.
 
 * `EventsCentre` : This class (written using [Google's Event Bus library](https://github.com/google/guava/wiki/EventBusExplained))
   is used by components to communicate with other components using events.
@@ -136,21 +136,33 @@ interface and exposes its functionality using the `LogicManager.java` class.<br>
 
 
 #### Event Driven Approach
-Agendum applies an Event-Driven approach and the **Observer Pattern** to reduce direct coupling between the various components. In Agendum, the `UI` and `Storage` components are interested in receiving notifications when there is a change in the to-do list in the `Model`. Note how `Model` is not coupled to `Storage` and `UI` as it does not inform both components directly (e.g. request the `Storage` component to save updates to the hard disk). Instead, to avoid bidirectional coupling, the `Model` (Observable) will raises a `ToDoListChangedEvent` and the EventsCenter is responsible for notifying the register Observers, the `Storage` and `UI` sub-components.
+Agendum applies an Event-Driven approach and the **Observer Pattern** to reduce direct coupling between the various components. For example, in Agendum, the `UI` and `Storage` components are interested in receiving notifications when there is a change in the to-do list in the `Model`. To avoid bidrectional coupling, `Model` (the Observable) does not inform these components of changes directly. Instead, it posts event and depend on the `EventsCenter` to notifying the register Observers in `Storage` and `UI`.
 
 For example, consider the scenario where the user inputs `delete 1` described in the _Sequence Diagram_ below. The `UI` component will invoke the `Logic` component’s  _execute_ method to carry out the given command, `delete 1`. The `Logic` component will identify the corresponding task and will call the `Model` component _deleteTasks_ method to update Agendum’s data and raise a `ToDoListChangedEvent`.
 
 <img src="images\SDforDeleteTask.png" width="800">
 
-The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `EventsCenter` will inform the subscribers (the `UI` and `Storage` components). Both components will then respond accordingly. `UI` will update the status bar to reflect the 'Last Updated' time while `Storage` will save the updates to the task data to hard disk. <br>
+The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `EventsCenter` will inform the subscribers (the `UI` and `Storage` components). `UI` will respond and update the status bar to reflect the 'Last Updated' time while `Storage` will respond and save the changes to hard disk. <br>
 
 <img src="images\SDforDeleteTaskEventHandling.png" width="800">
 
 #### Model-View-Controller approach
-To further reduce coupling between components, the Model-View-Controller pattern is also applied.
+To further reduce coupling between components, the Model-View-Controller pattern is also applied. The 3 components are as follows:
 * Model: The `Model` component as previously described, maintains and holds Agendum's data.
 * View: Part of the `UI` components and resources such as the .fxml file is responsible for displaying Agendum's data and interacting with the user. Through events, the `UI` component is able to get data updates from the model.
 * Controller: Parts of the `UI` component such as (`CommandBox`) act as 'Controllers' for part of the UI. The `CommandBox` accepts user command input and request `Logic` to execute the command entered. This execution may result in changes in the model.
+
+
+#### Activity Diagram
+
+<img src="images\activityDiagram.png" width="800">
+The Activity Diagram above illustrates Agendum's workflow. Brown boxes represent actions taken by Agendum while orange boxes represent actions that involve some interaction with the user.  
+
+When Agendum is launched, `MainApp` will attempt to read the configuration files and the to-do list data from the hard disk. If such files do not exist or are in the incorrect format, Agendum will re-create these files. 
+
+Agendum will then wait for the user to enter a command. Every command is parsed. If the command is valid and adheres to the given format, Agendum will executes the command. Agendum `Logic` component checks the input such as indices before updating the model and storage if needed.  
+
+Agendum will then display changes in the to-do list and feedback of each command in the UI. The user can then enter a command again. Agendum also give pop-up feedbacks when the command format or inputs are invalid.
 
 The following sections will then give more details of each individual component.
 
@@ -166,7 +178,7 @@ The `UI` is the entry point of Agendum which is responsible for showing updates 
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox` and `ResultPopup`. All these, including the `MainWindow`, inherit the abstract `UiPart` class. They can be loaded using `UiPartLoader`.
 
-The `commandBox` component controls the field for user input, and it saves every valid or invalid command into `CommandBoxHistory` class, which is written in singleton pattern to restrict the instantiation of the class to be only one object.
+The `commandBox` component controls the field for user input, and it is associated with a `CommandBoxHistory` object which saves the most recent valid or invalid commands. `CommandBoxHistory` follows a singleton pattern to restrict the instantiation of the class to one object.
 
 Agendum has 3 different task panel classes `UpcomingTasksPanel`, `CompletedTaskPanel` and `FloatingTasksPanel`. They all inherit from the the `TaskPanel` class and hold and load `TaskCard` objects.
 
