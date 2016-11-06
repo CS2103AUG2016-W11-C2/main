@@ -41,14 +41,15 @@ public interface ReadOnlyTask {
 
     //@@author A0133367E
     /**
-     * Format the tasks as text, showing all details including name, 
-     * completion status, start and end time if any and updated time
-     * This is used for logging and record fine details for debugging
+     * Format the tasks as text, showing all fine details including name, 
+     * completion status, start and end time if any and last updated time
      */
     default String getDetailedText() {
-        String completionStatus = isCompleted() ? "Completed" : "Incomplete";
-        String startTime = getStartDateTime().isPresent() ? getStartDateTime().get().toString() : "None";
-        String endTime = getEndDateTime().isPresent() ? getEndDateTime().get().toString() : "None";
+        String completionStatus = (isCompleted()) ? "Completed" : "Incomplete";
+        String startTime = (getStartDateTime().isPresent()) ? getStartDateTime().get().toString()
+                                                            : "None";
+        String endTime = (getEndDateTime().isPresent()) ? getEndDateTime().get().toString()
+                                                        : "None";
         String lastUpdatedTime = getLastUpdatedTime().toString();
 
         final StringBuilder builder = new StringBuilder();

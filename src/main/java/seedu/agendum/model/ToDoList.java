@@ -84,8 +84,7 @@ public class ToDoList implements ReadOnlyToDoList {
      * @throws UniqueTaskList.TaskNotFoundException if no such task (key) could be found in the list.
      */
     public boolean updateTask(ReadOnlyTask key, Task updatedTask)
-            throws UniqueTaskList.TaskNotFoundException,
-            UniqueTaskList.DuplicateTaskException {
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         return tasks.update(key, updatedTask);
     }
 
@@ -95,8 +94,7 @@ public class ToDoList implements ReadOnlyToDoList {
      * @throws UniqueTaskList.TaskNotFoundException if no such task (key) could be found in the list.
      */
     public boolean markTask(ReadOnlyTask key) 
-            throws UniqueTaskList.TaskNotFoundException, 
-            UniqueTaskList.DuplicateTaskException {
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         return tasks.mark(key);
     }
 
@@ -106,8 +104,7 @@ public class ToDoList implements ReadOnlyToDoList {
      * @throws UniqueTaskList.TaskNotFoundException if no such task (key) could be found in the list.
      */
     public boolean unmarkTask(ReadOnlyTask key) 
-            throws UniqueTaskList.TaskNotFoundException,
-            UniqueTaskList.DuplicateTaskException {
+            throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         return tasks.unmark(key);
     }
     //@@author
