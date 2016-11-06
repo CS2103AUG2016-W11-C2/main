@@ -174,6 +174,10 @@ It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 
 > A task cannot have both a deadline and a event time.
 
+Did Agendum intepret part of your task name as a deadline/event time when you did not intend for it to do so? Simply `undo` the last command and remember to enclose your task name with **single** quotation mark this time around.
+```
+> add 'drop by 7 eleven' by tmr
+```
 
 #### Date Time Format
 How do you specify the `<deadline>`, `<start time>` and `<end time>` of a task?
@@ -226,7 +230,7 @@ Note
 
 Helpful tip: With Agendum, you can skip typing the second date only if the deadline/event is **happening some time in the future**
 ```
-> add attend wedding dinner from 10 Nov 8pm to 9pm
+> add attend wedding dinner from 30 Nov 8pm to 9pm
 ```
 
 
