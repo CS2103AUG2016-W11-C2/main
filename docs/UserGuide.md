@@ -311,6 +311,8 @@ You can also try out any of the following examples:
 The tasks with display ids 1, 2 and 3 will be marked as completed.
 ```
 
+* You can specify a id (e.g. 1) or a range of id (e.g. 3-8). They must be separated by whitespace (e.g. 1 2 3) or commas (e.g. 2,3)
+
 The changes are as shown below.<br>
 <img src="images/userguide/marking.png" width="600"><br>
 
@@ -352,6 +354,8 @@ You can also try out any of the following examples:
 > delete 1-3
 The tasks with display ids 1, 2 and 3 will be deleted.
 ```
+
+* You can specify a id (e.g. 1) or a range of id (e.g. 3-8). They must be separated by whitespace (e.g. 1 2 3) or commas (e.g. 2,3)
 
 The deleted tasks will appear in a popup window. <br>
 <img src="images/userguide/afterDeleting.png" width="300"><br>
