@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<todolist>
+    <tasks>
+        <name>walk the dog</name>
+        <isCompleted>true</isCompleted>
+        <lastUpdatedTime>2016-11-06 16:10:24</lastUpdatedTime>
+    </tasks>
+    <tasks>
+        <name>read newspapers</name>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2016-11-06 16:09:42</lastUpdatedTime>
+    </tasks>
+    <tasks>
+        <name>prepare dinner</name>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2016-11-06 16:09:42</lastUpdatedTime>
+    </tasks>
+    <tasks>
+        <name>clean the room</name>
+        <isCompleted>false</isCompleted>
+        <lastUpdatedTime>2016-11-06 16:09:42</lastUpdatedTime>
+    </tasks>
+</todolist>

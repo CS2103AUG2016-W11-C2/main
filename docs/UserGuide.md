@@ -294,9 +294,6 @@ Celebrate the achievement by recording this in Agendum.
 Here is the *format*:
 * `mark <id>...` - mark all the tasks identified by `<id>`(s) as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed.
 
-Are you confused? Here are some *examples*:<br>
-<img src="images/userguide/beforeDeleting.png" width="300"><br>
-
 ```
 Description: I just walked my dog!
 > mark 4
@@ -314,8 +311,8 @@ You can also try out any of the following examples:
 The tasks with display ids 1, 2 and 3 will be marked as completed.
 ```
 
-The changes are as shown below. The 3 tasks will move to the done panel at a go. <br>
-<img src="images/userguide/afterMarking.png" width="600"><br>
+The changes are as shown below.<br>
+<img src="images/userguide/marking.png" width="600"><br>
 
 
 ### Unmarking a task : `unmark`
