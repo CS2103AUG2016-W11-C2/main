@@ -15,7 +15,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.events.model.ChangeSaveLocationEvent;
 import seedu.agendum.commons.events.model.LoadDataRequestEvent;
 import seedu.agendum.commons.events.model.ToDoListChangedEvent;
@@ -28,6 +27,7 @@ import seedu.agendum.model.ReadOnlyToDoList;
 import seedu.agendum.model.ToDoList;
 import seedu.agendum.model.UserPrefs;
 import seedu.agendum.testutil.EventsCollector;
+import seedu.agendum.testutil.TestUtil;
 import seedu.agendum.testutil.TypicalTestTasks;
 
 public class StorageManagerTest {
@@ -38,9 +38,9 @@ public class StorageManagerTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     @Before
-    public void setup() {
+    public void setUp() {
         storageManager = new StorageManager(getTempFilePath("ab"), getTempFilePath("command"),
-                getTempFilePath("prefs"), new Config());
+                getTempFilePath("prefs"), TestUtil.createTempConfig());
     }
 
 
@@ -68,7 +68,7 @@ public class StorageManagerTest {
      * Verifies that StorageManager is properly wired to {@link JsonAliasTableStorage} class
      */
     @Test
-    public void commandLibraryReadSave() throws Exception {
+    public void aliasTableReadSave() throws Exception {
         Hashtable<String, String> testingTable = new Hashtable<String, String>();
         testingTable.put("a", "add");
         testingTable.put("d", "delete");
@@ -95,7 +95,7 @@ public class StorageManagerTest {
     public void handleToDoListChangedEventExceptionThrownEventRaised() throws IOException {
         //Create a StorageManager while injecting a stub that throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlToDoListStorageExceptionThrowingStub("dummy"), 
-                new JsonAliasTableStorage("dummy"), new JsonUserPrefsStorage("dummy"), new Config());
+                new JsonAliasTableStorage("dummy"), new JsonUserPrefsStorage("dummy"), TestUtil.createTempConfig());
         EventsCollector eventCollector = new EventsCollector();
         storage.handleToDoListChangedEvent(new ToDoListChangedEvent(new ToDoList()));
         assertTrue(eventCollector.get(0) instanceof DataSavingExceptionEvent);

@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import seedu.agendum.model.task.ReadOnlyTask;
 import seedu.agendum.model.task.Task;
 import seedu.agendum.model.task.UniqueTaskList;
+import seedu.agendum.model.task.UniqueTaskList.DuplicateTaskException;
+import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,25 +65,21 @@ public class ToDoList implements ReadOnlyToDoList {
     /**
      * Adds a task to the to-do list.
      *
-     * @throws UniqueTaskList.DuplicateTaskException if an equivalent task already exists.
+     * @throws DuplicateTaskException if an equivalent task already exists.
      */
-    public void addTask(Task p) throws UniqueTaskList.DuplicateTaskException {
+    public void addTask(Task p) throws DuplicateTaskException {
         tasks.add(p);
     }
 
-    public boolean removeTask(ReadOnlyTask key) throws UniqueTaskList.TaskNotFoundException {
-        if (tasks.remove(key)) {
-            return true;
-        } else {
-            throw new UniqueTaskList.TaskNotFoundException();
-        }
+    public boolean removeTask(ReadOnlyTask key) throws TaskNotFoundException {
+        return tasks.remove(key);
     }
 
     //@@author A0133367E
     /**
      * Updates an existing task in the to-do list.
-     * @throws UniqueTaskList.DuplicateTaskException if an equivalent task (to updatedTask) already exists.
-     * @throws UniqueTaskList.TaskNotFoundException if no such task (key) could be found in the list.
+     * @throws DuplicateTaskException if an equivalent task (to updatedTask) already exists.
+     * @throws TaskNotFoundException if no such task (key) could be found in the list.
      */
     public boolean updateTask(ReadOnlyTask key, Task updatedTask)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
@@ -90,8 +88,8 @@ public class ToDoList implements ReadOnlyToDoList {
 
     /**
      * Marks an existing task in the to-do list.
-     * @throws UniqueTaskList.DuplicateTaskException if a duplicate task would result after marking key.
-     * @throws UniqueTaskList.TaskNotFoundException if no such task (key) could be found in the list.
+     * @throws DuplicateTaskException if a duplicate task would result after marking key.
+     * @throws TaskNotFoundException if no such task (key) could be found in the list.
      */
     public boolean markTask(ReadOnlyTask key) 
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
@@ -100,10 +98,10 @@ public class ToDoList implements ReadOnlyToDoList {
 
     /**
      * Unmarks an existing task in the to-do list.
-     * @throws UniqueTaskList.DuplicateTaskException if a duplicate task would result after unmarking key.
-     * @throws UniqueTaskList.TaskNotFoundException if no such task (key) could be found in the list.
+     * @throws DuplicateTaskException if a duplicate task would result after unmarking key.
+     * @throws TaskNotFoundException if no such task (key) could be found in the list.
      */
-    public boolean unmarkTask(ReadOnlyTask key) 
+    public boolean unmarkTask(ReadOnlyTask key)
             throws UniqueTaskList.TaskNotFoundException, UniqueTaskList.DuplicateTaskException {
         return tasks.unmark(key);
     }

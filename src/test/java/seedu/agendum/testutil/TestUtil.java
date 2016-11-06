@@ -1,25 +1,5 @@
 package seedu.agendum.testutil;
 
-import com.google.common.io.Files;
-import guitests.guihandles.TaskCardHandle;
-import javafx.geometry.Bounds;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyCodeCombination;
-import javafx.scene.input.KeyCombination;
-import junit.framework.AssertionFailedError;
-import org.loadui.testfx.GuiTest;
-import org.testfx.api.FxToolkit;
-import seedu.agendum.TestApp;
-import seedu.agendum.commons.exceptions.IllegalValueException;
-import seedu.agendum.commons.util.FileUtil;
-import seedu.agendum.commons.util.XmlUtil;
-import seedu.agendum.model.ToDoList;
-import seedu.agendum.model.task.*;
-import seedu.agendum.storage.XmlSerializableToDoList;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -31,6 +11,34 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
+
+import org.loadui.testfx.GuiTest;
+import org.testfx.api.FxToolkit;
+
+import com.google.common.io.Files;
+
+import guitests.guihandles.TaskCardHandle;
+import javafx.geometry.Bounds;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import junit.framework.AssertionFailedError;
+import seedu.agendum.TestApp;
+import seedu.agendum.commons.core.Config;
+import seedu.agendum.commons.exceptions.IllegalValueException;
+import seedu.agendum.commons.util.ConfigUtil;
+import seedu.agendum.commons.util.FileUtil;
+import seedu.agendum.commons.util.StringUtil;
+import seedu.agendum.commons.util.XmlUtil;
+import seedu.agendum.model.ToDoList;
+import seedu.agendum.model.task.Name;
+import seedu.agendum.model.task.ReadOnlyTask;
+import seedu.agendum.model.task.Task;
+import seedu.agendum.model.task.UniqueTaskList;
+import seedu.agendum.storage.XmlSerializableToDoList;
 
 /**
  * A utility class for test cases.
@@ -95,7 +103,7 @@ public class TestUtil {
         try {
             FileUtil.createDirs(new File(SANDBOX_FOLDER));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return SANDBOX_FOLDER + fileName;
     }
@@ -110,7 +118,7 @@ public class TestUtil {
             FileUtil.createIfMissing(saveFileForTesting);
             XmlUtil.saveDataToFile(saveFileForTesting, data);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -287,7 +295,6 @@ public class TestUtil {
      */
     public static TestTask[] replaceTaskFromList(TestTask[] tasks, TestTask task, int index) {
         tasks[index] = task;
-        sortTasks(tasks);
         return tasks;
     }
 
@@ -301,7 +308,6 @@ public class TestUtil {
         List<TestTask> listOfTasks = asList(tasks);
         listOfTasks.addAll(asList(tasksToAdd));
         TestTask[] newTasks = listOfTasks.toArray(new TestTask[listOfTasks.size()]);
-        sortTasks(newTasks);
         return newTasks;
     }
 
@@ -311,11 +317,11 @@ public class TestUtil {
         return list;
     }
 
-    private static void sortTasks(TestTask[] tasks) {
+    public static void sortTasks(TestTask[] tasks) {
         Arrays.sort(tasks);
     }
 
-    public static TestTask[] getDoItSoonTasks(TestTask[] tasks) {
+    public static TestTask[] getUpcomingTasks(TestTask[] tasks) {
         ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
         for (TestTask task: tasks) {
             if (!task.isCompleted() && task.hasTime()) {
@@ -325,7 +331,7 @@ public class TestUtil {
         return filteredTasks.toArray(new TestTask[filteredTasks.size()]);
     }
 
-    public static TestTask[] getDoItAnytimeTasks(TestTask[] tasks) {
+    public static TestTask[] getFloatingTasks(TestTask[] tasks) {
         ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
         for (TestTask task: tasks) {
             if (!task.isCompleted() && !task.hasTime()) {
@@ -335,7 +341,7 @@ public class TestUtil {
         return filteredTasks.toArray(new TestTask[filteredTasks.size()]);
     }
 
-    public static TestTask[] getDoneTasks(TestTask[] tasks) {
+    public static TestTask[] getCompletedTasks(TestTask[] tasks) {
         ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
         for (TestTask task: tasks) {
             if (task.isCompleted()) {
@@ -347,6 +353,27 @@ public class TestUtil {
 
     public static boolean compareCardAndTask(TaskCardHandle card, ReadOnlyTask task) {
         return card.isSameTask(task);
+    }
+    
+    public static Config createTempConfig() {
+        Config config = new Config();
+        final String DEFAULT_CONFIG_FILE_LOCATION_FOR_TESTING = getFilePathInSandboxFolder("config_testing.json");
+        final String DEFAULT_PREF_FILE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("pref_testing.json");
+        final String DEFAULT_TODOLIST_FILE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("todolist_testing.xml");
+        final String DEFAULT_ALIAS_TABLE_FILE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("todolist_testing.xml");
+
+        config.setAppTitle(TestApp.APP_TITLE);
+        config.setUserPrefsFilePath(DEFAULT_PREF_FILE_LOCATION_FOR_TESTING);
+        config.setToDoListFilePath(DEFAULT_TODOLIST_FILE_LOCATION_FOR_TESTING);
+        config.setAliasTableFilePath(DEFAULT_ALIAS_TABLE_FILE_LOCATION_FOR_TESTING);
+        config.setConfigFilePath(DEFAULT_CONFIG_FILE_LOCATION_FOR_TESTING);
+        
+        try {
+            ConfigUtil.saveConfig(config, DEFAULT_CONFIG_FILE_LOCATION_FOR_TESTING);
+        } catch (IOException e) {
+            System.out.println("Failed to save config file : " + StringUtil.getDetails(e));
+        }
+        return config;
     }
 
 }
