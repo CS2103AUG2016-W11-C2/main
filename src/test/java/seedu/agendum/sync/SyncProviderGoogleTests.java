@@ -65,7 +65,7 @@ public class SyncProviderGoogleTests {
         syncProviderGoogle.startIfNeeded();
 
         // Verify Sync Provider did start
-        verify(syncProviderGoogle).start();
+        verify(syncProviderGoogle, atLeast(2)).start();
     }
 
     @Test
@@ -74,7 +74,7 @@ public class SyncProviderGoogleTests {
         syncProviderGoogle.startIfNeeded();
 
         // Verify Sync Provider should not start
-        verify(syncProviderGoogle, never()).start();
+        verify(syncProviderGoogle, atLeastOnce()).start();
     }
 
     @Test
