@@ -145,6 +145,22 @@ public class SyncProviderGoogle extends SyncProvider {
         return calendar;
     }
 
+    public void deleteAgendumCalendar() {
+        try {
+            CalendarList feed = client.calendarList().list().execute();
+            logger.info("Deleting Agendum calendar");
+
+            for (CalendarListEntry entry : feed.getItems()) {
+                if (entry.getSummary().equals(CALENDAR_NAME)) {
+                    client.calendars().delete(entry.getId()).execute();
+                }
+
+            }
+        } catch (IOException e)
+             {e.printStackTrace();
+        }
+    }
+
     private void processAddEventQueue() {
         while (true) {
             try {
