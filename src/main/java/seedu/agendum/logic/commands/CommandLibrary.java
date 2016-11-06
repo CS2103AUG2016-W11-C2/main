@@ -49,9 +49,13 @@ public class CommandLibrary {
         return commandLibrary;
     }
 
+    public Hashtable<String, String> getAliasTable() {
+        return aliasTable;
+    }
+
     //@@author A0133367E
     /**
-     * Replace the current commandLibrary's aliasTable with the aliasTable provided
+     * Replace the current commandLibrary's aliasTable with the new aliasTable provided
      */
     public void loadAliasTable(Hashtable<String, String> aliasTable) {
         this.aliasTable = aliasTable;
@@ -68,8 +72,10 @@ public class CommandLibrary {
     }
 
     /**
-     * Pre-condition: key is an existing alias.
      * Returns the reserved command keyword that is aliased by key
+     * 
+     * @param key    An existing user-defined alias for a reserved command keyword
+     * @return       The associated reserved command keyword
      */
     public String getAliasedValue(String key) {
         assert isExistingAliasKey(key);
@@ -90,7 +96,10 @@ public class CommandLibrary {
     /**
      * Pre-condition: key is a new unique alias and not a command keyword;
      * value is a reserved command keyword.
-     * Saves the new alias relationship between key and value
+     * Saves the new alias relationship between key and value.
+     * 
+     * @param key       A valid and unique user-defined alias for a reserved command word
+     * @param value     The target reserved command word
      */
     public void addNewAlias(String key, String value) {
         assert !isExistingAliasKey(key);
@@ -103,8 +112,9 @@ public class CommandLibrary {
     }
 
     /**
-     * Precondition: key is aliased to a command keyword.
-     * Destroy the alias relationship (key can no longer be used in place of command keyword)
+     * Destroy the alias relationship (key can no longer be used in place of command word)
+     * 
+     * @param key    An existing user-defined alias for a reserved command word
      */
     public void removeExistingAlias(String key) {
         assert isExistingAliasKey(key);
@@ -114,22 +124,28 @@ public class CommandLibrary {
         indicateAliasRemoved(key, value);
     }
 
-    /** Raises an event to indicate that an alias has been added to aliasTable in the command library */
+    /**
+     * Raises an event to indicate that an alias has been added to aliasTable in the command library
+     * 
+     * @param key    The new user-defined alias key
+     * @param value  The target reserved command word
+     */
     private void indicateAliasAdded(String key, String value) {
         String message = "Added alias " + key + " for " + value;
         EventsCenter eventCenter = EventsCenter.getInstance();
         eventCenter.post(new AliasTableChangedEvent(message, aliasTable));
     }
 
-    /** Raises an event to indicate that an alias has been removed from aliasTable in the command library */
+    /**
+     * Raises an event to indicate that an alias has been removed from aliasTable in the command library
+     * 
+     * @param key       The alias key to be removed
+     * @param value     The associated reserved command word
+     */
     private void indicateAliasRemoved(String key, String value) {
         String message = "Removed alias " + key + " for " + value;
         EventsCenter eventCenter = EventsCenter.getInstance();
         eventCenter.post(new AliasTableChangedEvent(message, aliasTable));
-    }
-    
-    public Hashtable<String, String> getAliasTable() {
-        return aliasTable;
     }
 
 }
