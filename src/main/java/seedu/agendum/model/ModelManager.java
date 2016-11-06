@@ -120,9 +120,7 @@ public class ModelManager extends ComponentManager implements Model {
     public synchronized void deleteTasks(List<ReadOnlyTask> targets) throws TaskNotFoundException {
         for (ReadOnlyTask target: targets) {
             toDoList.removeTask(target);
-
-            // Delete tasks in sync manager
-            syncManager.deleteEvent((Task) target);
+            removeTaskFromSyncManager(target);
         }
 
         logger.fine("[MODEL] --- successfully deleted all specified targets from the to-do list");
@@ -138,8 +136,7 @@ public class ModelManager extends ComponentManager implements Model {
         backupCurrentToDoList();
         updateFilteredListToShowAll();
         indicateToDoListChanged();
-
-        syncManager.addNewEvent(task);
+        addTaskToSyncManager(task);
     }
     
     @Override
@@ -152,9 +149,8 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredListToShowAll();
         indicateToDoListChanged();
 
-        // Delete old task and add new task
-        syncManager.deleteEvent((Task) target);
-        syncManager.addNewEvent(updatedTask);
+        addTaskToSyncManager(updatedTask);
+        removeTaskFromSyncManager(target);
     }
 
     @Override
@@ -244,6 +240,14 @@ public class ModelManager extends ComponentManager implements Model {
         indicateChangeSaveLocation(location);
         indicateLoadDataRequest(location);
     }
+
+    private void addTaskToSyncManager(Task task) {
+        syncManager.addNewEvent(task);
+    }
+
+    private void removeTaskFromSyncManager(ReadOnlyTask task) {
+        syncManager.deleteEvent(new Task(task));
+    }
     //@@author A0003878Y
 
     //=========== Sync Methods ===============================================================================
@@ -264,6 +268,8 @@ public class ModelManager extends ComponentManager implements Model {
             syncManager.stopSyncing();
         }
     }
+
+    
 
     //@@author
     //=========== Filtered Task List Accessors ===============================================================
