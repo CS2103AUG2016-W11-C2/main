@@ -15,6 +15,7 @@ import java.util.Optional;
 import static org.mockito.Mockito.*;
 import static seedu.agendum.commons.core.Config.DEFAULT_DATA_DIR;
 
+// @@author A0003878Y
 public class SyncProviderGoogleTests {
     private static final File DATA_STORE_CREDENTIAL = new File(DEFAULT_DATA_DIR + "StoredCredential");
     private static final File DATA_STORE_CREDENTIAL_TEST = new File("StoredCredentialForTesting");
