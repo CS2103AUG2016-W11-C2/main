@@ -415,6 +415,18 @@ public class LogicManagerTest {
     }
     //@author
 
+    @Test
+    public void execute_syncOn_successfull() throws Exception {
+        assertCommandBehavior("sync on",
+                SyncCommand.SYNC_ON_MESSAGE);
+    }
+
+    @Test
+    public void execute_syncOff_successfull() throws Exception {
+        assertCommandBehavior("sync on",
+                SyncCommand.SYNC_OFF_MESSAGE);
+    }
+
 
     //@@author A0148095X
     @Test
