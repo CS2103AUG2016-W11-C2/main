@@ -195,7 +195,7 @@ The class diagram of the Logic Component is given below. `LogicManager` implemen
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
-The `CommandLibrary` class is responsible for managing the various Agendum's reserved command keywords and their aliases. The `Parser` checks and queries the `CommandLibrary` to ascertain if a command word given has been aliased and can be used to substitute a reserved command word. `AliasCommand` and `UnaliasCommand` will also check and update the `CommandLibrary` to add and remove aliases. The singleton pattern is applied to restrict the instantiation of the class to one object. This is to ensure that all other objects, such as Parser, AliasCommand and UnaliasCommand objects will refer to the same instance that records all the alias relationships.
+The `CommandLibrary` class is responsible for managing the various Agendum's reserved command keywords and their aliases. The `Parser` checks and queries the `CommandLibrary` to ascertain if a command word given has been aliased to a reserved command word. `AliasCommand` and `UnaliasCommand` will also check and update the `CommandLibrary` to add and remove aliases. The singleton pattern is applied to restrict the instantiation of the class to one object. This is to ensure that all other objects, such as Parser, AliasCommand and UnaliasCommand objects will refer to the same instance that records all the alias relationships.
 
 You can view the Sequence Diagram below for interactions within the `Logic` component for the `execute("delete 1")` API call.<br>
 
