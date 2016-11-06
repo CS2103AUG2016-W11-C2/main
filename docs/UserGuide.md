@@ -167,7 +167,7 @@ Result: Agendum will add a task "return library books" to the "Do It Soon" panel
 It will have a deadline set to the nearest upcoming Friday and with time 8pm.
 
 Description: I have a wedding dinner which will take place on 30 Oct night.
-> add attend wedding dinner from 30 Oct 7pm to 9.30pm
+> add attend wedding dinner from 30 Oct 7pm to 30 Oct 9.30pm
 Result: Agendum will add a task "attend wedding dinner" to the "Do It Soon" panel.
 It will have a start time 30 Oct 7pm and end time 30 Oct 9.30pm.
 ```
@@ -190,6 +190,7 @@ Agendum supports a wide variety of date time formats. Combine any of the date fo
 | Day of the week | Wed, Wednesday       |
 | Relative date   | today, tmr, next wed |
 
+ > If no year is specified, it is always assumed to be the current year.
  > It is possible to specify the year before or after the month-day pair in the first 3 formats (e.g. 1/23/2016 or 2016 1 Oct)
  > The day of the week refers to the following week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
 
@@ -216,7 +217,15 @@ with deadline day as the upcoming Wednesday and time as the current time.
 
 > add attend wedding dinner from 10 Nov 8pm to 10 Nov 9pm
 Result: All the date and time are specified and there is no ambiguity at all.
-However, with Agendum, you can skip typing the second date:
+```
+
+Note
+> If no year, date or time is specified, the current year, date or time will be used.
+> It is advisable to specify both the date and time.
+
+
+Helpful tip: With Agendum, you can skip typing the second date only if the deadline/event is **happening some time in the future**
+```
 > add attend wedding dinner from 10 Nov 8pm to 9pm
 ```
 
@@ -286,7 +295,7 @@ Here is the *format*:
 * `mark <id>...` - mark all the tasks identified by `<id>`(s) as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed.
 
 Are you confused? Here are some *examples*:<br>
-<img src="images/userguide/beforeMarking.png" width="600"><br>
+<img src="images/userguide/beforeDeleting.png" width="300"><br>
 
 ```
 Description: I just walked my dog!
