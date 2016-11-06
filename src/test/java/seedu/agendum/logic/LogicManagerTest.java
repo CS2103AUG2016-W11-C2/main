@@ -287,6 +287,7 @@ public class LogicManagerTest {
         List<Task> taskList = helper.generateTaskList(2);
 
         // set AB state to 2 tasks
+        model.resetData(new ToDoList());
         helper.addToModel(model, taskList);
 
         // test boundary value (one-based index is 3 when list is of size 2)
@@ -309,6 +310,7 @@ public class LogicManagerTest {
         List<Task> taskList = helper.generateTaskList(5);
 
         // set AB state to 5 tasks
+        model.resetData(new ToDoList());
         helper.addToModel(model, taskList);
 
         // test boundary value (one-based index is 6 when list is of size 5)
