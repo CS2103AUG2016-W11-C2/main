@@ -97,7 +97,7 @@ public class TaskCard extends UiPart {
         }
     }
 
-    public String formatTime(String dateTimePattern, String prefix, Optional<LocalDateTime> dateTime) {
+    private String formatTime(String dateTimePattern, String prefix, Optional<LocalDateTime> dateTime) {
 
         StringBuilder sb = new StringBuilder();
         DateTimeFormatter format = DateTimeFormatter.ofPattern(dateTimePattern);
@@ -106,7 +106,7 @@ public class TaskCard extends UiPart {
         return sb.toString();
     }
 
-    public String formatTaskTime(ReadOnlyTask task) {
+    private String formatTaskTime(ReadOnlyTask task) {
         
         StringBuilder timeStringBuilder = new StringBuilder();
 
@@ -127,7 +127,7 @@ public class TaskCard extends UiPart {
         return timeStringBuilder.toString();
     }
 
-    public String formatUpdatedTime(ReadOnlyTask task) {
+    private String formatUpdatedTime(ReadOnlyTask task) {
         StringBuilder timeStringBuilder = new StringBuilder();
         if (task.hasTime()) {
             timeStringBuilder.append("\n");

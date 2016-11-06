@@ -4,6 +4,7 @@ package seedu.agendum.ui;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
@@ -43,7 +44,7 @@ public class UpcomingTasksPanel extends TasksPanel {
     private void configure() {
         selectionModel = upcomingTasksListView.getSelectionModel();
         upcomingTasksListView.setSelectionModel(null);
-        upcomingTasksListView.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> event.consume());
+        upcomingTasksListView.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);
     }
 
     public void scrollTo(Task task, boolean hasMultipleTasks) {

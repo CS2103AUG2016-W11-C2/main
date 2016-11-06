@@ -57,7 +57,7 @@ public class CommandBox extends UiPart {
         return commandBox;
     }
 
-    public void configure(ResultPopUp resultPopUp, StackPane messagePlaceHolder, Logic logic) {
+    private void configure(ResultPopUp resultPopUp, StackPane messagePlaceHolder, Logic logic) {
         this.resultPopUp = resultPopUp;
         this.messagePlaceHolder = messagePlaceHolder;
         this.logic = logic;
@@ -89,7 +89,7 @@ public class CommandBox extends UiPart {
     }
 
     /**
-     * Executes the command and saves this command to history if comamnd input
+     * Executes the command and saves this command to history if command input
      * is changed
      */
     @FXML
