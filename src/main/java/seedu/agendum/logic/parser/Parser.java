@@ -305,7 +305,8 @@ public class Parser {
     private Command prepareRename(String args) {
         final Matcher matcher = RENAME_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
         }
 
         final String givenName = matcher.group("name").trim();
@@ -313,7 +314,8 @@ public class Parser {
         Optional<Integer> index = parseIndex(givenIndex);
 
         if (!index.isPresent()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -363,7 +365,7 @@ public class Parser {
     //@@author
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
-     *   Returns an {@code Optional.empty()} otherwise.
+     * Returns an {@code Optional.empty()} otherwise.
      */
     private Optional<Integer> parseIndex(String command) {
         final Matcher matcher = TASK_INDEX_ARGS_FORMAT.matcher(command.trim());
@@ -382,14 +384,15 @@ public class Parser {
     //@@author A0133367E
     /**
      * Returns the specified indices in the {@code command} if positive unsigned integer(s) are given.
-     *   Returns an empty set otherwise.
+     * Returns an empty set otherwise.
      */
     private Set<Integer> parseIndexes(String args) {
         final Matcher matcher = TASK_INDEXES_ARGS_FORMAT.matcher(args.trim());
-        Set<Integer> taskIds = new HashSet<>();
+        Set<Integer> emptySet = new HashSet<Integer>();
+        Set<Integer> taskIds = new HashSet<Integer>();
 
         if (!matcher.matches()) {
-            return taskIds;
+            return emptySet;
         }
 
         String replacedArgs = args.replaceAll("[ ]+", ",").replaceAll(",+", ",");
@@ -408,7 +411,7 @@ public class Parser {
         }
 
         if (taskIds.remove(0)) {
-            return new HashSet<>();
+            return emptySet;
         }
 
         return taskIds;
