@@ -24,11 +24,11 @@ public class CommandBoxTest extends ToDoListGuiTest {
     }
     
     @Test
-    public void commandBox_CommandHistory_NotExists() {
+    public void commandBox_CommandHistory_Empty() {
         // No previous command
         commandBox.scrollToPreviousCommand();
         assertEquals(commandBox.getCommandInput(), "");
-
+        
         // No next command
         commandBox.scrollToNextCommand();
         assertEquals(commandBox.getCommandInput(), "");
