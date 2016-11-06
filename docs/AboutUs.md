@@ -5,7 +5,7 @@ We are a team based in the [School of Computing, National University of Singapor
 ## Project Team
 
 #### [Muthu Kumar Chandrasekaran](https://www.quora.com/profile/Muthu-Kumar-Chandrasekaran) <br>
--<img src="https://lh5.googleusercontent.com/swdvryeX53Wc7dCEh1Owfz6PmATQWo87AF6lr_J2qL7rrcTW8Nego1_YFdu2TSoxyQBpJ42I_X5n31AVF6O3nQV_ECVZvQN9xbFMa_fDHV03azyXHdSNJMaSGCw-VWUNJVuIsVNh" width="150"><br>
+<img src="https://lh5.googleusercontent.com/swdvryeX53Wc7dCEh1Owfz6PmATQWo87AF6lr_J2qL7rrcTW8Nego1_YFdu2TSoxyQBpJ42I_X5n31AVF6O3nQV_ECVZvQN9xbFMa_fDHV03azyXHdSNJMaSGCw-VWUNJVuIsVNh" width="150"><br>
 **Role: Project Advisor**
 
 -----
@@ -23,9 +23,13 @@ We are a team based in the [School of Computing, National University of Singapor
    * [Re-schedule a task](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#renaming-a-task--rename)
    * [Undo commands that change the task list](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#undo-the-last-command--undo)
 * Code written:
+[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0133367E.md)
+[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0133367E.md)
+[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0133367E.md)
 * Other major contributions:
    * Did most of the refactoring from AddressBook to ToDoList
    * Update user/developer guide
+
 -----
 
 #### [Vishnu Prem](http://github.com/burnflare)
@@ -37,6 +41,9 @@ We are a team based in the [School of Computing, National University of Singapor
    * [Adding a task (with time)](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#adding-a-task-add)
    * [Smart command correction]
 * Code written:
+[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0003878Y.md)
+[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0003878Y.md)
+[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0003878Y.md)
 * Other major contributions:
    * Set up Travis, Coveralls and Codacy
 
@@ -51,6 +58,9 @@ We are a team based in the [School of Computing, National University of Singapor
    * [Choose a custom storage location](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#specifying-the-data-storage-location--store)
    * [Load from a specific storage location](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#loading-from-another-data-storage-location--load)
 * Code written:
+[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0148095X.md)
+[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0148095X.md)
+[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0148095X.md)
 * Other major contributions:
    * Actively update user/developer guide
    * Correct most grammatical errors in user/developer guide
@@ -67,6 +77,9 @@ We are a team based in the [School of Computing, National University of Singapor
    * [Scrolling through previous command history]
    * [Help command] (https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#viewing-help--help)
 * Code written:
+[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0148031R.md)
+[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0148031R.md)
+[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0148031R.md)
 * Other major contributions:
    *  Responsible for most of the UI
 
