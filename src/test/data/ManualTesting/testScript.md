@@ -211,8 +211,20 @@ Type `> store src/test/data/ManualTesting/Test/newData.xml`
 ####Result
 The storage file is stored in the specified path.
 
+## Sync
+To sync your tasks in agendum into Google calendar, you have to start comamnd with the keyword `sync`.
 
+>Here is the *format*:
 
+>* `sync on` to turn syncing on
+>* `sync off` to turn syncing off
+
+1. Type `sync on`.
+2. Type `sync off`.
+
+####Result
+1. After the first step, agendum will direct you to the Google calender authorization page in your browser. Once authorizd with your Google account, there will be a pop up window telling you that sync has been turned on, and you may close the authorization page and go back to agendum. After the authorization, all the tasks with deadline or event time you added will sync to your goolge calender, whereh there is a separate calendur called `Agendum Calendar` to view all your tasks from agendum.
+2. After the second step, sync to Google Calendar will be turned off.
 
 
 
