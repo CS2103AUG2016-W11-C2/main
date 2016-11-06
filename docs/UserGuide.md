@@ -503,6 +503,17 @@ Examples
 > load C:/Dropbox/mytasklist.xml
 ```
 
+### Google calendar synchronization: `sync`
+
+If you have a Google account and want to synchronize your tasks between Agendum and Google Calendar, this command enables you to do exactly that! Synchronization takes place when you turn it on.
+
+Here is the *format*:
+* `sync ON` or `sync OFF`
+
+> * `sync` must have either ON or OFF after the command word
+> * Only data from Agendum will be synchronized to Google Calendar
+> * Only tasks with a start and end date/time will be synchronized
+
 
 ### Exiting Agendum : `exit`
 
@@ -562,24 +573,6 @@ We hope that you will find Agendum and our user guide helpful. If you have any s
 ## Command Summary
 
 <img src="images/userguide/commandsummary.png" width="1000"><br>
-
-Command  | Format  
-:-------:| :--------
-Add      | `add <name>` or `add <name> by <deadline>` or `add <name> from <start time> to <end time>`
-Alias    | `alias <original command> <your command>`
-Delete   | `delete <id>...`
-Exit     | `exit`
-Find     | `find <keyword>...`
-Help     | `help`
-List     | `list`
-Load     | `load <path to file>`
-Mark     | `mark <id>...`
-Rename   | `rename <id> <name>`
-Schedule | `schedule <id>` or `schedule <id> by <deadline>` or `schedule <id> from <start time> to <end time>`
-Store    | `store <path to file>`
-Unalias  | `unalias <your command>`
-Undo     | `undo`
-Unmark   | `unmark <id>...`
 
 For a quick reference,
 > * Parameters with `...` after them can have multiple instances (separated by whitespace).
