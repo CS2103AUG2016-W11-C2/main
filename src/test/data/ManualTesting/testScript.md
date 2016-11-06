@@ -35,6 +35,7 @@ Before proceeding to add or schedule tasks with dates and time, here is a brief 
 | Day of the week | Wed, Wednesday       |
 | Relative date   | today, tmr, next wed |
 
+ > If no year is specified, it is always assumed to be the current year.
  > It is possible to specify the year before or after the month-day pair in the first 3 formats (e.g. 1/23/2016 or 2016 1 Oct)
  > The day of the week refers to the following week. For example, today is Sunday (30 Oct). Agendum will interpret Wednesday and Sunday as 2 Nov and 6 Nov respectively (a week from now).
 
@@ -46,6 +47,8 @@ Before proceeding to add or schedule tasks with dates and time, here is a brief 
 | Hour:Minute     | 10:30                                   |
 | Hour.Minute     | 10.30                                   |
 | Relative time   | this morning, this afternoon, tonight   |
+
+> By default, we use the 24 hour time format but we do support the meridian format as well e.g. 10am, 10pm
 
 
 ## Add
@@ -69,9 +72,9 @@ Type `add submit essay by 10pm`.
 A new task named "submit essay" is created in the **Do It Soon** column, with its deadline under the name the this task. Also, it is highlighted in purple borders.
 
 ### 3. Add a task with event time
-Type `add submit essay by 10pm`
+Type `add go for church camp from 20 nov 2pm to 25 nov 5pm`
 #### Result 
-A new task named "submit essay" is created in the **Do It Soon** column, with its deadline under the name the this task. Also, it is highlighted in purple borders.
+A new task named "go for church" is created in the **Do It Soon** column, with its deadline under the name the this task	. Also, it is highlighted in purple borders.
 
 ## Rename
 To rename a task, you have to start your command with the keyword `rename`.
@@ -104,16 +107,33 @@ Type `schedule 23 by 11 nov 10pm`.
 Task with index 23 now has a deadline, and it is shifted to **Do It Soon** column with a new index. Also, it is highlighted in purple borders.
 
 ###3. Schedule a task with event time
-Type `schedule 14 from 13 nov 2pm to 4pm`.
+Type `schedule 14 from 13 nov 2pm to 13 nov 4pm`.
 ####Result
 Task with index 14 now has a event time, and it is assigned with a new index. Also, it is highlighted in purple borders.
+
+## Delete
+To delete a task, you have to start your command with the keyword `delete`.
+
+>Here is the *format*:
+
+>* `delete <id>...` - Deletes the task at the specified `INDEX`. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas, space, or input as a range.
+
+###1. Delete a single task
+Type `delete 10`.
+####Result
+Task with index 10 is deleted. 
+
+###2. Delete multiple tasks
+Type `delete 11 21-23`
+####Result 
+Tasks with indices 11, 21, 22 and 23 are deleted.
 
 ## Mark
 To mark a task as completed, you have to start your command with the keyword `mark`.
 
 >Here is the *format*:
 
->* `mark <id>...` - mark all the tasks identified by `<id>`(s) as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed.
+>* `mark <id>...` - mark all the tasks identified by `<id>`(s) as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas, space, or input as a range.
 
 ###1. Mark a single task
 Type `mark 1`.
@@ -135,7 +155,7 @@ To unmark a task as completed, you have to start your command with the keyword `
 ###1. Unmark a single task
 Type `mark 36`.
 ####Result
-Task with index 36 is marked as completed, shifting from **Done** column to **Do It Soon** column, and there is no more completion time under the task name. Also, it is highlighted in purple borders.
+Task with index 36 is marked as completed, shifting from **Done** column to **Do It Soon** column, and there is no more completion time under the task name. Also, it is highlighted in purple borders. If there are multiple `<id>`s, they should be separated by commas, space, or input as a range.
 
 ###2. Unmark multiple tasks
 Type `mark 37-40`.
@@ -153,7 +173,7 @@ Tasks with indices 37, 38, 39 and 40 are unmarked as uncompleted, shifting from 
 ## Find
 >Here is the *format*:
 
->* `find <keyword>...` - filter out all tasks containing any of the keyword(s) given
+>* `find <keyword>...` - filter out all tasks containing any of the keyword(s) given. The keywords should be full word, and they are case insensitive.
 
 Type `find cs2103`
 ####result
