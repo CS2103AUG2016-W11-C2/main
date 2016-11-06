@@ -130,7 +130,8 @@ public abstract class ToDoListGuiTest {
     protected void assertShowingMessage(String expected) {
         assertEquals(expected, messageDisplay.getText());
     }
-    
+
+    //@@author A0133367E
     /**
      * Asserts the tasks shown in each panel will match
      */
