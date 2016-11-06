@@ -41,15 +41,14 @@ public class Parser {
     private static final Pattern UNALIAS_ARGS_FORMAT = Pattern.compile("(?<shorthand>[\\p{Alnum}]+)");
 
     //@@author A0003878Y
-    private static final Pattern QUOTATION_FORMAT = Pattern.compile("\"([^\"]*)\"");
-    private static final Pattern ADD_SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:by|from|to)\\s|$)))+?");
+    private static final Pattern QUOTATION_FORMAT = Pattern.compile("\'([^\']*)\'");
+    private static final Pattern ADD_SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:(?i)by|from|to)\\s|$)))+?");
 
     private static final String ARGS_FROM = "from";
     private static final String ARGS_BY = "by";
     private static final String ARGS_TO = "to";
     private static final String FILLER_WORD = "FILLER ";
     private static final String SINGLE_QUOTE = "\'";
-    private static final String DOUBLE_QUOTE= "\"";
 
     private static final String[] TIME_TOKENS = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY };
 
@@ -154,7 +153,7 @@ public class Parser {
         // Check for quotation in args. If so, they're set as title
         Optional<String> quotationCheck = checkForQuotation(args);
         if (quotationCheck.isPresent()) {
-            titleBuilder.append(quotationCheck.get().replace(SINGLE_QUOTE,"").replace(DOUBLE_QUOTE,""));
+            titleBuilder.append(quotationCheck.get().replace(SINGLE_QUOTE,""));
             args = FILLER_WORD + args.replace(quotationCheck.get(),""); // This will get removed later by regex
         }
 
@@ -188,18 +187,19 @@ public class Parser {
                 return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
             }
 
-            if (dateTimeMap.containsKey(ARGS_BY)) {
+            boolean hasDeadlineKeyword = dateTimeMap.containsKey(ARGS_BY);
+            boolean hasStartTimeKeyword = dateTimeMap.containsKey(ARGS_FROM);
+            boolean hasEndTimeKeyword = dateTimeMap.containsKey(ARGS_TO);
+
+            if (hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
                 return new AddCommand(title, dateTimeMap.get(ARGS_BY));
             }
 
-            if (dateTimeMap.containsKey(ARGS_FROM)
-                    && dateTimeMap.containsKey(ARGS_TO)) {
+            if (!hasDeadlineKeyword && hasStartTimeKeyword && hasEndTimeKeyword) {
                 return new AddCommand(title, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
             }
 
-            if (!dateTimeMap.containsKey(ARGS_FROM)
-                    && !dateTimeMap.containsKey(ARGS_TO)
-                    && !dateTimeMap.containsKey(ARGS_BY)) {
+            if (!hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
                 return new AddCommand(title);
             }
 
@@ -243,26 +243,26 @@ public class Parser {
         };
         executeOnEveryMatcherToken(matcher, consumer);
 
-        if (dateTimeMap.containsKey(ARGS_BY)) {
+        boolean hasDeadlineKeyword = dateTimeMap.containsKey(ARGS_BY);
+        boolean hasStartTimeKeyword = dateTimeMap.containsKey(ARGS_FROM);
+        boolean hasEndTimeKeyword = dateTimeMap.containsKey(ARGS_TO);
+
+        if (hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
             return new ScheduleCommand(index, Optional.empty(), dateTimeMap.get(ARGS_BY));
         }
 
-        if (dateTimeMap.containsKey(ARGS_FROM)
-                && dateTimeMap.containsKey(ARGS_TO)) {
-            return new ScheduleCommand(index, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
+        if (!hasDeadlineKeyword && hasStartTimeKeyword && hasEndTimeKeyword) {
+            return new ScheduleCommand(index, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));}
+
+        if (!hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
+            return new ScheduleCommand(index, Optional.empty(), Optional.empty());
         }
 
-        if (!dateTimeMap.containsKey(ARGS_FROM)
-                && !dateTimeMap.containsKey(ARGS_TO)
-                && !dateTimeMap.containsKey(ARGS_BY)) {
-            return  new ScheduleCommand(index, Optional.empty(), Optional.empty());
-        }
-
-        return new IncorrectCommand( String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
+        return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
     }
 
     /**
-     * Checks if there are ny quotation marks in the given string
+     * Checks if there are any quotation marks in the given string
      *
      * @param str
      * @return returns the string inside the quote.
