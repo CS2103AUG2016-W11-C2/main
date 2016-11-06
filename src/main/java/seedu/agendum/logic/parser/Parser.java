@@ -249,7 +249,7 @@ public class Parser {
 
     //@@author A0133367E
     /**
-     * Parses arguments in the context of the delete task command.
+     * Parses arguments in the context of the delete task(s) command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -265,7 +265,7 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the mark task command.
+     * Parses arguments in the context of the mark task(s) command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -281,7 +281,7 @@ public class Parser {
     }
  
     /**
-     * Parses arguments in the context of the unmark task command.
+     * Parses arguments in the context of the unmark task(s) command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -415,9 +415,9 @@ public class Parser {
         }
 
         return taskIds;
-    }
-    
+    }    
     //@@author
+
     /**
      * Parses arguments in the context of the find task command.
      *
