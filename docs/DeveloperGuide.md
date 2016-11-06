@@ -238,7 +238,7 @@ The `Storage` component has the following functions:
 * can save `UserPref` objects in json format and read it back.
 * can save the Agendum data in xml format and read it back.
 
-Other components such as `Model` need to access functionalities defined inside the `Storage` component in order to save the task data and GUI settings to the hard disk. The `StorageManager` is a Facade class. Components such as `Model` will have to access storage sub-components through `StorageManager` which will then redirect method calls to its internal component such as `JsonUserPrefsStorage`. The `StorageManager` also shields the internal details of the Storage Component, such as the implementation of `XmlToDoListStorage` from external classes.
+Other components such as `Model` require the functionalities defined inside the `Storage` component in order to save task data and user preferences to the hard disk. The `Storage` component uses the *Facade* design pattern. Components such as `ModelManager` access storage sub-components through `StorageManager` which will then redirect method calls to its internal component such as `JsonUserPrefsStorage` and `XmlToDoListStorage`. `Storage` also shields the internal details of the Storage and its related components, such as the implementation of `XmlToDoListStorage`, from external classes.
 
 The Object Diagram below shows what it looks like during runtime.
 
