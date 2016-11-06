@@ -46,6 +46,10 @@ public class FloatingTasksPanel extends TasksPanel {
         floatingTasksListView.addEventFilter(MouseEvent.MOUSE_PRESSED, Event::consume);
     }
 
+    /**
+     * Scrolls to the newly updated task and highlight for several seconds. If
+     * there are multiple tasks updated, previous highlight will not be cleared.
+     */
     public void scrollTo(Task task, boolean hasMultipleTasks) {
         Platform.runLater(() -> {
             
@@ -83,7 +87,6 @@ public class FloatingTasksPanel extends TasksPanel {
                 setText(null);
             } else {
                 setGraphic(TaskCard.load(task, mainTaskList.indexOf(task) + 1).getLayout());
-//                scrollTo();
             }
         }
     }

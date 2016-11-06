@@ -29,6 +29,10 @@ import java.util.Optional;
 import java.util.logging.Logger;
 
 //@@author A0148031R
+/**
+ * Controller for the command box field
+ *
+ */
 public class CommandBox extends UiPart {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private static final String FXML = "CommandBox.fxml";
@@ -118,6 +122,9 @@ public class CommandBox extends UiPart {
         logger.info(RESULT_FEEDBACK + mostRecentResult.feedbackToUser);
     }
     
+    /**
+     * Post meesage in the message place holder under the command box
+     */
     private void postMessage(String message) {
         this.messagePlaceHolder.getChildren().clear();
         raise(new CloseHelpWindowRequestEvent());
