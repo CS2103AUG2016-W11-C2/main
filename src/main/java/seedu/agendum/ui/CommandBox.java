@@ -36,6 +36,7 @@ public class CommandBox extends UiPart {
     private static final String HELP_COMMAND = "help";
     private static final String RESULT_FEEDBACK = "Result: ";
     private static final String ERROR = "error";
+    private static final Color MESSAGE_COLOR = Color.web("#ffffff");
 
     private AnchorPane placeHolderPane;
     private AnchorPane commandPane;
@@ -47,6 +48,7 @@ public class CommandBox extends UiPart {
 
     @FXML
     private TextField commandTextField;
+    private CommandResult mostRecentResult;
 
     public static CommandBox load(Stage primaryStage, AnchorPane commandBoxPlaceholder, StackPane messagePlaceHolder, 
             ResultPopUp resultPopUp, Logic logic) {
@@ -57,7 +59,7 @@ public class CommandBox extends UiPart {
         return commandBox;
     }
 
-    private void configure(ResultPopUp resultPopUp, StackPane messagePlaceHolder, Logic logic) {
+    public void configure(ResultPopUp resultPopUp, StackPane messagePlaceHolder, Logic logic) {
         this.resultPopUp = resultPopUp;
         this.messagePlaceHolder = messagePlaceHolder;
         this.logic = logic;
@@ -89,7 +91,7 @@ public class CommandBox extends UiPart {
     }
 
     /**
-     * Executes the command and saves this command to history if command input
+     * Executes the command and saves this command to history if comamnd input
      * is changed
      */
     @FXML
@@ -109,7 +111,7 @@ public class CommandBox extends UiPart {
          */
 
         setStyleToIndicateCorrectCommand();
-        CommandResult mostRecentResult = logic.execute(previousCommandTest);
+        mostRecentResult = logic.execute(previousCommandTest);
         if(!previousCommandTest.toLowerCase().equals(HELP_COMMAND)) {
             resultPopUp.postMessage(mostRecentResult.feedbackToUser);
         }
@@ -121,7 +123,7 @@ public class CommandBox extends UiPart {
         raise(new CloseHelpWindowRequestEvent());
 
         Label label = new Label(message);
-        label.setTextFill(Color.web("#ffffff"));
+        label.setTextFill(MESSAGE_COLOR);
         label.setContentDisplay(ContentDisplay.CENTER);
         label.setPadding(new Insets(0, 10, 0, 10));
         this.messagePlaceHolder.setAlignment(Pos.CENTER_LEFT);
