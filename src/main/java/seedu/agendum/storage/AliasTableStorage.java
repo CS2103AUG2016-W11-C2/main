@@ -21,7 +21,7 @@ public interface AliasTableStorage {
             throws DataConversionException, IOException;
 
     /**
-     * Saves the alias table in {{@link seedu.agendum.logic.commands.CommandLibrary} to the storage.
+     * Saves the alias table in {@link seedu.agendum.logic.commands.CommandLibrary} to the storage.
      * @param table cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
