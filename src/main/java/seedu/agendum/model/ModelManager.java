@@ -246,7 +246,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     private void removeTaskFromSyncManager(ReadOnlyTask task) {
-        syncManager.deleteEvent(new Task(task));
+        syncManager.deleteEvent((Task) task);
     }
     //@@author A0003878Y
 
