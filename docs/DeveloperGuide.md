@@ -97,16 +97,16 @@ The **_Architecture Diagram_** given above summarizes the high-level design of A
 Here is a quick overview of the main components of Agendum and their main responsibilities.
 
 #### `Main`
-The **`Main`** component has only one class called [`MainApp`](../src/main/java/seedu/agendum/MainApp.java). It is responsible for initializing all components in the correct sequence and connecting them up with each other at app launch. It is also responsible for shutting down the other components and invoking the necessary clean up methods when Agendum is shut down.
+The **`Main`** component has a single class: [`MainApp`](../src/main/java/seedu/agendum/MainApp.java). It is responsible for initializing all components in the correct sequence and connecting them up with each other at app launch. It is also responsible for shutting down the other components and invoking the necessary clean up methods when Agendum is shut down.
 
 
 #### `Commons`
 [**`Commons`**](#6-common-classes) represents a collection of classes used by multiple other components.
-Two such classes play important roles at the architecture level.
+Two Commons classes play important roles at the architecture level.
 
-* `EventsCentre` : This class (written using [Google's Event Bus library](https://github.com/google/guava/wiki/EventBusExplained))
+* `EventsCentre` (written using [Google's Event Bus library](https://github.com/google/guava/wiki/EventBusExplained))
   is used by components to communicate with other components using events.
-* `LogsCenter` : This class is used by many classes to write log messages to Agendum's log file to record noteworthy system information and events.
+* `LogsCenter` is used by many classes to write log messages to Agendum's log file to record noteworthy system information and events.
 
 
 #### `UI`
@@ -136,13 +136,13 @@ interface and exposes its functionality using the `LogicManager.java` class.<br>
 
 
 #### Event Driven Approach
-Agendum applies an Event-Driven approach and the **Observer Pattern** to reduce direct coupling between the various components. For example, in Agendum, the `UI` and `Storage` components are interested in receiving notifications when there is a change in the to-do list in `Model`. To avoid bidrectional coupling, `Model` does not inform these components of changes directly. Instead, it posts event and depend on the `EventsCenter` to notifying the register Observers in `Storage` and `UI`.
+Agendum applies an Event-Driven approach and the **Observer Pattern** to reduce direct coupling between the various components. For example, the `UI` and `Storage` components are interested in receiving notifications when there is a change in the to-do list in `Model`. To avoid bidrectional coupling, `Model` does not inform these components of changes directly. Instead, it posts an event and rely on the `EventsCenter` to notifying the register Observers in `Storage` and `UI`.
 
-For example, consider the scenario where the user inputs `delete 1` described in the _Sequence Diagram_ below. The `UI` component will invoke the `Logic` component’s  _execute_ method to carry out the given command, `delete 1`. The `Logic` component will identify the corresponding task and will call the `Model` component _deleteTasks_ method to update Agendum’s data and raise a `ToDoListChangedEvent`.
+Consider the scenario where the user inputs `delete 1` described in the _Sequence Diagram_ below. The `UI` component will invoke the `Logic` component’s  _execute_ method to carry out the given command, `delete 1`. The `Logic` component will identify the corresponding task and will call the `Model` component _deleteTasks_ method to update Agendum’s data and raise a `ToDoListChangedEvent`.
 
 <img src="images\SDforDeleteTask.png" width="800">
 
-The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `EventsCenter` will inform the subscribers (the `UI` and `Storage` components). `Storage` will respond and save the changes to hard disk while `UI` will respond and update the status bar to reflect the 'Last Updated' time. <br>
+The diagram below shows what happens after a `ToDoListChangedEvent` is raised. `EventsCenter` will inform its subscribers. `Storage` will respond and save the changes to hard disk while `UI` will respond and update the status bar to reflect the 'Last Updated' time. <br>
 
 <img src="images\SDforDeleteTaskEventHandling.png" width="800">
 
@@ -177,7 +177,7 @@ The `UI` is the entry point of Agendum which is responsible for showing updates 
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox` and `ResultPopup`. All these, including the `MainWindow`, inherit the abstract `UiPart` class. They can be loaded using `UiPartLoader`.
 
-The `commandBox` component controls the field for user input, and it is associated with a `CommandBoxHistory` object which saves the most recent valid or invalid commands. `CommandBoxHistory` follows a singleton pattern to restrict the instantiation of the class to one object.
+The `commandBox` component controls the field for user input, and it is associated with a `CommandBoxHistory` object which saves the most recent valid and invalid commands. `CommandBoxHistory` follows a singleton pattern to restrict the instantiation of the class to one object.
 
 Agendum has 3 different task panel classes `UpcomingTasksPanel`, `CompletedTaskPanel` and `FloatingTasksPanel`. They all inherit from the the `TaskPanel` class and hold and load `TaskCard` objects.
 
@@ -195,7 +195,7 @@ The class diagram of the Logic Component is given below. `LogicManager` implemen
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
-The `CommandLibrary` class is responsible for managing the various Agendum's reserved command keywords and their aliases. The `Parser` checks and queries the `CommandLibrary` to ascertain if a command word given has been aliased to a reserved command word. `AliasCommand` and `UnaliasCommand` will also check and update the `CommandLibrary` to add and remove aliases. The singleton pattern is applied to restrict the instantiation of the class to one object. This is to ensure that all other objects, such as Parser, AliasCommand and UnaliasCommand objects will refer to the same instance that records all the alias relationships.
+The `CommandLibrary` class is responsible for managing the various Agendum's reserved command keywords and their aliases. The `Parser` checks and queries the `CommandLibrary` to ascertain if a command word given has been aliased to a reserved command word. `AliasCommand` and `UnaliasCommand` will also check and update the `CommandLibrary` to add and remove aliases. The singleton pattern is applied to restrict the instantiation of the class to one object. This is to ensure that all other objects, such as ``Parser`, `AliasCommand` and `UnaliasCommand` objects will refer to the same instance that records and manages all the alias relationships.
 
 You can view the Sequence Diagram below for interactions within the `Logic` component for the `execute("delete 1")` API call.<br>
 
@@ -242,7 +242,7 @@ The identified task is removed from the `UniqueTaskList`. The `ModelManager` rai
 
 #### undo
 
-`previousLists` is a Stack of `ToDoList` objects with a minimum size of 1. The `ToDoList` object at the top of the stack is identical to the **main** `ToDoList` object before any operation that mutate the to-do list is performed and after any operation that mutates the task list successfully (without exceptions).
+`previousLists` is a Stack of `ToDoList` objects with a minimum size of 1. The `ToDoList` object at the top of the stack is identical to the **main** `ToDoList` object before any operation that mutate the to-do list is performed and after any operation that mutates the task list successfully (i.e. without exceptions).
 
 This is achieved with the _backupCurrentToDoList_ function which pushes a copy of the **main** `ToDoList` to the stack after any successful changes, such as the marking of multiple tasks.
 
@@ -265,7 +265,7 @@ The `Storage` component has the following functions:
 * can save `UserPref` objects in json format and read it back.
 * can save the Agendum data in xml format and read it back.
 
-Other components such as `Model` require the functionalities defined inside the `Storage` component in order to save task data and user preferences to the hard disk. The `Storage` component uses the *Facade* design pattern. Components such as `ModelManager` access storage sub-components through `StorageManager` which will then redirect method calls to its internal component such as `JsonUserPrefsStorage` and `XmlToDoListStorage`. `Storage` also shields the internal details of the Storage and its related components, such as the implementation of `XmlToDoListStorage`, from external classes.
+Other components such as `Model` require the functionalities defined inside the `Storage` component in order to save task data and user preferences to the hard disk. The `Storage` component uses the *Facade* design pattern. Components such as `ModelManager` access storage sub-components through `StorageManager` which will then redirect method calls to its internal component such as `JsonUserPrefsStorage` and `XmlToDoListStorage`. `Storage` also shields the internal details of its components, such as the implementation of `XmlToDoListStorage`, from external classes.
 
 The Object Diagram below shows what it looks like during runtime.
 
