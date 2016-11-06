@@ -435,17 +435,14 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | User | Specify my data storage location | Easily relocate the raw file for editing and/or sync the file to a Cloud Storage service
 `* * *` | User | Load from a file | Load Agendum’s task list from a certain location or a Cloud Storage service
 `* * *` | User | Exit the application by typing a command | Close the app easily
-
 `* *` | User | Filter overdue tasks and upcoming tasks (due within a week) | Decide on what needs to be done soon
 `* *` | User | Filter tasks based on marked/unmarked | Review my completed tasks and decide on what I should do next
 `* *` | User | See the count/statistics for upcoming/ overdue and pending tasks | Know how many tasks I need to do
-
 `*` | User | Sort tasks by alphabetical order and date | Organise and easily locate tasks
 `*` | User | Clear the command I am typing with a key | Enter a new command without having to backspace the entire command line
 `*` | Advanced user | Specify my own alias commands | Enter commands faster or change the name of a command to suit my needs
 `*` | Advanced user | Remove the alias commands | Update to use another command aliases
 `*` | Advanced user | Scroll through my past few commands | Check what I have done and redo actions easily
-
 `* Unlikely` | Google calendar user | Sync my tasks with Google calendar | Keep track of my tasks online
 `* Unlikely` | User | Add multiple time slots for a task | “Block” multiple time slots when the exact timing of a task is certain
 `* Unlikely` | User | Add tags for my tasks | Group tasks together and organise my task list
