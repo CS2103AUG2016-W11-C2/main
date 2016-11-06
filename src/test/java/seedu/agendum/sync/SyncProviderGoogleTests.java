@@ -24,15 +24,20 @@ public class SyncProviderGoogleTests {
 
     @Before
     public void setUp() {
-        try {
-            Files.copy(DATA_STORE_CREDENTIAL_TEST.toPath(), DATA_STORE_CREDENTIAL.toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        copyTestCredentials();
 
         mockSyncManager = mock(SyncManager.class);
         syncProviderGoogle = spy(new SyncProviderGoogle());
         syncProviderGoogle.setManager(mockSyncManager);
+    }
+
+    public static void copyTestCredentials() {
+        try {
+            DATA_STORE_CREDENTIAL.delete();
+            Files.copy(DATA_STORE_CREDENTIAL_TEST.toPath(), DATA_STORE_CREDENTIAL.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @After

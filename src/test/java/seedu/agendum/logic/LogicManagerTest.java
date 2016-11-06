@@ -23,6 +23,7 @@ import seedu.agendum.model.ModelManager;
 import seedu.agendum.model.ReadOnlyToDoList;
 import seedu.agendum.model.task.*;
 import seedu.agendum.storage.XmlToDoListStorage;
+import seedu.agendum.sync.SyncProviderGoogleTests;
 import seedu.agendum.testutil.EventsCollector;
 
 import java.io.File;
@@ -415,6 +416,13 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
     //@author
+
+    @Test
+    public void execute_syncOn_successfull() throws Exception {
+        SyncProviderGoogleTests.copyTestCredentials();
+        assertCommandBehavior("sync on",
+                SyncCommand.SYNC_ON_MESSAGE);
+    }
 
     @Test
     public void execute_syncOff_successfull() throws Exception {
