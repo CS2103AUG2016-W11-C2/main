@@ -3,7 +3,6 @@ package seedu.agendum.ui;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Control;
 import javafx.scene.control.ListCell;
@@ -43,12 +42,7 @@ public class FloatingTasksPanel extends TasksPanel {
     private void configure() {
         selectionModel = floatingTasksListView.getSelectionModel();
         floatingTasksListView.setSelectionModel(null);
-        floatingTasksListView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                event.consume();
-            }
-        });
+        floatingTasksListView.addEventFilter(MouseEvent.MOUSE_PRESSED, event -> event.consume());
     }
 
     public void scrollTo(Task task, boolean hasMultipleTasks) {

@@ -47,7 +47,6 @@ public class CommandBox extends UiPart {
 
     @FXML
     private TextField commandTextField;
-    private CommandResult mostRecentResult;
 
     public static CommandBox load(Stage primaryStage, AnchorPane commandBoxPlaceholder, StackPane messagePlaceHolder, 
             ResultPopUp resultPopUp, Logic logic) {
@@ -110,7 +109,7 @@ public class CommandBox extends UiPart {
          */
 
         setStyleToIndicateCorrectCommand();
-        mostRecentResult = logic.execute(previousCommandTest);
+        CommandResult mostRecentResult = logic.execute(previousCommandTest);
         if(!previousCommandTest.toLowerCase().equals(HELP_COMMAND)) {
             resultPopUp.postMessage(mostRecentResult.feedbackToUser);
         }
