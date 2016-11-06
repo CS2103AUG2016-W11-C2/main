@@ -79,49 +79,49 @@ public class Parser {
 
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_WORD :
             return prepareAdd(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_WORD :
             return prepareDelete(arguments);
 
-        case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD :
             return prepareFind(arguments);
 
-        case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_WORD :
             return new ListCommand();
 
-        case RenameCommand.COMMAND_WORD:
+        case RenameCommand.COMMAND_WORD :
             return prepareRename(arguments);
 
-        case MarkCommand.COMMAND_WORD:
+        case MarkCommand.COMMAND_WORD :
             return prepareMark(arguments);
 
-        case ScheduleCommand.COMMAND_WORD:
+        case ScheduleCommand.COMMAND_WORD :
             return prepareSchedule(arguments);
 
-        case UnmarkCommand.COMMAND_WORD:
+        case UnmarkCommand.COMMAND_WORD :
             return prepareUnmark(arguments);
 
-        case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_WORD :
             return new UndoCommand();
 
-        case AliasCommand.COMMAND_WORD:
+        case AliasCommand.COMMAND_WORD :
             return prepareAlias(arguments);
 
-        case UnaliasCommand.COMMAND_WORD:
+        case UnaliasCommand.COMMAND_WORD :
             return prepareUnalias(arguments);
 
-        case ExitCommand.COMMAND_WORD:
+        case ExitCommand.COMMAND_WORD :
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_WORD :
             return new HelpCommand();
-            
-        case StoreCommand.COMMAND_WORD:
+
+        case StoreCommand.COMMAND_WORD :
             return new StoreCommand(arguments);
-            
-        case LoadCommand.COMMAND_WORD:
+
+        case LoadCommand.COMMAND_WORD :
             return new LoadCommand(arguments);
 
         default:
