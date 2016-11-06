@@ -847,7 +847,7 @@ public class LogicManagerTest {
 
     @Test
     public void execute_aliasKeyIsReservedCommandWord_errorMessageShown() throws Exception {
-        String expectedMessage = String.format(AliasCommand.MESSAGE_FAILURE_UNAVAILABLE_ALIAS,
+        String expectedMessage = String.format(AliasCommand.MESSAGE_FAILURE_RESERVED_COMMAND_WORD,
                                     RenameCommand.COMMAND_WORD);
         String userCommand = "alias " + AddCommand.COMMAND_WORD + " " + RenameCommand.COMMAND_WORD;
         assertCommandBehavior(userCommand, expectedMessage, new ToDoList(), Collections.emptyList());
@@ -888,6 +888,14 @@ public class LogicManagerTest {
     public void execute_unaliasInvalidArgsFormat_errorMessageShown() throws Exception {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnaliasCommand.MESSAGE_USAGE);
         assertCommandBehavior("unalias", expectedMessage, new ToDoList(), Collections.emptyList());
+    }
+
+    @Test
+    public void execute_unaliasReservedCommandWord_errorMessageShown() throws Exception {
+        String expectedMessage = String.format(UnaliasCommand.MESSAGE_FAILURE_RESERVED_COMMAND_WORD,
+                                               AddCommand.COMMAND_WORD);
+        String command = "unalias " + AddCommand.COMMAND_WORD;
+        assertCommandBehavior(command, expectedMessage, new ToDoList(), Collections.emptyList());
     }
 
     @Test
@@ -995,10 +1003,6 @@ public class LogicManagerTest {
         model.deleteTasks(readOnlyTaskList);
         assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
 
-        // Undo clear command
-        model.resetData(new ToDoList());
-        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
-
         // Undo rename command
         Task p2 = new Task(p1);
         p2.setName(new Name("new name"));
@@ -1008,17 +1012,6 @@ public class LogicManagerTest {
         // Undo mark command
         model.markTasks(readOnlyTaskList);
         assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
-
-        // Undo unmark command
-        model.markTasks(readOnlyTaskList);
-        Task p3 = new Task(p1); //p1 clone
-        p3.markAsCompleted();
-        listWithOneTask = helper.generateTaskList(p3);
-        expectedTDL = helper.generateToDoList(listWithOneTask);
-        readOnlyTaskList = helper.generateReadOnlyTaskList(p3);
-        model.unmarkTasks(readOnlyTaskList);
-        assertCommandBehavior("undo", UndoCommand.MESSAGE_SUCCESS, expectedTDL, listWithOneTask);
-
     }
 
 
@@ -1205,7 +1198,6 @@ public class LogicManagerTest {
             return Arrays.asList(tasks);
         }
  
-        //@@author A0133367E
         private List<ReadOnlyTask> generateReadOnlyTaskList(ReadOnlyTask... tasks) {
             return Arrays.asList(tasks);
         }
