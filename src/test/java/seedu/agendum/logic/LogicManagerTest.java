@@ -416,14 +416,8 @@ public class LogicManagerTest {
     //@author
 
     @Test
-    public void execute_syncOn_successfull() throws Exception {
-        assertCommandBehavior("sync on",
-                SyncCommand.SYNC_ON_MESSAGE);
-    }
-
-    @Test
     public void execute_syncOff_successfull() throws Exception {
-        assertCommandBehavior("sync on",
+        assertCommandBehavior("sync off",
                 SyncCommand.SYNC_OFF_MESSAGE);
     }
 
