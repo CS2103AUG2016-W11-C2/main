@@ -1,7 +1,5 @@
 package seedu.agendum.logic.commands;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import seedu.agendum.commons.core.Messages;
 
