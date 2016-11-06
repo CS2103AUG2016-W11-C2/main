@@ -1,5 +1,3 @@
-//@@author A0133367E
-
 package seedu.agendum.logic.commands;
 
 import java.util.ArrayList;
@@ -19,13 +17,15 @@ import seedu.agendum.commons.events.logic.AliasTableChangedEvent;
 public class CommandLibrary {
 
     private static final Logger logger = LogsCenter.getLogger(CommandLibrary.class);
+    private static CommandLibrary commandLibrary = new CommandLibrary();
+
     private List<String> allCommandWords = new ArrayList<String>();
 
     // The keys of the hash table are user-defined aliases
     // The values of the has table are Agendum's reserved command keywords
     private Hashtable<String, String> aliasTable = new Hashtable<String, String>();
 
-    private static CommandLibrary commandLibrary = new CommandLibrary();
+   
 
     //@@author A0003878Y
     private CommandLibrary() {
@@ -68,7 +68,7 @@ public class CommandLibrary {
     }
 
     /**
-     * Precondition: key is an existing alias.
+     * Pre-condition: key is an existing alias.
      * Returns the reserved command keyword that is aliased by key
      */
     public String getAliasedValue(String key) {
@@ -88,9 +88,9 @@ public class CommandLibrary {
     }
 
     /**
-     * Precondition: key is a new unique alias and not a command keyword;
+     * Pre-condition: key is a new unique alias and not a command keyword;
      * value is a reserved command keyword.
-     * Saves the new alias relationship (key can be used in place of value)
+     * Saves the new alias relationship between key and value
      */
     public void addNewAlias(String key, String value) {
         assert !isExistingAliasKey(key);
@@ -99,7 +99,7 @@ public class CommandLibrary {
 
         aliasTable.put(key, value);
 
-        indicateAliasTableChanged(key + " aliased");
+        indicateAliasAdded(key, value);
     }
 
     /**
@@ -109,15 +109,23 @@ public class CommandLibrary {
     public void removeExistingAlias(String key) {
         assert isExistingAliasKey(key);
 
-        aliasTable.remove(key);
+        String value = aliasTable.remove(key);
 
-        indicateAliasTableChanged(key + " unaliased");
+        indicateAliasRemoved(key, value);
     }
 
-    /** Raises an event to indicate that the aliasTable in the command library has changed */
-    private void indicateAliasTableChanged(String keyChanged) {
+    /** Raises an event to indicate that an alias has been added to aliasTable in the command library */
+    private void indicateAliasAdded(String key, String value) {
+        String message = "Added alias " + key + " for " + value;
         EventsCenter eventCenter = EventsCenter.getInstance();
-        eventCenter.post(new AliasTableChangedEvent(keyChanged, aliasTable));
+        eventCenter.post(new AliasTableChangedEvent(message, aliasTable));
+    }
+
+    /** Raises an event to indicate that an alias has been removed from aliasTable in the command library */
+    private void indicateAliasRemoved(String key, String value) {
+        String message = "Removed alias " + key + " for " + value;
+        EventsCenter eventCenter = EventsCenter.getInstance();
+        eventCenter.post(new AliasTableChangedEvent(message, aliasTable));
     }
 
 }
