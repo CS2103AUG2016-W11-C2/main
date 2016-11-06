@@ -155,12 +155,11 @@ To further reduce coupling between components, the Model-View-Controller pattern
 
 #### Activity Diagram
 
-<img src="images\activityDiagram.jpg" width="800">
+<img src="images\activityDiagram.jpg" width="800"> <br>
+
 The Activity Diagram above illustrates Agendum's workflow. Brown boxes represent actions taken by Agendum while orange boxes represent actions that involve interaction with the user.  
 
-When Agendum is launched, `MainApp` will attempt to read the configuration files and the to-do list data from the hard disk. If such files do not exist or are in the incorrect format, Agendum will re-create these files. 
-
-Agendum will wait for the user to enter a command. Every command is parsed. If the command is valid and adheres to the given format, Agendum will executes the command. Agendum `Logic` component checks the input such as indices before updating the model and storage if needed.  
+After Agendum is launched, Agendum will wait for the user to enter a command. Every command is parsed. If the command is valid and adheres to the given format, Agendum will executes the command. Agendum `Logic` component checks the input such as indices before updating the model and storage if needed.  
 
 Agendum will then display changes in the to-do list and feedback of each command in the UI. The user can then enter a command again. Agendum will also give pop-up feedbacks when the command format or inputs are invalid.
 
@@ -219,18 +218,18 @@ The structure and relationship of the various classes in the `Model` component i
 
 <img src="images/ModelClassDiagram.png" width="800"><br>
 
-`ModelManager` implements the `Model` Interface. It contains a `UserPref` Object which represents the user’s preference and a `SyncManager` object which is integral for the integration with Google calendar.
+`ModelManager` implements the `Model` Interface. It contains a `UserPref` Object which represents the user’s preference and a `SyncManager` object which is necessary for the integration with Google calendar.
 
-`ModelManager` contains a **main** `ToDoList` object and a stack of `ToDoList` objects referred to as `previousLists`. The **main** `ToDoList` object is the version that is indirectly referred to by the `UI` and `Storage`. The stack, `previousLists` is used to support the [`undo` operation](#### undo).
+`ModelManager` contains a **main** `ToDoList` object and a stack of `ToDoList` objects referred to as `previousLists`. The **main** `ToDoList` object is the copy that is indirectly referred to by the `UI` and `Storage`. The stack, `previousLists` is used to support the [`undo` operation](#### undo).
 
 Each `ToDoList` object has one `UniqueTaskList` object. A `UniqueTaskList` can contain multiple `Task` objects but does not allow duplicates.  
 
 The `ReadOnlyToDoList` and `ReadOnlyTask` interfaces allow other classes and components, such as the `UI`, to access but not modify the list of tasks and their details.  
 
-Currently, each `Task` has a compulsory `Name` and last updated time. It is optional for a `Task` to have a start and end time. Each `Task` also has a completion status which is stored as a Boolean.  
+Currently, each `Task` has a compulsory `Name` and last updated time. It is optional for a `Task` to have a start and end time. Each `Task` also has a completion status which is represented by a boolean.
 
 Design considerations:
-> * `ToDoList` can potentially be extended to have another `UniqueTagList` object to keep track of tags associated with each task and `ToDoList` will be responsible for syncing the tasks and tags.
+> * `ToDoList` is a distinct class from `UniqueTaskList` as it can potentially be extended to have another `UniqueTagList` object to keep track of tags associated with each task and `ToDoList` will be responsible for syncing the tasks and tags.
 > * `Name` is a separate class as it might be modified to have its own validation regex e.g. no / or "
 
 Using the same example, if the `Logic` component requests `Model` to _deleteTasks(task)_, the subsequent interactions between objects can be described by the following sequence diagram.  
@@ -243,15 +242,15 @@ The identified task is removed from the `UniqueTaskList`. The `ModelManager` rai
 
 #### undo
 
-`previousLists` is a Stack of `ToDoList` objects with a minimum size of 1. The `ToDoList` object at the top of the stack is identical to the **main** `ToDoList` object before any operation that mutate the task list is performed and after a valid operation that mutates the task list successfully.
+`previousLists` is a Stack of `ToDoList` objects with a minimum size of 1. The `ToDoList` object at the top of the stack is identical to the **main** `ToDoList` object before any operation that mutate the to-do list is performed and after any operation that mutates the task list successfully (without exceptions).
 
-This is achieved by _backupCurrentToDoList_ which pushes a copy of the **main** `ToDoList` to the stack after any valid changes, such as the marking of multiple tasks.
+This is achieved with the _backupCurrentToDoList_ function which pushes a copy of the **main** `ToDoList` to the stack after any successful changes, such as the marking of multiple tasks.
 
 To undo the most recent changes, we simply pop the irrelevant `ToDoList` at the top of the `previousLists` stack and copy the `ToDoList` at the top of the stack back to the **main** list 
 
 This approach eliminates the need to implement an "undo" method and store the changes separately for each command that will mutate the task list.
 
-Also, it helps to resolve the complications involved with manipulating multiple task objects at a go. For example, the user might try to mark multiple tasks and one of which will result in a `DuplicateTaskException`. To revert the undesired changes to the **main** `ToDoList`, we can copy the the `ToDoList` at the top of the stack back to the **main** list. In such unsuccessful operations, the changes will not persist to Storage.
+Also, it helps to resolve the complications involved with manipulating multiple task objects at a go. For example, the user might try to mark multiple tasks and one of which will result in a `DuplicateTaskException`. To revert the undesired changes to the **main** `ToDoList`, we can copy the the `ToDoList` at the top of the stack back to the **main** list. In such unsuccessful operations, the changes would not have persisted to Storage.
 
 
 [comment]: # (@@author A0148095X)
