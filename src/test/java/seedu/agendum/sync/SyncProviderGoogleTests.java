@@ -10,7 +10,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import static org.mockito.Mockito.*;
 import static seedu.agendum.commons.core.Config.DEFAULT_DATA_DIR;
@@ -18,47 +21,41 @@ import static seedu.agendum.commons.core.Config.DEFAULT_DATA_DIR;
 // @@author A0003878Y
 public class SyncProviderGoogleTests {
     private static final File DATA_STORE_CREDENTIAL = new File(DEFAULT_DATA_DIR + "StoredCredential");
-    private static final File DATA_STORE_CREDENTIAL_TEST = new File("StoredCredentialForTesting");
+
+    private static final List<File> DATA_STORE_TEST_CREDENTIALS = Arrays.asList(
+            new File("cal/StoredCredential_1"),
+            new File("cal/StoredCredential_2"),
+            new File("cal/StoredCredential_3")
+            );
 
     private SyncProviderGoogle syncProviderGoogle;
     private SyncManager mockSyncManager;
 
-    @Before
-    public void setUp() {
+    public SyncProviderGoogleTests() {
         copyTestCredentials();
 
         mockSyncManager = mock(SyncManager.class);
         syncProviderGoogle = spy(new SyncProviderGoogle());
         syncProviderGoogle.setManager(mockSyncManager);
+        syncProviderGoogle.start();
     }
 
     public static void copyTestCredentials() {
         try {
             DATA_STORE_CREDENTIAL.delete();
-            Files.copy(DATA_STORE_CREDENTIAL_TEST.toPath(), DATA_STORE_CREDENTIAL.toPath());
+            Files.copy(getRandomCredential().toPath(), DATA_STORE_CREDENTIAL.toPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @After
-    public void tearDown() {
-        syncProviderGoogle.stop();
-    }
-
-    @Test
-    public void syncProviderGoogle_start_calendarAlreadyExists() {
-        syncProviderGoogle.deleteAgendumCalendar();
-        syncProviderGoogle.start();
-
-        // Verify if Sync Manager's status was changed
-        verify(mockSyncManager).setSyncStatus(Sync.SyncStatus.RUNNING);
+    public static File getRandomCredential() {
+        int r = new Random().nextInt(DATA_STORE_TEST_CREDENTIALS.size());
+        return DATA_STORE_TEST_CREDENTIALS.get(r);
     }
 
     @Test
     public void syncProviderGoogle_start_createCalendar() {
-        syncProviderGoogle.start();
-
         // Verify if Sync Manager's status was changed
         verify(mockSyncManager).setSyncStatus(Sync.SyncStatus.RUNNING);
     }
@@ -82,8 +79,6 @@ public class SyncProviderGoogleTests {
 
     @Test
     public void syncProviderGoogle_addEvent_successful() {
-        syncProviderGoogle.start();
-
         Task mockTask = mock(Task.class);
         Optional<LocalDateTime> fakeTime = Optional.of(LocalDateTime.now());
 
@@ -95,8 +90,6 @@ public class SyncProviderGoogleTests {
 
     @Test
     public void syncProviderGoogle_deleteEvent_successful() {
-        syncProviderGoogle.start();
-
         Task mockTask = mock(Task.class);
         Optional<LocalDateTime> fakeTime = Optional.of(LocalDateTime.now());
 
