@@ -103,7 +103,7 @@ public class TestUtil {
         try {
             FileUtil.createDirs(new File(SANDBOX_FOLDER));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return SANDBOX_FOLDER + fileName;
     }
@@ -118,7 +118,7 @@ public class TestUtil {
             FileUtil.createIfMissing(saveFileForTesting);
             XmlUtil.saveDataToFile(saveFileForTesting, data);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -295,7 +295,6 @@ public class TestUtil {
      */
     public static TestTask[] replaceTaskFromList(TestTask[] tasks, TestTask task, int index) {
         tasks[index] = task;
-        sortTasks(tasks);
         return tasks;
     }
 
@@ -309,7 +308,6 @@ public class TestUtil {
         List<TestTask> listOfTasks = asList(tasks);
         listOfTasks.addAll(asList(tasksToAdd));
         TestTask[] newTasks = listOfTasks.toArray(new TestTask[listOfTasks.size()]);
-        sortTasks(newTasks);
         return newTasks;
     }
 
@@ -319,11 +317,11 @@ public class TestUtil {
         return list;
     }
 
-    private static void sortTasks(TestTask[] tasks) {
+    public static void sortTasks(TestTask[] tasks) {
         Arrays.sort(tasks);
     }
 
-    public static TestTask[] getDoItSoonTasks(TestTask[] tasks) {
+    public static TestTask[] getUpcomingTasks(TestTask[] tasks) {
         ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
         for (TestTask task: tasks) {
             if (!task.isCompleted() && task.hasTime()) {
@@ -333,7 +331,7 @@ public class TestUtil {
         return filteredTasks.toArray(new TestTask[filteredTasks.size()]);
     }
 
-    public static TestTask[] getDoItAnytimeTasks(TestTask[] tasks) {
+    public static TestTask[] getFloatingTasks(TestTask[] tasks) {
         ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
         for (TestTask task: tasks) {
             if (!task.isCompleted() && !task.hasTime()) {
@@ -343,7 +341,7 @@ public class TestUtil {
         return filteredTasks.toArray(new TestTask[filteredTasks.size()]);
     }
 
-    public static TestTask[] getDoneTasks(TestTask[] tasks) {
+    public static TestTask[] getCompletedTasks(TestTask[] tasks) {
         ArrayList<TestTask> filteredTasks = new ArrayList<TestTask>();
         for (TestTask task: tasks) {
             if (task.isCompleted()) {
