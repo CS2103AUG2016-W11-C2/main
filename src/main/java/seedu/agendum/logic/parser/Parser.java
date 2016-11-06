@@ -404,7 +404,7 @@ public class Parser {
                 int startIndex = Integer.parseInt(startAndEndIndexes[0]);
                 int endIndex = Integer.parseInt(startAndEndIndexes[1]);
                 taskIds.addAll(IntStream.rangeClosed(startIndex, endIndex)
-                        .boxed().collect(Collectors.toList()));
+                       .boxed().collect(Collectors.toList()));
             }
         }
 
