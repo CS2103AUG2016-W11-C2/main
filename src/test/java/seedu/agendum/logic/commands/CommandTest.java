@@ -7,9 +7,6 @@ import seedu.agendum.commons.core.Messages;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by vprem on 6/11/16.
- */
 public class CommandTest {
     @Test
     public void getName()  {

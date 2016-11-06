@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by vprem on 6/11/16.
- */
 public class IncorrectCommandTest {
     @Test
     public void getName()  {
