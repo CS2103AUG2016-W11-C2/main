@@ -2,7 +2,6 @@ package seedu.agendum.logic.commands;
 
 import seedu.agendum.commons.exceptions.IllegalValueException;
 
-//@@author A0003878Y
 public class SyncCommand extends Command {
     // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "sync";
@@ -18,6 +17,12 @@ public class SyncCommand extends Command {
 
     private boolean syncOption;
 
+    //@@author A0003878Y
+    /**
+     * Convenience constructor using name
+     *
+     * @throws IllegalValueException if any of the raw values are invalid
+     */
     public SyncCommand(String option) throws IllegalValueException {
 
         if (option.trim().equalsIgnoreCase("on")) {

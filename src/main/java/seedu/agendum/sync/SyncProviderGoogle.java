@@ -44,6 +44,7 @@ public class SyncProviderGoogle extends SyncProvider {
 
     private Calendar agendumCalendar;
 
+    // These are blocking queues to ease the producer/consumer problem
     private static final ArrayBlockingQueue<Task> addEventConcurrentQueue = new ArrayBlockingQueue<Task>(200);
     private static final ArrayBlockingQueue<Task> deleteEventConcurrentQueue = new ArrayBlockingQueue<Task>(200);
 
@@ -68,6 +69,7 @@ public class SyncProviderGoogle extends SyncProvider {
             
             syncManager.setSyncStatus(Sync.SyncStatus.RUNNING);
 
+            // Process add & delete consumers into their own separate thread.
             Executors.newSingleThreadExecutor().execute(() -> processAddEventQueue());
             Executors.newSingleThreadExecutor().execute(() -> processDeleteEventQueue());
         } catch (IOException var3) {
@@ -111,6 +113,11 @@ public class SyncProviderGoogle extends SyncProvider {
         }
     }
 
+    /**
+     * Authorize with Google Calendar
+     * @return Credentail
+     * @throws Exception
+     */
     private Credential authorize() throws Exception {
         GoogleClientSecrets.Details details = new GoogleClientSecrets.Details();
         details.setClientId(CLIENT_ID);
@@ -122,7 +129,12 @@ public class SyncProviderGoogle extends SyncProvider {
         return (new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver())).authorize("user");
     }
 
-
+    /**
+     * Returns a new "Agendum Calendar" in the authenticated user.
+     * If a calendar with the same name doesn't already exist, it creates one.
+     * @return
+     * @throws IOException
+     */
     private Calendar getAgendumCalendar() throws IOException {
         CalendarList feed = client.calendarList().list().execute();
         logger.info("Searching for Agnendum Calendar");
@@ -145,6 +157,9 @@ public class SyncProviderGoogle extends SyncProvider {
         return calendar;
     }
 
+    /**
+     * Delete Agendum calendar in Google Calendar.
+     */
     public void deleteAgendumCalendar() {
         try {
             CalendarList feed = client.calendarList().list().execute();
@@ -161,6 +176,14 @@ public class SyncProviderGoogle extends SyncProvider {
         }
     }
 
+    /**
+     * A event loop that continuously processes the add event queue.
+     *
+     * `.take();` is a blocking call so it waits until there is something
+     * in the array before returning.
+     *
+     * This method should only be called on non-main thread.
+     */
     private void processAddEventQueue() {
         while (true) {
             try {
@@ -190,6 +213,14 @@ public class SyncProviderGoogle extends SyncProvider {
         }
     }
 
+    /**
+     * A event loop that continuously processes the delete event queue.
+     *
+     * `.take();` is a blocking call so it waits until there is something
+     * in the array before returning.
+     *
+     * This method should only be called on non-main thread.
+     */
     private void processDeleteEventQueue() {
         while (true) {
             try {

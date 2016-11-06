@@ -51,6 +51,7 @@ public class SyncProviderGoogleTests {
         syncProviderGoogle.deleteAgendumCalendar();
         syncProviderGoogle.start();
 
+        // Verify if Sync Manager's status was changed
         verify(mockSyncManager).setSyncStatus(Sync.SyncStatus.RUNNING);
     }
 
@@ -58,12 +59,15 @@ public class SyncProviderGoogleTests {
     public void syncProviderGoogle_start_createCalendar() {
         syncProviderGoogle.start();
 
+        // Verify if Sync Manager's status was changed
         verify(mockSyncManager).setSyncStatus(Sync.SyncStatus.RUNNING);
     }
 
     @Test
     public void syncProviderGoogle_startIfNeeded_credentialsFound() {
         syncProviderGoogle.startIfNeeded();
+
+        // Verify Sync Provider did start
         verify(syncProviderGoogle).start();
     }
 
@@ -71,6 +75,8 @@ public class SyncProviderGoogleTests {
     public void syncProviderGoogle_startIfNeeded_credentialsNotFound() {
         DATA_STORE_CREDENTIAL.delete();
         syncProviderGoogle.startIfNeeded();
+
+        // Verify Sync Provider should not start
         verify(syncProviderGoogle, never()).start();
     }
 

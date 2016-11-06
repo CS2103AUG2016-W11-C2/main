@@ -121,6 +121,7 @@ public class ModelManager extends ComponentManager implements Model {
         for (ReadOnlyTask target: targets) {
             toDoList.removeTask(target);
 
+            // Delete tasks in sync manager
             syncManager.deleteEvent((Task) target);
         }
 
@@ -151,6 +152,7 @@ public class ModelManager extends ComponentManager implements Model {
         updateFilteredListToShowAll();
         indicateToDoListChanged();
 
+        // Delete old task and add new task
         syncManager.deleteEvent((Task) target);
         syncManager.addNewEvent(updatedTask);
     }
@@ -251,9 +253,8 @@ public class ModelManager extends ComponentManager implements Model {
         if (syncManager.getSyncStatus() != Sync.SyncStatus.RUNNING) {
             syncManager.startSyncing();
 
-            for (Task t : toDoList.getTasks()) {
-                syncManager.addNewEvent(t);
-            }
+            // Add all current events into sync provider
+            toDoList.getTasks().forEach(syncManager::addNewEvent);
         }
     }
 
