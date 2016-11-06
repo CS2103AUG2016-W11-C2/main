@@ -78,6 +78,7 @@ public class ToDoList implements ReadOnlyToDoList {
     //@@author A0133367E
     /**
      * Updates an existing task in the to-do list.
+     * 
      * @throws DuplicateTaskException if an equivalent task (to updatedTask) already exists.
      * @throws TaskNotFoundException if no such task (key) could be found in the list.
      */
@@ -88,6 +89,7 @@ public class ToDoList implements ReadOnlyToDoList {
 
     /**
      * Marks an existing task in the to-do list.
+     * 
      * @throws DuplicateTaskException if a duplicate task would result after marking key.
      * @throws TaskNotFoundException if no such task (key) could be found in the list.
      */
@@ -98,6 +100,7 @@ public class ToDoList implements ReadOnlyToDoList {
 
     /**
      * Unmarks an existing task in the to-do list.
+     * 
      * @throws DuplicateTaskException if a duplicate task would result after unmarking key.
      * @throws TaskNotFoundException if no such task (key) could be found in the list.
      */
