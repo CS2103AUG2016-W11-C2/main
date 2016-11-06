@@ -411,8 +411,7 @@ public class LogicManagerTest {
                 expectedTDL.getTaskList());
     }
     //@author
-
-    @Ignore
+    
     @Test
     public void execute_syncOn_successfull() throws Exception {
         SyncProviderGoogleTests.copyTestCredentials();
