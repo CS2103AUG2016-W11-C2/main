@@ -40,6 +40,7 @@ allprojects {
 		googleCalendarVersion = 'v3-rev220-1.22.0'
 		googleHttpVersion = '1.21.0'
 		googleOauthVersion = '1.21.0'
+		mockitoVersion = '1.+'
 		
 
         libDir = 'lib'
@@ -63,6 +64,7 @@ allprojects {
 		compile "com.google.apis:google-api-services-calendar:$googleCalendarVersion"
 		compile "com.google.http-client:google-http-client-jackson2:$googleHttpVersion"
 		compile "com.google.oauth-client:google-oauth-client-jetty:$googleOauthVersion"
+		compile "org.mockito:mockito-core:$mockitoVersion"
 
         testCompile "junit:junit:$junitVersion"
         testCompile "org.testfx:testfx-core:$testFxVersion"
