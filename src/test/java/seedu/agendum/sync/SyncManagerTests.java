@@ -11,6 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 import static org.mockito.Mockito.*;
 
+// @@author A0003878Y
 public class SyncManagerTests {
     private SyncManager syncManager;
     private SyncProvider mockSyncProvider;
