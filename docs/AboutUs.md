@@ -22,7 +22,7 @@ We are a team based in the [School of Computing, National University of Singapor
    * [Rename an existing task](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#renaming-a-task--rename)
    * [Re-schedule a task](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#renaming-a-task--rename)
    * [Undo commands that change the task list](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#undo-the-last-command--undo)
-* Code written:
+* Code written:<br>
 [[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0133367E.md)]<br>
 [[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0133367E.md)]<br>
 [[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0133367E.md)]<br>
@@ -40,7 +40,7 @@ We are a team based in the [School of Computing, National University of Singapor
 * Features implemented:
    * [Adding a task (with time)](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#adding-a-task-add)
    * [Smart command correction]
-* Code written:
+* Code written:<br>
 [[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0003878Y.md)]<br>
 [[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0003878Y.md)]<br>
 [[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0003878Y.md)]<br>
@@ -57,7 +57,7 @@ We are a team based in the [School of Computing, National University of Singapor
 * Features implemented:
    * [Choose a custom storage location](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#specifying-the-data-storage-location--store)
    * [Load from a specific storage location](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#loading-from-another-data-storage-location--load)
-* Code written:
+* Code written:<br>
 [[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0148095X.md)]<br>
 [[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0148095X.md)]<br>
 [[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0148095X.md)]<br>
@@ -76,7 +76,7 @@ We are a team based in the [School of Computing, National University of Singapor
 * Features implemented:
    * [Scrolling through previous command history]
    * [Help command] (https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#viewing-help--help)
-* Code written:
+* Code written:<br>
 [[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0148031R.md)]<br>
 [[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0148031R.md)]<br>
 [[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0148031R.md)]<br>
