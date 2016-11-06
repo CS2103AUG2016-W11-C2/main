@@ -35,11 +35,13 @@ public class ModelManager extends ComponentManager implements Model {
     private final FilteredList<Task> filteredTasks;
     private final SortedList<Task> sortedTasks;
 
+    //@@author A0133367E
     /**
      * Signals that an operation to remove a list from the stack of previous lists would fail
      * as the stack must contain at least one list.
      */
     public static class NoPreviousListFoundException extends Exception {}
+    //@@author
 
     /**
      * Initializes a ModelManager with the given ToDoList

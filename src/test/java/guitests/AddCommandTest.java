@@ -48,14 +48,14 @@ public class AddCommandTest extends ToDoListGuiTest {
         commandBox.runCommand(taskToAdd.getAddCommand());
 
         //confirm the new card contains the right data
-        if (!taskToAdd.isCompleted() && !taskToAdd.hasTime()) {
+        if (taskToAdd.isCompleted()) {
+            TaskCardHandle addedCard = completedTasksPanel.navigateToTask(taskToAdd.getName().fullName);
+            assertMatching(taskToAdd, addedCard);
+        } else if (!taskToAdd.isCompleted() && !taskToAdd.hasTime()) {
             TaskCardHandle addedCard = floatingTasksPanel.navigateToTask(taskToAdd.getName().fullName);
             assertMatching(taskToAdd, addedCard);
         } else if (!taskToAdd.isCompleted() && taskToAdd.hasTime()) {
             TaskCardHandle addedCard = upcomingTasksPanel.navigateToTask(taskToAdd.getName().fullName);
-            assertMatching(taskToAdd, addedCard);
-        } else {
-            TaskCardHandle addedCard = completedTasksPanel.navigateToTask(taskToAdd.getName().fullName);
             assertMatching(taskToAdd, addedCard);
         }
 
