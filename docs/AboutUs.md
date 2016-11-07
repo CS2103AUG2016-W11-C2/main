@@ -24,9 +24,9 @@ We are a team based in the [School of Computing, National University of Singapor
    * [Defining custom alias for commands](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#creating-an-alias-for-a-command--alias)
    * [Removing custom alias for commands](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#removing-an-alias-command--unalias)
 * Code written:<br>
-[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0133367E.md)<br>
-[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0133367E.md)<br>
-[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0133367E.md)<br>
+[[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0133367E.md)]<br>
+[[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0133367E.md)]<br>
+[[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0133367E.md)]<br>
 * Other major contributions:
    * Did most of the refactoring from AddressBook to ToDoList
    * Actively update user/developer guide
@@ -44,9 +44,9 @@ We are a team based in the [School of Computing, National University of Singapor
    * [Synchronizing with Google calendar](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#synchronizing-with-google-calendar-sync)
    * Smart command correction
 * Code written:<br>
-[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0003878Y.md)<br>
-[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0003878Y.md)<br>
-[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0003878Y.md)<br>
+[[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0003878Y.md)]<br>
+[[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0003878Y.md)]<br>
+[[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0003878Y.md)]<br>
 * Other major contributions:
    * Set up & manage CI (Travis, Coveralls and Codacy)
 
@@ -61,9 +61,9 @@ We are a team based in the [School of Computing, National University of Singapor
    * [Choose a custom storage location](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#specifying-the-data-storage-location--store)
    * [Load from a specific storage location](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#loading-from-another-data-storage-location--load)
 * Code written:<br>
-[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0148095X.md)<br>
-[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0148095X.md)<br>
-[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0148095X.md)<br>
+[[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0148095X.md)]<br>
+[[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0148095X.md)]<br>
+[[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0148095X.md)]<br>
 * Other major contributions:
    * Actively update user/developer guide
    * Correct most grammatical errors in user/developer guide
@@ -82,9 +82,9 @@ We are a team based in the [School of Computing, National University of Singapor
    * [Help command](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#viewing-help--help)
    * [Keyboard shortcuts](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#keyboard-shortcuts)
 * Code written:<br>
-[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0148031R.md)<br>
-[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0148031R.md)<br>
-[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0148031R.md)<br>
+[[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0148031R.md)]<br>
+[[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0148031R.md)]<br>
+[[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0148031R.md)]<br>
 * Other major contributions:
    *  Responsible for most of the UI
 
