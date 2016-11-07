@@ -97,9 +97,9 @@ To rename a task, you have to start your command with the keyword `rename`.
 
 > * `rename <id> <new name>` - give a new name to the task identified by <id>. The <id> must be a positive number and be in the most recent to-do list displayed.
 
-Type `rename 1 complete peer review on TEAMMATES for 2101`.
+Type `rename 1 complete peer review on TEAMMATES for 2101`. Note the task original name as its id change after it has been renamed.
 #### Result
-The task with index 1 is renamed to `complete peer review on TEAMMATES for 2101`. Also, it is highlighted in purple borders.
+The original task with id 1 is renamed to `complete peer review on TEAMMATES for 2101`. Also, it is highlighted in purple borders.
 
 ## (Re)schedule 
 To reschedule a task, you have to start your command with the keyword `schedule`.
@@ -111,31 +111,31 @@ To reschedule a task, you have to start your command with the keyword `schedule`
 * `schedule <id> from <start time> to <end time>` - update the start/end time of the task identified by `<id>`. Note the keyword `from` and `to`.
 
 ###1. Schedule a task with no deadline or event time
-Type `schedule 22`.
+Type `schedule 22`. Note the task name as its id change after it has been rescheduled. Use the task name to identify the task.
 ####Result
-Task with index 22 now has no deadline, and it is shifted to **Do It Anytime** column with a new index. Also, it is highlighted in purple borders.
+The original task with id 22 now has no deadline, and it is shifted to **Do It Anytime** column with a new id. Also, it is highlighted in purple borders.
 
 ###2. Schedule a task with a deadline
-Type `schedule 23 by 11 nov 10pm`.
+Type `schedule 23 by 11 nov 10pm`. Note the task name as its id change after it has been rescheduled.
 ####Result
-Task with index 23 now has a deadline, and it is shifted to **Do It Soon** column with a new index. Also, it is highlighted in purple borders.
+The original task with id 23 now has a deadline, and it is shifted to **Do It Soon** column with a new id. Also, it is highlighted in purple borders.
 
 ###3. Schedule a task with event time
-Type `schedule 14 from 13 nov 2pm to 13 nov 4pm`.
+Type `schedule 14 from 13 nov 2pm to 13 nov 4pm`. Note the task name as its id change after it has been rescheduled.
 ####Result
-Task with index 14 now has an event time, and it is assigned with a new index. Also, it is highlighted in purple borders.
+The original task with id 14 now has an event time, and it is assigned with a new id. Also, it is highlighted in purple borders.
 
 ## Delete
 To delete a task, you have to start your command with the keyword `delete`.
 
 >Here is the *format*:
 
->* `delete <id>...` - Deletes the task at the specified `INDEX`. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas or space (e.g. 1,2 or 1 2). You can also input a range  (e.g. 3-5)
+>* `delete <id>...` - Deletes the task at the specified `id`. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas or space (e.g. 1,2 or 1 2). You can also input a range  (e.g. 3-5)
 
 ###1. Delete a single task
 Type `delete 10`.
 ####Result
-Task with index 10 is deleted. 
+Task with id 10 is deleted. 
 
 ###2. Delete multiple tasks
 Type `delete 11 21-23`
@@ -150,14 +150,14 @@ To mark a task as completed, you have to start your command with the keyword `ma
 >* `mark <id>...` - mark all the tasks identified by `<id>`(s) as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas or space (e.g. 1,2 or 1 2). You can also input a range  (e.g. 3-5)
 
 ###1. Mark a single task
-Type `mark 1`.
+Type `mark 1`. Note the task name as its id change after it has been marked.
 ####Result
-Task with index 1 is marked as completed, shifting from **Do It Soon** column to **Done** column, and the completion time is shown below the task name. Also, it is highlighted in purple borders.
+The original task with id 1 is marked as completed, shifting from **Do It Soon** column to **Done** column, and the completion time is shown below the task name. Also, it is highlighted in purple borders.
 
 ###2. Mark multiple tasks
-Type `mark 1 3-5`.
+Type `mark 1 3-5`.  Note the task names as ids change after they have been marked.
 ####Result
-Tasks with indices 1, 3, 4 and 5 are marked as completed, shifting from **Do It Soon** column to **Done** column, and their completion times are shown below their task names. Also, they are all highlighted in purple borders.
+Tasks with old indices 1, 3, 4 and 5 are marked as completed, shifting from **Do It Soon** column to **Done** column, and their completion times are shown below their task names. Also, they are all highlighted in purple borders.
 (The operation will only be successful if no duplicate task will result)
 
 ## Unmark
@@ -168,14 +168,14 @@ To unmark a task as completed, you have to start your command with the keyword `
 >* `unmark <id>...` - unmark all the tasks identified by `<id>`(s) as uncompleted. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas or space (e.g. 1,2 or 1 2). You can also input a range  (e.g. 3-5)
 
 ###1. Unmark a single task
-Type `unmark 36`.
+Type `unmark 36`.  Note the task name as its id change after it has been unmarked.
 ####Result
-Task with index 36 are unmarked, shifting from **Done** column to **Do It Soon** column, and there is no more completion time under the task name. Also, it is highlighted in purple borders. If there are multiple `<id>`s, they should be separated by commas, space, or input as a range.
+The original task with id 36 are unmarked, shifting from **Done** column to **Do It Soon** column, and there is no more completion time under the task name. Also, it is highlighted in purple borders. If there are multiple `<id>`s, they should be separated by commas, space, or input as a range.
 
 ###2. Unmark multiple tasks
-Type `unmark 37-40`.
+Type `unmark 37-40`. Note the task names as ids change after they have been unmarked.
 ####Result
-Tasks with indices 37, 38, 39 and 40 are unmarked, shifting from **Done** column to **Do It Soon** column, and there are no more completion times under their task names. Also, they are all highlighted in purple borders.
+Tasks with old indices 37, 38, 39 and 40 are unmarked, shifting from **Done** column to **Do It Soon** column, and there are no more completion times under their task names. Also, they are all highlighted in purple borders.
 (The operation will only be successful if no duplicate task will result)
 
 ## Undo
@@ -225,7 +225,7 @@ To alias a command, you have to start your command with the keyword `alias`.
 
 ####Result
 1. After the first step, `s` is created as an alias command for `schedule`, and you can now use both `s` and `schedule` to reschedule a task.
-2. After the second step, task with index 1 is rescheduled to be by today 10pm.
+2. After the second step, task with id 1 is rescheduled to be by today 10pm.
 
 ## Unalias
 To unalias a command, you have to start your command with the keyword `unalias`.
@@ -240,7 +240,7 @@ To unalias a command, you have to start your command with the keyword `unalias`.
 ####Result
 1. After the first step, `s` is no longer an alias command for `schedule`.
 2. After the second step, the pop-up window will tell you that agendum no longer recognizes the command `s`.
-3. After the third step, task with index 1 is rescheduled to be by today 11pm.
+3. After the third step, task with id 1 is rescheduled to be by today 11pm.
 
 ## Store
 To change the default data save location, you have to start command with the keyword `store`.
