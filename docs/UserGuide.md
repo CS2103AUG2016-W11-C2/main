@@ -81,7 +81,7 @@ Agendum will clearly display the name and time associated with each task. Notice
 The **Command Box** is located at the top of Agendum. Enter your keyboard commands into the box!
 Just in case, there is a **Status Bar** located at the bottom of Agendum. You can check today's date and time, where your Agendum's to-do list data is located and when your data was last saved.
 
-Agendum also has a pretty **Help Window** which summarizes the commands you can use and pop-ups after each commands for you to review your changes.
+Agendum also has a pretty **Help Window** which summarizes the commands you can use. Agendum might show pop-ups and highlights after each commands for you to review your changes.
 
 [comment]: # (@@author A0148031R)
 ### Start using Agendum
