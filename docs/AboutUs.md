@@ -45,7 +45,7 @@ We are a team based in the [School of Computing, National University of Singapor
    * Smart command correction
 * Code written:<br>
 [Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0003878Y.md)<br>
-[[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0003878Y.md)<br>
+[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0003878Y.md)<br>
 [Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0003878Y.md)<br>
 * Other major contributions:
    * Set up & manage CI (Travis, Coveralls and Codacy)
