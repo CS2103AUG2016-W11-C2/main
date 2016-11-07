@@ -220,7 +220,7 @@ The structure and relationship of the various classes in the `Model` component i
 
 `ModelManager` implements the `Model` Interface. It contains a `UserPref` Object which represents the user’s preference and a `SyncManager` object which is necessary for the integration with Google calendar.
 
-`SyncManager` implements the `Sync` Interface. The `SyncManager` redirects sync tasks to a `SyncProvider`. In Agendum, we have one provider, `SyncProviderGoogle` that implements the `SyncProvider` Interface. This is done so that it would be easy to extend Agendum to sync with other providers. One would just have to create a new class that extends the `SyncProvider` Interface and register that class with `SyncManager`.
+`SyncManager` implements the `Sync` Interface. The `SyncManager` redirects the job of syncing a task to a `SyncProvider`. In Agendum, we have one provider, `SyncProviderGoogle` that implements the `SyncProvider` Interface. This is done so that it would be easy to extend Agendum to sync with other providers. One would just have to create a new class that extends the `SyncProvider` Interface and register that class with `SyncManager`.
 
 `ModelManager` contains a **main** `ToDoList` object and a stack of `ToDoList` objects referred to as `previousLists`. The **main** `ToDoList` object is the copy that is indirectly referred to by the `UI` and `Storage`. The stack, `previousLists` is used to support the [`undo` operation](#### undo).
 
