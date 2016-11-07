@@ -30,12 +30,18 @@ With just one line of command, Agendum will carry out your wishes. You don’t e
 
 
 ### Acknowledgements
+Our team would like to thank the following people:
 
-* Some parts of this sample application were inspired by the excellent 
-  [Java FX tutorial](http://code.makery.ch/library/javafx-8-tutorial/) by *Marco Jakob*. 
-* Some of the source code come from Address Book (Level 4)
-  [GitHub repo](https://github.com/nus-cs2103-AY1617S1/addressbook-level4) by *nus-cs2103-AY1617S1*. 
-
+* Professor [Damith C. Rajapakse](http://www.comp.nus.edu.sg/~damithch) 
+  for giving us invaluable advice on Software Engineering.
+* Muthu Kumar Chandrasekaran 
+  our TA who has given us constructive feedback to aid in our development of Agendum.
+* The Development team of Address Book (Level 4)
+  [GitHub repo](https://github.com/nus-cs2103-AY1617S1/addressbook-level4) by *nus-cs2103-AY1617S1*.
+* [joestelmach](http://natty.joestelmach.com/)
+  who created the Natty Time Parser which powers our date-time parsing.
+* Marco Jakob for providing tutorials on JavaFX
+  [Java FX tutorial](http://code.makery.ch/library/javafx-8-tutorial/).
 
 ### License
 * [MIT](LICENSE)
