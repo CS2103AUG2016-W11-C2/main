@@ -8,7 +8,7 @@
 3. Type `load src/test/data/ManualTesting/SampleData.xml`.
 
 ####Result:
-* In the **Do It Soon** column, there should be 22 tasks appearing with indices from 1 to 22, where task 1-6 are highlighted in red, 7-12 in yellow, and the remaining not highlighted. 
+* In the **Do It Soon** column, there should be 22 tasks appearing with indices from 1 to 22. Tasks highlighted in red have a start/end time before the current day and time; task highlighted in yellow have a start/end time within the current week and the remaining are not highlighted. 
 * In the **Do It Anytime** column, there should be 16 tasks appearing, with indices from 23 to 38.
 * In the **Done** column, there should be 12 tasks appearing, with indices 39-50.
 
@@ -27,7 +27,7 @@
 
 ## Date Time Formats
 
-Before proceeding to add or schedule tasks with dates and time, here is a brief on the date time formats that Agendum supports, by combining any of the date format and time format below. The date/time formats are case insensitive too.
+Before proceeding to add or schedule tasks with dates and time, please refer to the tables below. They describe the date format and time format Agendum supports. Combine any of the date format and time format below. The date/time formats are case insensitive too.
 
 *Date Format*
 
@@ -54,6 +54,9 @@ Before proceeding to add or schedule tasks with dates and time, here is a brief 
 
 > By default, we use the 24-hour time format but we do support the meridian format as well e.g. 10am, 10pm
 
+Note
+> If no year, date or time is specified, the current year, date or time will be used in its place.
+> It is advisable to specify both the date and time.
 
 ## Add
 To add a task, you have to start your command with the keyword `add`.
@@ -80,11 +83,11 @@ Type `add go for church camp from 20 nov 2pm to 25 nov 5pm`
 #### Result 
 A new task named `go for church` is created in the **Do It Soon** column, with its deadline under the name of this task	. Also, it is highlighted in purple borders.
 
-### 4. Add a task with single quotation mark
+### 4. Add a task with name enclosed in single quotation mark
 Type `add 'drop by store' by tmr`
 #### Result
-A new task named `drop by store` is created in the **Do It Soon** column, with its deadline under the name of this task. 
->Sometimes Agendum may wrongly interpret part of task name as a deadline/event time. To avoid this wrong interpretation, you can add single quotation marks around the task name, and agendum will only interpret those inside the quotation marks as task name.
+A new task named `drop by store` is created in the **Do It Soon** column, with its deadline (tomorrow's date) under the name of this task. 
+>Sometimes Agendum may incorrectly interpret part of task name as a deadline/event time. To avoid this misinterpretation, you can add single quotation mark around the task name. Agendum will then intepret what is enclosed within the single quotation mark as the task name and will not attempt to parse it as time.
 
 
 ## Rename
@@ -127,7 +130,7 @@ To delete a task, you have to start your command with the keyword `delete`.
 
 >Here is the *format*:
 
->* `delete <id>...` - Deletes the task at the specified `INDEX`. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas, space, or input as a range.
+>* `delete <id>...` - Deletes the task at the specified `INDEX`. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas or space (e.g. 1,2 or 1 2). You can also input a range  (e.g. 3-5)
 
 ###1. Delete a single task
 Type `delete 10`.
@@ -144,7 +147,7 @@ To mark a task as completed, you have to start your command with the keyword `ma
 
 >Here is the *format*:
 
->* `mark <id>...` - mark all the tasks identified by `<id>`(s) as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas, space, or input as a range.
+>* `mark <id>...` - mark all the tasks identified by `<id>`(s) as completed. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas or space (e.g. 1,2 or 1 2). You can also input a range  (e.g. 3-5)
 
 ###1. Mark a single task
 Type `mark 1`.
@@ -155,31 +158,35 @@ Task with index 1 is marked as completed, shifting from **Do It Soon** column to
 Type `mark 1 3-5`.
 ####Result
 Tasks with indices 1, 3, 4 and 5 are marked as completed, shifting from **Do It Soon** column to **Done** column, and their completion times are shown below their task names. Also, they are all highlighted in purple borders.
+(The operation will only be successful if no duplicate task will result)
 
 ## Unmark
 To unmark a task as completed, you have to start your command with the keyword `unmark`.
 
 >Here is the *format*:
 
->* `unmark <id>...` - unmark all the tasks identified by `<id>`(s) as uncompleted. Each `<id>` must be a positive number and in the most recent to-do list displayed.
+>* `unmark <id>...` - unmark all the tasks identified by `<id>`(s) as uncompleted. Each `<id>` must be a positive number and in the most recent to-do list displayed. If there are multiple `<id>`s, they should be separated by commas or space (e.g. 1,2 or 1 2). You can also input a range  (e.g. 3-5)
 
 ###1. Unmark a single task
-Type `mark 36`.
+Type `unmark 36`.
 ####Result
-Task with index 36 is marked as completed, shifting from **Done** column to **Do It Soon** column, and there is no more completion time under the task name. Also, it is highlighted in purple borders. If there are multiple `<id>`s, they should be separated by commas, space, or input as a range.
+Task with index 36 are unmarked, shifting from **Done** column to **Do It Soon** column, and there is no more completion time under the task name. Also, it is highlighted in purple borders. If there are multiple `<id>`s, they should be separated by commas, space, or input as a range.
 
 ###2. Unmark multiple tasks
-Type `mark 37-40`.
+Type `unmark 37-40`.
 ####Result
-Tasks with indices 37, 38, 39 and 40 are unmarked as uncompleted, shifting from **Done** column to **Do It Soon** column, and there are no more completion times under their task names. Also, they are all highlighted in purple borders.
+Tasks with indices 37, 38, 39 and 40 are unmarked, shifting from **Done** column to **Do It Soon** column, and there are no more completion times under their task names. Also, they are all highlighted in purple borders.
+(The operation will only be successful if no duplicate task will result)
 
 ## Undo
+Undo is supposed to reverse the last changes to the task list (e.g. by  `add`, `delete`, `rename`, `mark`, `unmark`, `schedule`). Multiple undo are supported.
+
 1. Type `undo`.
 2. Press <kbd>Ctrl Z</kbd>
 
 ####Result
-1. The previously unmarked tasks are marked again, and the affected tasks are highlighted in purple borders.
-2. The previously marked task is marked again, and the affected task is highlighted in purple borders.
+1. The previously unmarked tasks (_from `unmark 37-40`_) are marked as completed again, and the affected tasks are highlighted in purple borders.
+2. The previously unmarked task (_from `unmark 36`_) is marked as completed again, and the affected task is highlighted in purple borders.
 
 ## Find
 >Here is the *format*:
@@ -211,7 +218,7 @@ After you are done with searching for tasks, you can use `list` to exit your fin
 To alias a command, you have to start your command with the keyword `alias`.
 >Here is the *format*:
 
->* `alias <original command> <your command>` - `<your command>` must be a single alphanumeric word, and it cannot be an original-command or already aliased to another command. `<original command>` must be a command word that is specified in the Command Summary section
+>* `alias <original command> <your command>` - `<your command>` must be a single alphanumeric word, and it cannot be an original-command or already aliased to another command. `<original command>` must be a command word that is specified in the Command Summary section (or in the help window)
 
 1. Type `alias schedule s`
 2. Type `s 1 by 10pm`
@@ -224,7 +231,7 @@ To alias a command, you have to start your command with the keyword `alias`.
 To unalias a command, you have to start your command with the keyword `unalias`.
 >Here is the *format*:
 
->* `unalias <your command>` - `<your command>` must be a single alphanumeric word, and it cannot be a original-command or already aliased to another command.
+>* `unalias <your command>` - `<your command>` should be an alias you previously defined.
 
 1. Type `unalias s`
 2. Type `s 1 by 11pm`
@@ -259,7 +266,7 @@ To sync your tasks in agendum into Google calendar, you have to start command wi
 2. Type `sync off`.
 
 ####Result
-1. After the first step, agendum will direct you to the Google Calendar authorization page in your browser. Once authorized with your Google account, there will be a pop-up window telling you that sync has been turned on, and you may close the authorization page and go back to agendum. After the authorization, all the tasks with an event time you added will sync to your Google Calendar, where a separate calendur called `Agendum Calendar` will appear for you to view all tasks from agendum.
+1. After the first step, agendum will direct you to the Google Calendar authorization page in your browser. Once authorized with your Google account, there will be a pop-up window telling you that sync has been turned on, and you may now close the authorization page and go back to Agendum. After the authorization, all the tasks with an event time you added will sync to your Google Calendar, where a separate calendar called `Agendum Calendar` will appear for you to view all tasks from agendum.
 2. After the second step, sync to Google Calendar will be turned off.
 
 
