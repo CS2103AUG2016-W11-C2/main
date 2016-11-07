@@ -41,11 +41,15 @@ public class Parser {
     private static final Pattern UNALIAS_ARGS_FORMAT = Pattern.compile("(?<shorthand>[\\p{Alnum}]+)");
 
     //@@author A0003878Y
+    private static final Pattern QUOTATION_FORMAT = Pattern.compile("\'([^\']*)\'");
     private static final Pattern ADD_SCHEDULE_ARGS_FORMAT = Pattern.compile("(?:.+?(?=(?:(?:(?i)by|from|to)\\s|$)))+?");
 
     private static final String ARGS_FROM = "from";
     private static final String ARGS_BY = "by";
     private static final String ARGS_TO = "to";
+    private static final String FILLER_WORD = "FILLER ";
+    private static final String SINGLE_QUOTE = "\'";
+
     private static final String[] TIME_TOKENS = new String[] { ARGS_FROM, ARGS_TO, ARGS_BY };
 
     private CommandLibrary commandLibrary;
@@ -77,50 +81,54 @@ public class Parser {
 
         switch (commandWord) {
 
-        case AddCommand.COMMAND_WORD:
+        case AddCommand.COMMAND_WORD :
             return prepareAdd(arguments);
 
-        case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_WORD :
             return prepareDelete(arguments);
 
-        case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_WORD :
             return prepareFind(arguments);
 
-        case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_WORD :
             return new ListCommand();
 
-        case RenameCommand.COMMAND_WORD:
+        case RenameCommand.COMMAND_WORD :
             return prepareRename(arguments);
 
-        case MarkCommand.COMMAND_WORD:
+        case MarkCommand.COMMAND_WORD :
             return prepareMark(arguments);
 
-        case ScheduleCommand.COMMAND_WORD:
+        case ScheduleCommand.COMMAND_WORD :
             return prepareSchedule(arguments);
 
-        case UnmarkCommand.COMMAND_WORD:
+        case UnmarkCommand.COMMAND_WORD :
             return prepareUnmark(arguments);
 
-        case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_WORD :
             return new UndoCommand();
 
-        case AliasCommand.COMMAND_WORD:
+        case AliasCommand.COMMAND_WORD :
             return prepareAlias(arguments);
 
-        case UnaliasCommand.COMMAND_WORD:
+        case UnaliasCommand.COMMAND_WORD :
             return prepareUnalias(arguments);
 
-        case ExitCommand.COMMAND_WORD:
+        case ExitCommand.COMMAND_WORD :
             return new ExitCommand();
 
-        case HelpCommand.COMMAND_WORD:
+        case HelpCommand.COMMAND_WORD :
             return new HelpCommand();
-            
-        case StoreCommand.COMMAND_WORD:
+
+        case StoreCommand.COMMAND_WORD :
             return new StoreCommand(arguments);
-            
-        case LoadCommand.COMMAND_WORD:
+
+        case LoadCommand.COMMAND_WORD :
             return new LoadCommand(arguments);
+
+        case SyncCommand.COMMAND_WORD: {
+            return prepareSync(arguments);
+        }
 
         default:
             //@@author A0003878Y
@@ -141,7 +149,21 @@ public class Parser {
      * @return the prepared command
      */
     private Command prepareAdd(String args) {
+
+        // Create title and dateTimeMap
+        StringBuilder titleBuilder = new StringBuilder();
+        HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
+
+        // Check for quotation in args. If so, they're set as title
+        Optional<String> quotationCheck = checkForQuotation(args);
+        if (quotationCheck.isPresent()) {
+            titleBuilder.append(quotationCheck.get().replace(SINGLE_QUOTE,""));
+            args = FILLER_WORD + args.replace(quotationCheck.get(),""); // This will get removed later by regex
+        }
+
+        // Start parsing for datetime in args
         Matcher matcher = ADD_SCHEDULE_ARGS_FORMAT.matcher(args.trim());
+
         if (!matcher.matches()) {
             return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
@@ -149,9 +171,11 @@ public class Parser {
         try {
             matcher.reset();
             matcher.find();
-            StringBuilder titleBuilder = new StringBuilder(matcher.group(0));
-            HashMap<String, Optional<LocalDateTime>> dateTimeMap = new HashMap<>();
+            if (titleBuilder.length() == 0) {
+                titleBuilder.append(matcher.group(0));
+            }
 
+            // Run this function on all matched groups
             BiConsumer<String, String> consumer = (matchedGroup, token) -> {
                 String time = matchedGroup.substring(token.length(), matchedGroup.length());
                 if (DateTimeUtils.containsTime(time)) {
@@ -160,21 +184,31 @@ public class Parser {
                     titleBuilder.append(matchedGroup);
                 }
             };
-            scheduleMatcherOnConsumer(matcher, consumer);
+            executeOnEveryMatcherToken(matcher, consumer);
 
             String title = titleBuilder.toString();
 
-            if (dateTimeMap.containsKey(ARGS_BY)) {
-                return new AddCommand(title, dateTimeMap.get(ARGS_BY));
-            } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
-                return new AddCommand(title, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
-            } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO)
-                    && !dateTimeMap.containsKey(ARGS_BY)) {
-                return new AddCommand(title);
-            } else {
-                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                        AddCommand.MESSAGE_USAGE));
+            if (title.length() == 0) {
+                return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
             }
+
+            boolean hasDeadlineKeyword = dateTimeMap.containsKey(ARGS_BY);
+            boolean hasStartTimeKeyword = dateTimeMap.containsKey(ARGS_FROM);
+            boolean hasEndTimeKeyword = dateTimeMap.containsKey(ARGS_TO);
+
+            if (hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
+                return new AddCommand(title, dateTimeMap.get(ARGS_BY));
+            }
+
+            if (!hasDeadlineKeyword && hasStartTimeKeyword && hasEndTimeKeyword) {
+                return new AddCommand(title, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
+            }
+
+            if (!hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
+                return new AddCommand(title);
+            }
+
+            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         } catch (IllegalValueException ive) {
             return new IncorrectCommand(ive.getMessage());
         }
@@ -206,34 +240,55 @@ public class Parser {
                     ScheduleCommand.MESSAGE_USAGE));
         }
 
+        // Run this function on all matched groups
         BiConsumer<String, String> consumer = (matchedGroup, token) -> {
             String time = matchedGroup.substring(token.length(), matchedGroup.length());
             if (DateTimeUtils.containsTime(time)) {
                 dateTimeMap.put(token, DateTimeUtils.parseNaturalLanguageDateTimeString(time));
             }
         };
-        scheduleMatcherOnConsumer(matcher, consumer);
+        executeOnEveryMatcherToken(matcher, consumer);
 
-        if (dateTimeMap.containsKey(ARGS_BY)) {
+        boolean hasDeadlineKeyword = dateTimeMap.containsKey(ARGS_BY);
+        boolean hasStartTimeKeyword = dateTimeMap.containsKey(ARGS_FROM);
+        boolean hasEndTimeKeyword = dateTimeMap.containsKey(ARGS_TO);
+
+        if (hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
             return new ScheduleCommand(index, Optional.empty(), dateTimeMap.get(ARGS_BY));
-        } else if (dateTimeMap.containsKey(ARGS_FROM) && dateTimeMap.containsKey(ARGS_TO)) {
-            return new ScheduleCommand(index, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));
-        } else if (!dateTimeMap.containsKey(ARGS_FROM) && !dateTimeMap.containsKey(ARGS_TO)
-                && !dateTimeMap.containsKey(ARGS_BY)) {
-            return  new ScheduleCommand(index, Optional.empty(), Optional.empty());
-        } else {
-            return new IncorrectCommand(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
         }
+
+        if (!hasDeadlineKeyword && hasStartTimeKeyword && hasEndTimeKeyword) {
+            return new ScheduleCommand(index, dateTimeMap.get(ARGS_FROM), dateTimeMap.get(ARGS_TO));}
+
+        if (!hasDeadlineKeyword && !hasStartTimeKeyword && !hasEndTimeKeyword) {
+            return new ScheduleCommand(index, Optional.empty(), Optional.empty());
+        }
+
+        return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ScheduleCommand.MESSAGE_USAGE));
     }
 
     /**
-     * Parses arguments in the context of the schedule task command.
+     * Checks if there are any quotation marks in the given string
+     *
+     * @param str
+     * @return returns the string inside the quote.
+     */
+    private Optional<String> checkForQuotation(String str) {
+        Matcher matcher = QUOTATION_FORMAT.matcher(str.trim());
+        if (!matcher.find()) {
+            return Optional.empty();
+        }
+        return Optional.of(matcher.group(0));
+    }
+
+    /**
+     * A higher order function that parses arguments in the context of the schedule task command.
+     * Extracted out of prepareAdd and prepareSchedule for code reuse.
      *
      * @param matcher matcher for current command context
      * @param consumer <String, String> closure to execute on
      */
-    private void scheduleMatcherOnConsumer(Matcher matcher, BiConsumer<String, String> consumer) {
+    private void executeOnEveryMatcherToken(Matcher matcher, BiConsumer<String, String> consumer) {
         while (matcher.find()) {
             for (String token : TIME_TOKENS) {
                 String matchedGroup = matcher.group(0).toLowerCase();
@@ -247,7 +302,7 @@ public class Parser {
 
     //@@author A0133367E
     /**
-     * Parses arguments in the context of the delete task command.
+     * Parses arguments in the context of the delete task(s) command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -263,7 +318,7 @@ public class Parser {
     }
 
     /**
-     * Parses arguments in the context of the mark task command.
+     * Parses arguments in the context of the mark task(s) command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -279,7 +334,7 @@ public class Parser {
     }
  
     /**
-     * Parses arguments in the context of the unmark task command.
+     * Parses arguments in the context of the unmark task(s) command.
      *
      * @param args full command args string
      * @return the prepared command
@@ -303,7 +358,8 @@ public class Parser {
     private Command prepareRename(String args) {
         final Matcher matcher = RENAME_ARGS_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
         }
 
         final String givenName = matcher.group("name").trim();
@@ -311,7 +367,8 @@ public class Parser {
         Optional<Integer> index = parseIndex(givenIndex);
 
         if (!index.isPresent()) {
-            return new IncorrectCommand(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
+            return new IncorrectCommand(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, RenameCommand.MESSAGE_USAGE));
         }
 
         try {
@@ -361,7 +418,7 @@ public class Parser {
     //@@author
     /**
      * Returns the specified index in the {@code command} IF a positive unsigned integer is given as the index.
-     *   Returns an {@code Optional.empty()} otherwise.
+     * Returns an {@code Optional.empty()} otherwise.
      */
     private Optional<Integer> parseIndex(String command) {
         final Matcher matcher = TASK_INDEX_ARGS_FORMAT.matcher(command.trim());
@@ -380,14 +437,15 @@ public class Parser {
     //@@author A0133367E
     /**
      * Returns the specified indices in the {@code command} if positive unsigned integer(s) are given.
-     *   Returns an empty set otherwise.
+     * Returns an empty set otherwise.
      */
     private Set<Integer> parseIndexes(String args) {
         final Matcher matcher = TASK_INDEXES_ARGS_FORMAT.matcher(args.trim());
-        Set<Integer> taskIds = new HashSet<>();
+        Set<Integer> emptySet = new HashSet<Integer>();
+        Set<Integer> taskIds = new HashSet<Integer>();
 
         if (!matcher.matches()) {
-            return taskIds;
+            return emptySet;
         }
 
         String replacedArgs = args.replaceAll("[ ]+", ",").replaceAll(",+", ",");
@@ -401,18 +459,19 @@ public class Parser {
                 int startIndex = Integer.parseInt(startAndEndIndexes[0]);
                 int endIndex = Integer.parseInt(startAndEndIndexes[1]);
                 taskIds.addAll(IntStream.rangeClosed(startIndex, endIndex)
-                        .boxed().collect(Collectors.toList()));
+                       .boxed().collect(Collectors.toList()));
             }
         }
 
         if (taskIds.remove(0)) {
-            return new HashSet<>();
+            return emptySet;
         }
 
         return taskIds;
     }
-    
+
     //@@author
+
     /**
      * Parses arguments in the context of the find task command.
      *
@@ -432,4 +491,20 @@ public class Parser {
         return new FindCommand(keywordSet);
     }
 
+    //@@author A0003878Y
+    /**
+     * Parses arugments in the context of the sync command.
+     *
+     * @param args full command args string
+     * @return the prepared command
+     */
+    private Command prepareSync(String args) {
+        try {
+            return new SyncCommand(args);
+        } catch (IllegalValueException ive) {
+            return new IncorrectCommand(ive.getMessage());
+        }
+    }
+
+    //@@author
 }

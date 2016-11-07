@@ -10,6 +10,7 @@ import seedu.agendum.testutil.TestTask;
 import seedu.agendum.testutil.TestUtil;
 import seedu.agendum.testutil.TypicalTestTasks;
 
+//@@author A0133367E
 public class AddCommandTest extends ToDoListGuiTest {
 
     @Test
@@ -32,7 +33,7 @@ public class AddCommandTest extends ToDoListGuiTest {
 
         //add duplicate task
         commandBox.runCommand(TypicalTestTasks.getFloatingTestTask().getAddCommand());
-        assertResultMessage(AddCommand.MESSAGE_DUPLICATE_TASK);
+        assertResultMessage(Messages.MESSAGE_DUPLICATE_TASK);
         assertAllPanelsMatch(currentList);
 
         //add to empty list
@@ -48,14 +49,14 @@ public class AddCommandTest extends ToDoListGuiTest {
         commandBox.runCommand(taskToAdd.getAddCommand());
 
         //confirm the new card contains the right data
-        if (!taskToAdd.isCompleted() && !taskToAdd.hasTime()) {
+        if (taskToAdd.isCompleted()) {
+            TaskCardHandle addedCard = completedTasksPanel.navigateToTask(taskToAdd.getName().fullName);
+            assertMatching(taskToAdd, addedCard);
+        } else if (!taskToAdd.isCompleted() && !taskToAdd.hasTime()) {
             TaskCardHandle addedCard = floatingTasksPanel.navigateToTask(taskToAdd.getName().fullName);
             assertMatching(taskToAdd, addedCard);
         } else if (!taskToAdd.isCompleted() && taskToAdd.hasTime()) {
             TaskCardHandle addedCard = upcomingTasksPanel.navigateToTask(taskToAdd.getName().fullName);
-            assertMatching(taskToAdd, addedCard);
-        } else {
-            TaskCardHandle addedCard = completedTasksPanel.navigateToTask(taskToAdd.getName().fullName);
             assertMatching(taskToAdd, addedCard);
         }
 

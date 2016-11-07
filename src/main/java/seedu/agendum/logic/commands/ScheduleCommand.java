@@ -9,7 +9,6 @@ import seedu.agendum.logic.parser.DateTimeUtils;
 import seedu.agendum.model.task.*;
 import seedu.agendum.model.task.UniqueTaskList.TaskNotFoundException;
 
-
 /**
  * Reschedules a task in the to do list.
  */
@@ -18,7 +17,7 @@ public class ScheduleCommand extends Command {
     public static final String COMMAND_WORD = "schedule";
     public static final String COMMAND_FORMAT = "schedule <id>\n"
                                               + "schedule <id> by <deadline>\n"
-                                              + "schedule <id> from <start-time> to <end-time>";
+                                              + "schedule <id> from <start time> to <end time>";
     public static final String COMMAND_DESCRIPTION = "update the time of a task";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + " - "
@@ -28,13 +27,12 @@ public class ScheduleCommand extends Command {
             + "Example: " + COMMAND_WORD + " 2 from 7am to 9am";
 
     public static final String MESSAGE_SUCCESS = "Task rescheduled: %1$s";
-    public static final String MESSAGE_DUPLICATE_TASK = "This task already exists!";
 
     public int targetIndex = -1;
-    private Optional<LocalDateTime> newStartDateTime = Optional.empty();
-    private Optional<LocalDateTime> newEndDateTime = Optional.empty();
+    public Optional<LocalDateTime> newStartDateTime = Optional.empty();
+    public Optional<LocalDateTime> newEndDateTime = Optional.empty();
 
-    //@@author A0133367E
+    //@@author A0003878Y
     public ScheduleCommand(int targetIndex, Optional<LocalDateTime> startTime,
             Optional<LocalDateTime> endTime) {
         Optional<LocalDateTime> balancedEndTime = endTime;
@@ -66,15 +64,16 @@ public class ScheduleCommand extends Command {
         try {
             model.updateTask(taskToSchedule, updatedTask);         
         } catch (UniqueTaskList.DuplicateTaskException e) {
-            return new CommandResult(MESSAGE_DUPLICATE_TASK);
+            return new CommandResult(Messages.MESSAGE_DUPLICATE_TASK);
         } catch (TaskNotFoundException e) {
-            assert false : "The target task cannot be missing";
+            return new CommandResult(Messages.MESSAGE_MISSING_TASK);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, updatedTask));
     }
 
-    //@author
+    //@@author
+
     public static String getName() {
         return COMMAND_WORD;
     }
