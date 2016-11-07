@@ -7,6 +7,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.agendum.commons.core.Config;
 import seedu.agendum.commons.core.EventsCenter;
+import seedu.agendum.commons.core.Messages;
 import seedu.agendum.commons.core.UnmodifiableObservableList;
 import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.logic.commands.*;
@@ -230,7 +231,7 @@ public class LogicManagerTest {
         // execute command and verify result
         assertCommandBehavior(
                 helper.generateAddCommand(toBeAdded),
-                AddCommand.MESSAGE_DUPLICATE_TASK,
+                Messages.MESSAGE_DUPLICATE_TASK,
                 expectedTDL,
                 expectedTDL.getTaskList());
 
@@ -529,7 +530,7 @@ public class LogicManagerTest {
         helper.addToModel(model, tasks);
         
         assertCommandBehavior("mark 1-3",
-                MarkCommand.MESSAGE_DUPLICATE,
+                Messages.MESSAGE_DUPLICATE_TASK,
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -616,7 +617,7 @@ public class LogicManagerTest {
         helper.addToModel(model, tasks);
         
         assertCommandBehavior("unmark 3-5",
-                UnmarkCommand.MESSAGE_DUPLICATE,
+                Messages.MESSAGE_DUPLICATE_TASK,
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -721,7 +722,7 @@ public class LogicManagerTest {
         // a valid index must be provided to check if the name is invalid (due to a duplicate)
         assertCommandBehavior(
                 "rename 2 " + toBeDuplicated.getName().toString(),
-                RenameCommand.MESSAGE_DUPLICATE_TASK,
+                Messages.MESSAGE_DUPLICATE_TASK,
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
@@ -797,7 +798,7 @@ public class LogicManagerTest {
         // a valid index must be provided to check if the time is invalid (due to a duplicate)
         assertCommandBehavior(
                 "schedule 2 by Oct 10 10:10",
-                ScheduleCommand.MESSAGE_DUPLICATE_TASK,
+                Messages.MESSAGE_DUPLICATE_TASK,
                 expectedTDL,
                 expectedTDL.getTaskList());
     }
