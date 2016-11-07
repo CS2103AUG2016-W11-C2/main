@@ -166,7 +166,7 @@ task allTests(type: AgendumTest) {
     
     exec {
       executable 'rm'
-      args 'data/StoredCredential'
+      args '-vf', 'data/StoredCredential'
     }
 }
 
