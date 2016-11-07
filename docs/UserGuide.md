@@ -20,7 +20,7 @@
 	* [Viewing help](#viewing-help--help)
 	* [Specifying the data storage location](#specifying-the-data-storage-location--store)
 	* [Loading from another data storage location](#loading-from-another-data-storage-location--load)
-	* [Synchronizing with Google calendar](#synchronizing-with-google-calendar--sync)
+	* [Synchronizing with Google calendar](#synchronizing-with-google-calendar-sync)
 	* [Exiting Agendum](#exiting-agendum--exit)
 	* [Bonus: Keyboard shortcuts](#keyboard-shortcuts)
 * [FAQ](#faq)
