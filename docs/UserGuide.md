@@ -522,6 +522,7 @@ Here is the *format*:
 > * `sync` must have either ON or OFF after the command word
 > * Only data from Agendum will be synchronized to Google Calendar
 > * Only tasks with a start and end date/time will be synchronized
+> * Please accept or decline Google's request for permission for Agendum client to manage your calendar. Do not close the window abruptly.
 
 
 ### Exiting Agendum : `exit`
