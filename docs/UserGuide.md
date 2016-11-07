@@ -20,6 +20,7 @@
 	* [Viewing help](#viewing-help--help)
 	* [Specifying the data storage location](#specifying-the-data-storage-location--store)
 	* [Loading from another data storage location](#loading-from-another-data-storage-location--load)
+	* [Synchronizing with Google calendar](#synchronizing-with-google-calendar--sync)
 	* [Exiting Agendum](#exiting-agendum--exit)
 	* [Bonus: Keyboard shortcuts](#keyboard-shortcuts)
 * [FAQ](#faq)
@@ -511,7 +512,7 @@ Examples
 > load C:/Dropbox/mytasklist.xml
 ```
 
-### Google calendar synchronization: `sync`
+### Synchronizing with Google calendar: `sync`
 
 If you have a Google account and want to synchronize your tasks between Agendum and Google Calendar, this command enables you to do exactly that! Synchronization takes place when you turn it on.
 

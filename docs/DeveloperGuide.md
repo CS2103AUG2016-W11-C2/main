@@ -248,7 +248,7 @@ This is achieved with the _backupCurrentToDoList_ function which pushes a copy o
 
 To undo the most recent changes, we simply pop the irrelevant `ToDoList` at the top of the `previousLists` stack and copy the `ToDoList` at the top of the stack back to the **main** list 
 
-This approach eliminates the need to implement an "undo" method and store the changes separately for each command that will mutate the task list.
+This approach is reliable as it eliminates the need to implement an "undo" method and store the changes separately for each command that will mutate the task list.
 
 Also, it helps to resolve the complications involved with manipulating multiple task objects at a go. For example, the user might try to mark multiple tasks and one of which will result in a `DuplicateTaskException`. To revert the undesired changes to the **main** `ToDoList`, we can copy the the `ToDoList` at the top of the stack back to the **main** list. In such unsuccessful operations, the changes would not have persisted to Storage.
 
@@ -737,7 +737,7 @@ Priority | As a ... | I want to ... | So that I can...
 6.	Should favour DOS style commands over Unix-style commands.
 7.	Should adopt an object oriented design.
 8.	Should not violate any copyrights.
-9.	Should have a response time of less than 1 second for every action performed.
+9.	Should have a response time of less than 2 second for every action performed.
 10.	Should work offline without an internet connection.
 11.	Should work as a standalone application.
 12.	Should not use relational databases to store data.
