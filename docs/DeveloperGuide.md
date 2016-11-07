@@ -677,14 +677,14 @@ Priority | As a ... | I want to ... | So that I can...
 1. Actor enters store command followed by a path to file
 2. System updates data storage location to the specified path to file
 3. System saves task list to the new data storage location
-4. System shows a feedback message ("New save location: `path-to-file`")
+4. System shows a feedback message ("New save location: `location`")
 5. Use case ends.
 
 **Extensions**
 
 1a. Path to file is input as 'default'
 > 1a1. System updates data storage location to default <br>
-> 1a2. System shows a feedback message ("Save location set to default: `path-to-file`") <br>
+> 1a2. System shows a feedback message ("Save location set to default: `location`") <br>
 > Use case ends
 
 1b. File exists
@@ -708,17 +708,17 @@ Priority | As a ... | I want to ... | So that I can...
 2. System saves current task list into existing data storage location
 3. System loads task list from specified path to file
 2. System updates data storage location to the specified path to file
-3. System shows a feedback message ("Data successfully loaded from: `path-to-file`")
+3. System shows a feedback message ("Data successfully loaded from: `location`")
 4. Use case ends.
 
 **Extensions**
 
 1a. Path to file is invalid
-> 1a1. System shows an error message ("The specified path to file is invalid: path-to-file") <br>
+> 1a1. System shows an error message ("The specified path to file is invalid: `location`") <br>
 > Use case ends
 
 2a. File does not exist
-> 1a1. System shows an error message ("The specified file does not exist: path-to-file") <br>
+> 1a1. System shows an error message ("The specified file does not exist: `location`") <br>
 > Use case ends
 
 3a. File is in the wrong format
