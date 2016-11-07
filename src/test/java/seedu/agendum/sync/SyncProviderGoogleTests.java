@@ -1,9 +1,6 @@
 package seedu.agendum.sync;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.mockito.internal.matchers.Any;
 import seedu.agendum.model.task.Task;
 
@@ -39,6 +36,11 @@ public class SyncProviderGoogleTests {
         syncProviderGoogle = spy(new SyncProviderGoogle());
         syncProviderGoogle.setManager(mockSyncManager);
         syncProviderGoogle.start();
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        DATA_STORE_CREDENTIAL.delete();
     }
 
     public static void copyTestCredentials() {

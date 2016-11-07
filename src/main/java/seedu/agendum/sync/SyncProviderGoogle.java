@@ -81,7 +81,9 @@ public class SyncProviderGoogle extends SyncProvider {
 
     @Override
     public void startIfNeeded() {
+        logger.info("Checking if Google Calendar needs to be started");
         if (DATA_STORE_CREDENTIAL.exists()) {
+            logger.info("Credentials, starting Google Calendar");
             start();
         }
     }
