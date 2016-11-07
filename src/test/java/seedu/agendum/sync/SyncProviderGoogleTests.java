@@ -40,19 +40,23 @@ public class SyncProviderGoogleTests {
 
     @AfterClass
     public static void tearDown() {
-        DATA_STORE_CREDENTIAL.delete();
+        deleteCredential();
     }
 
     public static void copyTestCredentials() {
         try {
-            DATA_STORE_CREDENTIAL.delete();
+            deleteCredential();
             Files.copy(getRandomCredential().toPath(), DATA_STORE_CREDENTIAL.toPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static File getRandomCredential() {
+    public static void deleteCredential() {
+        DATA_STORE_CREDENTIAL.delete();
+    }
+
+    private static File getRandomCredential() {
         int r = new Random().nextInt(DATA_STORE_TEST_CREDENTIALS.size());
         return DATA_STORE_TEST_CREDENTIALS.get(r);
     }
@@ -73,7 +77,7 @@ public class SyncProviderGoogleTests {
 
     @Test
     public void syncProviderGoogle_startIfNeeded_credentialsNotFound() {
-        DATA_STORE_CREDENTIAL.delete();
+        deleteCredential();
         syncProviderGoogle.startIfNeeded();
 
         // Verify Sync Provider should not start

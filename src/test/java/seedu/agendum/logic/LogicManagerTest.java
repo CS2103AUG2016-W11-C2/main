@@ -432,6 +432,8 @@ public class LogicManagerTest {
         SyncProviderGoogleTests.copyTestCredentials();
         assertCommandBehavior("sync on",
                 SyncCommand.SYNC_ON_MESSAGE);
+
+        SyncProviderGoogleTests.deleteCredential(); // Clean up credential file
     }
 
     @Test
