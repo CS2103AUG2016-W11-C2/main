@@ -38,10 +38,12 @@ Our team would like to thank the following people:
   our TA who has given us constructive feedback to aid in our development of Agendum.
 * The Development team of Address Book (Level 4)
   [GitHub repo](https://github.com/nus-cs2103-AY1617S1/addressbook-level4) by *nus-cs2103-AY1617S1*.
-* [joestelmach](http://natty.joestelmach.com/)
+* [Joestelmach](http://natty.joestelmach.com/)
   who created the Natty Time Parser which powers our date-time parsing.
 * Marco Jakob for providing tutorials on JavaFX
   [Java FX tutorial](http://code.makery.ch/library/javafx-8-tutorial/).
+* [Google Calendar API](https://developers.google.com/google-apps/calendar/)
+* [Mockito](http://site.mockito.org/)
 
 ### License
 * [MIT](LICENSE)
