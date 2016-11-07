@@ -514,7 +514,7 @@ Examples
 
 ### Synchronizing with Google calendar: `sync`
 
-If you have a Google account and want to synchronize your tasks between Agendum and Google Calendar, this command enables you to do exactly that! Synchronization takes place when you turn it on.
+If you have a Google account and want to synchronize your tasks from Agendum to Google Calendar, this command enables you to do exactly that! Synchronization takes place when you turn it on.
 
 Here is the *format*:
 * `sync ON` or `sync OFF`
