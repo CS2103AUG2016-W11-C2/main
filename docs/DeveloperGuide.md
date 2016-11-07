@@ -16,7 +16,7 @@
 * [Appendix B: Use Cases](#appendix-b--use-cases)
 * [Appendix C: Non Functional Requirements](#appendix-c--non-functional-requirements)
 * [Appendix D: Glossary](#appendix-d--glossary)
-* [Appendix E : Product Survey](#appendix-e--product-survey)
+* [Appendix E: Product Survey](#appendix-e--product-survey)
 
 
 &nbsp;
@@ -195,7 +195,7 @@ The class diagram of the Logic Component is given below. `LogicManager` implemen
 
 <img src="images/LogicClassDiagram.png" width="800"><br>
 
-The `CommandLibrary` class is responsible for managing the various Agendum's reserved command keywords and their aliases. The `Parser` checks and queries the `CommandLibrary` to ascertain if a command word given has been aliased to a reserved command word. `AliasCommand` and `UnaliasCommand` will also check and update the `CommandLibrary` to add and remove aliases. The singleton pattern is applied to restrict the instantiation of the class to one object. This is to ensure that all other objects, such as ``Parser`, `AliasCommand` and `UnaliasCommand` objects will refer to the same instance that records and manages all the alias relationships.
+The `CommandLibrary` class is responsible for managing the various Agendum's reserved command keywords and their aliases. The `Parser` checks and queries the `CommandLibrary` to ascertain if a command word given has been aliased to a reserved command word. `AliasCommand` and `UnaliasCommand` will also check and update the `CommandLibrary` to add and remove aliases. The singleton pattern is applied to restrict the instantiation of the class to one object. This is to ensure that all other objects, such as `Parser`, `AliasCommand` and `UnaliasCommand` objects will refer to the same instance that records and manages all the alias relationships.  
 
 You can view the Sequence Diagram below for interactions within the `Logic` component for the `execute("delete 1")` API call.<br>
 
@@ -239,6 +239,7 @@ Using the same example, if the `Logic` component requests `Model` to _deleteTask
 The identified task is removed from the `UniqueTaskList`. The `ModelManager` raises a `ToDoListChangedEvent` and back up the current to do list to `previousLists`
 
 > `Model`’s _deleteTasks_ methods actually take in `ArrayList<ReadOnlyTask>` instead of a single task. We use _deleteTasks(task)_ for simplicity in the sequence diagram.
+
 
 #### undo
 
@@ -383,7 +384,7 @@ See [UsingGradle.md](UsingGradle.md#running-tests)  for instructions on how to r
 &nbsp;
 
 
-[comment]: # (@@author A0133367E)
+[comment]: # (@@author A0148031R)
 ## Dev Ops
 
 ### 1. Build Automation
@@ -478,7 +479,7 @@ Priority | As a ... | I want to ... | So that I can...
 2. Actor enters an add command with the task name into the input box.
 3. System adds the task.
 4. System shows a feedback message ("Task `name` added") and displays the updated list
-5. Use case ends.
+   Use case ends.
 
 **Extensions**
 
@@ -496,57 +497,45 @@ Priority | As a ... | I want to ... | So that I can...
 
 **MSS**
 
-1. Actor requests to list tasks
-2. System shows a list of tasks
-3. Actor requests to delete a specific task in the list by its index
-4. System deletes the task.
-5. System shows a feedback message (“Task `index` deleted”) and displays the updated list
-6. Use case ends.
+1. Actor requests to delete a specific task in the list by its index
+2. System deletes the task.
+3. System shows a success feedback message to describe the task deleted and displays the updated list
+   Use case ends.
 
 **Extensions**
 
-2a. The list is empty
+1a. The index given is invalid (e.g. it is a string or out of range)
 
+> 1a1. System shows an error message to inform the user of the incorrect format/index given
 > Use case ends
-
-3a. The given index is invalid
-
-> 3a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
-> Use case resumes at step 2
 
 ### Use case 03 - Rename a task
 
 **MSS**
 
-1. Actor requests to list tasks
-2. System shows a list of tasks
-3. Actor requests to rename a specific task in the list by its index and also input the new task name
-4. System updates the task
-5. System shows a feedback message (“Task `index` updated”) and displays the updated list
-6. Use case ends.
+1. Actor requests to rename a specific task in the list by its index and also input the new task name
+2. System updates the task
+3. System shows a success feedback message to describe the task renamed and displays the updated list
+   Use case ends.
 
 **Extensions**
 
-2a. The list is empty
+1a. The index given is invalid (e.g. it is a string or out of range)
 
+> 1a1. System shows an error message to inform the user of the incorrect format/index given
 > Use case ends
 
-3a. The given index is invalid
+1b. No task name is provided
 
-> 3a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
-> Use case resumes at step 2
+> 1b1. System shows an error message to inform the user of the incorrect format/missing name
+> Use case ends
 
-3b. No task description is provided
+2a. Renaming a task will result in a duplicate (will become exactly identical to another task)
 
-> 3b1. System shows an error message (“Please include a new task name”) <br>
-> Use case resumes at step 2
+> 2a1. System shows an error message to inform user of potential duplicate <br>
+> Use case ends
 
-3c. There is an existing task with the same description and details
-
-> 3c1. System shows an error message (“Please use a new task name”) <br>
-> Use case resumes at step 2
-
-### Use case 04 - Schedule a task’s start and end time and deadlines
+### Use case 04 - Schedule a task’s start and end time/deadline
 
 **MSS**
 
@@ -573,71 +562,76 @@ Priority | As a ... | I want to ... | So that I can...
 > 3b1. System shows an error message (“Please follow the given time format”) <br>
 > Use case resumes at step 2
 
+
+[comment]: # (@@author A0133367E)
 ### Use case 05 - Undo previous command that modified the task list
 
 **MSS**
 
-1. Actor enters the undo command
-2. System finds the latest command that modified the task list
-3. System undo the identified command
-4. System shows a feedback message (“The command `last-command` has been undone”) and displays the updated list.
-5. Use case ends.
+1. Actor requests to undo the last change to the task list.
+2. System revert the last change to the task list.
+3. System shows a success feedback message and displays the updated list.
+   Use case ends.
 
 **Extensions**
 
-2a. There are no previous commands that modify the list (since the launch of the application)
+2a. There are no previous modifications to the task list (since the launch of the application)
 
-> 2a1. System shows an error message (“No previous command to undo”) <br>
+> 2a1. System alerts the user that there are no previous changes <br>
 > Use case ends
+
 
 ### Use case 06 - Mark a task as completed
 
 **MSS**:
 
-1. Actor requests to list tasks
-2. System show a list of tasks
-3. Actor requests to mark a task specified by its index in the list as completed
-4. System updates the task
-5. System shows a feedback message (“Task `index` is marked as completed”) and hides the marked task.
-6. Use case ends
+1. Actor requests to mark a task specified by its index in the list as completed
+2. System marks the task as completed 
+3. System shows a success feedback message, updates and highlights the selected task.
+   Use case ends
 
 **Extensions**
 
-2a. The list is empty
+1a. The index given is invalid (e.g. it is a string or out of range)
 
-> 2a1. Use case ends
+> 1a1. System shows an error message to inform the user of the incorrect format/index given
+> Use case ends
 
-3a. The given index is invalid
+2a. Marking a task will result in a duplicate (will become exactly identical to an existing task)
 
-> 3a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
-> Use case resumes at step 2
+> 2a1. System shows an error message to inform user of potential duplicate <br>
+> Use case ends
 
 ### Use case 07 - Unmark a task
 
 **MSS**:
 
 1. Actor requests to unmark a task followed by its index
-2. System updates the task
-3. System shows a feedback message (“Task `index` has been unmarked”) and moves the task to the correct list.
-4. Use case ends
+2. System unmarks the task from completed
+3. System shows a success feedback message, updates and highlights the selected task.
+   Use case ends
 
 **Extensions**
 
-1a. The list is empty
+1a. The index given is invalid (e.g. it is a string or out of range)
+
+> 1a1. System shows an error message to inform the user of the incorrect format/index given
 > Use case ends
 
-2a. The given index is invalid
-> 2a1. System shows an error message (“Please select a task on the list with a valid index”) <br>
+2a. Unmarking a task will result in a duplicate (will become exactly identical to an existing task)
+
+> 2a1. System shows an error message to inform user of potential duplicate <br>
 > Use case ends
 
 
+[comment]: # (@@author A0148095X)
 ### Use case 08 - Add alias commands
 
 **MSS**
 
 1. Actor enters a alias command and specify the name and new alias name of the command
 2. System alias the command
-3. System shows a feedback message (“The command `original-command` can now be keyed in as `alias-key`”)
+3. System shows a feedback message (“The command `original command` can now be keyed in as `alias key`”)
 4. Use case ends.
 
 **Extensions**
@@ -649,18 +643,17 @@ Priority | As a ... | I want to ... | So that I can...
 
 1b. The new alias name is already reserved/used for other commands
 
-> 1b1. System shows an error message ("The alias `alias-key` is already in use") <br>
+> 1b1. System shows an error message ("The alias `alias key` is already in use") <br>
 > Use case ends
 
 
-[comment]: # (@@author A0148095X)
 ### Use case 09 - Remove alias commands
 
 **MSS**
 
-1. Actor enters the unalias command followed by `alias-key`
+1. Actor enters the unalias command followed by `alias key`
 2. System removes the alias for the command
-3. System shows a feedback message ("The alias `alias-key` for `original-command` has been removed.")
+3. System shows a feedback message ("The alias `alias key` for `original command` has been removed.")
 4. Use case ends.
 
 **Extensions**
