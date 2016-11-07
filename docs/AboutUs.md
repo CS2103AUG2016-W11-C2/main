@@ -18,17 +18,18 @@ We are a team based in the [School of Computing, National University of Singapor
 * Features implemented:
    * [Delete multiple tasks](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#deleting-a-task--delete)
    * [Mark multiple tasks](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#marking-a-task-as-completed--mark)
-   * [Unmark multiple tasks](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#unmarking-a-task-as-completed--unmark)
+   * [Unmark multiple tasks](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#unmarking-a-task--unmark)
    * [Rename an existing task](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#renaming-a-task--rename)
-   * [Re-schedule a task](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#renaming-a-task--rename)
-   * [Undo commands that change the task list](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#undo-the-last-command--undo)
+   * [Undo last changes to the task list](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#undoing-your-last-changes--undo)
+   * [Defining custom alias for commands](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#creating-an-alias-for-a-command--alias)
+   * [Removing custom alias for commands](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/#removing-an-alias-command--unalias)
 * Code written:<br>
 [[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0133367E.md)]<br>
 [[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0133367E.md)]<br>
 [[Documentation](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/docs/A0133367E.md)]<br>
 * Other major contributions:
    * Did most of the refactoring from AddressBook to ToDoList
-   * Update user/developer guide
+   * Actively update user/developer guide
 
 -----
 
@@ -39,6 +40,8 @@ We are a team based in the [School of Computing, National University of Singapor
 * Aspects/tools in charge of: Integration, Git <br>
 * Features implemented:
    * [Adding a task (with time)](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#adding-a-task-add)
+   * [Rescheduling a task](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#rescheduling-a-task--schedule)
+   * [Synchronizing with Google calendar](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#synchronizing-with-google-calendar--sync)
    * [Smart command correction]
 * Code written:<br>
 [[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0003878Y.md)]<br>
@@ -75,7 +78,9 @@ We are a team based in the [School of Computing, National University of Singapor
 * Aspects/tools in charge of: Testing, Eclipse <br>
 * Features implemented:
    * [Scrolling through previous command history]
-   * [Help command] (https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#viewing-help--help)
+   * [Tab to autocomplete]
+   * [Help command](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#viewing-help--help)
+   * [Keyboard shortcuts](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/docs/UserGuide.md#keyboard-shortcuts))
 * Code written:<br>
 [[Functional Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/main/A0148031R.md)]<br>
 [[Testing Code](https://github.com/CS2103AUG2016-W11-C2/main/blob/master/collated/test/A0148031R.md)]<br>
