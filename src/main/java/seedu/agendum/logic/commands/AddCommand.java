@@ -1,5 +1,6 @@
 package seedu.agendum.logic.commands;
 
+import seedu.agendum.commons.core.Messages;
 import seedu.agendum.commons.exceptions.IllegalValueException;
 import seedu.agendum.logic.parser.DateTimeUtils;
 import seedu.agendum.model.task.*;
@@ -16,21 +17,19 @@ public class AddCommand extends Command {
 
     public static final String COMMAND_FORMAT = "add <name>\n"
                                               + "add <name> by <deadline> \n"
-                                              + "add <name> from <start-time> to <end-time>";
+                                              + "add <name> from <start time> to <end time>\n"
+                                              + "add '<full task name not to be read as time>'";
     public static final String COMMAND_DESCRIPTION = "adds a task to Agendum";
-
+    public static final String MESSAGE_SUCCESS = "Task added: %1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " - "
             + COMMAND_DESCRIPTION + "\n"
             + COMMAND_FORMAT + "\n"
             + "Example: " + COMMAND_WORD + " Watch Star Wars\n"
             + "from 7pm to 9pm";
 
-    public static final String MESSAGE_SUCCESS = "Task added: %1$s";
-    public static final String MESSAGE_DUPLICATE_TASK = "Hey, the task already exists";
-
     private Task toAdd = null;
 
-	//@@author A0003878Y
+    //@@author A0003878Y
     /**
      * Convenience constructor using name
      *
@@ -81,7 +80,7 @@ public class AddCommand extends Command {
             model.addTask(toAdd);
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
         } catch (UniqueTaskList.DuplicateTaskException e) {
-            return new CommandResult(MESSAGE_DUPLICATE_TASK);
+            return new CommandResult(Messages.MESSAGE_DUPLICATE_TASK);
         }
     }
 

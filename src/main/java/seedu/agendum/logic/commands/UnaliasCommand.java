@@ -1,20 +1,20 @@
-//@@author A0133367E
 package seedu.agendum.logic.commands;
 
 import seedu.agendum.model.Model;
 
+//@@author A0133367E
 /**
  * Create an alias for a reserved command keyword
  */
 public class UnaliasCommand extends Command {
 
-    // COMMAND_WORD, COMMAND_FORMAT, COMMAND_DESCRIPTION are for display in help window
     public static final String COMMAND_WORD = "unalias";
     public static final String COMMAND_FORMAT = "unalias <your command>";
     public static final String COMMAND_DESCRIPTION = "remove a shorthand command";
+ 
     public static final String MESSAGE_SUCCESS = "Removed alias <%1$s>";
-    public static final String MESSAGE_FAILURE_NO_ALIAS_KEY = 
-            "The alias <%1$s> does not exist";
+    public static final String MESSAGE_FAILURE_NO_ALIAS_KEY = "The alias <%1$s> does not exist";
+    public static final String MESSAGE_FAILURE_RESERVED_COMMAND_WORD = "<%1$s> is a reserved command word";
     public static final String MESSAGE_USAGE = COMMAND_WORD + " - "
             + COMMAND_DESCRIPTION + "\n"
             + COMMAND_FORMAT + "\n"
@@ -35,9 +35,12 @@ public class UnaliasCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        if (commandLibrary.isReservedCommandKeyword(aliasKey)) {
+            return new CommandResult(String.format(MESSAGE_FAILURE_RESERVED_COMMAND_WORD, aliasKey));
+        }
+
         if (!commandLibrary.isExistingAliasKey(aliasKey)) {
-            return new CommandResult(String.format(
-                    MESSAGE_FAILURE_NO_ALIAS_KEY, aliasKey));
+            return new CommandResult(String.format(MESSAGE_FAILURE_NO_ALIAS_KEY, aliasKey));
         }
         
         commandLibrary.removeExistingAlias(aliasKey);
