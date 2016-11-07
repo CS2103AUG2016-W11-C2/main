@@ -34,14 +34,12 @@ Our team would like to thank the following people:
 
 * Professor [Damith C. Rajapakse](http://www.comp.nus.edu.sg/~damithch) 
   for giving us invaluable advice on Software Engineering.
-* Muthu Kumar Chandrasekaran 
-  our TA who has given us constructive feedback to aid in our development of Agendum.
-* The Development team of Address Book (Level 4)
-  [GitHub repo](https://github.com/nus-cs2103-AY1617S1/addressbook-level4) by *nus-cs2103-AY1617S1*.
-* [Joestelmach](http://natty.joestelmach.com/)
-  who created the Natty Time Parser which powers our date-time parsing.
-* Marco Jakob for providing tutorials on JavaFX
-  [Java FX tutorial](http://code.makery.ch/library/javafx-8-tutorial/).
+* TA [Muthu Kumar Chandrasekaran](https://www.quora.com/profile/Muthu-Kumar-Chandrasekaran)
+  who has given us constructive feedback to aid in our development of Agendum.
+* The development team of Address Book (Level 4) which can be found at the 
+  [GitHub repo](https://github.com/nus-cs2103-AY1617S1/addressbook-level4).
+* [Joestelmach](http://natty.joestelmach.com/) who created the Natty Date Parser which powers our date-time parsing.
+* Marco Jakob for providing [Java FX tutorial](http://code.makery.ch/library/javafx-8-tutorial/).
 * [Google Calendar API](https://developers.google.com/google-apps/calendar/)
 * [Mockito](http://site.mockito.org/)
 
