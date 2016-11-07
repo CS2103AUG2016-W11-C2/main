@@ -1,6 +1,7 @@
 package seedu.agendum.sync;
 
 import org.junit.*;
+import org.junit.runners.MethodSorters;
 import org.mockito.internal.matchers.Any;
 import seedu.agendum.model.task.Task;
 
@@ -16,6 +17,7 @@ import java.util.Random;
 import static org.mockito.Mockito.*;
 import static seedu.agendum.commons.core.Config.DEFAULT_DATA_DIR;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 // @@author A0003878Y
 public class SyncProviderGoogleTests {
     private static final File DATA_STORE_CREDENTIAL = new File(DEFAULT_DATA_DIR + "StoredCredential");
