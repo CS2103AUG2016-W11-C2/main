@@ -28,14 +28,13 @@ public class SyncProviderGoogleTests {
             new File("cal/StoredCredential_3")
             );
 
-    private SyncProviderGoogle syncProviderGoogle;
-    private SyncManager mockSyncManager;
+    private static final SyncProviderGoogle syncProviderGoogle = spy(new SyncProviderGoogle());
+    private static final SyncManager mockSyncManager = mock(SyncManager.class);
 
-    public SyncProviderGoogleTests() {
+    @BeforeClass
+    public static void setUp() {
         copyTestCredentials();
 
-        mockSyncManager = mock(SyncManager.class);
-        syncProviderGoogle = spy(new SyncProviderGoogle());
         syncProviderGoogle.setManager(mockSyncManager);
         syncProviderGoogle.start();
     }
@@ -66,7 +65,7 @@ public class SyncProviderGoogleTests {
     @Test
     public void syncProviderGoogle_start_createCalendar() {
         // Verify if Sync Manager's status was changed
-        verify(mockSyncManager).setSyncStatus(Sync.SyncStatus.RUNNING);
+        verify(mockSyncManager, atLeastOnce()).setSyncStatus(Sync.SyncStatus.RUNNING);
     }
 
     @Test
