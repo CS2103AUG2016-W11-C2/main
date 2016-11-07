@@ -10,7 +10,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 -----
 
-#### [Rachael Sim](https://github.com/rachx)
+#### [Rachael Sim @rachx](https://github.com/rachx)
 <img src="images/profiles/Rachael.png" width="150"><br>
 **Role: Team leader** <br>
 * Components in charge of: Model <br>
@@ -33,7 +33,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 -----
 
-#### [Vishnu Prem](http://github.com/burnflare)
+#### [Vishnu Prem @burnflare](http://github.com/burnflare)
 <img src="images/profiles/Vishnu.png" width="150"><br>
 **Role: Developer** <br>
 * Components in charge of: Logic <br>
@@ -52,7 +52,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 -----
 
-#### [Justin Tay](https://github.com/INCENDE)
+#### [Justin Tay @INCENDE](https://github.com/INCENDE)
 <img src="images/profiles/Justin.png" width="150"><br>
 **Role: Developer** <br>
 * Components in charge of: Storage, Commons <br>
@@ -71,7 +71,7 @@ We are a team based in the [School of Computing, National University of Singapor
 
 -----
 
-#### [Fan Weiguang](https://github.com/fanwgwg)
+#### [Fan Weiguang @fanwgwg](https://github.com/fanwgwg)
 <img src="images/profiles/Weiguang.png" width="150"><br>
 **Role: Developer** <br>
 * Components in charge of: UI, Main <br>
