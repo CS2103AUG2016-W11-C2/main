@@ -415,7 +415,10 @@ Agendum depends on third-party libraries, such as the
 [comment]: # (@@author A0148095X)
 ## Appendix A : User Stories
 
->Priorities: High (must have) - `* * *`, Medium (nice to have)  - `* *`,  Low (unlikely to have) - `*`
+> Priorities: 
+> * High (must have) - `* * *`
+> * Medium (nice to have)  - `* *`
+> * Low (unlikely to have) - `*`
 
 Priority | As a ... | I want to ... | So that I can...
 -------- | :-------- | :--------- | :-----------
@@ -437,26 +440,26 @@ Priority | As a ... | I want to ... | So that I can...
 `* * *` | User | Exit the application by typing a command | Close the app easily
 `* *` | User | Filter overdue tasks and upcoming tasks (due within a week) | Decide on what needs to be done soon
 `* *` | User | Filter tasks based on marked/unmarked | Review my completed tasks and decide on what I should do next
-`*` | User | Clear the command I am typing with a key | Enter a new command without having to backspace the entire command line
-`*` | Advanced user | Specify my own alias commands | Enter commands faster or change the name of a command to suit my needs
-`*` | Advanced user | Remove the alias commands | Update to use another command aliases
-`*` | Advanced user | Scroll through my past few commands | Check what I have done and redo actions easily
-`*` | Google calendar user | Sync my tasks from Agendum to Google calendar | Keep track of my tasks using both Agendum and Google Calendar
-`* Unlikely` | User | Add multiple time slots for a task | “Block” multiple time slots when the exact timing of a task is certain
-`* Unlikely` | User | Add tags for my tasks | Group tasks together and organise my task list
-`* Unlikely` | User | Search based on tags | Find all the tasks of a similar nature
-`* Unlikely` | User | Add/Remove tags for existing tasks | Update the grouping of tasks
-`* Unlikely` | User | Be notified of deadline/time clashes | Resolve these conflicts manually
-`* Unlikely` | User | Key in emojis/symbols and characters from other languages e.g. Mandarin | Capture information in other languages
-`* Unlikely` | User | Clear all existing tasks | Easily start afresh with a new task list
-`* Unlikely` | User | See the count/statistics for upcoming/ overdue and pending tasks | Know how many tasks I need to do
-`* Unlikely` | User | Sort tasks by alphabetical order and date | Organise and easily locate tasks
-`* Unlikely` | Advanced user | Import tasks from an existing text file | Add multiple tasks efficiently without relying on multiple commands
-`* Unlikely` | Advanced user | Save a backup of the application in a custom file | Restore it any time at a later date
-`* Unlikely` | Busy user | Add recurring events or tasks | Keep the same tasks in my task list without adding them manually
-`* Unlikely` | Busy User | Search for tasks by date (e.g. on/before a date) | Easily check my schedule and make plans accordingly
-`* Unlikely` | Busy User | Search for a time when I am free | Find a suitable slot to schedule an item
-`* Unlikely` | Busy user | Can specify a priority of a task | Keep track of what tasks are more important
+`* *` | User | Clear the command I am typing with a key | Enter a new command without having to backspace the entire command line
+`* *` | Advanced user | Specify my own alias commands | Enter commands faster or change the name of a command to suit my needs
+`* *` | Advanced user | Remove the alias for a command | Use it for another command alias
+`* *` | Advanced user | Scroll through my past few commands | Check what I have done and redo actions easily
+`* *` | Google calendar user | Sync my tasks from Agendum to Google calendar | Keep track of my tasks using both Agendum and Google Calendar
+`*` | User | Add multiple time slots for a task | “Block” multiple time slots when the exact timing of a task is certain
+`*` | User | Add tags for my tasks | Group tasks together and organise my task list
+`*` | User | Search based on tags | Find all the tasks of a similar nature
+`*` | User | Add/Remove tags for existing tasks | Update the grouping of tasks
+`*` | User | Be notified of deadline/time clashes | Resolve these conflicts manually
+`*` | User | Key in emojis/symbols and characters from other languages e.g. Mandarin | Capture information in other languages
+`*` | User | Clear all existing tasks | Easily start afresh with a new task list
+`*` | User | See the count/statistics for upcoming/ overdue and pending tasks | Know how many tasks I need to do
+`*` | User | Sort tasks by alphabetical order and date | Organise and easily locate tasks
+`*` | Advanced user | Import tasks from an existing text file | Add multiple tasks efficiently without relying on multiple commands
+`*` | Advanced user | Save a backup of the application in a custom file | Restore it any time at a later date
+`*` | Busy user | Add recurring events or tasks | Keep the same tasks in my task list without adding them manually
+`*` | Busy User | Search for tasks by date (e.g. on/before a date) | Easily check my schedule and make plans accordingly
+`*` | Busy User | Search for a time when I am free | Find a suitable slot to schedule an item
+`*` | Busy user | Can specify a priority of a task | Keep track of what tasks are more important
 
 
 &nbsp;
