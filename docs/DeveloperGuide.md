@@ -407,7 +407,7 @@ To contribute a new release:
 ### 4. Managing Dependencies
 
 Agendum depends on third-party libraries, such as the
-[Jackson library](http://wiki.fasterxml.com/JacksonHome) for XML parsing. Managing these dependencies have been automated using Gradle. Gradle can download the dependencies automatically hence the libraries are not included in this repo and you do not need to download these libraries manually. To add a new dependency, update _build.gradle_.
+[Jackson library](http://wiki.fasterxml.com/JacksonHome), for XML parsing, [Natty](http://natty.joestelmach.com) for date & time parsing, [Reflection](https://code.google.com/archive/p/reflections/) for examining classes at runtime and [Google Calendar SDK](https://developers.google.com/api-client-library/java/apis/calendar/v3) for sync. Managing these dependencies have been automated using Gradle. Gradle can download the dependencies automatically hence the libraries are not included in this repo and you do not need to download these libraries manually. To add a new dependency, update `build.gradle`.
 
 
 &nbsp;
